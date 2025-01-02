@@ -8,6 +8,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home() {
+		// 개발1
 		return "/home";
 	}
 }
