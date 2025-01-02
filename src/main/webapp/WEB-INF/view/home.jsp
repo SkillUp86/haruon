@@ -4,29 +4,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-     
-
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    
+	<!-- 헤더 스크립트 -->
+    <jsp:include page="/WEB-INF/view/inc/headerScripts.jsp" />
     <!-- 페이지 제목 입력칸 -->
     <title>메인 페이지</title>
     <!-- 페이지 제목 입력칸 -->
@@ -99,6 +78,9 @@
                 <h1>콘텐츠 입력칸</h1>
                 <h1>콘텐츠 입력칸</h1>
                 <h1>콘텐츠 입력칸</h1>
+                <div>연습</div>
+                <div><p>연습</p></div>
+                <div><p><strong>연습</strong>연습</p></div>
                 
                 <!-- 메인컨텐츠 END -->
             </div>
@@ -107,23 +89,10 @@
             <!--  END FOOTER  -->
         </div>
         <!--  END CONTENT AREA  -->
-
     </div>
     <!-- END MAIN CONTAINER -->
-
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/template.js""></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-    <script src="../src/assets/js/dashboard/dash_1.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-
+    
+    <!-- 푸터 스크립트 -->
+	<jsp:include page="/WEB-INF/view/inc/footerScripts.jsp" />
 </body>
 </html>
