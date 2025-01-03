@@ -55,7 +55,7 @@
                                     
                                 </div>
                                 <div class="col-md-12">
-								    <form id="empLogin" action="${pageContext.request.contextPath}/login" method="post" novalidate>
+								    <form id="empLogin" action="${pageContext.request.contextPath}/" method="post" novalidate>
 								        <div class="form-row">
 								            <!-- 사원 번호 -->
 								            <div class="col-md-12 mb-4">
@@ -78,13 +78,6 @@
 								        <button class="btn btn-primary submit-fn mt-2 w-100" type="submit">SIGN IN</button>
 								    </form>
 								</div>
-
-                                <div class="col-12">
-                                    <div class="text-center">
-                                        <p class="mb-0">Dont't have an account ? <a href="javascript:void(0);" class="text-warning">Sign Up</a></p>
-                                    </div>
-                                </div>
-                                
                             </div>
                             
                         </div>
