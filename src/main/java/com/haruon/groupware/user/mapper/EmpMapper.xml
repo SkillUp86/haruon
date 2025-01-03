@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haruon.groupware.user.mapper.EmpMapper">
+	<select id="empLogin"
+		resultType="com.haruon.groupware.user.entity.Emp"
+		parameterType="com.haruon.groupware.user.entity.Emp">
+		SELECT
+			 email email
+			,emp_pw empPw
+		FROM emp
+		WHERE email = #{email} AND emp_pw = #{empPw}
+	</select>
+</mapper>
