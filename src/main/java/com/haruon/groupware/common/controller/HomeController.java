@@ -1,4 +1,4 @@
-package com.haruon.groupware.controller;
+package com.haruon.groupware.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
