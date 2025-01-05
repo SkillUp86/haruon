@@ -18,9 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 public class EmpController {
     @Autowired EmpService empService;
 
+    
+    @GetMapping("/addCustomer")
+    public String addCustomer() {
+    	return "user/addCustomer";
+    }
+    
+    @GetMapping("/modifyCustomer")
+    public String modifyCustomer() {
+    	return "user/modifyCustomer";
+    }
     @GetMapping("/login")
     public String empLogin() {
-        return "user/login";
+    	return "user/login";
     }
 
     @PostMapping("/login")
