@@ -20,6 +20,7 @@
 	    width: 100px; /* 모든 라벨의 고정된 너비 */
 	    text-align: center; /* 텍스트 중앙 정렬 */
 	}
+	
 	</style>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
@@ -33,7 +34,6 @@
     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="../src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
      <link href="../src/assets/css/light/elements/infobox.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/elements/infobox.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
@@ -131,7 +131,7 @@
 				                    		<span class="input-group-text label-text">유형</span>
 						                    <select type="text" class="form-control" id="kind" name="kind" required="required">
 							                    <c:forEach items="${codeList}" var="c">
-							                    	<option id="code" value="${c.commonCode}">${c.descript}</option>
+							                    	<option class="bg-light-danger" id="code" value="${c.commonCode}">${c.descript}</option>
 							                    </c:forEach>
 						                    </select>
 				                            <span class="input-group-text label-text">참조자</span>
@@ -139,7 +139,7 @@
 							           </div>
 				                </div>
 				                <div class="text-end">
-					            		 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#midAppModal">
+					            		 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
 					                   	 결재자 선택
 						                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
 							                            <circle cx="11" cy="11" r="8"></circle>
@@ -232,8 +232,8 @@
             </div>
         </div>
     </div>
-    <!-- 중간 결재자 모달 -->
-    <div class="modal fade " id="midAppModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- 결재자 모달 -->
+    <div class="modal fade " id="approvalModal" tabindex="-1" role="dialog" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -244,9 +244,9 @@
 					    <!-- Left Section: 부서 리스트 -->
 					    <div class="col-3 border-end">
 					        <h6>부서 목록</h6>
-					        <div class="list-group" id="department-list">
+					        <div class="list-group">
 					            <c:forEach var="d" items="${deptList}">
-					                <a href="#" class="list-group-item dept-item" data-department-id="${d.depNo}">${d.dname}</a>
+					                <button class="btn mb-1 dept" type="button" value="${d.depNo}">${d.dname}</button>
 					            </c:forEach>
 					        </div>
 					    </div>
@@ -255,7 +255,7 @@
 					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
-					            <div class="list-group" id="employee-list">
+					            <div class="list-group" id="employeeList">
 					            
 					            </div>
 					        </div>
@@ -265,35 +265,66 @@
 					    <!-- Right Section: 중간결재자 / 최종결재자 -->
 					    <div class="col-5">
 					        <h6 class="modal-body">중간결재자</h6>
-					        <div class="list-group" id="employee-list">
+					        <div class="list-group" id="midApp">
 				                <div class="input-group">
-				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-						            </button>
-					                <input class="form-control" type="text" value="직원" readonly="readonly">
-					                <button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				                	<!-- 중간결재자 -->
+									<button type="button" class="btn btn-primary" onclick="applyOn('midApp')">
+									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+									        <circle cx="12" cy="12" r="10"></circle>
+									        <line x1="12" y1="8" x2="12" y2="16"></line>
+									        <line x1="8" y1="12" x2="16" y2="12"></line>
+									    </svg>
+									</button>
+					                <input class="form-control" id="midAppEmpNo" type="hidden" value="" placeholder="중간결재자" readonly="readonly">
+					                <input class="form-control" id="midAppEname" type="text" value="" placeholder="중간결재자" readonly="readonly">
+					                <button class="btn btn-Warning-Light" onclick="clearInput('midApp')">
+					                	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
+					                		<circle cx="12" cy="12" r="10"></circle>
+					                		<line x1="8" y1="12" x2="16" y2="12"></line>
+				                		</svg>
+			                		</button>
 				                </div>
 				            </div>
 					
 					        <h6 class="modal-body">최종결재자</h6>
 				         	<div class="list-group" id="employee-list">
 				                <div class="input-group">
-				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-						            </button>
-					                <input class="form-control" type="text" value="직원" readonly="readonly">
-					            	<button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				                	<button type="button" class="btn btn-primary" onclick="applyOn('finApp')">
+									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+									        <circle cx="12" cy="12" r="10"></circle>
+									        <line x1="12" y1="8" x2="12" y2="16"></line>
+									        <line x1="8" y1="12" x2="16" y2="12"></line>
+									    </svg>
+									</button>
+					                <input class="form-control" id="finalAppEmpNo" type="hidden" value="" placeholder="최종결재자" readonly="readonly">
+					                <input class="form-control" id="finalAppEname" type="text" value="" placeholder="최종결재자" readonly="readonly">
+					            	<button class="btn btn-Warning-Light" onclick="clearInput('finalApp')">
+					            		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
+						            		<circle cx="12" cy="12" r="10"></circle>
+						            		<line x1="8" y1="12" x2="16" y2="12"></line>
+					            		</svg>
+				            		</button>
 				            	</div>
 				            </div>
 					
 					        <h6 class="modal-body">참조자</h6>
 				         	<div class="list-group" id="employee-list">
 				                <div class="input-group">
-				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-						            </button>
-					                <input class="form-control" type="text" value="직원" readonly="readonly">
-					            	<button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				                	<button type="button" class="btn btn-primary" onclick="applyOn('refApp')">
+									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+									        <circle cx="12" cy="12" r="10"></circle>
+									        <line x1="12" y1="8" x2="12" y2="16"></line>
+									        <line x1="8" y1="12" x2="16" y2="12"></line>
+									    </svg>
+									</button>
+					                <input class="form-control" id="refAppEmpNo" type="hidden" value="" placeholder="참조자"  readonly="readonly">
+					                <input class="form-control" id="refAppEname" type="text" value="" placeholder="참조자"  readonly="readonly">
+					            	<button class="btn btn-Warning-Light" onclick="clearInput('refApp')">
+					            		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
+						            		<circle cx="12" cy="12" r="10"></circle>
+						            		<line x1="8" y1="12" x2="16" y2="12"></line>
+					            		</svg>
+				            		</button>
 				            	</div>
 				            </div>
 					    </div>
@@ -322,67 +353,133 @@
     
 
 </body>
-	<script>
-    // 중간 결재자 직원 불러오기
-    $('#btnSearchMidApp').click(function() {
-        const midApp = $("#selectMidApp").val().trim();  
-        
-        if (!midApp) {
-            alert("중간 결재자 이름을 입력하세요.");
-            return;
-        }
-
-        // 직원 정보 가져오기
-        $.ajax({
-            url: "/approval/search",  
-            method: "GET"
-           	data: {
-                   ename: midApp  
-               }
-        }).done(function(response) {
-            console.log(response);
-
-            let midAppName = $("#midAppName"); 
-            midAppName.empty();  // 기존 선택지 지우기
-
-            if (response.data && response.data.length > 0) {
-            	$.each(response.data, function(index, emp) {
-                    midAppName.append('<option value="' + emp.empNo + '">' + emp.ename + '</option>');
-                });            
-           	} else {
-                midAppName.append('<option value="">직원 없음</option>');  // 직원이 없으면 "직원 없음" 메시지 추가
-            }
-        }).fail(function() {
-            alert('실패');  // 실패 처리
-        });
-    });
-    </script>
     <script>
-   $(function () {
-	    // 보고서 유형 선택 시 이벤트 핸들러
-	    $('#kind').on('change', function () {
-	        var selectedType = $(this).val(); // 선택된 commonCode 값
-
-	        // 모든 유형별 필드 숨기기
-	        $('.kind-field').hide().find('input, select').each(function () {
-			    if ($(this).is('select')) {
-			        $(this).prop('selectedIndex', 0); // select 요소 초기화
-			    } else {
-			        $(this).val(''); // input 초기화
-			    }
-			});
-
-	        // 선택된 commonCode에 따라 필드 표시
-	        if (selectedType === 'C02') { // 출장 보고서
-	            $('#business').show();
-	        } else if (selectedType === 'C03') { // 매출 보고서
-	            $('#sales').show();
-	        } else if (selectedType === 'C04') { // 휴가 보고서
-	            $('#vacation').show();
-	        }
-	    });
+	   $(function () {
+		    // 보고서 유형 선택 시 이벤트 핸들러
+		    $('#kind').on('change', function () {
+		        var selectedType = $(this).val(); // 선택된 commonCode 값
+	
+		        // 모든 유형별 필드 숨기기
+		        $('.kind-field').hide().find('input, select').each(function () {
+				    if ($(this).is('select')) {
+				        $(this).prop('selectedIndex', 0); // select 요소 초기화
+				    } else {
+				        $(this).val(''); // input 초기화
+				    }
+				});
+	
+		        // 선택된 commonCode에 따라 필드 표시
+		        if (selectedType === 'C02') { // 출장 보고서
+		            $('#business').show();
+		        } else if (selectedType === 'C03') { // 매출 보고서
+		            $('#sales').show();
+		        } else if (selectedType === 'C04') { // 휴가 보고서
+		            $('#vacation').show();
+		        }
+		    });
+		    
+		    $('#kind').trigger('change');".gitignore"
+		});
+   
+	   $('.dept').click(function() {
+		   let deptNo = $(this).val();
+		   $.ajax({
+			   url: 'approval/depts/'+deptNo+'/employees'
+			 , method: "GET"
+			   
+		}).done(function(response) {
+			//console.log(response);
+			employeeList(response);
+		}).fail(function() {
+			alert('실패');
+		})
+		})
+		
+		// 중복방지 로직
+	    let midAppSelected = null;
+	    let finAppSelected = null;
+	    let refAppSelected = null;
 	    
-	    $('#kind').trigger('change');
-	});
-   </script>
+		function employeeList(emp) {
+		    let empList = $('#employeeList');
+		    empList.empty();
+			
+		    
+		    
+		    if(emp && emp.length > 0) {
+		        emp.forEach(function(item) {
+		        	
+		        	// 중복방지 로직
+		        	if (item.empNo === midAppSelected || item.empNo === finAppSelected || item.empNo === refAppSelected) {
+		                return; 
+		            }
+		        	
+		            let radioButton = $('<input type="radio" class="form-check-input" name="employeeRadio">')
+		                .val(item.empNo) 
+		                .on('change', function() {
+		                    // 다른 체크박스를 모두 해제
+		                    $('input[type="radio"]').not(this).prop('checked', false);
+		                });
+		            // 라디오 버튼과 직급, 이름을 포함하는 label 생성
+		            let label = $('<label class="form-check-label">')
+		                .text('(' + item.location + ')' + item.ename); // 이름과 직급 표시
+		
+		            // 리스트 아이템에 radio 버튼과 label을 함께 추가
+		            let listItem = $('<li class="form-check">').append(radioButton).append(label);
+		            empList.append(listItem);
+		        });
+		    } else {
+		        empList.append('<li>직원이 없습니다.</li>'); 
+		    }
+		}
+		
+	   	// 결재 라인 추가
+		function applyOn(type) {
+		    let selectedEmp = $('input[name="employeeRadio"]:checked');  // 'employeeRadio' name으로 선택된 사원 찾기
+		    if (selectedEmp.length === 0) {
+		        alert('사원을 선택해주세요.');
+		        return;
+		    }
+		    
+		   
+		    let empNo = selectedEmp.val();  // 사원 번호
+		    let empInfo = selectedEmp.next().text();
+		    let empName = empInfo.substring(empInfo.indexOf(')')+1);  // 사원 이름만 가져오기
+			
+		    //console.log(empNo)
+		    //console.log(empName)
+		    if (type === 'midApp'  && !midAppSelected) {
+		    	midAppSelected = empNo;
+		        $('#midAppEmpNo').val(empNo); // 사원번호 hidden 필드에 입력
+		        $('#midAppEname').val(empName); // 이름 hidden 필드에 입력
+		    }
+		    else if (type === 'finApp' && !finAppSelected ) {
+		    	finAppSelected = empNo;
+		        $('#finalAppEmpNo').val(empNo);
+		        $('#finalAppEname').val(empName);
+		    }
+		    else if (type === 'refApp' && !refAppSelected) {
+		    	refAppSelected = empNo;
+		        $('#refAppEmpNo').val(empNo);
+		        $('#refAppEname').val(empName);
+		    }
+		}
+		
+	    // 삭제버튼
+		function clearInput(type) {
+		    if (type === 'midApp') {
+		    	midAppSelected = null;
+		        $('#midAppEmpNo').val(''); 
+		        $('#midAppEname').val(''); 
+		    } else if (type === 'finalApp') {
+		    	finAppSelected = null;
+		        $('#finalAppEmpNo').val(''); 
+		        $('#finalAppEname').val(''); 
+		    } else if (type === 'refApp') {
+		    	refAppSelected = null;
+		        $('#refAppEmpNo').val(''); 
+		        $('#refAppEname').val(''); 
+		    }
+		}
+	   </script>
 </html>
