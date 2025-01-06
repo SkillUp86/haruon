@@ -1,22 +1,28 @@
 package com.haruon.groupware.user.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.department.entity.Dept;
+import com.haruon.groupware.department.service.DeptService;
 import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.service.EmpService;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class EmpController {
+	@Autowired DeptService deptService;
     @Autowired EmpService empService;
     
     //로그아웃
@@ -57,15 +63,20 @@ public class EmpController {
         
         return "redirect:/home";
     }
+    
     @GetMapping("/addEmp")
-    public String addEmp() {
+    
+    public String addEmp(Model model) {
+    	List<Dept> deptList = deptService.findByAll();
+    	model.addAttribute("deptList" , deptList);
+    	model.addAttribute("empPw", UUID.randomUUID().toString());
     	return "user/addEmp";
     }
     
     @PostMapping("/addEmp")
     public String addEmp(EmpDto emp) {
     	// 서비스 호출
-    	empService.addEmp(emp);  	
+    	empService.addEmp(emp);
     	return "redirect:/home";
     }
 }

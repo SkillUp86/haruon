@@ -14,21 +14,17 @@
 	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto">
 		INSERT INTO emp (
 		ename
+		,emp_pw
 		,post_code
 		,email
 		,address
 		,phone
+		,dep_no
+		,gender
+		,birth
 		)VALUES(
-			#{ename}, #{postCode}, #{email}, #{address}, #{phone} 
+			#{ename},#{empPW}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth}
 		)
-	</insert>
-	
-	<insert id="insertEmpDname" parameterType="com.haruon.groupware.user.dto.EmpDto">
-	INSERT INTO dept (
-	dname
-	)VALUES(
-	#{dname}
-	)
 	</insert>
 	
 </mapper>

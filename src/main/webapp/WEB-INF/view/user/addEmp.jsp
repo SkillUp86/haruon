@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +69,11 @@
 								    <div class="col-12">
 								        <div class="mb-3">
 								            <label class="form-label">부서</label>
-								            <input type="text" class="form-control" id="deptNo" name="deptNo">
+								            <select class="form-control" id="depNo" name="depNo">
+								            	<c:forEach items="${deptList}" var="d">
+								            		<option value="${d.depNo}">${d.dname}</option>
+								            	</c:forEach>
+								            </select>
 								        </div>
 								    </div>
 								    <div class="col-12">
@@ -77,6 +82,25 @@
 								            <input type="email" class="form-control" id="email" name="email">
 								        </div>
 								    </div>
+								    
+								    <div class="col-12">
+								        <div class="mb-3">
+								            <label class="form-label">생년월일</label>
+								            <input type="date" class="form-control" id="birth" name="birth">
+								        </div>
+								    </div>
+								    
+								    <div class="col-12">
+								        <div class="mb-3">
+								            <label>
+						                        <input type="radio" name="gender" id="gender"  value="M"> 남자
+						                    </label>
+						                    <label>
+						                        <input type="radio"  name="gender" id="gender"  value="F"> 여자
+						                    </label>
+								        </div>
+								    </div>
+								    
 								    <div class="col-12">
 								        <div class="mb-3">
 								            <label class="form-label">연락처</label>
