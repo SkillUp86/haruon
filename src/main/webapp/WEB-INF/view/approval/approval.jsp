@@ -100,64 +100,55 @@
                 <!-- 메인컨텐츠 입력칸 -->
                 
                 <h1>전자 결재</h1>
-                <form action="" enctype="multipart/form-data">
-			        <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-			            <div class="widget-content widget-content-area mt-4">
-			                <h5 class="mb-4">결재선</h5>
-			                <div class="input-group mb-4">
-			                    <span class="input-group-text label-text">기안자</span>
-			                    <input type="text" class="form-control" id="empNo" name="empNo" readonly="readonly">
-			                    <span class="input-group-text label-text">부서</span>
-			                    <input type="text" class="form-control" id="depNo" name="depNo" readonly="readonly">
-			                </div>
-			                
-			                <div class="row mb-4">
-			                    <div class="col-md-6">
-			                        <div class="input-group">
-			                            <span class="input-group-text label-text">중간결재자</span>
-			                            <input type="text" class="form-control" id="midApp" name="midApp" placeholder="중간결재자 입력" aria-label="중간결재자" aria-describedby="mid-approver" required="required" readonly="readonly">
-			                           	<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#midAppModal">
-				                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-					                            <circle cx="11" cy="11" r="8"></circle>
-					                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-				                            </svg>
+	                <form action="" enctype="multipart/form-data">
+				        <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				            <div class="widget-content widget-content-area mt-4">
+				            	<div class="input-group mb-4">
+				                	<h5 class="mb-4">결재라인</h5>
+				                	
+				                </div>
+				                <div class="input-group mb-4">
+				                    <span class="input-group-text label-text">기안자</span>
+				                    <input type="text" class="form-control" id="empNo" name="empNo" readonly="readonly">
+				                    <span class="input-group-text label-text">부서</span>
+				                    <input type="text" class="form-control" id="depNo" name="depNo" readonly="readonly">
+				                </div>
+				                
+				                <div class="input-group mb-4">
+				                        <div class="input-group">
+				                            <span class="input-group-text label-text">중간결재자</span>
+				                            <input type="text" class="form-control" id="midApp" name="midApp" placeholder="중간결재자 입력" aria-label="중간결재자" aria-describedby="mid-approver" required="required" readonly="readonly">
+				                            <span class="input-group-text label-text">최종결재자</span>
+				                            <input type="text" class="form-control" id="finalApp" name="finalApp" placeholder="최종결재자 입력" aria-label="최종결재자" aria-describedby="final-approver" required="required" readonly="readonly">
+				                            <span class="input-group-text label-text">참조자</span>
+				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required="required" readonly="readonly">
+							           </div>
+				                    </div>
+				                
+				                   
+				                <div class="input-group mb-4">
+				                        <div class="input-group">
+				                    		<span class="input-group-text label-text">유형</span>
+						                    <select type="text" class="form-control" id="kind" name="kind" required="required">
+							                    <c:forEach items="${codeList}" var="c">
+							                    	<option id="code" value="${c.commonCode}">${c.descript}</option>
+							                    </c:forEach>
+						                    </select>
+				                            <span class="input-group-text label-text">참조자</span>
+				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required="required" readonly="readonly">
+							           </div>
+				                </div>
+				                <div class="text-end">
+					            		 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#midAppModal">
+					                   	 결재자 선택
+						                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+							                            <circle cx="11" cy="11" r="8"></circle>
+							                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						                            </svg>
 			                            </button>
- 			                        </div>
-			                    </div>
-			                    <div class="col-md-6">
-			                        <div class="input-group">
-			                            <span class="input-group-text label-text">최종결재자</span>
-			                            <input type="text" class="form-control" id="finalApp" name="finalApp" placeholder="최종결재자 입력" aria-label="최종결재자" aria-describedby="final-approver" required="required" readonly="readonly">
-			                            <button class="btn btn-primary">
-				                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-					                            <circle cx="11" cy="11" r="8"></circle>
-					                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-				                            </svg>
-			                            </button>
-						           </div>
-			                    </div>
-			                </div>
-			                
-			                <div class="input-group mb-4">
-			                    <span class="input-group-text label-text">참조자</span>
-			                    <!-- 참조자 번호 : refNo -->
-			                    <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required="required" readonly="readonly">
-			                    <button class="btn btn-primary">
-		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-			                            <circle cx="11" cy="11" r="8"></circle>
-			                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-		                            </svg>
-	                            </button>
-   			                </div>
-			                <div class="input-group mb-4">
-			                    <span class="input-group-text label-text">유형</span>
-			                    <select type="text" class="form-control" id="kind" name="kind" required="required">
-				                    <c:forEach items="${codeList}" var="c">
-				                    	<option id="code" value="${c.commonCode}">${c.descript}</option>
-				                    </c:forEach>
-			                    </select>
-			                </div>
-			            </div>
+		                            </div>
+	                            
+				            </div>
                            <div class="widget-content widget-content-area blog-create-section mt-4">
                            	<!-- 보고서 -->
                            	<div>
@@ -238,6 +229,7 @@
 			        </div>
 				</form>
             </div>
+            </div>
         </div>
     </div>
     <!-- 중간 결재자 모달 -->
@@ -260,57 +252,49 @@
 					    </div>
 					    
 					    <!-- Middle Section: 직원 목록 -->
-					    <div class="col-4 d-flex">
+					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
 					            <div class="list-group" id="employee-list">
-					                <!-- 직원 리스트가 동적으로 추가됩니다 -->
+					            
 					            </div>
 					        </div>
-					        <!-- Arrow Section -->
-					        <div class="d-flex flex-column justify-content-center align-items-center ms-3">
-					            <button type="button" class="btn btn-light mb-2" onclick="applyOn();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-					            </button>
-					            <button type="button" class="btn btn-light mb-5" onclick="applyOff();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
-					            </button>
-					            <button type="button" class="btn btn-light mb-2" onclick="referOn();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-					            </button>
-					            <button type="button" class="btn btn-light mb-5" onclick="referOff();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
-					            </button>
-					            <button type="button" class="btn btn-light mb-2" onclick="referOn();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-					            </button>
-					            <button type="button" class="btn btn-light mb-2" onclick="referOff();">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
-					            </button>
-					        </div>
+					       
 					    </div>
 					    
 					    <!-- Right Section: 중간결재자 / 최종결재자 -->
 					    <div class="col-5">
 					        <h6 class="modal-body">중간결재자</h6>
 					        <div class="list-group" id="employee-list">
-				                <!-- 직원 리스트가 동적으로 추가됩니다 -->
-				                <input class="form-control" type="text" value="직원" readonly="readonly">
-				                <button>delete</button>
+				                <div class="input-group">
+				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+						            </button>
+					                <input class="form-control" type="text" value="직원" readonly="readonly">
+					                <button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				                </div>
 				            </div>
 					
 					        <h6 class="modal-body">최종결재자</h6>
 				         	<div class="list-group" id="employee-list">
-				                <!-- 직원 리스트가 동적으로 추가됩니다 -->
-				                <input class="form-control" type="text" value="직원" readonly="readonly">
-				            	<button>delete</button>
+				                <div class="input-group">
+				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+						            </button>
+					                <input class="form-control" type="text" value="직원" readonly="readonly">
+					            	<button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				            	</div>
 				            </div>
 					
 					        <h6 class="modal-body">참조자</h6>
 				         	<div class="list-group" id="employee-list">
-				                <!-- 직원 리스트가 동적으로 추가됩니다 -->
-				                <input class="form-control" type="text" value="직원" readonly="readonly">
-				            	<button>delete</button>
+				                <div class="input-group">
+				                	<button type="button" class="btn btn-primary" onclick="applyOn();">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+						            </button>
+					                <input class="form-control" type="text" value="직원" readonly="readonly">
+					            	<button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+				            	</div>
 				            </div>
 					    </div>
 					</div>
