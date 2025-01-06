@@ -10,7 +10,7 @@ public class Approval {
 	private Integer finalApp;
 	private String state;
 	private String reasonDenial;
-	private String mid_appDate;
+	private String midAppDate;
 	private String finalAppDate;
 }   
     

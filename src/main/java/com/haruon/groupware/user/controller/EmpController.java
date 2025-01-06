@@ -17,22 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class EmpController {
     @Autowired EmpService empService;
-
     
-    @GetMapping("/addCustomer")
-    public String addCustomer() {
-    	return "user/addCustomer";
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+    	session.invalidate();
+    	log.debug("로그아웃 성공");
+    	return "redirect:/login";	
     }
     
-    @GetMapping("/modifyCustomer")
-    public String modifyCustomer() {
-    	return "user/modifyCustomer";
-    }
     @GetMapping("/login")
     public String empLogin() {
-    	return "user/login";
+        return "user/login";
     }
-
+    
     @PostMapping("/login")
     public String login(
             Model model
