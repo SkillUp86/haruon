@@ -87,7 +87,7 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">문서</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">전자 결재</li>
+                                                <li class="breadcrumb-item active" aria-current="page"> 결재신청 </li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -117,11 +117,14 @@
 				                <div class="input-group mb-4">
 				                        <div class="input-group">
 				                            <span class="input-group-text label-text">중간결재자</span>
-				                            <input type="text" class="form-control" id="midApp" name="midApp" placeholder="중간결재자 입력" aria-label="중간결재자" aria-describedby="mid-approver" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="midAppNo" name="midAppNo" required="required" readonly="readonly">
+				                            <input type="text" class="form-control" id="midAppName" name="midAppName" placeholder="중간결재자 입력" aria-label="중간결재자" aria-describedby="mid-approver" required="required" readonly="readonly">
 				                            <span class="input-group-text label-text">최종결재자</span>
-				                            <input type="text" class="form-control" id="finalApp" name="finalApp" placeholder="최종결재자 입력" aria-label="최종결재자" aria-describedby="final-approver" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="finalAppNo" name="finalAppNo"  required="required" readonly="readonly">
+				                            <input type="text" class="form-control" id="finalAppName" name="finalAppName" placeholder="최종결재자 입력" aria-label="최종결재자" aria-describedby="final-approver" required="required" readonly="readonly">
 				                            <span class="input-group-text label-text">참조자</span>
-				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="refNo" name="refNo"required="required" readonly="readonly">
+				                            <input type="text" class="form-control" id="refName" name="refName" placeholder="참조자 입력" required="required" readonly="readonly">
 							           </div>
 				                    </div>
 				                
@@ -131,7 +134,7 @@
 				                    		<span class="input-group-text label-text">유형</span>
 						                    <select type="text" class="form-control" id="kind" name="kind" required="required">
 							                    <c:forEach items="${codeList}" var="c">
-							                    	<option class="bg-light-danger" id="code" value="${c.commonCode}">${c.descript}</option>
+							                    	<option class="" id="code" value="${c.commonCode}">${c.descript}</option>
 							                    </c:forEach>
 						                    </select>
 				                            <span class="input-group-text label-text">참조자</span>
@@ -241,7 +244,6 @@
 	            </div>
 	            <div class="modal-body container">
 	                <div class="row">
-					    <!-- Left Section: 부서 리스트 -->
 					    <div class="col-3 border-end">
 					        <h6>부서 목록</h6>
 					        <div class="list-group">
@@ -251,7 +253,6 @@
 					        </div>
 					    </div>
 					    
-					    <!-- Middle Section: 직원 목록 -->
 					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
@@ -262,7 +263,6 @@
 					       
 					    </div>
 					    
-					    <!-- Right Section: 중간결재자 / 최종결재자 -->
 					    <div class="col-5">
 					        <h6 class="modal-body">중간결재자</h6>
 					        <div class="list-group" id="midApp">
@@ -296,8 +296,8 @@
 									        <line x1="8" y1="12" x2="16" y2="12"></line>
 									    </svg>
 									</button>
-					                <input class="form-control" id="finalAppEmpNo" type="hidden" value="" placeholder="최종결재자" readonly="readonly">
-					                <input class="form-control" id="finalAppEname" type="text" value="" placeholder="최종결재자" readonly="readonly">
+					                <input class="form-control" id="finalAppEmpNo" type="hidden" value="" placeholder="최종결재자" readonly>
+					                <input class="form-control" id="finalAppEname" type="text" value="" placeholder="최종결재자" readonly required>
 					            	<button class="btn btn-Warning-Light" onclick="clearInput('finalApp')">
 					            		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
 						            		<circle cx="12" cy="12" r="10"></circle>
@@ -334,12 +334,12 @@
 	                <button class="btn btn-light-dark" data-bs-dismiss="modal">
 	                    <i class="flaticon-cancel-12"></i> 취소
 	                </button>
-	                <button type="button" class="btn btn-primary">선택</button>
+	                <button type="button" class="btn btn-primary" id="btnInsertApprover" ">선택</button>
 	            </div>
 	        </div>
 	    </div>
 	</div>
-    <!-- 중간 결재자 모달END -->
+    <!-- 결재자 모달END -->
     
     <!--  BEGIN FOOTER  -->
     <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
@@ -355,16 +355,15 @@
 </body>
     <script>
 	   $(function () {
-		    // 보고서 유형 선택 시 이벤트 핸들러
 		    $('#kind').on('change', function () {
-		        var selectedType = $(this).val(); // 선택된 commonCode 값
+		        let selectedType = $(this).val(); 
 	
 		        // 모든 유형별 필드 숨기기
 		        $('.kind-field').hide().find('input, select').each(function () {
 				    if ($(this).is('select')) {
-				        $(this).prop('selectedIndex', 0); // select 요소 초기화
+				        $(this).prop('selectedIndex', 0);
 				    } else {
-				        $(this).val(''); // input 초기화
+				        $(this).val(''); 
 				    }
 				});
 	
@@ -386,100 +385,156 @@
 		   $.ajax({
 			   url: 'approval/depts/'+deptNo+'/employees'
 			 , method: "GET"
-			   
-		}).done(function(response) {
-			//console.log(response);
-			employeeList(response);
-		}).fail(function() {
-			alert('실패');
+			}).done(function(response) {
+				//console.log(response);
+				employeeList(response);
+			}).fail(function() {
+				alert('실패');
+			})
 		})
-		})
-		
-		// 중복방지 로직
-	    let midAppSelected = null;
-	    let finAppSelected = null;
-	    let refAppSelected = null;
-	    
+
+		// 중복체크
+		let emp = [];
+
+		let midAppSelected = null;
+		let finAppSelected = null;
+		let refAppSelected = null;
+
+		$('.dept').click(function() {
+			let deptNo = $(this).val();
+			$.ajax({
+				url: 'approval/depts/' + deptNo + '/employees',
+				method: "GET"
+			}).done(function(response) {
+				emp = response;
+				employeeList(emp);  // 직원 목록 표시
+			}).fail(function() {
+				alert('실패');
+			})
+		});
+
 		function employeeList(emp) {
-		    let empList = $('#employeeList');
-		    empList.empty();
-			
-		    
-		    
-		    if(emp && emp.length > 0) {
-		        emp.forEach(function(item) {
-		        	
-		        	// 중복방지 로직
-		        	if (item.empNo === midAppSelected || item.empNo === finAppSelected || item.empNo === refAppSelected) {
-		                return; 
-		            }
-		        	
-		            let radioButton = $('<input type="radio" class="form-check-input" name="employeeRadio">')
-		                .val(item.empNo) 
-		                .on('change', function() {
-		                    // 다른 체크박스를 모두 해제
-		                    $('input[type="radio"]').not(this).prop('checked', false);
-		                });
-		            // 라디오 버튼과 직급, 이름을 포함하는 label 생성
-		            let label = $('<label class="form-check-label">')
-		                .text('(' + item.location + ')' + item.ename); // 이름과 직급 표시
-		
-		            // 리스트 아이템에 radio 버튼과 label을 함께 추가
-		            let listItem = $('<li class="form-check">').append(radioButton).append(label);
-		            empList.append(listItem);
-		        });
-		    } else {
-		        empList.append('<li>직원이 없습니다.</li>'); 
-		    }
+			let empList = $('#employeeList');
+			empList.empty();
+
+			if (emp && emp.length > 0) {
+				emp.forEach(function(item) {
+					// 중복체크
+					if (item.empNo === midAppSelected || item.empNo === finAppSelected || item.empNo === refAppSelected) {
+						return;  
+					}
+
+					let radioButton = $('<input type="radio" class="form-check-input" name="employeeRadio">')
+						.val(item.empNo)
+						.attr('id', 'radio-' + item.empNo)
+						.on('change', function() {
+							// 체크박스 해제
+							$('input[type="radio"]').not(this).prop('checked', false);
+						});
+
+					let label = $('<label class="form-check-label">')
+						.attr('for', 'radio-' + item.empNo)
+						.text('(' + item.location + ')' + item.ename); // 이름과 직급 표시
+
+					let listItem = $('<li class="form-check">').append(radioButton).append(label);
+					empList.append(listItem);
+				});
+			} 
 		}
-		
-	   	// 결재 라인 추가
+
+		// 결재 라인 추가
 		function applyOn(type) {
-		    let selectedEmp = $('input[name="employeeRadio"]:checked');  // 'employeeRadio' name으로 선택된 사원 찾기
-		    if (selectedEmp.length === 0) {
-		        alert('사원을 선택해주세요.');
-		        return;
-		    }
-		    
-		   
-		    let empNo = selectedEmp.val();  // 사원 번호
-		    let empInfo = selectedEmp.next().text();
-		    let empName = empInfo.substring(empInfo.indexOf(')')+1);  // 사원 이름만 가져오기
+			let selectedEmp = $('input[name="employeeRadio"]:checked');  // 선택된 사원 찾기
+			if (selectedEmp.length === 0) {
+				alert('사원을 선택해주세요.');
+				return;
+			}
+
+			let empNo = selectedEmp.val();  // 사원 번호
+			let empInfo = selectedEmp.next().text();
+			let empName = empInfo.substring(empInfo.indexOf(')') + 1);  // 사원 이름만 가져오기
+
+			//  중복 체크크
+			if (type === 'midApp') {
+				if (midAppSelected) {
+					alert('중간 결재자는 이미 선택되었습니다.');
+					return;
+				}
+				if (empNo === finAppSelected || empNo === refAppSelected) {
+					alert('중간 결재자는 이미 최종 결재자나 참조자로 선택된 사원입니다.');
+					return;
+				}
+				midAppSelected = empNo;
+				// 사원번호 히든 필드에 입력
+				$('#midAppEmpNo').val(empNo); 
+				// 이름 필드에 입력
+				$('#midAppEname').val(empName); 
+			} else if (type === 'finApp') {
+				if (finAppSelected) {
+					alert('최종 결재자는 이미 선택되었습니다.');
+					return;
+				}
+				if (empNo === midAppSelected || empNo === refAppSelected) {
+					alert('최종 결재자는 이미 중간 결재자나 참조자로 선택된 사원입니다.');
+					return;
+				}
+				finAppSelected = empNo;
+				$('#finalAppEmpNo').val(empNo);
+				$('#finalAppEname').val(empName);
+			} else if (type === 'refApp') {
+				if (refAppSelected) {
+					alert('참조자는 이미 선택되었습니다.');
+					return;
+				}
+				if (empNo === midAppSelected || empNo === finAppSelected) {
+					alert('참조자는 이미 중간 결재자나 최종 결재자로 선택된 사원입니다.');
+					return;
+				}
+				refAppSelected = empNo;
+				$('#refAppEmpNo').val(empNo);
+				$('#refAppEname').val(empName);
+			}
 			
-		    //console.log(empNo)
-		    //console.log(empName)
-		    if (type === 'midApp'  && !midAppSelected) {
-		    	midAppSelected = empNo;
-		        $('#midAppEmpNo').val(empNo); // 사원번호 hidden 필드에 입력
-		        $('#midAppEname').val(empName); // 이름 hidden 필드에 입력
-		    }
-		    else if (type === 'finApp' && !finAppSelected ) {
-		    	finAppSelected = empNo;
-		        $('#finalAppEmpNo').val(empNo);
-		        $('#finalAppEname').val(empName);
-		    }
-		    else if (type === 'refApp' && !refAppSelected) {
-		    	refAppSelected = empNo;
-		        $('#refAppEmpNo').val(empNo);
-		        $('#refAppEname').val(empName);
-		    }
+			selectedEmp.prop('checked', false);
+
 		}
-		
-	    // 삭제버튼
+
+		// 삭제버튼
 		function clearInput(type) {
-		    if (type === 'midApp') {
-		    	midAppSelected = null;
-		        $('#midAppEmpNo').val(''); 
-		        $('#midAppEname').val(''); 
-		    } else if (type === 'finalApp') {
-		    	finAppSelected = null;
-		        $('#finalAppEmpNo').val(''); 
-		        $('#finalAppEname').val(''); 
-		    } else if (type === 'refApp') {
-		    	refAppSelected = null;
-		        $('#refAppEmpNo').val(''); 
-		        $('#refAppEname').val(''); 
-		    }
+			if (type === 'midApp') {
+				midAppSelected = null;
+				$('#midAppEmpNo').val('');
+				$('#midAppEname').val('');
+			} else if (type === 'finalApp') {
+				finAppSelected = null;
+				$('#finalAppEmpNo').val('');
+				$('#finalAppEname').val('');
+			} else if (type === 'refApp') {
+				refAppSelected = null;
+				$('#refAppEmpNo').val('');
+				$('#refAppEname').val('');
+			}
 		}
+
+		// 결재 라인 입력값 추가
+		$('#btnInsertApprover').click(function() {
+			if(!$('#finalAppEname').val()){
+				alert('최종 결재자를 입력해주세요.');
+				return;
+			} else {
+				$('#midAppNo').val($('#midAppEmpNo').val())
+				$('#midAppName').val($('#midAppEname').val())
+				//console.log($('#finalAppEmpNo').val());
+				//console.log($('#finalAppEname').val());
+				$('#finalAppNo').val($('#finalAppEmpNo').val())
+				$('#finalAppName').val($('#finalAppEname').val())
+
+				$('#refNo').val($('#refAppEmpNo').val())
+				$('#refName').val($('#refAppEname').val())
+				let modal = bootstrap.Modal.getInstance($('#approvalModal')[0]); 
+				modal.hide(); 
+			}
+
+		});
 	   </script>
 </html>

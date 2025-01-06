@@ -4,12 +4,12 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="index.html">
+                    <a href="${pageContext.request.contextPath}/home">
                         <img src="../src/assets/img/logo2.svg" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index.html" class="nav-link">HARUON</a>
+                    <a href="${pageContext.request.contextPath}/home" class="nav-link">HARUON</a>
                 </li>
             </ul>
             

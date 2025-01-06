@@ -5,12 +5,12 @@
                 <div class="navbar-nav theme-brand flex-row  text-center">
                     <div class="nav-logo">
                         <div class="nav-item theme-logo">
-                            <a href="./index.html">
+                            <a href="${pageContext.request.contextPath}/home">
                                 <img src="../src/assets/img/logo.svg" class="navbar-logo" alt="logo">
                             </a>
                         </div>
                         <div class="nav-item theme-text">
-                            <a href="./index.html" class="nav-link"> SKILLUP </a>
+                            <a href="${pageContext.request.contextPath}/home" class="nav-link"> SKILLUP </a>
                         </div>
                     </div>
                     <div class="nav-item sidebar-toggle">
@@ -86,13 +86,13 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="components" data-bs-parent="#accordionExample">
                             <li>
-                                <a href="./component-accordion.html"> 기안하기  </a>
+                                <a href="${pageContext.request.contextPath}/approval"> 결재신청  </a>
                             </li>
                             <li>
-                                <a href="./component-tabs.html"> 나의 문서 </a>
+                                <a href="./component-tabs.html"> 내문서함 </a>
                             </li>
                             <li>
-                                <a href="./component-accordion.html"> 참조 문서서  </a>
+                                <a href="./component-accordion.html"> 참조문서서함  </a>
                             </li>
                            
                         </ul>
