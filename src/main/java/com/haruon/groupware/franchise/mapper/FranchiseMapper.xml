@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
-
-	<!-- 가맹점 목록 : /franchises -->
-	<select id="selectFranchiseList"
-			parameterType="com.haruon.groupware.franchise.entity.Franchise">
+<mapper
+	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
+	
+	<select id="selectFranchiseList" resultType="com.haruon.groupware.franchise.entity.Franchise">
 		SELECT
 			fra_no fraNo
 			, fname
@@ -17,5 +16,6 @@
 			, createDate
 			, updateDate
 		FROM franchise
-	</select>
+	</select>	
+	
 </mapper>
