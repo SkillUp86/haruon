@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.service.EmpService;
 
 import ch.qos.logback.core.model.Model;
@@ -55,5 +56,16 @@ public class EmpController {
         log.debug("로그인 성공 ---> " + empLogin.getEmail());
         
         return "redirect:/home";
+    }
+    @GetMapping("/addEmp")
+    public String addEmp() {
+    	return "user/addEmp";
+    }
+    
+    @PostMapping("/addEmp")
+    public String addEmp(EmpDto emp) {
+    	// 서비스 호출
+    	empService.addEmp(emp);  	
+    	return "redirect:/home";
     }
 }

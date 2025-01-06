@@ -45,39 +45,33 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
 
-                                    <h2>직원 등록</h2>
-                                    <p>직원을 등록해주세요</p>
+                                    <h2>직원 수정</h2>
+                                    <p>직원 수정</p>
 
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">사진</label>
+                                        <input type="image" class="form-control add-billing-address-input">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">이름</label>
-                                        <input type="text" class="form-control add-billing-address-input">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                    	<input class="form-check-input me-3" type="checkbox" id="form-check-default">
-                                            <label class="form-check-label" for="form-check-default">
-												남자
-                                            </label>
-                                    	<input class="form-check-input me-3" type="checkbox" id="form-check-default">
-                                            <label class="form-check-label" for="form-check-default">
-												여자
-                                            </label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">주민번호</label>
-                                        <input type="email" class="form-control">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">부서 </label>
+                                        <input type="checkbox" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">직급</label>
                                         <input type="text" class="form-control">
                                     </div>
                                 </div>
@@ -92,14 +86,38 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">주소</label>
-                                        <input type="text" class="form-control">
+                                        <div class="col-12">
+                                    <div class="mb-3">
+                                        <input type="text" id="sample4_postcode" placeholder="우편번호">
+										<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+										<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+										<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+										<span id="guide" style="color:#999;display:none"></span>
+										<input type="text" id="sample4_detailAddress" placeholder="상세주소">
+										<input type="text" id="sample4_extraAddress" placeholder="참고항목">
+                                    </div>
+                                </div>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">연락처</label>
-                                        <input type="text" class="form-control">
+                                        <input type="number" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">내선번호</label>
+                                        <input type="number" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">퇴사일자</label>
+                                        <input type="date" class="form-control">
                                     </div>
                                 </div>
 

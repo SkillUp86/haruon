@@ -115,6 +115,9 @@
                             <li>
                                 <a href="./element-avatar.html"> 사원 조회 </a>
                             </li>
+                            <li>
+                                <a href="addEmp"> 사원등록 </a>
+                            </li>
                         </ul>
                     </li>
 

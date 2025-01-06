@@ -10,4 +10,25 @@
 		FROM emp
 		WHERE email = #{email} AND emp_pw = #{empPw}
 	</select>
+	
+	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto">
+		INSERT INTO emp (
+		ename
+		,post_code
+		,email
+		,address
+		,phone
+		)VALUES(
+			#{ename}, #{postCode}, #{email}, #{address}, #{phone} 
+		)
+	</insert>
+	
+	<insert id="insertEmpDname" parameterType="com.haruon.groupware.user.dto.EmpDto">
+	INSERT INTO dept (
+	dname
+	)VALUES(
+	#{dname}
+	)
+	</insert>
+	
 </mapper>
