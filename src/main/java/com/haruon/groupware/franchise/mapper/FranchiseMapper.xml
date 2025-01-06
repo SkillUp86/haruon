@@ -12,9 +12,9 @@
 			, leader
 			, phone
 			, email
-			, openYn
-			, createDate
-			, updateDate
+			, open_yn openYn
+			, create_date createDate
+			, update_date updateDate
 		FROM franchise
 	</select>	
 	

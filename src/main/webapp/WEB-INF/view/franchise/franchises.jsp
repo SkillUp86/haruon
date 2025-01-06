@@ -101,22 +101,28 @@
                 <table class="board">
                 	<tr>
                 		<td>가맹점 번호</td>
-                		<td>가맹점 이름</td>
+                		<td>가맹점명</td>
+                		<td>주소</td>
                 		<td>사업자번호</td>
-                		<td></td>
-                		<td></td>
-                		<td></td>
-                		<td></td>
+                		<td>사장님</td>
+                		<td>연락처</td>
+                		<td>이메일</td>
+                		<td>영업 유무</td>
+                		<td>생성일</td>
+                		<td>수정일</td>
                 	</tr>
-               		<c:forEach item="franchiseList" var="f">
+               		<c:forEach items="${franchiseList}" var="f">
                			<tr>
                				<td>${f.fraNo}</td>
-               				<td></td>
-               				<td></td>
-               				<td></td>
-               				<td></td>
-               				<td></td>
-               				<td></td>
+               				<td>${f.fname}</td>
+               				<td>${f.address}</td>
+               				<td>${f.id}</td>
+               				<td>${f.reader}</td>
+               				<td>${f.phone}</td>
+               				<td>${f.email}</td>
+               				<td>${f.openYn}</td>
+               				<td>${f.createDate}</td>
+               				<td>${f.updateDate}</td>
                			</tr>
                		</c:forEach>
                 </table>
