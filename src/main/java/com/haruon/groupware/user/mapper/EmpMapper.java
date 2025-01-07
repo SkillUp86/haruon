@@ -11,7 +11,5 @@ public interface EmpMapper {
 	
 	int insertEmp(EmpDto emp);
 	
-	int insertEmpDname(EmpDto emp);
-
 
 }

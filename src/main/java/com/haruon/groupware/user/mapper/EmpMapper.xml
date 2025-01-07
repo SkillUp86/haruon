@@ -7,6 +7,10 @@
 		SELECT
 			 email email
 			,emp_pw empPw
+			,ename ename
+			,location location
+			,emp_no empNo
+			,dep_no depNo
 		FROM emp
 		WHERE email = #{email} AND emp_pw = #{empPw}
 	</select>
@@ -23,7 +27,7 @@
 		,gender
 		,birth
 		)VALUES(
-			#{ename},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth}
+			#{eName},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth},#{location}
 		)
 	</insert>
 	

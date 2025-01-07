@@ -13,5 +13,6 @@ public class EmpDto {
 	private String phone;
 	private String gender;
 	private String birth;
+	private String location;
 	
 }

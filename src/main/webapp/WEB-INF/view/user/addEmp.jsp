@@ -48,7 +48,7 @@
 
                                     <h2>직원 등록</h2>
                                     <p>직원을 등록해주세요</p>
-                                </div>
+                                    
 								<form id="addEmp" method="post" action="${pageContext.request.contextPath}/addEmp">
 								    <div class="col-md-12">
 								        <div class="mb-3">
@@ -79,9 +79,10 @@
 								    <div class="col-12">
 								        <div class="mb-3">
 								            <label class="form-label">이메일</label>
-								            <input type="email" class="form-control" id="email" name="email">
+								            <input type="email" name="email" id="email"  class="form-control" value="${mailCheck}" readonly>
 								        </div>
 								    </div>
+								    
 								    
 								    <div class="col-12">
 								        <div class="mb-3">
@@ -139,7 +140,7 @@ $('#btnAddEmp').click(function () {
         alert('연락처를 입력하세요');
     } else if ($('#deptNo').val().trim() === '') {
         alert('부서를 입력하세요');
-    } else if ($('#sample4_postcode').val().trim() === '' || $('#sample4_roadAddress').val().trim() === '') {
+    } else if ($('#address').val().trim() === '' || $('#address').val().trim() === '') {
         alert('주소를 입력하세요');
     } else {
         $('#addEmp').submit();
