@@ -35,10 +35,12 @@
 	<!-- 부서별 직원 리스트 -->
 	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.EmployeeResponse">
 		select
-				emp_no empNo
-			,   ename
-			,   location
-		from 	emp
+				e.emp_no empNo
+			,   e.ename
+			,   c.descript descript
+		from 	emp e
+		inner join common_code c
+				on e.location = c.common_code
 		where dep_no = #{depNo}
 	</select>
 
