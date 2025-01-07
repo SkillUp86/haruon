@@ -44,4 +44,9 @@
 		where dep_no = #{depNo}
 	</select>
 
+	<update id="findempByPw" parameterType="Map">
+   	 UPDATE emp
+   	 SET empPw = #{empPw}
+   	 WHERE email = #{email} AND empPw = #{currentEmpPw};
+	</update>
 </mapper>
