@@ -5,13 +5,16 @@
 		resultType="com.haruon.groupware.user.entity.Emp"
 		parameterType="com.haruon.groupware.user.entity.Emp">
 		SELECT
-			 email email
-			,emp_pw empPw
-			,ename ename
-			,location location
-			,emp_no empNo
-			,dep_no depNo
-		FROM emp
+			 e.email email
+			,e.emp_pw empPw
+			,e.ename ename
+			,e.location location
+			,e.emp_no empNo
+			,e.dep_no depNo
+			,d.dname dname
+		FROM emp e
+		INNER JOIN dept d
+		ON e.dep_no = d.dep_no
 		WHERE email = #{email} AND emp_pw = #{empPw}
 	</select>
 	
