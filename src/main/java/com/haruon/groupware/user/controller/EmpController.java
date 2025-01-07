@@ -58,7 +58,7 @@ public class EmpController {
         }
 
         // 로그인 성공 시 세션 저장 후 홈 이동
-        session.setAttribute("loginCustomer", empLogin.getEmail());
+        session.setAttribute("loginEmp", empLogin.getEmail());
         log.debug("로그인 성공 ---> " + empLogin.getEmail());
         
         return "redirect:/home";
