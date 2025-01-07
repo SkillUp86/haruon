@@ -31,7 +31,7 @@
 		,gender
 		,birth
 		)VALUES(
-			#{eName},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth},#{location}
+			#{ename},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth}
 		)
 	</insert>
 	
