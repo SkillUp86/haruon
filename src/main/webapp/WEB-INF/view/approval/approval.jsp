@@ -109,22 +109,22 @@
 				                </div>
 				                <div class="input-group mb-4">
 				                    <span class="input-group-text label-text">기안자</span>
-				                    <input type="text" class="form-control" id="empNo" name="empNo" readonly="readonly">
+				                    <input type="text" class="form-control" id="empNo" name="empNo" readonly>
 				                    <span class="input-group-text label-text">부서</span>
-				                    <input type="text" class="form-control" id="depNo" name="depNo" readonly="readonly">
+				                    <input type="text" class="form-control" id="depNo" name="depNo" readonly>
 				                </div>
 				                
 				                <div class="input-group mb-4">
 				                        <div class="input-group">
 				                            <span class="input-group-text label-text">중간결재자</span>
-				                            <input type="hidden" class="form-control" id="midAppNo" name="midAppNo" required="required" readonly="readonly">
-				                            <input type="text" class="form-control" id="midAppName" name="midAppName" placeholder="중간결재자 입력" aria-label="중간결재자" aria-describedby="mid-approver" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="midAppNo" name="midAppNo" value="" required readonly>
+				                            <input type="text" class="form-control" id="midAppName" name="midAppName" value="" placeholder="중간결재자 입력" aria-label="중간결재자" required="required" readonly="readonly">
 				                            <span class="input-group-text label-text">최종결재자</span>
-				                            <input type="hidden" class="form-control" id="finalAppNo" name="finalAppNo"  required="required" readonly="readonly">
-				                            <input type="text" class="form-control" id="finalAppName" name="finalAppName" placeholder="최종결재자 입력" aria-label="최종결재자" aria-describedby="final-approver" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="finalAppNo" name="finalAppNo"  value="" required readonly>
+				                            <input type="text" class="form-control" id="finalAppName" name="finalAppName" value="" placeholder="최종결재자 입력" aria-label="최종결재자" required="required" readonly="readonly">
 				                            <span class="input-group-text label-text">참조자</span>
-				                            <input type="hidden" class="form-control" id="refNo" name="refNo"required="required" readonly="readonly">
-				                            <input type="text" class="form-control" id="refName" name="refName" placeholder="참조자 입력" required="required" readonly="readonly">
+				                            <input type="hidden" class="form-control" id="refNo" name="refNo" value="" required readonly="readonly">
+				                            <input type="text" class="form-control" id="refName" name="refName" value="" placeholder="참조자 입력" required readonly>
 							           </div>
 				                    </div>
 				                
@@ -132,13 +132,13 @@
 				                <div class="input-group mb-4">
 				                        <div class="input-group">
 				                    		<span class="input-group-text label-text">유형</span>
-						                    <select type="text" class="form-control" id="kind" name="kind" required="required">
+						                    <select type="text" class="form-control" id="kind" name="kind" required>
 							                    <c:forEach items="${codeList}" var="c">
 							                    	<option class="" id="code" value="${c.commonCode}">${c.descript}</option>
 							                    </c:forEach>
 						                    </select>
 				                            <span class="input-group-text label-text">참조자</span>
-				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required="required" readonly="readonly">
+				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required readonly>
 							           </div>
 				                </div>
 				                <div class="text-end">
@@ -172,7 +172,7 @@
 							    <div id="sales" class=" kind-field" style="display: none;">
 							    	<div class="input-group mb-4">
 					                    <span class="input-group-text label-text">가맹점</span>
-					                    <select type="text" class="form-control" id="" required="required">
+					                    <select type="text" class="form-control" id="" required>
 						                    <c:forEach items="" var="f">
 						                    	<option id="" value="">가맹점</option>
 						                    </c:forEach>
@@ -186,6 +186,20 @@
 							    </div>
 							
 							    <div id="vacation" class="kind-field" style="display: none;">
+							    	<div class="input-group  mb-4">
+			                            <span class="input-group-text label-text">대체업무자</span>
+			                            <input class="form-control" id="subEmpNumber" type="hidden" readonly>
+			                            <input class="form-control type="text" id="subEmpName" " placeholder="대체업무자" aria-label="대체업무자" required readonly>
+			                            <span class="input-group-text label-text">부서</span>
+			                            <input class="form-control" type="text"  id="subDept" placeholder="대체업무자 부서 입력" aria-label="대체업무자 부서"  required readonly>
+			                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#subWorkerModal">
+											대체업무자 선택
+				                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+					                            <circle cx="11" cy="11" r="8"></circle>
+					                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				                            </svg>
+			                            </button>
+			                        </div>
 								    <div class="input-group mb-4">
 								        <span class="input-group-text label-text">시작날짜</span>
 								        <input class="form-control" type="datetime-local" id="" name="">
@@ -199,25 +213,16 @@
 								            <option value="halfDay">반차</option>
 								        </select>
 								        <span class="input-group-text label-text">비상연락처</span>
-								        <input type="text" class="form-control" id="" name="emergencyContact">
+								        <input class="form-control" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" placeholder="010-0000-0000">
 								    </div>
-								    <div class="input-group  mb-4">
-			                            <span class="input-group-text label-text">대체업무자</span>
-			                            <input type="text" class="form-control" placeholder="대체업무자 입력" aria-label="대체업무자" aria-describedby="final-approver" required="required">
-			                            <button class="btn btn-primary">
-				                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-					                            <circle cx="11" cy="11" r="8"></circle>
-					                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-				                            </svg>
-			                            </button>
-			                        </div>
+								    
 							    </div>
 							    
 							</div>
 							<!-- 보고서 끝 -->
 			                <div class="input-group mb-4">
 			                    <span class="input-group-text label-text">제 목</span>
-			                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" aria-label="제목" aria-describedby="basic-addon2">
+			                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" aria-label="제목" >
 			                </div>
 						    <div class="input-group mb-4">
 						        <textarea class="form-control mb-4" rows="10" id="textarea" name="content"></textarea>
@@ -265,7 +270,7 @@
 					    
 					    <div class="col-5">
 					        <h6 class="modal-body">중간결재자</h6>
-					        <div class="list-group" id="midApp">
+					        <div class="list-group">
 				                <div class="input-group">
 				                	<!-- 중간결재자 -->
 									<button type="button" class="btn btn-primary" onclick="applyOn('midApp')">
@@ -287,7 +292,7 @@
 				            </div>
 					
 					        <h6 class="modal-body">최종결재자</h6>
-				         	<div class="list-group" id="employee-list">
+				         	<div class="list-group">
 				                <div class="input-group">
 				                	<button type="button" class="btn btn-primary" onclick="applyOn('finApp')">
 									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
@@ -308,7 +313,7 @@
 				            </div>
 					
 					        <h6 class="modal-body">참조자</h6>
-				         	<div class="list-group" id="employee-list">
+				         	<div class="list-group">
 				                <div class="input-group">
 				                	<button type="button" class="btn btn-primary" onclick="applyOn('refApp')">
 									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
@@ -340,7 +345,66 @@
 	    </div>
 	</div>
     <!-- 결재자 모달END -->
-    
+    <!-- 대체 업무자 모달 START-->
+	<div class="modal fade common-employee-modal" id="subWorkerModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">직원 선택</h5>
+            </div>
+            <div class="modal-body container">
+                <div class="row">
+					<div class="col-3 border-end">
+						<h6>부서 목록</h6>
+						<div class="list-group">
+							<c:forEach var="d" items="${deptList}">
+								<button class="btn mb-1 dept" type="button" value="${d.depNo}">${d.dname}</button>
+							</c:forEach>
+						</div>
+					</div>
+					
+					<div class="col-4 d-flex border-end">
+						<div class="flex-grow-1">
+							<h6>직원 목록</h6>
+							<div class="list-group" id="employeeSubList">
+							
+							</div>
+						</div>
+					   
+					</div>
+
+					<div class="col-5">
+						<h6 class="modal-body">대체업무자</h6>
+						<div class="list-group">
+							<div class="input-group">
+								<!-- 대체업무자 -->
+								<button type="button" class="btn btn-primary" onclick="applyOn('subEmp')">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+										<circle cx="12" cy="12" r="10"></circle>
+										<line x1="12" y1="8" x2="12" y2="16"></line>
+										<line x1="8" y1="12" x2="16" y2="12"></line>
+									</svg>
+								</button>
+								<input class="form-control" id="subEmpNo" type="hidden" value="" placeholder="중간결재자" readonly="readonly">
+								<input class="form-control" id="subEname" type="text" value="" placeholder="중간결재자" readonly="readonly">
+								<button class="btn btn-Warning-Light" onclick="clearInput('subEmp')">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
+										<circle cx="12" cy="12" r="10"></circle>
+										<line x1="8" y1="12" x2="16" y2="12"></line>
+									</svg>
+								</button>
+							</div>
+						</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light-dark" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="BtnInsertSubEmp" data-bs-dismiss="modal">선택</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!--  BEGIN FOOTER  -->
     <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
     <!--  END FOOTER  -->
@@ -400,6 +464,16 @@
 		let finAppSelected = null;
 		let refAppSelected = null;
 
+		// 대체업무자, 결재자 if문 분기
+		let existEmployee = true;
+		$('#subWorkerModal').on('show.bs.modal', function() {
+			existEmployee = false;  
+		});
+		// 모달 닫힐 때
+		$('#subWorkerModal').on('hide.bs.modal', function() {
+			existEmployee = true; 
+		});
+
 		$('.dept').click(function() {
 			let deptNo = $(this).val();
 			$.ajax({
@@ -415,29 +489,42 @@
 
 		function employeeList(emp) {
 			let empList = $('#employeeList');
+			let empSubList = $('#employeeSubList');
 			empList.empty();
+			empSubList.empty();
 
 			if (emp && emp.length > 0) {
 				emp.forEach(function(item) {
-					// 중복체크
-					if (item.empNo === midAppSelected || item.empNo === finAppSelected || item.empNo === refAppSelected) {
-						return;  
-					}
+					//console.log(item)
+
+					// let empList = $(`
+					// 			<li class="form-check">
+					// 				<input type="radio" class="form-check-input" name="employeeRadio" id="${item.empNo}" value="${item.empNo}">
+					// 				<label class="form-check-label" for="${item.empNo}">(${item.descript}) ${item.ename}</label>
+					// 			</li>
+					// 			`);
+					// console.log(test[0].outerHTML)	
+					
 
 					let radioButton = $('<input type="radio" class="form-check-input" name="employeeRadio">')
 						.val(item.empNo)
-						.attr('id', 'radio-' + item.empNo)
+						.attr('id', item.empNo)
 						.on('change', function() {
 							// 체크박스 해제
 							$('input[type="radio"]').not(this).prop('checked', false);
 						});
 
 					let label = $('<label class="form-check-label">')
-						.attr('for', 'radio-' + item.empNo)
-						.text('(' + item.location + ')' + item.ename); // 이름과 직급 표시
+						.attr('for', item.empNo)
+						.text('(' + item.descript + ')' + item.ename); 
 
-					let listItem = $('<li class="form-check">').append(radioButton).append(label);
-					empList.append(listItem);
+					let listItem = $('<div class="form-check form-check-primary form-check-inline">')
+						.append($('<li class="form-check">'))
+						.append(radioButton)
+						.append(label);
+						
+					empList.append(listItem.clone());
+					empSubList.append(listItem.clone());
 				});
 			} 
 		}
@@ -452,48 +539,59 @@
 
 			let empNo = selectedEmp.val();  // 사원 번호
 			let empInfo = selectedEmp.next().text();
+			let dept = empInfo.substring(empInfo.indexOf('(')+1,empInfo.indexOf(')'))
+			//console.log(dept)
 			let empName = empInfo.substring(empInfo.indexOf(')') + 1);  // 사원 이름만 가져오기
 
 			//  중복 체크크
-			if (type === 'midApp') {
-				if (midAppSelected) {
-					alert('중간 결재자는 이미 선택되었습니다.');
-					return;
-				}
-				if (empNo === finAppSelected || empNo === refAppSelected) {
-					alert('중간 결재자는 이미 최종 결재자나 참조자로 선택된 사원입니다.');
-					return;
-				}
-				midAppSelected = empNo;
-				// 사원번호 히든 필드에 입력
-				$('#midAppEmpNo').val(empNo); 
-				// 이름 필드에 입력
-				$('#midAppEname').val(empName); 
-			} else if (type === 'finApp') {
-				if (finAppSelected) {
-					alert('최종 결재자는 이미 선택되었습니다.');
-					return;
-				}
-				if (empNo === midAppSelected || empNo === refAppSelected) {
-					alert('최종 결재자는 이미 중간 결재자나 참조자로 선택된 사원입니다.');
-					return;
-				}
-				finAppSelected = empNo;
-				$('#finalAppEmpNo').val(empNo);
-				$('#finalAppEname').val(empName);
-			} else if (type === 'refApp') {
-				if (refAppSelected) {
-					alert('참조자는 이미 선택되었습니다.');
-					return;
-				}
-				if (empNo === midAppSelected || empNo === finAppSelected) {
-					alert('참조자는 이미 중간 결재자나 최종 결재자로 선택된 사원입니다.');
-					return;
-				}
-				refAppSelected = empNo;
-				$('#refAppEmpNo').val(empNo);
-				$('#refAppEname').val(empName);
+			if(existEmployee){
+
+				if (type === 'midApp') {
+					if (midAppSelected) {
+						alert('중간 결재자는 이미 선택되었습니다.');
+						return;
+					}
+					if (empNo === finAppSelected || empNo === refAppSelected) {
+						alert('중간 결재자는 이미 최종 결재자나 참조자로 선택된 사원입니다.');
+						return;
+					}
+					midAppSelected = empNo;
+					// 사원번호 히든 필드에 입력
+					$('#midAppEmpNo').val(empNo); 
+					// 이름 필드에 입력
+					$('#midAppEname').val(empName); 
+				} else if (type === 'finApp') {
+					if (finAppSelected) {
+						alert('최종 결재자는 이미 선택되었습니다.');
+						return;
+					}
+					if (empNo === midAppSelected || empNo === refAppSelected) {
+						alert('최종 결재자는 이미 중간 결재자나 참조자로 선택된 사원입니다.');
+						return;
+					}
+					finAppSelected = empNo;
+					$('#finalAppEmpNo').val(empNo);
+					$('#finalAppEname').val(empName);
+				} else if (type === 'refApp') {
+					if (refAppSelected) {
+						alert('참조자는 이미 선택되었습니다.');
+						return;
+					}
+					if (empNo === midAppSelected || empNo === finAppSelected) {
+						alert('참조자는 이미 중간 결재자나 최종 결재자로 선택된 사원입니다.');
+						return;
+					}
+					refAppSelected = empNo;
+					$('#refAppEmpNo').val(empNo);
+					$('#refAppEname').val(empName);
+				} 
 			}
+
+			if (type === 'subEmp') {
+					$('#subEmpNo').val(empNo);
+					$('#subDept').val(dept);
+					$('#subEname').val(empName);
+				}
 			
 			selectedEmp.prop('checked', false);
 
@@ -513,6 +611,10 @@
 				refAppSelected = null;
 				$('#refAppEmpNo').val('');
 				$('#refAppEname').val('');
+			} else if (type === 'subEmp'){
+				$('#subEmpNo').val('');
+				$('#subEname').val('');
+				$('#subDept').val('');
 			}
 		}
 
@@ -521,20 +623,30 @@
 			if(!$('#finalAppEname').val()){
 				alert('최종 결재자를 입력해주세요.');
 				return;
-			} else {
-				$('#midAppNo').val($('#midAppEmpNo').val())
-				$('#midAppName').val($('#midAppEname').val())
-				//console.log($('#finalAppEmpNo').val());
-				//console.log($('#finalAppEname').val());
-				$('#finalAppNo').val($('#finalAppEmpNo').val())
-				$('#finalAppName').val($('#finalAppEname').val())
+			} 
+			$('#midAppNo').val($('#midAppEmpNo').val())
+			$('#midAppName').val($('#midAppEname').val())
+			//console.log($('#finalAppEmpNo').val());
+			//console.log($('#finalAppEname').val());
+			$('#finalAppNo').val($('#finalAppEmpNo').val())
+			$('#finalAppName').val($('#finalAppEname').val())
 
-				$('#refNo').val($('#refAppEmpNo').val())
-				$('#refName').val($('#refAppEname').val())
-				let modal = bootstrap.Modal.getInstance($('#approvalModal')[0]); 
-				modal.hide(); 
-			}
+			$('#refNo').val($('#refAppEmpNo').val())
+			$('#refName').val($('#refAppEname').val())
+			let modal = bootstrap.Modal.getInstance($('#approvalModal')[0]); 
+			modal.hide(); 
+			
 
 		});
+
+		// 대체 업무자 입력값 추가
+		$('#BtnInsertSubEmp').click(function(){
+			
+			$('#subEmpNumber').val($('#subEmpNo').val())
+			$('#subEmpName').val($('#subEname').val())
+			$('#subEmpName').val($('#subEname').val())
+			let modal = bootstrap.Modal.getInstance($('#subWorkerModal')[0]); 
+			modal.hide(); 
+		}) 
 	   </script>
 </html>
