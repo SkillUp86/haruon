@@ -4,10 +4,22 @@ import lombok.Data;
 
 @Data
 public class Emp {
+	private Integer empNo;
 	private String email;
 	private String empPw;
+	private Integer depNo;
 	private String ename;
-	private String EmpNo;
-	private String depNo;
 	private String location;
+	private String extNum;
+	private	String phone;
+	private String address;
+	private String postCode;
+	private String gender;
+	private String birth;
+	private String totalLeave;
+	private String usedLeave;
+	private String pwUpdate;
+	private String joinDate;
+	private String leaveDate;
+	private String dname;
 }

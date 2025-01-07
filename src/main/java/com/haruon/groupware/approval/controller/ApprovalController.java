@@ -11,6 +11,10 @@ import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
 
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class ApprovalController {
 	
@@ -23,13 +27,21 @@ public class ApprovalController {
 	}
 
 	@GetMapping("/approval")
-	public String approval(Model model) {
+	public String approval(HttpSession session,Model model) {
+		String empName = (String)session.getAttribute("loginEmpName");
+		int empNo = (int)session.getAttribute("loginEmpNo");
+		String location = (String)session.getAttribute("loginEmpLocation");
+		String dname = (String)session.getAttribute("loginDname");
+		log.debug("location:"+location);
 		// 전자결재 코드
 		String parentCode = "C00";
 		List<CommonCode> codeList = approvalService.findByParentCode(parentCode);
 		List<Dept> deptList = deptService.findByAll();
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("deptList", deptList);
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("empName", empName);
+		model.addAttribute("dname", dname);
 		
 		return "/approval/approval";
 	}

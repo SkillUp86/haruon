@@ -55,19 +55,19 @@ public class EmpController {
         emp.setEmpPw(empPw);
 
         Emp empLogin = empService.empLogin(emp);
-
+        log.debug(empLogin.toString());
         // 로그인 실패 시
         if (empLogin == null) {
             log.debug("로그인 실패: 잘못된 ID 또는 비밀번호");
             return "user/login";
         }
-
         // 로그인 성공 시 세션에 다양한 정보 저장
         session.setAttribute("loginEmpEmail", empLogin.getEmail());
         session.setAttribute("loginEmpName", empLogin.getEname()); // 이름 저장
         session.setAttribute("loginEmpNo", empLogin.getEmpNo()); // 사원번호 저장
         session.setAttribute("loginEmpDept", empLogin.getDepNo()); // 부서번호 저장
-        session.setAttribute("loginEmpDept", empLogin.getLocation()); // 부서번호 저장
+        session.setAttribute("loginEmpLocation", empLogin.getLocation()); // 부서번호 저장
+        session.setAttribute("loginDname", empLogin.getDname()); // 부서이름
 
         log.debug("로그인 성공 ---> " + empLogin.getEmail());
 
@@ -75,7 +75,6 @@ public class EmpController {
     }
     
     @GetMapping("/addEmp")
-    
     public String addEmp(Model model) {
     	List<Dept> deptList = deptService.findByAll();
     	model.addAttribute("deptList" , deptList);
