@@ -1,11 +1,8 @@
 package com.haruon.groupware.user.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 public class EmpController {
 	@Autowired DeptService deptService;
     @Autowired EmpService empService;
-    @Autowired JavaMailSender javaMailSender;
 
     
     //로그아웃
@@ -82,34 +78,14 @@ public class EmpController {
     	return "user/addEmp";
     }
 
-    // 회원가입 처리
     @PostMapping("/addEmp")
     public String addEmp(EmpDto emp) {
-        // 1. 비밀번호 생성 및 설정
-        String rawPassword = UUID.randomUUID().toString().replace("-", ""); // UUID 비밀번호 생성
-        String encryptedPassword = SHA256Util.encoding(rawPassword);       // 비밀번호 암호화
-        emp.setEmpPw(encryptedPassword);
-
-        // 2. 회원가입 처리
-        empService.addEmp(emp);
-
-        // 3. 이메일 발송
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(emp.getEmail()); // 회원가입한 사용자의 이메일
-        message.setSubject("회원가입 완료 및 임시 비밀번호 안내");
-        message.setText(
-            "안녕하세요, " + emp.getEname() + "님.\n\n" +
-            "회원가입이 완료되었습니다.\n" +
-            "임시 비밀번호는 아래와 같습니다. 로그인 후 반드시 비밀번호를 변경해주세요.\n\n" +
-            "임시 비밀번호: " + rawPassword + "\n\n" +
-            "감사합니다."
-        );
-        javaMailSender.send(message);
-
-        // 4. 홈 화면으로 리다이렉트
-        return "redirect:/home";
+    	// 서비스 호출
+    	String empPw = SHA256Util.encoding(emp.getEmpPw());
+    	emp.setEmpPw(empPw);
+    	empService.addEmp(emp);
+    	return "redirect:/home";
     }
-
    
     @GetMapping("/findPw")
     public String findPw() {
