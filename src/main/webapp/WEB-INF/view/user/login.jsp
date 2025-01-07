@@ -77,7 +77,9 @@
 								        <!-- 제출 버튼 -->
 								        <button class="btn btn-primary submit-fn mt-2 w-100" type="submit">SIGN IN</button>
 								    </form>
-								</div>
+								    <br>
+			                                <a href="findPw"> 비밀번호 찾기 </a>
+			                       </div>
                             </div>
                             
                         </div>
@@ -109,7 +111,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         // 사용자 정의 Bootstrap 검증 스타일을 적용하려는 모든 양식을 가져옵니다.
-        var forms = document.getElementsByClassName('simple-example');ㅍㅁ
+        var forms = document.getElementsByClassName('simple-example');
 
         // 모든 양식을 순회하며 유효성 검사를 추가합니다.
         Array.prototype.forEach.call(forms, function (form) {

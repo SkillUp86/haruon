@@ -15,7 +15,7 @@
 		WHERE email = #{email} AND emp_pw = #{empPw}
 	</select>
 	
-<<<<<<< HEAD
+
 	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto">
 		INSERT INTO emp (
 		ename
@@ -32,7 +32,6 @@
 		)
 	</insert>
 	
-=======
 	<!-- 부서별 직원 리스트 -->
 	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.EmployeeResponse">
 		select
@@ -42,5 +41,5 @@
 		from 	emp
 		where dep_no = #{depNo}
 	</select>
->>>>>>> develop
+
 </mapper>

@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmpController {
 	@Autowired DeptService deptService;
     @Autowired EmpService empService;
+
     
     //로그아웃
     @GetMapping("/logout")
@@ -86,4 +87,10 @@ public class EmpController {
     	return "redirect:/home";
     }
    
+    @GetMapping("/findPw")
+    public String findPw() {
+        return "user/findPw";
+    }
+    
+    
 }
