@@ -93,7 +93,6 @@ public class EmpController {
         // 2. 회원가입 처리
         empService.addEmp(emp);
 
-        // 3. 이메일 발송
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(emp.getEmail()); // 회원가입한 사용자의 이메일
         message.setSubject("회원가입 완료 및 임시 비밀번호 안내");

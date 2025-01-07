@@ -79,7 +79,7 @@
 								    <div class="col-12">
 								        <div class="mb-3">
 								            <label class="form-label">이메일</label>
-								            <input type="email" name="email" id="email"  class="form-control" value="${mailCheck}" readonly>
+								            <input type="email" name="email" id="email"  class="form-control" >
 								        </div>
 								    </div>
 								    
