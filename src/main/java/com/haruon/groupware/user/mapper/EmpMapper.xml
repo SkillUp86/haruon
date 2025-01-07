@@ -45,8 +45,8 @@
 	</select>
 
 	<update id="findempByPw" parameterType="Map">
-   	 UPDATE emp
-   	 SET empPw = #{empPw}
-   	 WHERE email = #{email} AND empPw = #{currentEmpPw};
-	</update>
+   	UPDATE emp
+ 	SET empPw = #{newEmpPw}
+   	WHERE email = #{email} AND empPw = #{empPw};
+</update>
 </mapper>
