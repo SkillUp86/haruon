@@ -7,6 +7,6 @@ public class EmployeeResponse {
 	
 	private Integer empNo; 
 	private String ename;
-	private String location;
+	private String descript;
 
 }
