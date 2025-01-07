@@ -8,6 +8,6 @@ import com.haruon.groupware.franchise.entity.Franchise;
 
 @Mapper
 public interface FranchiseMapper {
-	
+
 	List<Franchise> selectFranchiseList();
 }

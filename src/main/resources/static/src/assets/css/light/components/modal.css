@@ -121,6 +121,10 @@
 .modal-success .modal-content {
   background-color: #ddf5f0;
 }
+input[readonly] {
+    background-color: white !important;  /* 배경색을 흰색으로 설정 */
+    color: black !important;             /* 글자 색을 검정색으로 설정 */
+	}
 
 /*
     Modal Video
@@ -129,6 +133,7 @@
   background-color: transparent;
   border: none;
 }
+
 .modal-video .video-container {
   position: relative;
   padding-bottom: 56.25%;
