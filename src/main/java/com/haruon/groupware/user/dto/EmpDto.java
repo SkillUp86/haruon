@@ -15,5 +15,4 @@ public class EmpDto {
 	private String gender;
 	private String birth;
 	private String location;
-	
 }

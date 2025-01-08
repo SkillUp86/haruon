@@ -19,7 +19,7 @@
 	</select>
 	
 
-	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto">
+	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto" >
 		INSERT INTO emp (
 		ename
 		,emp_pw
@@ -35,21 +35,11 @@
 		)
 	</insert>
 	
-	<!-- 부서별 직원 리스트 -->
-	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.EmployeeResponse">
-		select
-				e.emp_no empNo
-			,   e.ename
-			,   c.descript descript
-		from 	emp e
-		inner join common_code c
-				on e.location = c.common_code
-		where dep_no = #{depNo}
-	</select>
+	
 
 	<!-- 사원번호와 이메일로 사원 조회 -->
   <!-- 사원번호와 이메일로 사원 조회 -->
-  	<select id="findEmpEmail" resultType="com.haruon.groupware.user.dto.EmpDto" parameterType="Map">
+  	<select id="findEmpByEmail" resultType="com.haruon.groupware.user.dto.EmpDto" parameterType="com.haruon.groupware.user.dto.EmpDto">
     SELECT
     	emp_no empNo
     	,email email

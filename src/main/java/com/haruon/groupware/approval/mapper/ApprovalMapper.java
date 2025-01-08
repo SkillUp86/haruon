@@ -13,5 +13,6 @@ public interface ApprovalMapper {
 	// 결재코드
 	List<CommonCode> findByParentCode(String parentCode);
 	
+	List<EmployeeResponse> findEmpByDept(int deptNo);
 	
 }
