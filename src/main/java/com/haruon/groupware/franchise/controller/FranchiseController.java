@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.haruon.groupware.franchise.entity.Franchise;
 import com.haruon.groupware.franchise.service.FranchiseService;
-import com.haruon.groupware.franchise.util.PageUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
