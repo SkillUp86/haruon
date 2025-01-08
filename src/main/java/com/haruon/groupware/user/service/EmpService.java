@@ -1,7 +1,5 @@
 package com.haruon.groupware.user.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +32,20 @@ public class EmpService {
 	    
 	}
 
-	public String resetPassword(String empNo, String email) {
-	    // 1. 사원번호와 이메일로 사용자 조회
-	    Map<String, Object> params = new HashMap<>();
-	    params.put("empNo", empNo);
-	    params.put("email", email);
-	    EmpDto emp = empMapper.findEmpByEmail(params);
+	public void findAndSendNewPw(EmpDto emp) {
+	    empMapper.findEmpByEmail(empNo, email);
+	    if (emp == null) {
+	        // 예외를 던져 실패 상황 처리
+	        throw new IllegalArgumentException("사원번호와 이메일이 일치하지 않습니다.");
+	    }
 
-        if (emp == null) {
-            // 사원번호와 이메일이 일치하지 않음
-            return null;
-        }
-        // 2. UUID 기반 임시 비밀번호 생성
-        String rawPassword = UUID.randomUUID().toString().replace("-", "");
-        // 3. 비밀번호 암호화
-        String newPassword = SHA256Util.encoding(rawPassword);
-        // 4. DB 업데이트
-        emp.setEmpPw(newPassword);
-        empMapper.updateEmpPw(emp);
-        // 5. 원본 비밀번호 반환 (이메일 발송용)
-        return rawPassword;
-    }
+	    // 새 비밀번호 생성 및 업데이트
+	    String newPw = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+	    String encodedPw = SHA256Util.encoding(newPw);
+	    emp.setEmpPw(encodedPw);
+	    empMapper.updateEmpPw(emp);
+
+	    // 이메일 발송
+	    updateEmpPw(emp.getEmail());
+	}
 }
