@@ -33,10 +33,14 @@ public class ApprovalController {
 		String location = (String)session.getAttribute("loginEmpLocation");
 		String dname = (String)session.getAttribute("loginDname");
 		log.debug("location:"+location);
+		
 		// 전자결재 코드
 		String parentCode = "C00";
 		List<CommonCode> codeList = approvalService.findByParentCode(parentCode);
 		List<Dept> deptList = deptService.findByAll();
+		
+		// 가맹점 리스트
+		
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("empNo", empNo);

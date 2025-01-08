@@ -33,7 +33,8 @@
     <link href="../src/assets/css/light/components/carousel.css" rel="stylesheet" type="text/css">
     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="../src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
-     <link href="../src/assets/css/light/elements/infobox.css" rel="stylesheet" type="text/css" />
+	<link href="../src/assets/css/light/elements/infobox.css" rel="stylesheet" type="text/css" />
+	<link href="../src/assets/css/light/elements/color_library.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
@@ -100,7 +101,7 @@
                 <!-- 메인컨텐츠 입력칸 -->
                 
                 <h1>전자 결재</h1>
-	                <form action="" enctype="multipart/form-data">
+	                <form id="formInsertApproval" action="${pageContext.request.contextPath}/approval/insert" enctype="multipart/form-data">
 				        <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				            <div class="widget-content widget-content-area mt-4">
 				            	<div class="input-group mb-4">
@@ -109,9 +110,10 @@
 				                </div>
 				                <div class="input-group mb-4">
 				                    <span class="input-group-text label-text">기안자</span>
+				                    <input type="hidden" class="form-control" id="empNo" name="empNo" value="${empNo}" readonly>
 				                    <input type="text" class="form-control" id="empName" name="empName" value="${empName}" readonly>
 				                    <span class="input-group-text label-text">부서</span>
-				                    <input type="text" class="form-control" id="depNo" name="depNo" value="${dname}" readonly>
+				                    <input type="text" class="form-control" id="depName" name="depName" value="${dname}" readonly>
 				                </div>
 				                
 				                <div class="input-group mb-4">
@@ -137,13 +139,11 @@
 							                    	<option class="" id="code" value="${c.commonCode}">${c.descript}</option>
 							                    </c:forEach>
 						                    </select>
-				                            <span class="input-group-text label-text">참조자</span>
-				                            <input type="text" class="form-control" id="refNo" placeholder="참조자 입력" required readonly>
 							           </div>
 				                </div>
 				                <div class="text-end">
 					            		 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
-					                   	 결재자 선택
+					                   		결재자 선택
 						                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
 							                            <circle cx="11" cy="11" r="8"></circle>
 							                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -159,28 +159,29 @@
 							    <div id="business" class="kind-field" style="display: none;">
 							    	<div class="input-group mb-4">
 								        <span class="input-group-text label-text">출장지역</span>
-								        <input type="text" class="form-control" id="" name="">
+								        <input type="text" class="form-control" id="place" name="place">
 										
 								        <span class="input-group-text label-text">시작날짜</span>
-								        <input type="date" class="form-control" id="" name="">
+								        <input type="date" class="form-control" id="placeStartDate" name="placeStartDate">
 								
 								        <span class="input-group-text label-text">종료날짜</span>
-								        <input type="date" class="form-control" id="" name="">
+								        <input type="date" class="form-control" id="placefinishDate" name="placefinishDate">
 								    </div>
 								</div>
 								
 							    <div id="sales" class=" kind-field" style="display: none;">
 							    	<div class="input-group mb-4">
 					                    <span class="input-group-text label-text">가맹점</span>
-					                    <select type="text" class="form-control" id="" required>
+					                    <select type="text" class="form-control" id="fraNo" name="fraNo" required>
+											<option value="">:::가맹점:::</option>
 						                    <c:forEach items="" var="f">
-						                    	<option id="" value="">가맹점</option>
+						                    	<option value="">가맹점</option>
 						                    </c:forEach>
 					                    </select>
 					                     <span class="input-group-text label-text">연-월</span>
-					                     <input class="form-control" type="month" id="" name="">
+					                     <input class="form-control" type="month" id="ym" name="ym">
 					                     <span class="input-group-text label-text">매출액</span>
-					                     <input class="form-control" type="number" id="" name="">
+					                     <input class="form-control" type="number" id="revenue" name="revenue">
 				                	</div>
 									
 							    </div>
@@ -188,10 +189,10 @@
 							    <div id="vacation" class="kind-field" style="display: none;">
 							    	<div class="input-group  mb-4">
 			                            <span class="input-group-text label-text">대체업무자</span>
-			                            <input class="form-control" id="subEmpNumber" type="hidden" readonly>
-			                            <input class="form-control type="text" id="subEmpName" " placeholder="대체업무자" aria-label="대체업무자" required readonly>
+			                            <input class="form-control" id="subEmpNumber" name="subEmpNumber" type="hidden" readonly>
+			                            <input class="form-control type="text" id="subEmpName" name="subEmpName" placeholder="대체업무자" aria-label="대체업무자" required readonly>
 			                            <span class="input-group-text label-text">부서</span>
-			                            <input class="form-control" type="text"  id="subDept" placeholder="대체업무자 부서 입력" aria-label="대체업무자 부서"  required readonly>
+			                            <input class="form-control" type="text"  id="subDept" name="subDept" placeholder="대체업무자 부서 입력" aria-label="대체업무자 부서"  required readonly>
 			                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#subWorkerModal">
 											대체업무자 선택
 				                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
@@ -202,10 +203,10 @@
 			                        </div>
 								    <div class="input-group mb-4">
 								        <span class="input-group-text label-text">시작날짜</span>
-								        <input class="form-control" type="datetime-local" id="" name="">
+								        <input class="form-control" type="datetime-local" id="vacStartDate" name="vacStartDate">
 								
 								        <span class="input-group-text label-text">종료날짜</span>
-								        <input class="form-control" type="datetime-local" id="" name="">
+								        <input class="form-control" type="datetime-local" id="vacFinishDate" name="vacFinishDate">
 								
 								        <span class="input-group-text label-text">유형</span>
 								        <select class="form-control" id="" name="">
@@ -213,7 +214,7 @@
 								            <option value="halfDay">반차</option>
 								        </select>
 								        <span class="input-group-text label-text">비상연락처</span>
-								        <input class="form-control" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" placeholder="010-0000-0000">
+								        <input class="form-control" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" id="urgentPhone" placeholder="010-0000-0000">
 								    </div>
 								    
 							    </div>
@@ -224,14 +225,14 @@
 			                    <span class="input-group-text label-text">제 목</span>
 			                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" aria-label="제목" >
 			                </div>
-						    <div class="input-group mb-4">
-						        <textarea class="form-control mb-4" rows="10" id="textarea" name="content"></textarea>
+						    <div class="input-group">
+						        <textarea class="form-control mb-4" rows="10" id="textarea" name="textContent" id="textContent"></textarea>
 							</div>
                             <div class="form-group mb-4">
                                 <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple">
                             </div>
                             <div class="text-end">
-                               	<input type="submit" name="time" class="mb-4 btn btn-primary">
+								<button class="btn btn-primary" type="button" id="btnInsertApproval">제출</button>
                             </div>
                         </div>
 			        </div>
@@ -445,6 +446,7 @@
 		});
    
 	   $('.dept').click(function() {
+		   debugger;
 		   let deptNo = $(this).val();
 		   $.ajax({
 			   url: 'approval/depts/'+deptNo+'/employees'
@@ -648,5 +650,102 @@
 			let modal = bootstrap.Modal.getInstance($('#subWorkerModal')[0]); 
 			modal.hide(); 
 		}) 
+
+		
+
+		function check () {
+
+			if($('#kind').val() === '기본') {
+				if(!$('#title').val()){
+					alert('제목을 입력하세요')
+					return false;
+				} else if(!$('#textContent').val()) {
+					alert('내용을 입력하세요')
+					return false;
+				}
+				return true;
+			}
+			
+		}
+
+		// form 제출
+		$('#btnInsertApproval').click(function () {
+			if($('#kind').val() === 'C01'){
+				if(check ()) {
+					$('#formInsertApproval').submit();
+				}
+			} else if($('#kind').val() === 'C02') {
+				if(check()) {
+					
+					if(!$('#place').val()){
+						alert('출장 지역을 입력하세요')
+						return;
+					} else if(!$('#placeStartDate').val()) {
+						alert('출장 시작날짜를 입력하세요')
+						return;
+					} else if(!$('#placeEndDate').val()) {
+						alert('출장 종료날짜를 입력하세요')
+						return;
+					}
+					$('#formInsertApproval').submit();
+				}
+			} else if($('#kind').val() === 'C03') {
+				if(check()) {
+					if(!$('#fraNo').val()){
+						alert('가맹점을 선택하세요')
+						return;
+					} else if(!$('#ym').val()) {
+						alert('연월을 입력하세요')
+						return;
+					} else if(!$('#revenue').val()) {
+						alert('매출액을을 입력하세요')
+						return;
+					}
+				}
+				$('#formInsertApproval').submit();
+			} else if($('#kind').val() === 'C04') {
+				if(check()) {
+					if(!$('#subEmpNumber').val()){
+						alert('대체 업무자를 입력하세요')
+						return;
+					} else if(!$('#vacStartDate').val()) {
+						alert('휴가가 시작날짜를 입력하세요')
+						return;
+					} else if(!$('#vacFinishDate').val()) {
+						alert('휴가가 종료날짜를 입력하세요')
+						return;
+					} else if(!$('#urgentPhone').val()) {
+						alert('비상 연락처를 입력하세요요')
+						return;
+					} 
+				}
+				$('#formInsertApproval').submit();
+			}
+		});
+
+		// if($('#kind').val() === '기본'){
+
+		// 	$('#btnInsertApproval').click(function () {
+		// 		if(!$('#title').val()){
+		// 			alert('제목을 입력하세요')
+		// 			return;
+		// 		} else if(!$('#textContent').val()){
+		// 			alert('내용을 입력하세요')
+		// 			return;
+		// 		} else {
+		// 			$('#formInsertApproval').submit();
+		// 		}
+		// 	})
+
+		// 	if($('#kind').val() === '출장') {
+				
+		// 	} else if($('#kind').val() === '매출') {
+
+		// 	} else if($('#kind').val() === '휴가') {
+
+		// 	}
+
+		// }
+			
 	   </script>
 </html>

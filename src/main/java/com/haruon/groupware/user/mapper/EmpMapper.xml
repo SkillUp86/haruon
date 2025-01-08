@@ -36,7 +36,7 @@
 	</insert>
 	
 	<!-- 부서별 직원 리스트 -->
-	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.EmployeeResponse">
+	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.ResponseEmployee">
 		select
 				e.emp_no empNo
 			,   e.ename

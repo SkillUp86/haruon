@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.haruon.groupware.approval.dto.EmployeeResponse;
+import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.entity.Emp;
 @Mapper
@@ -16,8 +16,6 @@ public interface EmpMapper {
 	int insertEmp(EmpDto emp);
 	
 	String mailCheck(String mailCheck);
-
-	List<EmployeeResponse> findEmpByDept(int deptNo);
 
     EmpDto findEmpByEmail(Map<String, Object> params);
 	

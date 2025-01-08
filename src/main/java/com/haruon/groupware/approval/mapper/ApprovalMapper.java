@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.haruon.groupware.approval.dto.EmployeeResponse;
+import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.common.entity.CommonCode;
 
 @Mapper

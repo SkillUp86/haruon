@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.haruon.groupware.approval.dto.EmployeeResponse;
+import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.user.mapper.EmpMapper;
@@ -30,7 +30,7 @@ public class ApprovalService {
 	}
 	
 	// 결재라인 해당 부서 직원
-	public List<EmployeeResponse> findEmpByDept(int deptNo){
+	public List<ResponseEmployee> findEmpByDept(int deptNo){
 		return empMapper.findEmpByDept(deptNo);
 	}
 }
