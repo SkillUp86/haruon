@@ -9,21 +9,24 @@ import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
+import com.haruon.groupware.common.mapper.CommonMapper;
 
 @Service
 @Transactional
 public class ApprovalService {
 
 	private final ApprovalMapper approvalMapper;
+	private final CommonMapper commonMapper;
 	
-	public ApprovalService(ApprovalMapper approvalMapper) {
+	public ApprovalService(ApprovalMapper approvalMapper, CommonMapper commonMapper) {
 		this.approvalMapper = approvalMapper;
+		this.commonMapper = commonMapper;
 	}
 	
 	
 	// 결재 코드
 	public List<CommonCode> findByParentCode(String parentCode) {
-		return approvalMapper.findByParentCode(parentCode);
+		return commonMapper.findByParentCode(parentCode);
 	}
 	
 	// 결재라인 해당 부서 직원

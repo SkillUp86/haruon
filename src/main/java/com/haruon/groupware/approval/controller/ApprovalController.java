@@ -33,6 +33,8 @@ public class ApprovalController {
 	@PostMapping("/approval")
 	public String insertApproval(@ModelAttribute RequestApproval approval) {
 		log.debug(approval.toString());
+		
+		
 		return "";
 	}
 
