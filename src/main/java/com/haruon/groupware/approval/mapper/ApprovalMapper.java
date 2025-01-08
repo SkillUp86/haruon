@@ -11,8 +11,7 @@ import com.haruon.groupware.common.entity.CommonCode;
 @Mapper
 public interface ApprovalMapper {
 
-	// 결재코드
-	List<CommonCode> findByParentCode(String parentCode);
+	
 	
 	// 부서별 직원 리스트
 	List<ResponseEmployee> findEmpByDept(int deptNo);
