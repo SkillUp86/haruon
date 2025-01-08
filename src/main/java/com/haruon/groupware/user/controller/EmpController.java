@@ -60,6 +60,7 @@ public class EmpController {
             log.debug("로그인 실패: 잘못된 ID 또는 비밀번호");
             return "user/login";
         }
+        System.out.println(empLogin.toString());
         log.debug(empLogin.toString());
         // 로그인 성공 시 세션에 다양한 정보 저장
         session.setAttribute("loginEmpEmail", empLogin.getEmail());
@@ -127,5 +128,10 @@ public class EmpController {
         }
         return "user/findPw";
     }
+    
+   @GetMapping("modifyMyInfo")
+   public String modifyMyInfo() {
+	   return "user/modifyMyInfo";
+   }
 }
 

@@ -111,6 +111,7 @@
 								    <div class="col-12">
 								        <div class="mb-4">
 								            <button id="btnAddEmp" class="btn btn-secondary w-100">SIGN UP</button>
+								            
 								        </div>
 								    </div>
 								</form>
@@ -125,28 +126,12 @@
         </div>
 
     </div>
+    </div>
     
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
-<script>
-// 회원가입 유효성 검사
-$('#btnAddEmp').click(function () {
-    if ($('#empName').val().trim() === '') {
-        alert('이름을 입력하세요');
-    } else if ($('#email').val().trim() === '') {
-        alert('이메일을 입력하세요');
-    } else if ($('#phone').val().trim() === '') {
-        alert('연락처를 입력하세요');
-    } else if ($('#deptNo').val().trim() === '') {
-        alert('부서를 입력하세요');
-    } else if ($('#address').val().trim() === '' || $('#address').val().trim() === '') {
-        alert('주소를 입력하세요');
-    } else {
-        $('#addEmp').submit();
-    }
-});
-</script>
+
 <script>
 function sample4_execDaumPostcode() {
           new daum.Postcode({
