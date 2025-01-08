@@ -3,16 +3,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <!-- 페이지 제목 입력칸 -->
+    <title>자유 게시판</title>
+    <!-- 페이지 제목 입력칸 -->
+    
+     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-     
-
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -20,15 +21,18 @@
     <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link rel="stylesheet" type="text/css" href="../src/plugins/src/table/datatable/datatables.css">
     
-    <!-- 페이지 제목 입력칸 -->
-    <title>자유 게시판</title>
-    <!-- 페이지 제목 입력칸 -->
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/table/datatable/dt-global_style.css">
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/table/datatable/dt-global_style.css">
+    <!--  END CUSTOM STYLE FILE  -->
+
+    <style>
+        #blog-list img {
+            border-radius: 18px;
+        }
+    </style>
 </head>
 <body class="layout-boxed">
     <!-- BEGIN LOADER -->
@@ -92,62 +96,63 @@
                     <!--  END BREADCRUMBS  -->
                         
                     <div class="account-settings-container layout-top-spacing">
-    
                         <div class="account-content">
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <h2>자유 게시판</h2>
                                     
-                                    <div class="simple-pill">
+                                    <div class="simple-tab">
 										<!-- 탭 -->
-	                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-	                                    	<c:forEach var="ct" items="${categoryList}">
-	                                            <li class="nav-item" role="presentation">
-	                                            	<button class="nav-link active" id="pills-${ct.catName}-tab" data-bs-toggle="pill" data-bs-target="#탭페이지id" type="button" role="tab" aria-controls="탭페이지id" aria-selected="true">${ct.catName}</button>
-	                                            </li>
-	                                        </c:forEach>
+	                                    <ul class="nav nav-tabs d-flex justify-content-between" id="pills-tab" role="tablist">
+	                                    	<div class="d-flex">
+		                                    	<c:forEach var="ct" items="${categoryList}">
+		                                            <li class="nav-item" role="presentation">
+		                                            	<button class="nav-link active" id="${ct.catName}-tab" data-bs-toggle="pill" data-bs-target="#탭페이지id" type="button" role="tab" aria-controls="탭페이지id" aria-selected="true">${ct.catName}</button>
+		                                            </li>
+		                                        </c:forEach>
+		                                	</div>
+		                                	<span style="text-align: right;">
+		                                        <a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/board/insert">
+	                                       			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+	                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 글쓰기
+	                                       		</a>
+	                                       	</span>
 	                                    </ul>
 	                                    <!-- 탭 끝 -->
                                 
-			                            <div class="tab-content" id="pills-tabContent">
+			                            <div class="tab-content" id="tabContent">
 			                                <!-- 탭1 - 전체 -->
-			                                <div class="tab-pane fade show active" id="animated-underline-전체" role="tabpanel" aria-labelledby="tab1">
+			                                <div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
 		                                    	<div class="widget-content widget-content-area br-8">
-			                                    	<div class="col-md-12 col-sm-12 col-12" style="text-align: right;">
-			                                       		<a class="btn btn-secondary" id="addTask" href="${pageContext.request.contextPath}/board/insert">
-			                                       			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-			                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 글쓰기
-			                                       		</a>
-			                                        </div>	
-			                                    	
+		                                    	
 			                                        <table id="board-list" class="table dt-table-hover" style="width:100%">
 					                                    <thead>
 					                                        <tr>
-					                                            <th>번호</th>
+					                                            <th style="text-align: center;">번호</th>
 					                                            <th>제목</th>
 					                                            <th>작성자</th>
 					                                            <th>작성일</th>
-					                                            <th>조회수</th>
-					                                            <th>추천</th>
+					                                            <th style="text-align: center;">조회수</th>
+					                                            <th style="text-align: center;">추천</th>
 					                                        </tr>
 					                                    </thead>
 					                                    <tbody>
 					                                    	<c:forEach var="b" items="${boardList}">
 					                                       		<tr>
-						                                        	<td>${b.boaNo}</td>
+						                                        	<td style="text-align: center;">${b.boaNo}</td>
 						                                            <td>
 						                                                <div class="d-flex justify-content-left align-items-center">
 						                                                    <div class="d-flex flex-column">
 						                                                        <span class="text-truncate fw-bold">
-						                                                        	<a href="${pageContext.request.contextPath}/board">${b.title}</a>
+						                                                        	[${b.catName}] <a href="${pageContext.request.contextPath}/board/${b.boaNo}">${b.title}</a>
 						                                                        </span>
 						                                                    </div>
 						                                                </div>
 						                                            </td>
 						                                            <td>${b.ename}</td>
 						                                            <td>${b.createDate}</td>
-																	<td>${b.viewCnt}</td>
-						                                            <td>추천</td>
+																	<td style="text-align: center;">${b.viewCnt}</td>
+						                                            <td style="text-align: center;">${b.countLike}</td>
 					                                  			</tr>
 					                                        </c:forEach>
 					                                    </tbody>
@@ -170,14 +175,14 @@
 			                                </div>
 			                                
 			                            </div>
-                           			</div> <!-- END #simple-pill -->
+                           			</div> <!-- END #simple-tab -->
                             	</div>
                         	</div>
                    	 	</div>
                 </div>
 
             </div>
-
+			</div>
             <!--  BEGIN FOOTER  -->
             <div class="footer-wrapper">
                 <div class="footer-section f-section-1">
@@ -194,33 +199,34 @@
     </div>
     <!-- END MAIN CONTAINER -->
 
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <script src="../src/plugins/src/global/vendors.min.js"></script>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
     <script src="../src/plugins/src/waves/waves.min.js"></script>
     <script src="../layouts/vertical-light-menu/app.js"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <script src="../src/assets/js/custom.js"></script>
+    <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../src/plugins/src/table/datatable/datatables.js"></script>
     <script>
-		boardList = $('#board-list').DataTable({
-            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
-                	"sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 10 
-        });
+		$('#board-list').DataTable({
+			"dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+	        "<'table-responsive'tr>" +
+	        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+	            "oLanguage": {
+	                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+	                "sInfo": "Showing page _PAGE_ of _PAGES_",
+	                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+	                "sSearchPlaceholder": "Search...",
+	               "sLengthMenu": "Results :  _MENU_",
+	            },
+	            "stripeClasses": [],
+	            "lengthMenu": [7, 10, 20, 50],
+	            "pageLength": 10 
+	        });
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
 </body>

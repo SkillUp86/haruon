@@ -17,4 +17,8 @@ public class CategoryService {
 	public List<Category> getCategoryList(){
 		return categoryMapper.selectCategoryListFree();
 	}
+	
+	public List<Category> getAllCategory(){
+		return categoryMapper.selectAllCategory();
+	}
 }

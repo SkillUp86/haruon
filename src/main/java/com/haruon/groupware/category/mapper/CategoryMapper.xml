@@ -8,4 +8,11 @@
 		FROM category
 		WHERE cat_no != 1
 	</select>
+	
+	<select id="selectAllCategory" resultType="com.haruon.groupware.category.entity.Category">
+		SELECT
+			cat_no catNo
+			, cat_name catName
+		FROM category
+	</select>
 </mapper>

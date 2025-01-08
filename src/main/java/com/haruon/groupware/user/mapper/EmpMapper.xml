@@ -5,13 +5,16 @@
 		resultType="com.haruon.groupware.user.entity.Emp"
 		parameterType="com.haruon.groupware.user.entity.Emp">
 		SELECT
-			 email email
-			,emp_pw empPw
-			,ename ename
-			,location location
-			,emp_no empNo
-			,dep_no depNo
-		FROM emp
+			 e.email email
+			,e.emp_pw empPw
+			,e.ename ename
+			,e.location location
+			,e.emp_no empNo
+			,e.dep_no depNo
+			,d.dname dname
+		FROM emp e
+		INNER JOIN dept d
+		ON e.dep_no = d.dep_no
 		WHERE email = #{email} AND emp_pw = #{empPw}
 	</select>
 	
@@ -28,7 +31,7 @@
 		,gender
 		,birth
 		)VALUES(
-			#{eName},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth},#{location}
+			#{ename},#{empPw}, #{postCode}, #{email}, #{address}, #{phone} ,#{depNo} ,#{gender} ,#{birth}
 		)
 	</insert>
 	
@@ -44,9 +47,19 @@
 		where dep_no = #{depNo}
 	</select>
 
-	<update id="findempByPw" parameterType="Map">
-   	 UPDATE emp
-   	 SET empPw = #{empPw}
-   	 WHERE email = #{email} AND empPw = #{currentEmpPw};
+	<!-- 사원번호와 이메일로 사원 조회 -->
+  <!-- 사원번호와 이메일로 사원 조회 -->
+  	<select id="findEmpEmail" resultType="com.haruon.groupware.user.dto.EmpDto" parameterType="Map">
+    SELECT
+    	emp_no empNo
+    	,email email
+    FROM emp
+    WHERE emp_no = #{empNo} AND email = #{email};
+	</select>
+	
+	<update id="updateEmpPw" parameterType="com.haruon.groupware.user.dto.EmpDto">
+    UPDATE emp
+    SET emp_pw = #{empPw}
+    WHERE emp_no = #{empNo} AND email = #{email};
 	</update>
 </mapper>

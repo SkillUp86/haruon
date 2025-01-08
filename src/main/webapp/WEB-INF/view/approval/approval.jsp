@@ -109,9 +109,9 @@
 				                </div>
 				                <div class="input-group mb-4">
 				                    <span class="input-group-text label-text">기안자</span>
-				                    <input type="text" class="form-control" id="empNo" name="empNo" readonly>
+				                    <input type="text" class="form-control" id="empName" name="empName" value="${empName}" readonly>
 				                    <span class="input-group-text label-text">부서</span>
-				                    <input type="text" class="form-control" id="depNo" name="depNo" readonly>
+				                    <input type="text" class="form-control" id="depNo" name="depNo" value="${dname}" readonly>
 				                </div>
 				                
 				                <div class="input-group mb-4">

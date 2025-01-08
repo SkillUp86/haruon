@@ -4,12 +4,13 @@ import lombok.Data;
 
 @Data
 public class EmpDto {
+	private Integer empNo;
 	private String ename;
 	private String empPw;
 	private String postCode;
 	private String email;
 	private String address;
-	private String depNo;
+	private Integer depNo;
 	private String phone;
 	private String gender;
 	private String birth;
