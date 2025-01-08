@@ -10,10 +10,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.haruon.groupware.board.dto.BoardDto;
 import com.haruon.groupware.board.entity.Board;
+import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
 import com.haruon.groupware.board.mapper.BoardMapper;
 
@@ -48,6 +50,9 @@ public class BoardService {
 	}
 	public Integer countLike(Integer boaNo) {
 		return boardMapper.countLike(boaNo);
+	}
+	public Integer insertComment(BoardComment boardComment) {
+		return boardMapper.insertComment(boardComment);
 	}
 	
 	// /board/insert

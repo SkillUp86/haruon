@@ -136,14 +136,14 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="board" data-bs-parent="#accordionExample">
                             <li>
-                                <a href="./element-alerts.html"> 공지 게시판 </a>
+                                <a href="${pageContext.request.contextPath}/board/notice"> 공지 게시판 </a>
                             </li>
                             <li>
-                                <a href="./element-avatar.html"> 자유 게시판 </a>
+                                <a href="${pageContext.request.contextPath}/board"> 자유 게시판 </a>
                             </li>
                             <!-- 시스템 관리자 세션만 -->
                             <li>
-                                <a href="./element-avatar.html"> 카테고리 관리 </a>
+                                <a href="${pageContext.request.contextPath}/categories"> 카테고리 관리 </a>
                             </li>
                         </ul>
                     </li>

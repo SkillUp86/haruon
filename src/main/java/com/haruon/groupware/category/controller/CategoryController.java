@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.category.entity.Category;
 import com.haruon.groupware.category.service.CategoryService;
@@ -20,5 +22,14 @@ public class CategoryController {
 		model.addAttribute("categoryList", categoryList);
 		
 		return "/board/categories";
+	}
+	
+	@PostMapping("/category/update")
+	public String updateCategory(@RequestParam Integer catNo, @RequestParam String catName) {
+	    Category category = new Category();
+	    category.setCatNo(catNo);
+	    category.setCatName(catName);
+	    categoryService.updateCategory(category);
+	    return "redirect:/board/categories";
 	}
 }

@@ -32,11 +32,7 @@
 			, content
 			, create_date
 		) VALUES (
-			#{empNo}
-			, #{catNo}
-			, #{title}
-			, #{content}
-			, NOW()
+			#{empNo}, #{catNo}, #{title}, #{content}, NOW()
 		)
 	</insert>
 	<insert id="insertBoardFile" parameterType="com.haruon.groupware.board.entity.BoardFile">
@@ -94,6 +90,16 @@
 		FROM board_like
 		WHERE boa_no = #{boaNo}
 	</select>
+	<insert id="insertComment" parameterType="com.haruon.groupware.board.entity.BoardComment">
+		INSERT INTO board_comment(
+			boa_no
+			, emp_no
+			, content
+			, create_date
+		) VALUES(
+			#{boaNo}, #{empNo}, #{content}, NOW()
+		)
+	</insert>
 	
 	<!-- /board/update -->
 	<update id="updateBoard" parameterType="Map">
@@ -144,11 +150,7 @@
 			, content
 			, create_date
 		) VALUES (
-			#{empNo}
-			, 1
-			, #{title}
-			, #{content}
-			, NOW()
+			#{empNo}, 1, #{title}, #{content}, NOW()
 		)
 	</insert>
 	

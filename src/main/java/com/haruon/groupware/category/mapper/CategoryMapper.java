@@ -11,4 +11,6 @@ import com.haruon.groupware.category.entity.Category;
 public interface CategoryMapper {
 	List<Category> selectCategoryListFree(); 
 	List<Category> selectAllCategory();
+	
+	Integer updateCategory(Category category);
 }
