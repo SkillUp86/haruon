@@ -22,10 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ApprovalController {
-	
+
 	private final ApprovalService approvalService;
 	private final DeptService deptService;
-	
+
 	public ApprovalController(ApprovalService approvalService, DeptService deptService) {
 		this.approvalService = approvalService;
 		this.deptService = deptService;
@@ -36,38 +36,33 @@ public class ApprovalController {
 		log.debug(approval.toString());
 		List<MultipartFile> list = approval.getFormFile();
 		if (list != null && !list.isEmpty()) {
-		    boolean existFilename = false;
-		    for (MultipartFile f : list) {
-		        if (f.isEmpty()) {
-		            continue; // 비어 있는 파일은 넘김
-		        }
-		        existFilename = true; // 유효한 파일이 하나라도 있으면
-		        if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png")) {
-		            model.addAttribute("msg", "이미지 파일만 입력이 가능합니다");
-		            return "";
-		        }
-		    }
-		    
-		    if (!existFilename) {
-		        model.addAttribute("msg", "유효한 파일이 없습니다.");
-		        return "";
-		    }
+			boolean existFilename = false;
+			for (MultipartFile f : list) {
+				if (f.isEmpty()) {
+					continue; // 비어 있는 파일은 넘김
+				}
+				if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png")) {
+					model.addAttribute("msg", "이미지 파일만 입력이 가능합니다");
+					return "/approval/approval";
+				}
+			}
 		}
+
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
-		approvalService.saveDraftAndApproval(approval, path);
-		
+		approvalService.addApproval(approval, path);
+
 		return "redirect:/";
 	}
 
 	@GetMapping("/approval")
-	public String approval(HttpSession session,Model model) {
-		String empName = (String)session.getAttribute("loginEmpName");
-		int empNo = (int)session.getAttribute("loginEmpNo");
-		String location = (String)session.getAttribute("loginEmpLocation");
-		String dname = (String)session.getAttribute("loginDname");
-		
-		log.debug("location:"+location);
-		
+	public String approval(HttpSession session, Model model) {
+		String empName = (String) session.getAttribute("loginEmpName");
+		int empNo = (int) session.getAttribute("loginEmpNo");
+		String location = (String) session.getAttribute("loginEmpLocation");
+		String dname = (String) session.getAttribute("loginDname");
+
+		log.debug("location:" + location);
+
 		// 전자결재 코드
 		String parentCode = "C00";
 		List<CommonCode> codeList = approvalService.findByParentCode(parentCode);
@@ -78,8 +73,7 @@ public class ApprovalController {
 		// 휴가 코드
 		String vactionCode = "H00";
 		List<CommonCode> vactionList = approvalService.findByParentCode(vactionCode);
-		
-		
+
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("vactionList", vactionList);
 		model.addAttribute("deptList", deptList);
@@ -87,7 +81,7 @@ public class ApprovalController {
 		model.addAttribute("empNo", empNo);
 		model.addAttribute("empName", empName);
 		model.addAttribute("dname", dname);
-		
+
 		return "/approval/approval";
 	}
 

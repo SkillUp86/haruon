@@ -28,74 +28,73 @@ public class ApprovalService {
 		this.approvalMapper = approvalMapper;
 		this.commonMapper = commonMapper;
 	}
-	
+
 	// 기안서 유형 추가
-	public void saveDraftAndApproval(RequestApproval approval, String path) {
-		
+	public void addApproval(RequestApproval approval, String path) {
+
 		// 기본 기안서
 		int basicRow = approvalMapper.saveBasicDraftByUser(approval);
 		Integer draNo = approval.getDraNo();
-		
+
 		// 기안서 분기
-		if(approval.getKind().equals("C02")) { 
-			approvalMapper.saveApprovalByUser(approval); 
+		if (approval.getKind().equals("C02")) {
 			approvalMapper.saveBusinessTripByUser(approval); // 출장 보고서
+			approvalMapper.saveApprovalByUser(approval);
 			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} else if(approval.getKind().equals("C03")) { 
-			approvalMapper.saveApprovalByUser(approval); 
+		} else if (approval.getKind().equals("C03")) {
+			approvalMapper.saveApprovalByUser(approval);
+			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
 			approvalMapper.saveSalesByUser(approval); // 매출 보고서
-			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} else if(approval.getKind().equals("C04")) { 
-			approvalMapper.saveApprovalByUser(approval); 
+		} else if (approval.getKind().equals("C04")) {
 			approvalMapper.saveVacationByUser(approval); // 휴가 보고서
+			approvalMapper.saveApprovalByUser(approval);
 			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} 
+		}
 		// 참조자 있을시 참조자 입력
-		if(approval.getSubEmpNumber() != null) {
+		if (approval.getSubEmpNumber() != null) {
 			approvalMapper.saveApprovalReference(approval);
 		}
-		
+
 		// 첨부 파일 존재
-		
+
 	}
 
-	
-	
 	// 결재 코드
 	public List<CommonCode> findByParentCode(String parentCode) {
 		return commonMapper.findByParentCode(parentCode);
 	}
-	
+
 	// 결재라인 해당 부서 직원
-	public List<ResponseEmployee> findEmpByDept(int deptNo){
-		return approvalMapper.findEmpByDept(deptNo);
+	public List<ResponseEmployee> findEmpByDept(int deptNo, int empNo) {
+		return approvalMapper.findEmpByDept(deptNo, empNo);
 	}
-	
+
 	// 결재 가맹점 선택 리스트
 	public List<ResponseFranchise> findByFranchise() {
 		return approvalMapper.findByFranchise();
 	}
+
 	// 결재 첨부파일 존재시 추가
 	private void existApprovalFile(RequestApproval approval, String path, int basicRow, Integer draNo) {
-		if(basicRow == 1 && approval.getFormFile()!= null) {
+		if (basicRow == 1 && approval.getFormFile() != null) {
 			List<MultipartFile> file = approval.getFormFile();
-			for(MultipartFile f : file) {
-			DraftFileEntity draftFile = new DraftFileEntity();
-			draftFile.setDraNo(draNo);
-			draftFile.setKind(f.getContentType());
-			draftFile.setSize(f.getSize());
-			int dotInx = f.getOriginalFilename().lastIndexOf(".");
-			String originName = f.getOriginalFilename().substring(0,dotInx);
-			String fileName = UUID.randomUUID().toString().replace("-", "");
-			String ext = f.getOriginalFilename().substring(dotInx+1);
-			draftFile.setFileName(fileName);
-			draftFile.setOriginName(originName);
-			draftFile.setExt(ext);
-			
-			int draftFileRow = approvalMapper.saveDraftFileByUser(draftFile);
-				if(draftFileRow == 1) {
+			for (MultipartFile f : file) {
+				DraftFileEntity draftFile = new DraftFileEntity();
+				draftFile.setDraNo(draNo);
+				draftFile.setKind(f.getContentType());
+				draftFile.setSize(f.getSize());
+				int dotInx = f.getOriginalFilename().lastIndexOf(".");
+				String originName = f.getOriginalFilename().substring(0, dotInx);
+				String fileName = UUID.randomUUID().toString().replace("-", "");
+				String ext = f.getOriginalFilename().substring(dotInx + 1);
+				draftFile.setFileName(fileName);
+				draftFile.setOriginName(originName);
+				draftFile.setExt(ext);
+
+				int draftFileRow = approvalMapper.saveDraftFileByUser(draftFile);
+				if (draftFileRow == 1) {
 					try {
-						f.transferTo(new File(path + fileName +"."+ext));
+						f.transferTo(new File(path + fileName + "." + ext));
 					} catch (IllegalStateException | IOException e) {
 						e.printStackTrace();
 						throw new IllegalArgumentException("파일이 없습니다");
@@ -104,4 +103,5 @@ public class ApprovalService {
 			}
 		}
 	}
+
 }

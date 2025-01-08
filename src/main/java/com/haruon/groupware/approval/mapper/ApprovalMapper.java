@@ -26,7 +26,7 @@ public interface ApprovalMapper {
 	// 기본 기안서
 	int saveBasicDraftByUser(RequestApproval approval);
 	// 부서별 직원 리스트
-	List<ResponseEmployee> findEmpByDept(int deptNo);
+	List<ResponseEmployee> findEmpByDept(int deptNo, int empNo);
 	// 가맹점 결재 리스트
 	List<ResponseFranchise> findByFranchise();
 	

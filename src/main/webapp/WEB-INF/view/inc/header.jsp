@@ -17,7 +17,7 @@
 
                 <li class="nav-item dropdown language-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="../src/assets/img/1x1/kr.svg" class="flag-width" alt="flag">
+                        <img src="${pageContext.request.contextPath}/src/assets/img/1x1/kr.svg" class="flag-width" alt="flag">
                     </a>
                 </li>
                 <!-- 다크모드 & 라이트 모드 -->
@@ -38,7 +38,7 @@
                         <div class="notification-scroll">
                             <div class="dropdown-item">
                                 <div class="media server-log">
-                                    <img src="../src/assets/img/profile-16.jpeg" class="img-fluid me-2" alt="avatar">
+                                    <img src="${pageContext.request.contextPath}/src/assets/img/profile-16.jpeg" class="img-fluid me-2" alt="avatar">
                                     <div class="media-body">
                                         <div class="data-info">
                                             <h6 class="">Kara Young</h6>
@@ -53,7 +53,7 @@
                             
                             <div class="dropdown-item">
                                 <div class="media ">
-                                    <img src="../src/assets/img/profile-15.jpeg" class="img-fluid me-2" alt="avatar">
+                                    <img src="${pageContext.request.contextPath}/src/assets/img/profile-15.jpeg" class="img-fluid me-2" alt="avatar">
                                     <div class="media-body">
                                         <div class="data-info">
                                             <h6 class="">Daisy Anderson</h6>
@@ -69,7 +69,7 @@
 
                             <div class="dropdown-item">
                                 <div class="media file-upload">
-                                    <img src="../src/assets/img/profile-21.jpeg" class="img-fluid me-2" alt="avatar">
+                                    <img src="${pageContext.request.contextPath}/src/assets/img/profile-21.jpeg" class="img-fluid me-2" alt="avatar">
                                     <div class="media-body">
                                         <div class="data-info">
                                             <h6 class="">Oscar Garner</h6>

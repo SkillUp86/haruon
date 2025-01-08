@@ -228,7 +228,7 @@
 								<div class="input-group">
 									<textarea class="form-control mb-4" rows="10" id="textContent" name="textContent"></textarea>
 								</div>
-								<div class="invalid-feedback">
+								<div class="form-group mb-4">
 					                ${msg}
 					            </div>
 								<div class="form-group mb-4">

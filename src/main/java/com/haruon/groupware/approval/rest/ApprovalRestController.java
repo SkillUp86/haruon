@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.service.ApprovalService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 public class ApprovalRestController {
 	
@@ -20,8 +22,9 @@ public class ApprovalRestController {
 	}
 
 	@GetMapping("approval/depts/{deptNo}/employees")
-	public ResponseEntity<List<ResponseEmployee>> empList(@PathVariable int deptNo) {
-		List<ResponseEmployee> empByDept = approvalService.findEmpByDept(deptNo);
+	public ResponseEntity<List<ResponseEmployee>> empList(@PathVariable int deptNo,HttpSession session) {
+		int empNo = (int)session.getAttribute("loginEmpNo");
+		List<ResponseEmployee> empByDept = approvalService.findEmpByDept(deptNo,empNo);
 		return ResponseEntity.ok(empByDept);
 		
 	}

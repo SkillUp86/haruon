@@ -92,7 +92,7 @@
                                 <a href="${pageContext.request.contextPath}/approval"> 결재신청  </a>
                             </li>
                             <li>
-                                <a href="./component-tabs.html"> 내문서함 </a>
+                                <a href="${pageContext.request.contextPath}/draft/list"> 내문서함 </a>
                             </li>
                             <li>
                                 <a href="./component-accordion.html"> 참조문서서함  </a>
