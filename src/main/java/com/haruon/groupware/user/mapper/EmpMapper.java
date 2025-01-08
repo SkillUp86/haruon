@@ -1,6 +1,7 @@
 package com.haruon.groupware.user.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,5 +18,9 @@ public interface EmpMapper {
 	String mailCheck(String mailCheck);
 
 	List<EmployeeResponse> findEmpByDept(int deptNo);
+
+    EmpDto findEmpByEmail(Map<String, Object> params);
+	
+	int updateEmpPw(EmpDto emp);
 
 }

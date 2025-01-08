@@ -42,7 +42,7 @@
                     <div class="card mt-3 mb-3">
                         <div class="card-body">
     
-    						<form action="" method="post">
+    						<form action="${pageContext.request.contextPath}/findPw" method="post">
                             <div class="row">
                                 <div class="col-md-12 mb-3">
 
@@ -52,14 +52,14 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">사원번호</label>
-                                        <input type="text" id=""  name="" class="form-control">
+   										 <input type="text" id="empNo" name="empNo" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="mb-4">
                                         <label class="form-label">이메일</label>
-                                        <input type="email" id="" name="" class="form-control">
+                                        <input type="email" id="email" name="email" class="form-control">
                                     </div>
                                 </div>
 
