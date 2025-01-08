@@ -1,11 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper	namespace="com.haruon.groupware.attendance.mapper.AttendanceMapper">
+	<!-- 어제, 한 사원의 근태 기록 조회 -->
+	<select id="findAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
+			resultType="com.haruon.groupware.attendance.entity.Attendance">
+		SELECT emp_no empNo
+			 , start_time startTime
+			 , end_time endTime
+		  FROM attendance 
+		 WHERE emp_no=#{empNo} AND start_time LIKE CONCAT('%', '#{startTime}', '%')
+	</select>	
+	<!-- 어제, 한 사원의 연차 기록과 출장 기록 조회 --> 
+	<select id="findYesterDayAttByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
+			resultType="Map">
+		
+		 SELECT s.sch_no schNo
+		      , cc.descript schType
+			  , s.start_time startTime
+			  , s.end_time endTime
+		   FROM schedules s
+		  INNER JOIN schedule_attendance sa ON sa.sch_no = s.sch_no
+		  INNER JOIN common_code cc ON s.kind = cc.common_code
+		  WHERE sa.emp_no = #{empNo}
+		 	AND s.start_time LIKE CONCAT('%', '#{startTime}','%')
+		    AND s.kind IN (SELECT common_code from common_code
+							WHERE parent_code 
+							   IN (SELECT common_code FROM common_code
+								    WHERE descript LIKE 'schedule_kind')
+							  AND (descript Like '연차' OR descript LIKE '반차' OR descript LIKE  '출장'))
+	</select>
+	
+	<!-- 근태 업데이트 -->
+	<update id="updateAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
+		UPDATE attendance 
+		<set>
+			<choose>
+				<when test = "${endTime} != null">
+					end_time = ${endTime}
+				</when>
+				<when test = "${state} != null">
+					state = ${state}
+				</when>
+				<when test = "${approvalYN} != null">
+					approvalYN = ${approvalYN}
+				</when>
+				<when test ="${reasonMod != null}">
+					reason_mod = ${reasonMod}
+				</when>
+			</choose>
+		</set>
+		WHERE emp_no = ${emp_no} AND start_time LIKE CONCAT('%', '#{startTime}', '%');
+	</update>
 
+	<!-- 근태 정보 생성 (스케쥴링)-->
+	<insert id="insertAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
+		Insert INTO attendance(
+			emp_no, start_time, end_time, state
+		) VALUES (
+			#{empNo}, #{startTime}, #{endTime}
+			, (SELECT common_code from common_code
+				WHERE parent_code 
+				   IN (SELECT common_code FROM common_code
+					    WHERE descript LIKE 'schedule_kind')
+				  AND descript LIKE '#{state}') 
+		)	
+	</insert>
 	
-	
-	<!-- ATTENDANCE : 특정 일 & 직원의 근태상태 조회 -->
-	
-	<!-- ATTENDANCE : 특정 일 & 직원의 근태상태 변경 -->
 	
 </mapper>
