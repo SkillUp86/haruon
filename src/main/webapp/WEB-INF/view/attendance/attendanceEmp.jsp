@@ -163,43 +163,27 @@
                                 <!-- 근태관리 start -->
                                 <div class="tab-pane fade show active" id="attendance-tab-pane" role="tabpanel" aria-labelledby="attendance-tab" tabindex="0">
                                     <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-                                        <div class="text-end">
-                                            <div class="btn-group" role="group">
-                                                <button type="button" class="btn btn-hover btn-primary">전체 선택</button>    
-                                                <!-- <button type="button" class="btn btn-hover btn-primary">선택 해제</button>      -->
-                                                <button type="button" class="btn btn-hover btn-primary">선택 승인</button>     
-                                                <button type="button" class="btn btn-hover btn-primary">전체 승인</button>     
-                                            </div>
-                                        </div>  
                                         <div class="widget-content widget-content-area br-8">                                            
+
                                             <table class="zero-config table dt-table-hover" style="width:100%">
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th>선택</th>
-                                                        <th>이름</th>
-                                                        <th>직급</th>
                                                         <th>날짜</th>
-                                                        <th>상태</th>
                                                         <th>출근</th>
                                                         <th>퇴근</th>
+                                                        <th>상태</th>
+                                                        <th>초과근무</th>
                                                         <th>승인여부</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr class="text-center">
-                                                        <td>
-                                                            <div class="form-check form-check-primary form-check-inline">
-                                                                <input class="form-check-input" type="checkbox" value="" id="form-check-primary">
-                                                                <label class="form-check-label" for="form-check-primary"></label>
-                                                            </div>
-                                                        </td>
                                                         <td>Tiger Nixon</td>
-                                                        <td>Architect</td>
-                                                        <td>2025.01.07</td>
-                                                        <td>정상근무 <button type="button" class="btn btn-hover btn-primary btn-sm">EDIT</button></td>
-                                                        <td>08:00:00</td>
-                                                        <td>16:00:00</td>
-                                                        <td><button type="button" class="btn btn-hover btn-primary btn-sm">승인</button></td></td>
+                                                        <td>ㅇ Architect</td>
+                                                        <td>ㅇㅇㅇ</td>
+                                                        <td>61</td>
+                                                        <td>2011/04/25</td>
+                                                        <td>$320,800</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -208,166 +192,92 @@
                                 </div>
                                 <!-- 근태관리 end -->
 
-                                <!-- 연차 관리 start -->
+                                <!-- 연가관리 start -->
                                 <div class="tab-pane fade" id="vacation-tab-pane" role="tabpanel" aria-labelledby="vacation-tab" tabindex="0">
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="vacation-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                            <!-- 부서 연차 기록 시작 -->
+                                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                                            <!-- 연가 요약 시작 -->
                                             <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
                                                 <div class="widget-content widget-content-area br-8">   
                                                     <div id="toggleAccordion" class="no-icons accordion">
                                                         <div class="card">
                                                             <div class="card-header" id="...">
                                                                 <section class="mb-0 mt-0">
-                                                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#vacationDraft" aria-expanded="true" aria-controls="vacationDraft">
-                                                                        부서원 휴가신청 리스트
+                                                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#defaultAccordionOne" aria-expanded="true" aria-controls="defaultAccordionOne">
+                                                                        나의 연차 요약
                                                                     </div>
                                                                 </section>
                                                             </div>
-                                                            <div id="vacationDraft" class="collapse show" aria-labelledby="..." data-bs-parent="#toggleAccordion">
+                                                            <div id="defaultAccordionOne" class="collapse show" aria-labelledby="..." data-bs-parent="#toggleAccordion">
                                                                 <div class="card-body">
-                                                                    <table class="zero-config table dt-table-hover" style="width:100%">
-                                                                        <thead>
-                                                                            <tr class="text-center">
-                                                                                <th>이름</th>
-                                                                                <th>직급</th>
-                                                                                <th>시작일자</th>
-                                                                                <th>종료일자</th>
-                                                                                <th>결재상태</th>
-                                                                                <th>상세보기</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr class="text-center">
-                                                                                <td>김대리</td>
-                                                                                <td>대리</td>
-                                                                                <td>2025.01.01. 12:50:00</td>
-                                                                                <td>2025.01.11. 12:50:00</td>
-                                                                                <td>결재완료</td>
-                                                                                <td>
-                                                                                    <button type="button" class="btn btn-primary">상세보기</button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
+                                                                    <table class="table">
+                                                                        <tr>
+                                                                            <td class="text-center">사용기간</td>
+                                                                            <td> 2025.01.01. ~ 2025.12.31. </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center">연도별 연차</td>
+                                                                            <td> 15 </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center">조정 연차</td>
+                                                                            <td>2</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center">남은 연차 / 총 연차</td>
+                                                                            <td> 9.5 / 17</td>
+                                                                        </tr>
                                                                     </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- 부서 연차 기록 끝 -->
-                                            <!-- 연차 사용률 시작 -->
-                                            <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-                                                <div class="widget-content widget-content-area br-8">   
-                                                    
-                                                    <div id="toggleAccordion" class="no-icons accordion">
-                                                        <div class="card">
-                                                            <div class="card-header" id="...">
-                                                                <section class="mb-0 mt-0">
-                                                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#annualUtilRate" aria-expanded="true" aria-controls="annualUtilRate">
-                                                                        연차 유급휴가 사용률
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                            <div id="annualUtilRate" class="collapse" aria-labelledby="..." data-bs-parent="#toggleAccordion">
-                                                                <div class="card-body">
+                                                                    <br>
                                                                     <div class="progress br-30 progress-xl">
                                                                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                                                             <div class="progress-title">
-                                                                                <span>회사 평균 연차 유급휴가 사용률</span> <span>80%</span>
+                                                                                <span>나의 연차 사용률</span> <span>80%</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="progress br-30 progress-xl">
                                                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                                                             <div class="progress-title">
-                                                                                <span>부서 평균 연차 유급휴가 사용률</span> <span>25%</span> 
+                                                                                <span>부서 평균 연차 사용률</span> <span>25%</span> </div>
                                                                             </div>
-                                                                        </div>
                                                                     </div>
-                                                                    <hr>
-                                                                    <table class="zero-config table dt-table-hover" style="width:100%">
-                                                                        <thead>
-                                                                            <tr class="text-center">
-                                                                                <th>이름</th>
-                                                                                <th>직급</th>
-                                                                                <th>총 일수</th>
-                                                                                <th>사용한 일수</th>
-                                                                                <th>사용률</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr class="text-center">
-                                                                                <td>김대리</td>
-                                                                                <td>대리</td>
-                                                                                <td>17</td>
-                                                                                <td>2</td>
-                                                                                <td>
-                                                                                    <div class="progress br-30" style="min-height: 20px; width: 100%">
-                                                                                        <div class="progress-bar bg-info " role="progressbar" style="width: 25%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                                            25%
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
                                                                 </div>
-                                                                
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- 연가 사용률 끝 -->
-
-                                            <!-- 연차 관리 시작 -->
+                                            <!-- 연가 요약 끝 -->
+                                            <!-- 연가 사용 리스트 시작 -->
                                             <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-                                                <div class="widget-content widget-content-area br-8">   
-                                                    <div id="toggleAccordion" class="no-icons accordion">
-                                                        <div class="card">
-
-                                                            <div class="card-header" id="...">
-                                                                <section class="mb-0 mt-0">
-                                                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#manageAnnual" aria-expanded="true" aria-controls="manageAnnual">
-                                                                        부서원 연차 관리
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-
-                                                            <div id="manageAnnual" class="collapse" aria-labelledby="..." data-bs-parent="#toggleAccordion">
-                                                                <div class="card-body">
-                                                                    <table class="zero-config table dt-table-hover" style="width:100%">
-                                                                        <thead>
-                                                                            <tr class="text-center">
-                                                                                <th>이름</th>
-                                                                                <th>직급</th>
-                                                                                <th>연차(현재연도 - 입사년도)</th>
-                                                                                <th>총 연차 유급휴가 일수</th>
-                                                                                <th>연차관리</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr class="text-center">
-                                                                                <td>김대리</td>
-                                                                                <td>대리</td>
-                                                                                <td>17</td>
-                                                                                <td>2</td>
-                                                                                <td>
-                                                                                    <button type="button" class="btn btn-primary">관리</button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="d-flex justify-content-sm-end">
+                                                    <button type="button" class="btn btn-hover btn-primary">휴가 신청</button>                
+                                                </div>        
+                                                <div class="widget-content widget-content-area br-8">          
+                                                    <table class="zero-config table dt-table-hover" style="width:100%">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th>시작일자</th>
+                                                                <th>종료일자</th>
+                                                                <th>대체업무자</th>
+                                                                <th>결재상태</th>
+                                                                <th>상세보기</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="text-center">
+                                                                <td>2025.01.01 12:50:00</td>
+                                                                <td>2025.01.03 12:50:00</td>
+                                                                <td>Architect</td>
+                                                                <td>결재완료</td>
+                                                                <td>상세보기</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
-                                            <!-- 연가 사용률 집계 끝 -->
+                                            <!-- 연가 사용 리스트 끝 -->
                                         </div>
                                     </div>
                                 </div>
@@ -376,6 +286,9 @@
                                 <!--출장관리 start -->
                                 <div class="tab-pane fade" id="businessTrip-tab-pane" role="tabpanel" aria-labelledby="businessTrip-tab" tabindex="0">
                                     <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+                                        <div class="d-flex justify-content-sm-end">
+                                            <button type="button" id="" class="btn btn-hover btn-primary">출장 신청</button>                
+                                        </div>  
                                         <div class="widget-content widget-content-area br-8">                                            
                                             <table class="zero-config table dt-table-hover" style="width:100%">
                                                 <thead>
@@ -384,7 +297,7 @@
                                                         <th>종료일자</th>
                                                         <th>장소</th>
                                                         <th>목적</th>
-                                                        <th>결재상태</th>
+                                                        <th>승인여부</th>
                                                         <th>상세보기</th>
                                                     </tr>
                                                 </thead>
@@ -395,9 +308,7 @@
                                                         <td>구로</td>
                                                         <td>Object</td>
                                                         <td>결재완료</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary">상세보기</button>
-                                                        </td>
+                                                        <td>상세보기</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -406,6 +317,7 @@
                                 </div>
                                 <!-- 출장관리 end -->
                             </div>
+
                         </div>
                     </div>
                 </div>
