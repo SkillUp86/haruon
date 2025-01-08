@@ -47,9 +47,19 @@
 		where dep_no = #{depNo}
 	</select>
 
-	<update id="findempByPw" parameterType="Map">
-   	UPDATE emp
- 	SET empPw = #{newEmpPw}
-   	WHERE email = #{email} AND empPw = #{empPw};
-</update>
+	<!-- 사원번호와 이메일로 사원 조회 -->
+  <!-- 사원번호와 이메일로 사원 조회 -->
+  	<select id="findEmpEmail" resultType="com.haruon.groupware.user.dto.EmpDto" parameterType="Map">
+    SELECT
+    	emp_no empNo
+    	,email email
+    FROM emp
+    WHERE emp_no = #{empNo} AND email = #{email};
+	</select>
+	
+	<update id="updateEmpPw" parameterType="com.haruon.groupware.user.dto.EmpDto">
+    UPDATE emp
+    SET emp_pw = #{empPw}
+    WHERE emp_no = #{empNo} AND email = #{email};
+	</update>
 </mapper>

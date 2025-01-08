@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class EmpDto {
+	private Integer empNo;
 	private String ename;
 	private String empPw;
 	private String postCode;
