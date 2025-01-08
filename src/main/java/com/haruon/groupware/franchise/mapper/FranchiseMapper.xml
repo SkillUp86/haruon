@@ -3,6 +3,13 @@
 <mapper
 	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
 	
+	<!-- 가맹점 수 -->
+	<select id="selectFranchisesCount" resultType="Integer">
+		SELECT count(*)
+		FROM franchise
+	</select>	
+	
+	<!-- 가맹점 리스트 -->
 	<select id="selectFranchiseList" resultType="com.haruon.groupware.franchise.entity.Franchise">
 		SELECT
 			fra_no fraNo
@@ -16,6 +23,6 @@
 			, create_date createDate
 			, update_date updateDate
 		FROM franchise
-	</select>	
+	</select>
 	
 </mapper>
