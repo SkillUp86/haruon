@@ -52,4 +52,34 @@
     SET emp_pw = #{empPw}
     WHERE emp_no = #{empNo} AND email = #{email};
 	</update>
+	
+	
+	<!-- EMP : 퇴사하지 않은 모든 사원의 사원번호를 가져오기 -->
+	<select id="findAllEmp" resultType="com.haruon.groupware.user.entity.Emp">
+		SELECT emp_no empNo , dep_no depNo
+			 , email	    , ename 
+			 , location     , join_date
+			 , total_leave  , used_leave
+		  FROM emp 
+		 WHERE leave_date IS NULL
+	</select>
+	
+	<!-- EMP : 직원의 연가 수 업데이트(매년 + 사원 등록시)  -->
+	<update id="updateLeaveByAnnualorJoin" parameterType="com.haruon.groupware.user.entity.Emp">
+		UPDATE emp
+	   	   SET total_leave = #{totalLeave}, used_leave=0
+	   	 WHERE emp_no = #{empNo}
+	</update>
+	
+	<!-- EMP : 기중 부서장이 한명의 연가 수 업데이트 -->
+	<update id="updateTotalLeaveByDivision" parameterType="com.haruon.groupware.user.entity.Emp">
+		UPDATE emp
+	   	   SET total_leave = #{totalLeave}
+	   	 WHERE emp_no = #{empNo}
+	</update>
+	
+	<!-- EMP : 가장 최근에 등록한 사원 -->
+	<select id="findNewEmp" resultType="com.haruon.groupware.user.entity.Emp">
+		SELECT emp_no empNo, join_date joinDate FROM emp WHERE emp_no = (SELECT MAX(emp_no) FROM emp)
+	</select>
 </mapper>

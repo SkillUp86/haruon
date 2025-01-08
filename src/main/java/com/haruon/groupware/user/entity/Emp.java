@@ -16,8 +16,8 @@ public class Emp {
 	private String postCode;
 	private String gender;
 	private String birth;
-	private String totalLeave;
-	private String usedLeave;
+	private Integer totalLeave;
+	private Integer usedLeave;
 	private String pwUpdate;
 	private String joinDate;
 	private String leaveDate;
