@@ -3,6 +3,21 @@
 <mapper
 	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
 	
+	<!-- 가맹점 추가 -->
+	<insert id="insertFranchise" parameterType="com.haruon.groupware.franchise.entity.Franchise">
+		INSERT INTO franchise (
+			fname
+			, address
+			, post_code
+			, id
+			, leader
+			, phone
+			, email
+		) VALUES (
+			#{fname}, #{address}, #{postCode}, #{id}, #{leader}, #{phone}, #{email}
+		)
+	</insert>
+	
 	<!-- 가맹점 수 -->
 	<select id="selectFranchisesCount" resultType="Integer">
 		SELECT count(*)
@@ -14,6 +29,7 @@
 		SELECT
 			fra_no fraNo
 			, fname
+			, post_code postCode
 			, address
 			, id
 			, leader
