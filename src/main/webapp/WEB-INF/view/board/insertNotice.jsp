@@ -107,10 +107,8 @@
                 	<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     	<div class="widget-content widget-content-area blog-create-section">
                                <div class="row mb-4">
-                               <h2>자유게시판 글 작성</h2>
                                
-                               	<form id="formInsert" action="${pageContext.request.contextPath}/board/insert" method="post" enctype="multipart/form-data">
-	                                <br>
+                               	<form id="formInsert" action="${pageContext.request.contextPath}/board/insertNotice" method="post" enctype="multipart/form-data">
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
@@ -118,29 +116,20 @@
 	                                    </div>
 	                                </div>
 	                                
-	                                <div class="col-xxl-12 col-md-4 mb-4">
-	                                    <label>카테고리</label>
-	                                    <select id="category" class="form-select" style="width: 50%;">
-										    <option value="" selected>카테고리</option>
-										    <c:forEach var="ct" items="${categoryList}">
-										    	<option value="${ct.catName}">${ct.catName}</option>
-										    </c:forEach>
-										</select>
-	                                </div>
 	                                <div class="row mb-4">
-	                                    <div class="col-sm-10">
+	                                    <div class="col-sm-12">
 	                                    	<label>제목</label>
-	                                        <input type="text" class="form-control" id="title" placeholder="제목">
+	                                        <input type="content" class="form-control" id="title" placeholder="제목">
 	                                    </div>
 	                                </div>
-	                                
+                                    
                                     <div class="form-group row invoice-note">
                                         <label>내용</label>
                                         <div class="col-sm-12">
                                             <textarea class="form-control" id="contents" name="content" placeholder="내용 작성" style="height: 300px;"></textarea>
                                         </div>
                                     </div><br>
-                                    
+                                	
 	                                <div class="row">
 	                                    <div class="col-md-8">
 			                                <label for="product-images">첨부 파일</label>
@@ -201,10 +190,7 @@
 
 	<script>
     	$('#btnInsert').click(function(){
-    		if($('#category').val() == null || $('#category').val() === ''){
-    			alert('카테고리를 선택하세요');
-    			return;
-    		} else if($('#title').val() == ''){
+    		if($('#title').val() == ''){
     			alert('제목을 입력하세요');
     			return;
     		} else if($('#contents').val() == ''){

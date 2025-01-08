@@ -14,7 +14,7 @@ import com.haruon.groupware.category.mapper.CategoryMapper;
 public class CategoryService {
 	@Autowired CategoryMapper categoryMapper;
 	
-	public List<Category> getCategoryList(){
+	public List<Category> getCategoryListFree(){
 		return categoryMapper.selectCategoryListFree();
 	}
 	

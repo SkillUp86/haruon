@@ -10,19 +10,31 @@ import com.haruon.groupware.board.entity.BoardFile;
 
 @Mapper
 public interface BoardMapper {
-	// board
+	/* 자유 */
+	// /board
 	List<Map<String,Object>> selectBoardList(Map<String,Object> map);
 	
-	// board/notice
-	List<Map<String,Object>> selectNoticeList(Map<String,Object> map);
-	
-	// board/insert
+	// /board/insert
 	Integer insertBoard(Board board);
 	Integer insertBoardFile(BoardFile boardFile);
 	
-	// board/{boaNo}
+	// /board/{boaNo}
 	Map<String,Object> selectBoardOne(Integer boaNo);
 	List<Map<String,Object>> selectCommentList(Integer boaNo);
 	Integer countComment(Integer boaNo);
 	Integer countLike(Integer boaNo);
+	
+	// /board/update
+	Integer updateBoard(Map<String,Object> map);
+	List<BoardFile> selectBoardFiles(Integer boaNo);
+	
+	/* 공지 */
+	// /board/notice
+	List<Map<String,Object>> selectNoticeList(Map<String,Object> map);
+	
+	// /board/notice/insert
+	Integer insertNotice(Board board);
+	
+	// /board/updateNotice
+	Integer updateNotice(Map<String,Object> map);
 }

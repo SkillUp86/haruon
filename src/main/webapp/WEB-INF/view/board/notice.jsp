@@ -102,7 +102,7 @@
 	                            <h2>공지 게시판</h2>
                
                					<div style="text-align: right;">
-	                                <a class="btn btn-secondary" id="insertNotice" href="${pageContext.request.contextPath}/board/notice/insert">
+	                                <a class="btn btn-secondary" id="insertNotice" href="${pageContext.request.contextPath}/board/insertNotice">
 	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
 	                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 글쓰기
 	                                </a>
@@ -127,7 +127,7 @@
                                                         <div class="d-flex justify-content-left align-items-center">
                                                             <div class="d-flex flex-column">
                                                                 <span class="text-truncate fw-bold">
-                                                                    <a href="${pageContext.request.contextPath}/board/notice/{n.boaNo}">${n.title}</a>
+                                                                    <a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title}</a>
                                                                 </span>
                                                             </div>
                                                         </div>

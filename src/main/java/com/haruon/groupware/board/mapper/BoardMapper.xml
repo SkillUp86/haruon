@@ -23,22 +23,6 @@
 		ORDER BY b.boa_no DESC
 	</select>
 	
-	<!-- /board/notice -->
-	<select id="selectNoticeList" parameterType="Map" resultType="Map">
-		SELECT 
-			b.boa_no boaNo
-			, e.ename ename
-			, b.title
-			, b.create_date createDate
-			, b.view_cnt viewCnt
-			, b.cat_no catNo
-		FROM board b
-		INNER JOIN emp e
-			ON b.emp_no = e.emp_no
-		WHERE b.cat_no = 1
-		ORDER BY b.boa_no DESC
-	</select>
-
 	<!-- /board/insert -->
 	<insert id="insertBoard" parameterType="com.haruon.groupware.board.entity.Board">
 		INSERT INTO board(
@@ -74,6 +58,7 @@
 		SELECT
 			b.boa_no boaNo
 			, e.ename ename
+			, b.cat_no catNo
 			, c.cat_name catName
 			, b.title
 			, b.content
@@ -109,4 +94,71 @@
 		FROM board_like
 		WHERE boa_no = #{boaNo}
 	</select>
+	
+	<!-- /board/update -->
+	<update id="updateBoard" parameterType="Map">
+		UPDATE board
+		SET cat_no = #{catNo}
+			, title = #{title}
+			, content = #{content}
+			, update_date = NOW()
+		WHERE boa_no = #{boaNo}
+	</update>
+	<select id="selectBoardFiles" parameterType="Integer" resultType="com.haruon.groupware.board.entity.BoardFile">
+		SELECT
+			boaf_no boafNo
+			, original_name originalName
+			, file_name fileName
+			, ext
+			, kind
+			, size
+		FROM board_file
+		WHERE boa_no = #{boaNo}
+	</select>
+	
+	<!-- 	
+		공지
+	 		-->
+	<!-- /board/notice -->
+	<select id="selectNoticeList" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+			, b.create_date createDate
+			, b.view_cnt viewCnt
+			, b.cat_no catNo
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		WHERE b.cat_no = 1
+		ORDER BY b.boa_no DESC
+	</select>
+	
+	<!-- /board/insertNotice -->
+	<insert id="insertNotice" parameterType="com.haruon.groupware.board.entity.Board">
+		INSERT INTO board(
+			emp_no
+			, cat_no
+			, title
+			, content
+			, create_date
+		) VALUES (
+			#{empNo}
+			, 1
+			, #{title}
+			, #{content}
+			, NOW()
+		)
+	</insert>
+	
+	<!-- /board/updateNotice -->
+	<update id="updateNotice" parameterType="Map">
+		UPDATE board
+		SET cat_no = 1
+			, title = #{title}
+			, content = #{content}
+			, update_date = NOW()
+		WHERE boa_no = #{boaNo}
+	</update>
 </mapper>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
@@ -38,9 +38,9 @@
     <link rel="stylesheet" href="../src/assets/css/light/apps/ecommerce-create.css">
     <link rel="stylesheet" href="../src/assets/css/dark/apps/ecommerce-create.css">
     <!--  END CUSTOM STYLE FILE  -->
-       
+        
     <!-- 페이지 제목 입력칸 -->
-    <title>자유게시판 글 작성</title>
+    <title>게시글 수정</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -103,65 +103,59 @@
                     <!--  END BREADCRUMBS  -->
                 </div>
                 <!-- 메인컨텐츠 입력칸 -->
+                
                 <div class="row mb-4 layout-spacing layout-top-spacing">
-                	<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    	<div class="widget-content widget-content-area blog-create-section">
-                               <div class="row mb-4">
-                               <h2>자유게시판 글 작성</h2>
-                               
-                               	<form id="formInsert" action="${pageContext.request.contextPath}/board/insert" method="post" enctype="multipart/form-data">
-	                                <br>
-	                                <div class="row mb-4">
-	                                    <div class="col-sm-10">
-	                                    	<label>작성자</label>
-	                                        <input type="number" class="form-control" id="empNo" name="empNo" placeholder="사원번호" style="width: 150px;">
-	                                    </div>
-	                                </div>
+
+                        <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                            <div class="widget-content widget-content-area ecommerce-create-section">
+
+                                <form id="formUpdate" action="${pageContext.request.contextPath}/board/update" method="post">
+	                                <input type="hidden" name="boaNo" value="${b.boaNo}">
+	                                <div class="col-xxl-12 col-md-6 mb-4">
+	                                     <label for="category">카테고리</label>
+	                                     <select class="form-select" id="category" name="catNo">
+	                                         <option value="${b.catNo}">${b.catName}</option>
+	                                         <c:forEach var="c" items="${categoryList}">
+	                                         	<option value="${c.catNo}">${c.catName}</option>
+	                                         </c:forEach>
+	                                     </select>
+	                                 </div>
 	                                
-	                                <div class="col-xxl-12 col-md-4 mb-4">
-	                                    <label>카테고리</label>
-	                                    <select id="category" class="form-select" style="width: 50%;">
-										    <option value="" selected>카테고리</option>
-										    <c:forEach var="ct" items="${categoryList}">
-										    	<option value="${ct.catName}">${ct.catName}</option>
-										    </c:forEach>
-										</select>
-	                                </div>
 	                                <div class="row mb-4">
-	                                    <div class="col-sm-10">
+	                                    <div class="col-sm-12">
 	                                    	<label>제목</label>
-	                                        <input type="text" class="form-control" id="title" placeholder="제목">
+	                                        <input type="text" class="form-control" id="title" name="title" placeholder="제목" value="${b.title}">
 	                                    </div>
 	                                </div>
-	                                
-                                    <div class="form-group row invoice-note">
+									
+	                                <div class="form-group row invoice-note">
                                         <label>내용</label>
                                         <div class="col-sm-12">
-                                            <textarea class="form-control" id="contents" name="content" placeholder="내용 작성" style="height: 300px;"></textarea>
+                                            <textarea class="form-control" id="contents" name="content" placeholder="내용 작성" style="height: 300px;">${b.content}</textarea>
                                         </div>
                                     </div><br>
-                                    
+	
 	                                <div class="row">
 	                                    <div class="col-md-8">
-			                                <label for="product-images">첨부 파일</label>
-			                                <div class="multiple-file-upload">
-			                                    <input type="file" class="filepond file-upload-multiple" name="boardFile" id="boardFile" 
-			                                        multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="5">
-			                                </div>
-		                               </div>
-		                            </div>
-	
-	                                <div class="col-sm-12 text-center" style="margin-top: 20px;">
-	                                    <button id="btnInsert" type="button" class="btn btn-success mb-4">글 작성</button>
+	                                        <label>첨부파일</label>
+	                                        <div class="multiple-file-upload">
+	                                            <input type="file" class="filepond file-upload-multiple" name="boardFile" id="boardFile" 
+	                                                multiple data-allow-reorder="true" data-instant-upload="false" data-max-file-size="3MB" data-max-files="5">
+	                                        </div>
+	                                    </div>
 	                                </div>
-								</form>
-								
-							</div>
-                    	</div>
-               
-               
-               		</div>
-                </div>
+	                                
+	                                <div class="col-sm-12 text-center" style="margin-top: 20px;">
+	                                    <button id="btnUpdate" type="button" class="btn btn-success mb-4">수정하기</button>
+	                                </div>
+                                </form>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                
                 <!-- 메인컨텐츠 END -->
             </div>
             <!--  BEGIN FOOTER  -->
@@ -173,7 +167,7 @@
     </div>
     <!-- END MAIN CONTAINER -->
 
-   <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <script src="../src/plugins/src/global/vendors.min.js"></script>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -199,10 +193,32 @@
     <script src="../src/plugins/src/tagify/tagify.min.js"></script>
     <script src="../src/assets/js/apps/ecommerce-create.js"></script>
 
-	<script>
-    	$('#btnInsert').click(function(){
+    <script>
+	    // boardFiles를 JSON으로 변환
+	    var boardFiles = [
+	        <c:forEach var="file" items="${boardFiles}">
+	            {
+	                "boafNo": "${file.boafNo}",
+	                "originalName": "${file.originalName}",
+	                "fileName": "${file.fileName}",
+	                "ext": "${file.ext}",
+	                "kind": "${file.kind}",
+	                "size": "${file.size}"
+	            }
+	        </c:forEach>
+	    ];
+	
+	    // 파일 경로 배열 생성
+	    var filePaths = boardFiles.map(function(file) {
+	        return '${pageContext.request.contextPath}/upload/' + file.fileName; // 웹 애플리케이션의 컨텍스트 경로와 upload 폴더를 결합
+	    });
+	
+	    // ecommerce.addFiles 호출
+	    ecommerce.addFiles(...filePaths); // 스프레드 연산자를 사용하여 배열 전개
+    
+    	$('#btnUpdate').click(function(){
     		if($('#category').val() == null || $('#category').val() === ''){
-    			alert('카테고리를 선택하세요');
+    			$('#category').val('${b.catNo}'); // 카테고리 입력하지 않았으면 원래 카테고리 값 입력
     			return;
     		} else if($('#title').val() == ''){
     			alert('제목을 입력하세요');
@@ -211,9 +227,11 @@
     	        alert('내용을 입력하세요');
     	        return;
     	    } else {
-    			$('#formInsert').submit();
+    			$('#formUpdate').submit();
     		}
     	})
     </script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>
