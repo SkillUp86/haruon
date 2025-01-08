@@ -7,6 +7,7 @@ public class Franchise {
 	private Integer fraNo; // 가맹점 번호
 	private String fname; // 가맹점 이름
 	private String address; // 주소
+	private String postCode; // 우편번호
 	private String id; // 사업자번호 10자리
 	private String leader; // 사장 이름
 	private String phone; // 휴대폰

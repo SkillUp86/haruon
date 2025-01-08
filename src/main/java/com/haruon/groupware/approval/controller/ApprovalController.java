@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.haruon.groupware.approval.dto.RequestApproval;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
@@ -31,11 +32,31 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/approval")
-	public String insertApproval(@ModelAttribute RequestApproval approval) {
+	public String insertApproval(@ModelAttribute RequestApproval approval, Model model, HttpSession session) {
 		log.debug(approval.toString());
+		List<MultipartFile> list = approval.getFormFile();
+		if (list != null && !list.isEmpty()) {
+		    boolean existFilename = false;
+		    for (MultipartFile f : list) {
+		        if (f.isEmpty()) {
+		            continue; // 비어 있는 파일은 넘김
+		        }
+		        existFilename = true; // 유효한 파일이 하나라도 있으면
+		        if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png")) {
+		            model.addAttribute("msg", "이미지 파일만 입력이 가능합니다");
+		            return "";
+		        }
+		    }
+		    
+		    if (!existFilename) {
+		        model.addAttribute("msg", "유효한 파일이 없습니다.");
+		        return "";
+		    }
+		}
+		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		approvalService.saveDraftAndApproval(approval, path);
 		
-		
-		return "";
+		return "redirect:/";
 	}
 
 	@GetMapping("/approval")

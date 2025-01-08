@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.approval.mapper.ApprovalMapper">
+	<!-- 참조자 추가 -->
+	<insert id="saveApprovalReference" parameterType="com.haruon.groupware.approval.entity.ReferEntity">
+		insert into refer(
+				app_no
+			,	emp_no
+		) values (
+				#{appNo}
+			,	#{empNo}
+		)
+	</insert>
+	<!-- 결재 첨부파일 -->
+	<insert id="saveDraftFileByUser" parameterType="com.haruon.groupware.approval.entity.DraftFileEntity">
+		insert into draft_file(
+				dra_no
+			,	origin_name
+			,	file_name
+			,	ext
+			,	kind
+			,	size
+			
+		) values (
+				#{draNo}
+			,	#{originName}
+			,	#{fileName}
+			,	#{ext}
+			,	#{kind}
+			,	#{size}
+			
+		)
+	</insert>
+	<!-- 결재양식 -->
+	<insert id="saveApprovalByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval"
+			useGeneratedKeys="true" keyProperty="appNo">
+		insert into approval(
+				dra_no
+			,	mid_app
+			,	final_app
+		) values (
+				#{draNo}
+			,	#{midAppNo}
+			,	#{finalAppNo}
+		)
+	</insert>
+	 
+	<!-- 휴가 보고서 -->
+	<insert id="saveVacationByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval">
+		insert into vacation(
+				dra_no
+			,	emp_no <!-- 대체 업무자 사원번호 -->
+			,	start_date
+			,	finish_date
+			, 	kind
+			,	urgent_phone
+		) values (
+				#{draNo}
+			,	#{subEmpNumber}
+			,	#{vacStartDate}
+			,	#{vacFinishDate}
+			,	#{vactionType}
+			,	#{urgentPhone}
+		)
+	</insert>
+	<!-- 매출 보고서 -->
+	<insert id="saveSalesByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval">
+		insert into sales(
+				dra_no
+			,	fra_no
+			,	ym
+			,	revenue
+		) values (
+				#{draNo}
+			,	#{fraNo}
+			,	#{ym}
+			,	#{revenue}
+		)
+	</insert>
+	<!-- 출장 보고서 -->
+	<insert id="saveBusinessTripByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval">
+		insert into business_trip(
+				dra_no
+			,	place
+			,	start_date
+			,	finish_date
+		) values (
+				#{draNo}
+			,	#{place}
+			,	#{placeStartDate}
+			,	#{placeEndDate}
+		)
+	</insert>
+	<!-- 기본 기안서 -->
+	<insert id="saveBasicDraftByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval" 
+			useGeneratedKeys="true" keyProperty="draNo">
+		insert into draft(
+				emp_no
+			,	kind
+			,	title
+			,	content
+		) values (
+				#{empNo}
+			,	#{kind}
+			,	#{title}
+			,	#{textContent}
+		)
+	</insert>
 	
 	
 	<!-- 부서별 직원 리스트 -->

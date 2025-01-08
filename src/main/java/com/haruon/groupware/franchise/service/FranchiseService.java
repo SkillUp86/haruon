@@ -15,6 +15,13 @@ import com.haruon.groupware.franchise.mapper.FranchiseMapper;
 public class FranchiseService {
 	@Autowired FranchiseMapper franchiseMapper;
 	
+	
+	// 가맹점 추가
+	public Integer addFranchise(Franchise franchise) {
+		return franchiseMapper.insertFranchise(franchise);
+	}
+	
+	// 가맹점 조회
 	public List<Franchise> getFranchiseList() {
 		return franchiseMapper.selectFranchiseList();
 	}
