@@ -13,7 +13,7 @@ public interface EmpMapper {
 	
 	String mailCheck(String mailCheck);
 
-    Emp findEmpByEmail(EmpDto emp);
+    EmpDto findEmpByEmail(EmpDto emp);
 	
 	int updateEmpPw(EmpDto emp);
 

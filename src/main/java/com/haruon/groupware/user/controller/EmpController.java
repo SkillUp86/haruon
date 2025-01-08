@@ -115,32 +115,17 @@ public class EmpController {
     }
  // 비밀번호 찾기 처리
     @PostMapping("/findPw")
-    public String findPw(EmpDto emp, Model model) {
+    public String findPw(@RequestParam Integer empNo, @RequestParam String email, Model model) {
         try {
-            // Service 호출 (성공 여부 확인 대신 예외 처리 사용)
             empService.findAndSendNewPw(empNo, email);
             model.addAttribute("message", "새로운 비밀번호가 이메일로 발송되었습니다.");
+            return"user/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("message", e.getMessage());
         } catch (Exception e) {
             model.addAttribute("message", "오류가 발생했습니다. 다시 시도해주세요.");
         }
-
         return "user/findPw";
-    }
-    // 이메일 발송 메서드
-    private void sendResetPassword() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(EmpDto.getEmail());
-        message.setSubject("비밀번호 초기화 안내");
-        message.setText(
-            "안녕하세요.\n\n" +
-            "비밀번호 초기화 요청에 따라 임시 비밀번호가 발급되었습니다.\n" +
-            "로그인 후 반드시 비밀번호를 변경해주세요.\n\n" +
-            "임시 비밀번호: " + newPassword + "\n\n" +
-            "감사합니다."
-        );
-        javaMailSender.send(message);
     }
 }
 
