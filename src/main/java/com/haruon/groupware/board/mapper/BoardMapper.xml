@@ -9,11 +9,33 @@
 			, b.title
 			, b.create_date createDate
 			, b.view_cnt viewCnt
+			, c.cat_name catName
+			, COUNT(bl.like_no) countLike
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		INNER JOIN category c
+			ON b.cat_no = c.cat_no
+		INNER JOIN board_like bl
+			ON b.boa_no = bl.boa_no
+		WHERE b.cat_no != 1
+		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
+		ORDER BY b.boa_no DESC
+	</select>
+	
+	<!-- /board/notice -->
+	<select id="selectNoticeList" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+			, b.create_date createDate
+			, b.view_cnt viewCnt
 			, b.cat_no catNo
 		FROM board b
 		INNER JOIN emp e
-		ON b.emp_no = e.emp_no
-		WHERE b.cat_no != 1
+			ON b.emp_no = e.emp_no
+		WHERE b.cat_no = 1
 		ORDER BY b.boa_no DESC
 	</select>
 
@@ -33,4 +55,58 @@
 			, NOW()
 		)
 	</insert>
+	<insert id="insertBoardFile" parameterType="com.haruon.groupware.board.entity.BoardFile">
+		INSERT INTO board_file(
+			boa_no
+			, original_name
+			, file_name
+			, ext
+			, kind
+			, size
+			, create_date
+		) VALUES(
+			#{boaNo}, #{originalName}, #{fileName}, #{ext}, #{kind}, #{size}, NOW()
+		)
+	</insert>
+	
+	<!-- /board/{boaNo} -->
+	<select id="selectBoardOne" parameterType="Integer" resultType="Map">
+		SELECT
+			b.boa_no boaNo
+			, e.ename ename
+			, c.cat_name catName
+			, b.title
+			, b.content
+			, b.create_date createDate
+			, b.update_date updateDate
+			, b.view_cnt viewCnt
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		INNER JOIN category c
+			ON b.cat_no = c.cat_no
+		WHERE boa_no = #{boaNo}
+	</select>
+	<select id="selectCommentList" parameterType="Integer" resultType="Map">
+		SELECT
+			bc.com_no comNo
+			, e.ename ename
+			, bc.content content
+			, bc.create_date createDate
+		FROM board_comment bc
+		INNER JOIN emp e
+			ON bc.emp_no = e.emp_no
+		WHERE bc.boa_no = #{boaNo}
+		ORDER BY bc.create_date
+	</select>
+	<select id="countComment" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM board_comment
+		WHERE boa_no = #{boaNo}
+	</select>
+	<select id="countLike" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM board_like
+		WHERE boa_no = #{boaNo}
+	</select>
 </mapper>
