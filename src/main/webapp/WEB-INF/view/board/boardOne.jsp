@@ -162,8 +162,34 @@
 	                                     </div>
 	                                 </div>
 	                             </c:forEach>
-
                              </div>
+                             <div class="post-form mt-5">
+                                 <div class="section add-comment">
+                                 	<form id="formComment" action="${pageContext.request.contextPath}/board/comment" method="post">
+	                                     <div class="info">
+	                                         <div class="row mt-4">
+	                                         	<div class="col-md-6">
+	                                                 <div class="mb-3">
+	                                                     <label class="form-label">작성자</label>
+	                                                     <input type="number" class="form-control" id="empNo" name="empNo" style="width: 150px;"> <!-- readonly -->
+	                                                 </div>
+	                                             </div>
+	                                             <div class="col-md-12">
+		                                             <div class="mb-3">
+		                                                 <label class="form-label">댓글 작성</label>
+		                                                 <textarea class="form-control" cols="20" rows="4" name="content" id="contents"></textarea>
+		                                             </div>
+	                                             </div>
+	                                         </div>
+	                                         <div class="text-end mt-4">
+	                                             <button class="btn me-3" style="background-color: darkgray; color: #fff !important;">지우기</button>
+	                                             <button id="btnComment" class="btn btn-success">입력</button>
+	                                         </div>
+	                                     </div>
+	                                 </form>   
+                                 </div>
+                             </div>
+                             
                          </div>
                     </div>
                  </div>
@@ -189,5 +215,8 @@
     <script src="../src/plugins/src/highlight/highlight.pack.js"></script>
     <!-- END GLOBAL MANDATORY STYLES -->
 
+	<script>
+		
+	</script>
 </body>
 </html>

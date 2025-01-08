@@ -137,10 +137,11 @@
 								                            <td>${c.catNo}</td>
 								                            <td>${c.catName}</td>
 								                            <td>
-								                            	<a href="${pageContext.request.contextPath}/board/categories/modify" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#inputFormModal">수정</a>
+								                            	<a href="${pageContext.request.contextPath}/board/category/update" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#inputFormModal"
+								                            		data-catno="${c.catNo}" data-catname="${c.catName}" onclick="setModalData(this)">수정</a>
 								                            </td>
 								                            <td>
-								                            	<a href="${pageContext.request.contextPath}/board/categories/delete" class="btn btn-dark btn-rounded mb-2 me-4">삭제</a>
+								                            	<a href="${pageContext.request.contextPath}/board/category/delete" class="btn btn-dark btn-rounded mb-2 me-4">삭제</a>
 								                            </td>
 								                        </tr>
 								                        <!-- Modal -->
@@ -152,22 +153,24 @@
 											                        <h5 class="modal-title">카테고리 수정</h5>
 											                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
 											                    </div>
-											                    <div class="modal-body">
-											                   	 	<form id="editForm">
+											                    
+											                    <form id="formUpdate" action="${pageContext.request.contextPath}/category/update" method="post">
+											                    	<div class="modal-body">
 													                    <div class="mb-3">
 													                        <label for="catNo" class="form-label">번호</label>
-													                        <input type="text" class="form-control" id="catNo" name="catNo">
+													                        <input type="text" class="form-control" id="catNo" name="catNo" value="${c.catNo}" readonly>
 													                    </div>
 													                    <div class="mb-3">
 													                        <label for="catName" class="form-label">이름</label>
-													                        <input type="text" class="form-control" id="catName" name="catName">
+													                        <input type="text" class="form-control" id="catName" name="catName" value="${c.catName}">
 													                    </div>
-												                	</form>
-											                    </div>
-											                    <div class="modal-footer">
-											                        <button type="submit" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-											                        <button type="submit" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">수정</button>
-											                    </div>
+												                    </div>
+												                    <div class="modal-footer">
+												                        <button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+												                        <button id="btnUpdate" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">수정</button>
+												                    </div>
+												                 </form>
+												                 
 											                  </div>
 											               	</div>
 											            	</div>
@@ -206,6 +209,30 @@
     <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
     <script src="../src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    
+    <script>
+    // 모달창마다 데이터 받기
+	function setModalData(button) {
+	    const catNo = button.getAttribute('data-catno');
+	    const catName = button.getAttribute('data-catname');
+	
+	    document.getElementById('catNo').value = catNo;
+	    document.getElementById('catName').value = catName;
+	}
+	</script>
+    
+    <script>
+	 // 수정 버튼 클릭 시 폼 제출
+    $('#inputFormModal').on('click', '#btnUpdate', function() {
+        if ($('#catName').val() === '') {
+            alert('수정할 이름을 입력하세요');
+            return;
+        } else {
+            $('#formUpdate').submit();
+        }
+    });
+	});
+    </script>
 
 </body>
 </html>

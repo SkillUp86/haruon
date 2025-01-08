@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.haruon.groupware.board.dto.BoardDto;
+import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
 import com.haruon.groupware.board.service.BoardService;
 import com.haruon.groupware.category.entity.Category;
@@ -61,6 +62,18 @@ public class BoardController {
         
         return "/board/boardOne";
     }
+	
+	// /board/comment
+	@PostMapping("/board/comment")
+	public String insertComment(@RequestParam Integer boaNo, @RequestParam String content) {
+		BoardComment boardComment = new BoardComment();
+	    boardComment.setBoaNo(boaNo);
+	    boardComment.setContent(content);
+	    // boardComment.setEmpNo(로그인empNo); 
+	    
+		boardService.insertComment(boardComment);
+		return "redirect:/board/"+ boaNo;
+	}
 	
 	// /board/insert
 	@GetMapping("/board/insert")

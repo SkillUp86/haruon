@@ -114,7 +114,7 @@
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
-	                                        <input type="number" class="form-control" id="empNo" name="empNo" placeholder="사원번호" style="width: 150px;">
+	                                        <input type="number" class="form-control" id="empNo" name="empNo" placeholder="사원번호" style="width: 150px;"> <!-- readonly -->
 	                                    </div>
 	                                </div>
 	                                

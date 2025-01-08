@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.board.entity.Board;
+import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
 
 @Mapper
@@ -23,6 +24,7 @@ public interface BoardMapper {
 	List<Map<String,Object>> selectCommentList(Integer boaNo);
 	Integer countComment(Integer boaNo);
 	Integer countLike(Integer boaNo);
+	Integer insertComment(BoardComment boardComment);
 	
 	// /board/update
 	Integer updateBoard(Map<String,Object> map);

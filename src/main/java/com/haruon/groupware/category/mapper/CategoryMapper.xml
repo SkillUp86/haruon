@@ -15,4 +15,13 @@
 			, cat_name catName
 		FROM category
 	</select>
+	
+	<update id="updateCategory" parameterType="com.haruon.groupware.category.entity.Category">
+		INSERT INTO category(
+			cat_name
+		) VALUES(
+			#{catName}
+		)
+		WHERE cat_no = #{catNo}
+	</update>
 </mapper>

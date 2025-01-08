@@ -21,4 +21,9 @@ public class CategoryService {
 	public List<Category> getAllCategory(){
 		return categoryMapper.selectAllCategory();
 	}
+	
+	// /category/update
+	public Integer updateCategory(Category category) {
+	    return categoryMapper.updateCategory(category);
+	}
 }
