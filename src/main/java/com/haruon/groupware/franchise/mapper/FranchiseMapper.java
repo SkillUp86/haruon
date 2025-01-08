@@ -8,10 +8,10 @@ import com.haruon.groupware.franchise.entity.Franchise;
 
 @Mapper
 public interface FranchiseMapper {
-
+	
 	
 	// 가맹점 추가
-	Integer insertFranchise();
+	Integer insertFranchise(Franchise franchise);
 	
 	// 가맹점 리스트
 	List<Franchise> selectFranchiseList();

@@ -209,17 +209,18 @@
                             <table class="table text-center" id="board-list">
 							    <thead>
 							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
-							            <th>NO</th>
-							            <th>F-NAME</th>
-							            <th>ADDRESS</th>
-							            <th>ID</th>
-							            <th>LEADER</th>
-							            <th>PHONE</th>
-							            <th>EMAIL</th>
-							            <th>OPEN</th>
-							            <th>CREATE</th>
-							            <th>UPDATE</th>
-							            <th>ACTIVE</th>
+							            <th>등록번호</th>
+							            <th>가맹점명</th>
+							            <th>우편번호</th>
+							            <th>주소</th>
+							            <th>사업자번호</th>
+							            <th>가맹점주</th>
+							            <th>연락처</th>
+							            <th>이메일</th>
+							            <th>영업유무</th>
+							            <th>오픈일</th>
+							            <th>폐업일</th>
+							            <th>활성화</th>
 							        </tr>
 								</thead>
 							    <tbody>
@@ -227,6 +228,7 @@
 							            <tr>
 							                <td>${f.fraNo}</td>
 							                <td>${f.fname}</td>
+							                <td>${f.postCode}</td>
 							                <td>${f.address}</td>
 							                <td>${f.id}</td>
 							                <td>${f.leader}</td>

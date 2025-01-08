@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.haruon.groupware.franchise.entity.Franchise;
 import com.haruon.groupware.franchise.service.FranchiseService;
-import com.haruon.groupware.franchise.util.PageUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,12 +22,13 @@ public class FranchiseController {
 	// 가맹점 추가
 	@GetMapping("/franchises/insert")
 	public String insertFranchise() {
-		return "franchises/insertFranchise";
+		return "franchise/insert";
 	}
 	
 	@PostMapping("/franchises/insert")
 	public String insertFranchise(Franchise franchise) {
-		return "redirect://franchises";
+		franchiseService.addFranchise(franchise);
+		return "redirect:/franchises";
 	}
 	
 	// 가맹점 리스트
@@ -39,6 +39,6 @@ public class FranchiseController {
 
 		log.debug("franchiseList ----->" + franchiseList);
 		
-		return "franchises/franchises";
+		return "franchise/franchises";
 	}
 }
