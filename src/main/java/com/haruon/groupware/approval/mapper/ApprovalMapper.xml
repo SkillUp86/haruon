@@ -11,7 +11,7 @@
 	    where  parent_code = #{parentCode}  
 	</select>
 	<!-- 부서별 직원 리스트 -->
-	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.EmployeeResponse">
+	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.ResponseEmployee">
 		select
 				e.emp_no empNo
 			,   e.ename
@@ -20,6 +20,13 @@
 		inner join common_code c
 				on e.location = c.common_code
 		where dep_no = #{depNo}
+	</select>
+	
+	<select id="findByFranchise" resultType="com.haruon.groupware.approval.dto.ResponseFranchise">
+		select
+				fra_no fraNo
+			 ,	fname
+		from franchise
 	</select>
 	
 </mapper>

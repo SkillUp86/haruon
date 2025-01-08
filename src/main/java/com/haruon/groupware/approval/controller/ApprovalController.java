@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.department.entity.Dept;
@@ -40,9 +41,11 @@ public class ApprovalController {
 		List<Dept> deptList = deptService.findByAll();
 		
 		// 가맹점 리스트
-		
+		List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
+		System.out.println(franchiseList.toString());
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("deptList", deptList);
+		model.addAttribute("franchiseList", franchiseList);
 		model.addAttribute("empNo", empNo);
 		model.addAttribute("empName", empName);
 		model.addAttribute("dname", dname);
