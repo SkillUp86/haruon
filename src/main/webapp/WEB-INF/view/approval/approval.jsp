@@ -163,7 +163,7 @@
 											<input type="date" class="form-control" id="placeStartDate" name="placeStartDate">
 									
 											<span class="input-group-text label-text">종료날짜</span>
-											<input type="date" class="form-control" id="placefinishDate" name="placefinishDate">
+											<input type="date" class="form-control" id="placeEndDate" name="placeEndDate">
 										</div>
 									</div>
 									
@@ -228,6 +228,9 @@
 								<div class="input-group">
 									<textarea class="form-control mb-4" rows="10" id="textContent" name="textContent"></textarea>
 								</div>
+								<div class="invalid-feedback">
+					                ${msg}
+					            </div>
 								<div class="form-group mb-4">
 									<input class="form-control file-upload-input" type="file" id="formFile" name="formFile" multiple="multiple">
 								</div>

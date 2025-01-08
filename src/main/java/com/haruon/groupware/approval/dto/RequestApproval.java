@@ -8,16 +8,14 @@ import lombok.Data;
 
 @Data
 public class RequestApproval {
-
-	private Integer empNo;
+	private Integer appNo;
+	private Integer draNo;
+	
+	private Integer empNo; // 기안자 사원번호
 	private String empName;
-	private String depName;
 	private Integer midAppNo;
-	private String midAppName;
 	private Integer finalAppNo;
-	private String finalAppname;
 	private Integer refNo;
-	private String refName;
 	private String kind; //(결재유형)
 	private String place; //출장지역 
 	private String placeStartDate;
@@ -26,8 +24,6 @@ public class RequestApproval {
 	private String ym; //연월
 	private Integer revenue; //매출액
 	private String subEmpNumber; //대체업무자 사원번호
-	private String subEmpName;
-	private String subDept; //대체업무자 부서이름
 	private String vacStartDate;
 	private String vacFinishDate;
 	private String vactionType;
