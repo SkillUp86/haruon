@@ -17,7 +17,9 @@ import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class ApprovalService {
@@ -40,23 +42,20 @@ public class ApprovalService {
 		// 기안서 분기
 		if (approval.getKind().equals("C02")) {
 			approvalMapper.saveBusinessTripByUser(approval); // 출장 보고서
-			approvalMapper.saveApprovalByUser(approval);
 			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
 		} else if (approval.getKind().equals("C03")) {
-			approvalMapper.saveApprovalByUser(approval);
 			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
 			approvalMapper.saveSalesByUser(approval); // 매출 보고서
 		} else if (approval.getKind().equals("C04")) {
 			approvalMapper.saveVacationByUser(approval); // 휴가 보고서
-			approvalMapper.saveApprovalByUser(approval);
 			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
 		}
+		Integer appNo = approval.getAppNo();
+		int approvalRow = approvalMapper.saveApprovalByUser(approval);
 		// 참조자 있을시 참조자 입력
-		if (approval.getSubEmpNumber() != null) {
+		if (approval.getSubEmpNumber() != null && !approval.getSubEmpNumber().isEmpty()) {
 			approvalMapper.saveApprovalReference(approval);
 		}
-
-		// 첨부 파일 존재
 
 	}
 

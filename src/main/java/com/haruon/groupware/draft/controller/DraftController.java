@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.haruon.groupware.draft.dto.ResponseDraft;
+import com.haruon.groupware.draft.dto.ResponseDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +23,16 @@ public class DraftController {
 	public DraftController(DraftService draftService) {
 		this.draftService = draftService;
 	}
+	// 결재 상세보기
+	@GetMapping("/draft/{draNo}")
+	public String draft(@PathVariable int draNo, HttpSession session, Model model) {
+		int empNo = (int)session.getAttribute("loginEmpNo");
+		ResponseDraftDetail draftDetail = draftService.getDraftDetail(draNo, empNo);
+		model.addAttribute("d", draftDetail);
+		return "draft/draftDetail";
+	}
 	
+	// 문서리스트
 	@GetMapping("/draft/list")
 	public String draftList(HttpSession session, Model model) {
 		int empNo = (int)session.getAttribute("loginEmpNo");
@@ -32,4 +42,6 @@ public class DraftController {
 		
 		return "draft/draftList";
 	}
+	
+	
 }
