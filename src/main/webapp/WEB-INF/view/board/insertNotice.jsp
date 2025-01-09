@@ -40,7 +40,7 @@
     <!--  END CUSTOM STYLE FILE  -->
        
     <!-- 페이지 제목 입력칸 -->
-    <title>자유게시판 글 작성</title>
+    <title>공지게시판 글 작성</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -107,6 +107,7 @@
                 	<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     	<div class="widget-content widget-content-area blog-create-section">
                                <div class="row mb-4">
+                               <h2>공지게시판 글 작성</h2>
                                
                                	<form id="formInsert" action="${pageContext.request.contextPath}/board/insertNotice" method="post" enctype="multipart/form-data">
 	                                <div class="row mb-4">
@@ -119,7 +120,7 @@
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-12">
 	                                    	<label>제목</label>
-	                                        <input type="content" class="form-control" id="title" placeholder="제목">
+	                                        <input type="text" class="form-control" id="title" placeholder="제목">
 	                                    </div>
 	                                </div>
                                     

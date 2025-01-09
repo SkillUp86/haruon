@@ -3,6 +3,7 @@ package com.haruon.groupware.category.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +25,27 @@ public class CategoryController {
 		return "/board/categories";
 	}
 	
+	@PostMapping("/category/insert")
+	public String insertCategory(@RequestParam String catName) {
+		Category category = new Category();
+		category.setCatName(catName);
+		categoryService.insertCategory(category);
+		
+		return "redirect:/categories";
+	}
+	
 	@PostMapping("/category/update")
 	public String updateCategory(@RequestParam Integer catNo, @RequestParam String catName) {
 	    Category category = new Category();
 	    category.setCatNo(catNo);
 	    category.setCatName(catName);
 	    categoryService.updateCategory(category);
-	    return "redirect:/board/categories";
+	    return "redirect:/categories";
+	}
+	
+	@GetMapping("/category/delete")
+	public String deleteCategory(@RequestParam Integer catNo) {
+		categoryService.deleteCategory(catNo);
+        return "redirect:/categories";
 	}
 }
