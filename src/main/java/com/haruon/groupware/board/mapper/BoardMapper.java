@@ -9,6 +9,7 @@ import com.haruon.groupware.board.entity.Board;
 import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
 
+
 @Mapper
 public interface BoardMapper {
 	/* 자유 */

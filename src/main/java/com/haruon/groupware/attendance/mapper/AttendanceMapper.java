@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.attendance.entity.Attendance;
 
+
 @Mapper
 public interface AttendanceMapper {
 	

@@ -9,6 +9,7 @@ import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 
+
 @Mapper
 public interface ApprovalMapper {
 	// 참조자 

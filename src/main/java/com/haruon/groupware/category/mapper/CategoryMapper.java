@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.haruon.groupware.category.entity.Category;
 
 
+
 @Mapper
 public interface CategoryMapper {
 	List<Category> selectCategoryListFree(); 
