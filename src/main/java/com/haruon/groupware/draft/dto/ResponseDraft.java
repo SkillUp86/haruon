@@ -9,5 +9,5 @@ public class ResponseDraft {
 	private String title;
 	private String content;
 	private String createDate;
-	private String approvalType; // 결재상태
+	private String approvalState; // 결재상태
 }
