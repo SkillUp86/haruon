@@ -63,7 +63,7 @@ public class AttendanceService {
 	}
 	
 	
-	@Scheduled(cron = "27 04 14 * * *")
+	@Scheduled(cron = "00 00 00 * * *")
 	public void schedulePreviousDayAttState() {
 		
 		// 1) 퇴사일자가 null인 모든 직원 리스트 가져오기 - 스케쥴링 대상
