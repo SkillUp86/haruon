@@ -112,27 +112,39 @@
 		                                    </div>
 		                                </div>
 		                                <div class="widget-content widget-content-area">
-		                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3">
+		                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
 		                                        <div class="col-12">
-		                                            <label for="fname" class="form-label">FNAME</label>
-		                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
+		                                            <label for="empNo" class="form-label">EMP</label>
+		                                            <select id="empNo" name="empNo" class="form-control">
+		                                            	<option value="">::: 담당자 :::</option>
+		                                            	<c:forEach items="${empList}" var="el">
+			                                            	<option value="${el.empNo}">${el.ename}</option>
+		                                            	</c:forEach>
+		                                            </select>
 		                                        </div>
 		                                        <div class="col-12">
-		                                            <label for="id" class="form-label">ID</label>
-		                                            <input type="text" class="form-control" id="id" name="id" placeholder="사업자번호">
+		                                            <label for="title" class="form-label">TITLE</label>
+		                                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+		                                        </div>
+												<div class="col-12">
+												    <label for="contents" class="form-label">CONTENT</label>
+												    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40"></textarea>
+												</div>
+		                                        <div class="col-12">
+		                                            <label for="place" class="form-label">PLACE</label>
+		                                            <input type="text" class="form-control" id="place" name="place" placeholder="장소">
 		                                        </div>
 		                                        <div class="col-12">
-		                                            <label for="leader" class="form-label">LEADER</label>
-		                                            <input type="text" class="form-control" id="leader" name="leader" placeholder="가맹점주">
+		                                            <label for="eduDate" class="form-label">EDU DATE</label>
+		                                            <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" placeholder="교육 일정">
 		                                        </div>
 		                                        <div class="col-12">
-		                                            <label for="phone" class="form-label">PHONE</label>
-		                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="연락처">
+		                                            <label for="capacity" class="form-label">CAPACITY</label>
+		                                            <input type="number" class="form-control" id="capacity" name="capacity" placeholder="정원">
 		                                        </div>
-		                                        <div class="col-12">
-		                                            <label for="email" class="form-label">EMAIL</label>
-		                                            <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
-		                                        </div>
+												<div class="form-group mb-4">
+													<input class="form-control file-upload-input" type="file" id="educationFile" name="educationFile" multiple="multiple">
+												</div>		                                        
 		                                        <div class="col-12 ">
 		                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">등록</button>
 		                                        </div>
@@ -168,27 +180,28 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
 	
 	<script>
 		$('#addBtn').click(function() {
-			if($('#fname').val() == '') {
-				alert('FNAME을 입력하세요');
-			} else if($('#address').val() == '') {
-				alert('ADDRESS를 입력하세요');
-			} else if(!/^\d{10}$/.test($('#id').val())) {
-				alert('ID : 10자리 숫자를 입력하세요');
-			} else if($('#leader').val() == '') {
-				alert('가맹점주 이름을 입력하세요');
-			} else if(!/^\d{11}$/.test($('#phone').val())) {
-				alert('휴대폰번호 11자리를 입력하세요');
-			} else if($('#email').val() == '') {
-				alert('이메일을 입력하세요');
+			if($('#empNo').val() == '') {
+				alert('담당자를 선택하세요');
+			} else if($('#title').val() == '') {
+				alert('제목을 입력하세요');
+			} else if($('#contents').val() == '') {
+				alert('내용을 입력하세요');
+			} else if($('#place').val() == '') {
+				alert('장소를 입력하세요');
+			} else if($('#eduDate').val() == '') {
+				alert('일정을 입력하세요');
+			} else if($('#capacity').val() == '') {
+				alert('정원을 입력하세요');
 			} else {
 				$('#addForm').submit();
 			}
 		});
 	</script>
-	<!-- END PAGE LEVEL SCRIPTS -->
+
 </body>
 
 </html>

@@ -3,25 +3,35 @@
 <mapper namespace="com.haruon.groupware.course.mapper.CourseMapper">
 	
 	<!-- 교육 등록 -->
-	<insert id="insertCourse" parameterType="com.haruon.groupware.course.entity.Education">
-		INSERT INTO course (
-			emp_no empNo
+	<insert id="insertCourse" parameterType="com.haruon.groupware.course.dto.CourseDto"
+			useGeneratedKeys="true" keyProperty="eduNo"> 
+		INSERT INTO education (
+			emp_no
 			, title
 			, content
 			, place
-			, edu_date eduDate
+			, edu_date
 			, capacity
 		) VALUE (
 			#{empNo}, #{title}, #{content}, #{place}, #{eduDate}, #{capacity}
 		)
 	</insert>
 	
+	<!-- 교육 등록 시 담당자 리스트 -->
+	<select id="selectEmpList" parameterType="Integer" resultType="com.haruon.groupware.user.entity.Emp">
+		SELECT 
+			emp_no empNo
+			, ename
+		FROM emp
+		WHERE dep_no = #{depNo}		
+	</select>
+	
 	<!-- 교육 등록 시 파일첨부 -->
 	<insert id="insertCourseFile" parameterType="com.haruon.groupware.course.entity.EducationFile">
 		INSERT INTO education_file (
-			edu_no eduNo
-			, origin_name originName 
-			, file_name fileName
+			edu_no
+			, origin_name 
+			, file_name
 			, ext
 			, kind
 			, size

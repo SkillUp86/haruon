@@ -14,7 +14,7 @@ public class CourseDto { // 교육 추가
 	private String content;
 	private String place;
 	private String eduDate;
-	private String capacity;
+	private Integer capacity;
 	private String createDate;
 	private String updateDate;
 	private String cancleYn;

@@ -100,110 +100,6 @@
                                 <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
                                 	<a href="${pageContext.request.contextPath}/franchises/insert" class="btn">+ 등록</a>
                                 </div>
-
-                                <!-- 가맹점 수정 모달창 -->
-                                <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
-                                    <div class="modal fade" id="addContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title add-title" id="addContactModalTitleLabel1">Add Contact</h5>
-                                                    <h5 class="modal-title edit-title" id="addContactModalTitleLabel2" style="display: none;">Edit Contact</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                    </button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <div class="add-contact-box">
-                                                        <div class="add-contact-content">
-                                                            <form id="addContactModalTitle">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-name">
-                                                                            <input type="text" id="c-no" class="form-control" placeholder="NO" value="" readonly> 
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-name">
-                                                                            <input type="text" id="c-fname" class="form-control" placeholder="F-NAME" value="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-12 mb-3">
-                                                                        <div class="contact-location">
-                                                                            <input type="text" id="c-location" class="form-control" placeholder="ADDRESS" value="">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-phone">
-                                                                            <input type="text" id="c-id" class="form-control" placeholder="ID" value="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-name">
-                                                                            <input type="text" id="c-leader" class="form-control" placeholder="LEADER" value="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-phone">
-                                                                            <input type="text" id="c-phone" class="form-control" placeholder="Phone" value="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-email">
-                                                                            <input type="text" id="c-email" class="form-control" placeholder="EMAIL" value="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-occupation">
-                                                                            <input type="text" id="c-createDate" class="form-control" placeholder="CREATEDATE" value="" readonly>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-phone">
-                                                                            <input type="text" id="c-updateDate" class="form-control" placeholder="UPDATEDATE" value="" readonly>
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button id="btn-edit" class="float-left btn btn-success">Save</button>
-
-                                                    <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
-
-                                                    <button id="btn-add" class="btn btn-primary">Add</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <table class="table text-center" id="board-list">
@@ -217,9 +113,9 @@
 							            <th>가맹점주</th>
 							            <th>연락처</th>
 							            <th>이메일</th>
-							            <th>영업유무</th>
 							            <th>오픈일</th>
 							            <th>폐업일</th>
+							            <th>영업유무</th>
 							            <th>활성화</th>
 							        </tr>
 								</thead>
@@ -234,15 +130,17 @@
 							                <td>${f.leader}</td>
 							                <td>${f.phone}</td>
 							                <td>${f.email}</td>
-							                <td>${f.openYn}</td>
 							                <td>${f.createDate}</td>
 							                <td>${f.updateDate}</td>
+							                <td>${f.openYn}</td>
 							                <td>
 							                	<!-- 활성화 여부 -->
 							                    <!-- 수정 아이콘 -->
-							                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit">
-							                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-							                    </svg>
+							                    <a href="${pageContext.request.contextPath}/franchises/modify?fraNo=${f.fraNo}">
+								                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit">
+								                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+								                    </svg>
+							                    </a>
 							                </td>
 							            </tr>
 							        </c:forEach>
