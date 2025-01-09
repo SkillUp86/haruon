@@ -8,7 +8,7 @@
 			 , start_time startTime
 			 , end_time endTime
 		  FROM attendance 
-		 WHERE emp_no=#{empNo} AND start_time LIKE CONCAT('%', '#{startTime}', '%')
+		 WHERE emp_no=#{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%')
 	</select>	
 	<!-- 어제, 한 사원의 연차 기록과 출장 기록 조회 --> 
 	<select id="findYesterDayAttByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
@@ -22,7 +22,7 @@
 		  INNER JOIN schedule_attendance sa ON sa.sch_no = s.sch_no
 		  INNER JOIN common_code cc ON s.kind = cc.common_code
 		  WHERE sa.emp_no = #{empNo}
-		 	AND s.start_time LIKE CONCAT('%', '#{startTime}','%')
+		 	AND s.start_time LIKE CONCAT('%', #{startTime},'%')
 		    AND s.kind IN (SELECT common_code from common_code
 							WHERE parent_code 
 							   IN (SELECT common_code FROM common_code
@@ -49,7 +49,7 @@
 				</when>
 			</choose>
 		</set>
-		WHERE emp_no = ${emp_no} AND start_time LIKE CONCAT('%', '#{startTime}', '%');
+		WHERE emp_no = ${emp_no} AND start_time LIKE CONCAT('%', #{startTime}, '%');
 	</update>
 
 	<!-- 근태 정보 생성 (스케쥴링)-->
@@ -62,7 +62,7 @@
 				WHERE parent_code 
 				   IN (SELECT common_code FROM common_code
 					    WHERE descript LIKE 'schedule_kind')
-				  AND descript LIKE '#{state}') 
+				  AND descript LIKE #{state}) 
 		)	
 	</insert>
 	
