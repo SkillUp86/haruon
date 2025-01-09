@@ -26,30 +26,25 @@
 		    AND s.kind IN (SELECT common_code from common_code
 							WHERE parent_code 
 							   IN (SELECT common_code FROM common_code
-								    WHERE descript LIKE 'schedule_kind')
-							  AND (descript Like '연차' OR descript LIKE '반차' OR descript LIKE  '출장'))
+								    WHERE descript = 'schedule_kind')
+							  AND (descript = '연차' OR descript = '출장' OR descript = '반차'))
 	</select>
 	
-	<!-- 근태 업데이트 -->
+	<!-- 근태 업데이트 : 스케쥴링 -->
 	<update id="updateAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
 		UPDATE attendance 
-		<set>
-			<choose>
-				<when test = "${endTime} != null">
-					end_time = ${endTime}
-				</when>
-				<when test = "${state} != null">
-					state = ${state}
-				</when>
-				<when test = "${approvalYN} != null">
-					approvalYN = ${approvalYN}
-				</when>
-				<when test ="${reasonMod != null}">
-					reason_mod = ${reasonMod}
-				</when>
-			</choose>
-		</set>
-		WHERE emp_no = ${emp_no} AND start_time LIKE CONCAT('%', #{startTime}, '%');
+		<trim prefix="set" suffixOverrides=",">
+			<if test = "endTime != null">
+				end_time = #{endTime},
+			</if>
+			<if test = "state != null">
+				state = (SELECT common_code FROM common_code 
+					  	  WHERE descript = #{state}
+					  	    AND parent_code = (SELECT common_code FROM common_code 
+												WHERE descript='attendance_state')),
+			</if>
+		</trim>
+		WHERE emp_no = #{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%') AND state is null
 	</update>
 
 	<!-- 근태 정보 생성 (스케쥴링)-->
@@ -61,8 +56,8 @@
 			, (SELECT common_code from common_code
 				WHERE parent_code 
 				   IN (SELECT common_code FROM common_code
-					    WHERE descript LIKE 'schedule_kind')
-				  AND descript LIKE #{state}) 
+					    WHERE descript = 'attendance_state')
+				  AND descript = #{state}) 
 		)	
 	</insert>
 	
