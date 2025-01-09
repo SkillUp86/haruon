@@ -9,7 +9,7 @@ public class Education {
 	private String title;
 	private String content;
 	private String place;
-	private Integer eduDate;
+	private String eduDate;
 	private String capacity;
 	private String createDate;
 	private String updateDate;
