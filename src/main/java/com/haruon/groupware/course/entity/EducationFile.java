@@ -10,7 +10,7 @@ public class EducationFile {
 	private String fileName;
 	private String ext;
 	private String kind;
-	private Integer size;
+	private Long size;
 	private String createDate;
 	
 }

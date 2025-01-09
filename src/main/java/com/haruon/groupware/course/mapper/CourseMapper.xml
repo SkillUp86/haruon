@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.course.mapper.CourseMapper">
+	
+	<!-- 교육 등록 -->
+	<insert id="insertCourse" parameterType="com.haruon.groupware.course.entity.Education">
+		INSERT INTO course (
+			emp_no empNo
+			, title
+			, content
+			, place
+			, edu_date eduDate
+			, capacity
+		) VALUE (
+			#{empNo}, #{title}, #{content}, #{place}, #{eduDate}, #{capacity}
+		)
+	</insert>
+	
+	<!-- 교육 등록 시 파일첨부 -->
+	<insert id="insertCourseFile" parameterType="com.haruon.groupware.course.entity.EducationFile">
+		INSERT INTO education_file (
+			edu_no eduNo
+			, origin_name originName 
+			, file_name fileName
+			, ext
+			, kind
+			, size
+		) VALUES (
+			#{eduNo}, #{originName}, #{fileName}, #{ext}, #{kind}, #{size}
+		)
+	</insert>
+	
+	<!-- 교육 리스트 -->
+	<select id="selectCourseList" resultType="com.haruon.groupware.course.entity.Education">
+		SELECT
+			edu_no eduNo
+			, edu_date eduDate
+			, place 
+			, title 
+			, content 
+			, capacity 
+		FROM education
+	</select>
 </mapper>

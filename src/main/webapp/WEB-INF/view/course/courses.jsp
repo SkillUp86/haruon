@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 조회</title>
+    <title>교육 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -81,7 +81,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Franchise List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Course List</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -98,48 +98,30 @@
 
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                	<a href="${pageContext.request.contextPath}/franchises/insert" class="btn">+ 등록</a>
+                                	<a href="${pageContext.request.contextPath}/franchises/courses/insert" class="btn">+ 등록</a>
                                 </div>
                             </div>
 
                             <table class="table text-center" id="board-list">
 							    <thead>
 							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
-							            <th>등록번호</th>
-							            <th>가맹점명</th>
-							            <th>우편번호</th>
-							            <th>주소</th>
-							            <th>사업자번호</th>
-							            <th>가맹점주</th>
-							            <th>연락처</th>
-							            <th>이메일</th>
-							            <th>영업유무</th>
-							            <th>오픈일</th>
-							            <th>폐업일</th>
-							            <th>활성화</th>
+							            <th>번호</th>
+							            <th>교육일정</th>
+							            <th>장소</th>
+							            <th>제목</th>
+							            <th>설명</th>
+							            <th>수용인원</th>
 							        </tr>
 								</thead>
 							    <tbody>
-							        <c:forEach items="${franchiseList}" var="f">
+							        <c:forEach items="${courseList}" var="c">
 							            <tr>
-							                <td>${f.fraNo}</td>
-							                <td>${f.fname}</td>
-							                <td>${f.postCode}</td>
-							                <td>${f.address}</td>
-							                <td>${f.id}</td>
-							                <td>${f.leader}</td>
-							                <td>${f.phone}</td>
-							                <td>${f.email}</td>
-							                <td>${f.openYn}</td>
-							                <td>${f.createDate}</td>
-							                <td>${f.updateDate}</td>
-							                <td>
-							                	<!-- 활성화 여부 -->
-							                    <!-- 수정 아이콘 -->
-							                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit">
-							                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-							                    </svg>
-							                </td>
+							                <td>${c.eduNo}</td>
+							                <td>${c.eduDate}</td>
+							                <td>${c.place}</td>
+							                <td>${c.title}</td>
+							                <td>${c.content}</td>
+							                <td>${c.capacity}</td>
 							            </tr>
 							        </c:forEach>
 							    </tbody>
