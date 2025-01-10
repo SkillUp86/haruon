@@ -109,6 +109,7 @@
 										
 								</div>
 								<div class="input-group mb-4">
+								
 									<span class="input-group-text label-text">기안자</span>
 									<input type="hidden" class="form-control" id="empNo" name="empNo" value="${empNo}" readonly>
 									<input type="text" class="form-control" id="empName" name="empName" value="${empName}" readonly>
@@ -134,7 +135,7 @@
 								<div class="input-group mb-4">
 									<div class="input-group">
 										<span class="input-group-text label-text">유형</span>
-										<select type="text" class="form-control" id="kind" name="kind" required>
+										<select type="text" class="form-select" id="kind" name="kind" required>
 											<c:forEach items="${codeList}" var="c">
 												<option class="" id="code" value="${c.commonCode}">${c.descript}</option>
 											</c:forEach>
@@ -170,7 +171,7 @@
 									<div id="sales" class=" kind-field" style="display: none;">
 										<div class="input-group mb-4">
 											<span class="input-group-text label-text">가맹점</span>
-											<select type="text" class="form-control" id="fraNo" name="fraNo">
+											<select type="text" class="form-select" id="fraNo" name="fraNo">
 												<option value="">:::가맹점 선택:::</option>
 												<c:forEach items="${franchiseList}" var="f">
 													<option value="${f.fraNo}">${f.fname}</option>
@@ -207,7 +208,7 @@
 											<input class="form-control" type="datetime-local" id="vacFinishDate" name="vacFinishDate">
 									
 											<span class="input-group-text label-text">유형</span>
-											<select class="form-control" id="vactionType" name="vactionType">
+											<select class="form-select" id="vactionType" name="vactionType">
 												<option value="">:::선택:::</option>
 												<c:forEach items="${vactionList}" var="v">
 													<option value="${v.commonCode}">${v.descript}</option>
