@@ -13,29 +13,20 @@ import com.haruon.groupware.course.dto.CourseDto;
 import com.haruon.groupware.course.entity.Education;
 import com.haruon.groupware.course.entity.EducationFile;
 import com.haruon.groupware.course.mapper.CourseMapper;
+import com.haruon.groupware.user.entity.Emp;
 
 @Service
 @Transactional
 public class CourseService {
 	@Autowired CourseMapper courseMapper;
 	
-	// 교육 추가
+	// 교육 등록
 	public void insertCourse(CourseDto courseDto, String path) {
-		// 교육 기본 항목 (담당자, 제목, 내용, 장소, 일정, 인원)
-		Education edu = new Education();
-		edu.setEmpNo(courseDto.getEmpNo());
-		edu.setTitle(courseDto.getTitle());
-		edu.setContent(courseDto.getContent());
-		edu.setPlace(courseDto.getPlace());
-		edu.setEduDate(courseDto.getEduDate());
-		edu.setCapacity(courseDto.getCapacity());
-		
 		// 교육 NO 생성
-		Integer addEdu = courseMapper.insertCourse(edu);
-		courseMapper.insertCourse(edu);
+		Integer addEdu = courseMapper.insertCourse(courseDto);
 		
 		// 키값
-		Integer eduNo = edu.getEduNo();
+		Integer eduNo = courseDto.getEduNo();
 		
 		// 
 		if(addEdu == 1 && courseDto.getEducationFile() != null) {
@@ -69,6 +60,11 @@ public class CourseService {
 				}
 			}
 		}
+	}
+	
+	// 교육 담당자 리스트
+	public List<Emp> getEmpList(Integer deptNo) {
+		return courseMapper.selectEmpList(deptNo);
 	}
 	
 	// 교육 조회

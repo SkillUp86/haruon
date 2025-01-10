@@ -3,45 +3,84 @@
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
 
 	<!-- 결재 상세보기 -->
-	<select id="findByDraftNo" parameterType="com.haruon.groupware.draft.dto.RequestDraftDetail" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<select id="findByDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
 		select 
 				d.dra_no draNo
 			,	kc.descript draftType
-		    ,	a.mid_app midApp
-		    ,	me.ename midAppName
-		    ,	a.final_app finApp
-		    ,	fe.ename finalAppName
-		    ,	re.emp_no referEmpNo
-		    ,	re.ename referName
-		    ,	de.emp_no drafterNo
-		    ,	de.ename drafterName
+			,	de.emp_no drafterNo
+			,	de.ename drafterName
+			,	lc.descript location
+			,	de.dep_no depNo
+			,	dt.dname deptName
+			,	a.mid_app midApp
+			,	me.ename midAppName
+			,	a.final_app finApp
+			,	fe.ename finalAppName
+			,	re.emp_no referEmpNo
+			,	re.ename referName
 			,	d.title title
 			,	d.content content
 			,	d.create_date createDate
-		    ,	a.mid_app_date midDate
-		    ,	a.final_app_date finalDate
+			,	a.mid_app_date midDate
+			,	a.final_app_date finalDate
 			,	sc.descript approvalState
 		from draft d
+		inner join emp de
+			on d.emp_no = de.emp_no
+		inner join dept dt
+			on de.dep_no = dt.dep_no
+		inner join common_code lc
+			on de.location = lc.common_code
 		inner join approval a
 			on d.dra_no = a.dra_no
-		left join common_code kc
+		inner join common_code kc
 			on d.kind = kc.common_code
-		left join common_code sc
+		inner join common_code sc
 			on a.state = sc.common_code
 		left join refer r
 			on a.app_no = r.app_no
 		left join emp re
 			on r.emp_no = re.emp_no
-		left join emp de
-			on d.emp_no = de.emp_no
 		left join emp me
 			on a.mid_app = me.emp_no
 		left join emp fe
 			on a.final_app = fe.emp_no
-		where d.emp_no = #{empNo}
-		and d.dra_no = #{draNo}
+		where d.dra_no = #{draNo}
 	</select>
-	<!-- 사원별 문서 리스트 -->
+	<!-- 문서별 파일 리스트 -->
+	<select id="findDraftByFile" parameterType="Integer" resultType="com.haruon.groupware.approval.entity.DraftFileEntity">
+		select
+				draf_no drafNo
+			,	dra_no draNo
+			,	origin_name originName
+			,	file_name fileName
+			,	ext
+			,	kind
+			,	size
+		from draft_file
+		where dra_no = #{draNo}
+	</select>
+	<!-- 사원별 결재문서 리스트 -->
+	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
+		select 
+				d.dra_no draNo
+			,	kc.descript draftType
+			,	d.title title
+			,	d.content content
+			,	d.create_date createDate
+			,	sc.descript approvalState
+		from draft d
+		inner join approval a
+			on d.dra_no = a.dra_no
+		inner join common_code kc
+			on d.kind = kc.common_code
+		inner join common_code sc
+			on a.state = sc.common_code
+		where a.mid_app = #{empNo}
+			or a.final_app = #{empNo}
+	</select>
+	
+	<!-- 사원별 기안문서 리스트 -->
 	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
 		select 
 				d.dra_no draNo

@@ -40,4 +40,7 @@ public interface BoardMapper {
 	
 	// /board/updateNotice
 	Integer updateNotice(Map<String,Object> map);
+	
+	// (카테고리 삭제) board 테이블에서 특정 cat_no를 기타 카테고리로 업데이트
+	Integer updateCatNo(Integer catNo, Integer newCatNo);
 }

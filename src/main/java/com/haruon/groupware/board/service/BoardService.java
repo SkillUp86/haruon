@@ -122,12 +122,12 @@ public class BoardService {
 		board.setContent(boardDto.getContent());
 		board.setCatNo(boardDto.getCatNo());
 		
-		Integer boaNo = board.getBoaNo();
-		boardDto.setBoaNo(boaNo);
-		
 		Integer row = boardMapper.insertNotice(board);
 		
 		if(row == 1 && boardDto.getBoardFile() != null) {
+			Integer boaNo = board.getBoaNo();
+			boardDto.setBoaNo(boaNo);
+			
 			List<MultipartFile> list = boardDto.getBoardFile();
 			for(MultipartFile mf : list) {
 				BoardFile boardFile = new BoardFile();

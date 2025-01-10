@@ -41,8 +41,8 @@ public class ApprovalController {
 				if (f.isEmpty()) {
 					continue; // 비어 있는 파일은 넘김
 				}
-				if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png")) {
-					model.addAttribute("msg", "이미지 파일만 입력이 가능합니다");
+				if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png") && !f.getContentType().equals("application/pdf")) {
+					model.addAttribute("msg", "이미지 파일,pdf 만 입력이 가능합니다");
 					return "/approval/approval";
 				}
 			}

@@ -9,13 +9,18 @@ import com.haruon.groupware.franchise.entity.Franchise;
 @Mapper
 public interface FranchiseMapper {
 	
+	// 가맹점 수정
+	Integer modifyFranchise(Franchise franchise);
 	
-	// 가맹점 추가
+	// 가맹점 정보 조회
+	Franchise selectFranchise(Integer fraNo);
+	
+	// 가맹점 등록
 	Integer insertFranchise(Franchise franchise);
 	
 	// 가맹점 리스트
 	List<Franchise> selectFranchiseList();
 	
-	// 가맹점 수
+	// 가맹점 개수
 	Integer selectFranchisesCount();
 }

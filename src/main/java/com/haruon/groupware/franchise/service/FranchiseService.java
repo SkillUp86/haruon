@@ -15,13 +15,22 @@ import com.haruon.groupware.franchise.mapper.FranchiseMapper;
 public class FranchiseService {
 	@Autowired FranchiseMapper franchiseMapper;
 	
+	// 가맹점 수정
+	public Integer modifyFranchise(Franchise franchise) {
+		return franchiseMapper.modifyFranchise(franchise);
+	}
+	
+	// 가맹점 정보 조회
+	public Franchise getFranchise(Integer fraNo) {
+		return franchiseMapper.selectFranchise(fraNo);
+	}
 	
 	// 가맹점 추가
 	public Integer addFranchise(Franchise franchise) {
 		return franchiseMapper.insertFranchise(franchise);
 	}
 	
-	// 가맹점 조회
+	// 가맹점 리스트
 	public List<Franchise> getFranchiseList() {
 		return franchiseMapper.selectFranchiseList();
 	}

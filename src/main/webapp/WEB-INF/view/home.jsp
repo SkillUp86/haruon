@@ -275,7 +275,7 @@
     <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
     <script src="../src/plugins/src/waves/waves.min.js"></script>
     <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/template.js""></script>
+    <script src="../src/assets/js/template.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

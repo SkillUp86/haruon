@@ -1,232 +1,238 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-    .bold-box {
-        border: 3px solid #000; /* 진한 테두리 */
-        background-color: #f9f9f9; /* 박스 배경색 */
-        padding: 20px; /* 내용 여백 */
-        margin: 10px 0; /* 위아래 여백 */
-        border-radius: 5px; /* 모서리를 둥글게 (필요 시) */
-        text-align: center; /* 텍스트 가운데 정렬 */
-    }
-	</style>
+        <!DOCTYPE html>
+        <html lang="en">
 
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+            <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico" />
+            <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+            <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/approval/draft.css">
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-   <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-   <link rel="stylesheet" href="../src/plugins/src/filepond/filepond.min.css">
-   <link rel="stylesheet" href="../src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
-   <link rel="stylesheet" type="text/css" href="../src/plugins/src/tagify/tagify.css">
+            <!-- BEGIN GLOBAL MANDATORY STYLES -->
+            <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+            <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+            <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+            <!-- END GLOBAL MANDATORY STYLES -->
 
-   <link rel="stylesheet" type="text/css" href="../src/assets/css/light/forms/switches.css">
-   <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/editors/quill/quill.snow.css">
-   <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/tagify/custom-tagify.css">
-   <link href="../src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
+            <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+            <link href="${pageContext.request.contextPath}/src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
+            <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+            <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/forms/switches.css">
+            <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
-   <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-   
-   <!--  BEGIN CUSTOM STYLE FILE  -->
-   <link rel="stylesheet" href="../src/assets/css/light/apps/blog-create.css">
-   <link rel="stylesheet" href="../src/assets/css/dark/apps/blog-create.css">
-   <!--  END CUSTOM STYLE FILE  -->
 
-    <!-- 페이지 제목 입력칸 -->
-    <title>Haruon | 내 문서</title>
-    <!-- 페이지 제목 입력칸 -->
-</head>
-<body class="layout-boxed">
-    <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
-    <!--  END LOADER -->
+            <!-- 페이지 제목 입력칸 -->
+            <title>Haruon | 내 문서</title>
+            <!-- 페이지 제목 입력칸 -->
+        </head>
 
-    <!--  BEGIN NAVBAR  -->
-    <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
-    </div>
-    <!--  END NAVBAR  -->
-      
-    <!--  BEGIN MAIN CONTAINER 템플릿 직접 끌어와서 사용  -->
-    <div class="main-container" id="container">
+        <body class="layout-boxed">
+            <!-- BEGIN LOADER -->
+            <div id="load_screen">
+                <div class="loader">
+                    <div class="loader-content">
+                        <div class="spinner-grow align-self-center"></div>
+                    </div>
+                </div>
+            </div>
+            <!--  END LOADER -->
 
-        <div class="overlay"></div>
-        <div class="search-overlay"></div>
+            <!--  BEGIN NAVBAR  -->
+            <div class="header-container container-xxl">
+                <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+            </div>
+            <!--  END NAVBAR  -->
 
-        <!--  BEGIN SIDEBAR  -->
-        <div class="sidebar-wrapper sidebar-theme">
+            <!--  BEGIN MAIN CONTAINER 템플릿 직접 끌어와서 사용  -->
+            <div class="main-container" id="container">
 
-            <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
+                <div class="overlay"></div>
+                <div class="search-overlay"></div>
 
-        </div>
-        <!--  END SIDEBAR  -->
+                <!--  BEGIN SIDEBAR  -->
+                <div class="sidebar-wrapper sidebar-theme">
 
-        <!--  BEGIN CONTENT AREA  -->
-        <div id="content" class="main-content">
-            <div class="layout-px-spacing">
-                <div class="middle-content container-xxl p-0">
-                    <!--  BEGIN BREADCRUMBS  -->
-                    <div class="secondary-nav">
-                        <div class="breadcrumbs-container" data-page-heading="Analytics">
-                            <header class="header navbar navbar-expand-sm">
-                                <a href="javascript:void(0);" class="btn-toggle sidebarCollapse" data-placement="bottom">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-                                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                                    </svg>
-                                </a>
-                                <div class="d-flex breadcrumb-content">
-                                    <div class="page-header">
-                                        <div class="page-title">
+                    <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
+
+                </div>
+                <!--  END SIDEBAR  -->
+
+                <!--  BEGIN CONTENT AREA  -->
+                <div id="content" class="main-content">
+                    <div class="layout-px-spacing">
+                        <div class="middle-content container-xxl p-0">
+                            <!--  BEGIN BREADCRUMBS  -->
+                            <div class="secondary-nav">
+                                <div class="breadcrumbs-container" data-page-heading="Analytics">
+                                    <header class="header navbar navbar-expand-sm">
+                                        <a href="javascript:void(0);" class="btn-toggle sidebarCollapse"
+                                            data-placement="bottom">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-menu">
+                                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                                            </svg>
+                                        </a>
+                                        <div class="d-flex breadcrumb-content">
+                                            <div class="page-header">
+                                                <div class="page-title">
+                                                </div>
+                                                <nav class="breadcrumb-style-one" aria-label="breadcrumb">
+                                                    <ol class="breadcrumb">
+                                                        <li class="breadcrumb-item"><a href="#">내문서함</a></li>
+                                                        <li class="breadcrumb-item active" aria-current="page">${d.draftType} 결재</li>
+                                                    </ol>
+                                                </nav>
+                                            </div>
                                         </div>
-                                        <nav class="breadcrumb-style-one" aria-label="breadcrumb">
-                                            <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">내문서함</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">결재</li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                            </ol>
-                                        </nav>
+                                    </header>
+                                </div>
+                            </div>
+                            <!--  END BREADCRUMBS  -->
+                        </div>
+                        <!-- 메인컨텐츠 입력칸 -->
+                        <div class="row mb-4 layout-spacing layout-top-spacing">
+                            <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <div class="widget-content widget-content-area">
+                                    <div class="row mb-4">
+                                        <div class="col-sm-12">
+                                            <div class="container">
+                                                <div class="bold-box">
+                                                    <h1>
+                                                        <div class="mt-4 mb-4">
+                                                            ${d.draftType} 결재
+                                                        </div>
+                                                    </h1>
+                                                    <div class="approval-section">
+                                                    	<c:if test="${d.midApp != null}">
+	                                                        <div class="approver mt-4">
+	                                                            <p>중간결재자</p>
+	                                                            <div class="signature-box"></div>
+	                                                            <p>${d.midAppName}</p>
+	                                                        </div>
+                                                    	</c:if>
+                                                        <div class="approver mt-4">
+                                                            <p>최종결재자</p>
+                                                            <div class="signature-box"></div>
+                                                            <p>${d.finalAppName}</p>
+                                                        </div>
+                                                    </div><br><br><br><br><br><br><br><br><br>
+                                                    <div class="input-group mb-2 mt-4">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text label-text">문서번호</span>
+                                                            <input class="form-control" value="${d.draNo}" readonly>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text label-text">기안부서</span>
+                                                            <input class="form-control" value="${d.deptName}" readonly>
+                                                            <span class="input-group-text label-text">직위</span>
+                                                            <input class="form-control" value="${d.location}" readonly>
+                                                        </div>
+                                                        <div class="input-group mb-1">
+                                                            <span class="input-group-text label-text">기안자</span>
+                                                            <input class="form-control" value="${d.drafterName}" readonly>
+                                                            <span class="input-group-text label-text">기안일자</span>
+                                                            <input class="form-control" value="${d.createDate}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text label-text">제목</span>
+                                                            <input class="form-control" value="${d.title}" readonly>
+                                                        </div>
+                                                        <div class="input-group mb-3">
+														    <span class="input-group-text label-text">첨부파일</span>
+														        <c:if test="${draftFiles == null || draftFiles.isEmpty()}">
+														            <input class="form-control" value="첨부파일 없음" readonly>
+														        </c:if>
+															    <c:if test="${draftFiles != null && !draftFiles.isEmpty()}">
+														            <div class="d-flex flex-wrap">
+														                <c:forEach var="f" items="${draftFiles}">
+														                &nbsp;
+														                    <a href="${pageContext.request.contextPath}/uploadDraft/${f.fileName}.${f.ext}" 
+														                       download="${f.originName}.${f.ext}" class="btn btn-dark mt-1 file">
+														                       ${f.originName}.${f.ext}
+														                    </a>
+														                </c:forEach>
+														            </div>
+														        </c:if>
+														</div>
+                                                        <div class="input-group">
+                                                            <textarea class="form-control" rows="10" id="textContent" name="textContent" readonly>${d.content}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <c:if test="${d.referEmpNo != null}">
+	                                                    <div class="input-group mb-2">
+	                                                        <div class="input-group">
+	                                                            <p class="black-text"><strong>참조자:${d.referName}</strong></p>
+	                                                        </div>
+	                                                    </div>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </header>
-                        </div>
-                    </div>
-                    <!--  END BREADCRUMBS  -->
-                </div>
-                <!-- 메인컨텐츠 입력칸 -->
-                <div class="row mb-4 layout-spacing layout-top-spacing">
-				    <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-						<div class="widget-content widget-content-area blog-create-section">
-						    <div class="row mb-4">
-						        <div class="col-sm-12">
-						            <label>문서</label>
-						            <div class="container">
-								        <!-- 추가된 박스 -->
-								        <div class="bold-box">
-								        	<div class="input-group">
-												<span class="input-group-text label-text">${d.draftType}문서 신청서</span>
-												<span class="input-group-text label-text">문서 신청서</span>
-	                                		</div>
-	                                	</div>
-									</div>
-	                            </div>
-	                        </div>
-                        </div>
-					</div>
-                        <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
-                            <div class="widget-content widget-content-area blog-create-section">
-                                <div class="row">
-                                    <div class="col-xxl-12 mb-4">
-                                        <div class="switch form-switch-custom switch-inline form-switch-primary">
-                                            <input class="switch-input" type="checkbox" role="switch" id="showPublicly" checked>
-                                            <label class="switch-label" for="showPublicly">Publish</label>
+                            </div>
+                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
+                                <div class="widget-content widget-content-area">
+                                    <div class="row">
+                                        <div class="col-xxl-12 mb-4">
+                                            <div class="form-bootstrap-basic">
+                                                <label class="switch-label">결재 상태</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xxl-12 mb-4">
-                                        <div class="switch form-switch-custom switch-inline form-switch-primary">
-                                            <input class="switch-input" type="checkbox" role="switch" id="enableComment" checked>
-                                            <label class="switch-label" for="enableComment">Enable Comments</label>
+                                        <div class="col-xxl-12 mb-4">
+                                                <label class="form-control text-center">${d.approvalState}</label>
                                         </div>
-                                    </div>
-                                    <div class="col-xxl-12 col-md-12 mb-4">
-                                        <label for="tags">Tags</label>
-                                        <input id="tags" class="blog-tags" value="">
-                                    </div>
+                                        <div class="col-xxl-12 col-md-12 mb-4">
+                                        </div>
 
-                                    <div class="col-xxl-12 col-md-12 mb-4">
-                                        <label for="category">Category</label>
-                                        <input id="category" name="category" placeholder="Choose...">
-                                    </div>
+                                        <div class="col-xxl-12 col-md-12 mb-4">
+                                        </div>
 
-                                    <div class="col-xxl-12 col-md-12 mb-4">
+                                        <div class="col-xxl-12 col-md-12 mb-4">
+                                        	<c:if test="${d.approvalState == '결재대기'}">
+												<button class="btn btn-primary w-100">수정</button>
+                                        	</c:if>
+                                        </div>
 
-                                        <label for="product-images">Featured Image</label>
-                                        <div class="multiple-file-upload">
-                                            <input type="file" 
-                                                class="filepond file-upload-multiple"
-                                                name="filepond"
-                                                id="product-images" 
-                                                multiple 
-                                                data-allow-reorder="true"
-                                                data-max-file-size="3MB"
-                                                data-max-files="5">
+                                        <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
+                                            <a class="btn btn-dark w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
                                         </div>
 
                                     </div>
-
-                                    <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
-                                        <button class="btn btn-success w-100">Create Post</button>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
-				</div>	
-                
-                <!-- 메인컨텐츠 END -->
+                    </div>
+                        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
+                    </div>
+                </div>
+
             </div>
-            <!--  BEGIN FOOTER  -->
-            <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-            <!--  END FOOTER  -->
-        </div>
-        <!--  END CONTENT AREA  -->
+            <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
+            <script src="../src/plugins/src/waves/waves.min.js"></script>
+            <script src="../layouts/vertical-light-menu/app.js"></script>
+            <script src="../src/assets/js/template.js""></script>
+    		<script src=" ../src/plugins/src/apex/apexcharts.min.js"></script>
+            <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
+            <script src="../src/plugins/src/waves/waves.min.js"></script>
+            <script src="../layouts/vertical-light-menu/app.js"></script>
 
-    </div>
-    <!-- END MAIN CONTAINER -->
-
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/template.js""></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="../src/plugins/src/editors/quill/quill.js"></script>
-    <script src="../src/plugins/src/filepond/filepond.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
-    <script src="../src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
-
-    <script src="../src/assets/js/apps/blog-create.js"></script>
-	
-</body>
-</html>
+        </body>
+        </html>

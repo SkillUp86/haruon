@@ -142,7 +142,7 @@
 	</select>
 	
 	<!-- /board/insertNotice -->
-	<insert id="insertNotice" parameterType="com.haruon.groupware.board.entity.Board">
+	<insert id="insertNotice" parameterType="com.haruon.groupware.board.entity.Board" useGeneratedKeys="true" keyProperty="boaNo">
 		INSERT INTO board(
 			emp_no
 			, cat_no
@@ -162,5 +162,12 @@
 			, content = #{content}
 			, update_date = NOW()
 		WHERE boa_no = #{boaNo}
+	</update>
+	
+	<!-- (카테고리 삭제) board 테이블에서 특정 cat_no를 기타 카테고리로 업데이트 -->
+	<update id="updateCatNo" parameterType="map">
+		UPDATE board  
+		SET cat_no = #{newCatNo} 
+		WHERE cat_no = #{catNo}
 	</update>
 </mapper>

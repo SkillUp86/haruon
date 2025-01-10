@@ -73,8 +73,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">게시판</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">자유</li>
+                                                <li class="breadcrumb-item"><a href="#">내문서함</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">기안함</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -89,34 +89,33 @@
                 <div class="row layout-top-spacing">
                     <h3>내 문서함</h3>
                     <div class="col-xl-12 col-lg-12 col-sm-12 mt-2  layout-spacing">
-                        <div class="widget-content widget-content-area br-8">
-                            <table id="zero-config" class="table dt-table-hover" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>문서번호</th>
-                                        <th class=" dt-no-sorting">문서양식</th>
-                                        <th class=" dt-no-sorting">제목</th>
-                                        <th class=" dt-no-sorting">기안날짜</th>
-                                        <th class=" dt-no-sorting">결재상태</th>
-                                        <th class="text-center dt-no-sorting" >이동</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="d" items="${draftList}">
-                                    	<tr>
-                                    		<td>${d.draNo}</td>
-                                    		<td>${d.draftType}</td>
-                                    		<td>${d.title}</td>
-                                    		<td>${d.createDate}</td>
-                                    		<td>${d.approvalState}</td>
-                                    		<td class="text-center">
-												<a href="${pageContext.request.contextPath}/draft/${d.draNo}"><button class="btn btn-primary">이동</button></a>                                   				
-                                    		</td>
-                                    	</tr>
-                                    </c:forEach>
-                                    
-                                </tbody>
-                            </table>
+                        <div class="simple-tab">
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="draft-tab" data-bs-toggle="tab" data-bs-target="#draft-tab-pane" type="button" role="tab" aria-controls="draft-tab-pane" aria-selected="true">기안함</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="approval-tab" data-bs-toggle="tab" data-bs-target="#approval-tab-pane" type="button" role="tab" aria-controls="approval-tab-pane" aria-selected="false">결재함</button>
+                                </li>
+                            </ul>
+                            <div class="widget-content widget-content-area br-8">
+                                <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>문서번호</th>
+                                            <th class=" dt-no-sorting">문서양식</th>
+                                            <th class=" dt-no-sorting">제목</th>
+                                            <th class=" dt-no-sorting">기안날짜</th>
+                                            <th class=" dt-no-sorting">결재상태</th>
+                                            <th class="text-center dt-no-sorting" >이동</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,6 +142,8 @@
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../src/plugins/src/table/datatable/datatables.js"></script>
+    
+
     <script>
         $('#zero-config').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
@@ -159,6 +160,54 @@
             "lengthMenu": [7, 10, 20],
             "pageLength": 10 
         });
+    </script>
+    <script>
+        function tabData(empNo, tabData) {
+            let url = (tabData === 'draft') ? `/drafts/`+empNo : `/approvals/`+empNo;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let tbody = $('#zero-config tbody');
+                    tbody.empty();
+
+                    data.forEach(item => {
+                        let row = $('<tr></tr>');
+                        row.append($('<td></td>').text(item.draNo));
+                        row.append($('<td></td>').text(item.draftType));
+                        row.append($('<td></td>').text(item.title));
+                        row.append($('<td></td>').text(item.createDate));
+                        row.append($('<td></td>').text(item.approvalState));
+
+                        let actionCell = $('<td class="text-center"></td>');
+                        let button = $('<button class="btn btn-primary">이동</button>')
+                            .click(() => window.location.href = `/draft/`+item.draNo);
+                        actionCell.append(button);
+
+                        row.append(actionCell);
+                        tbody.append(row);
+                    });
+
+                })
+                .catch(error => console.error(error));
+            
+        }
+
+        $('#approval-tab').click(function(){
+            let empNo = ${sessionScope.loginEmpNo}
+            tabData(empNo, 'approval')
+        });
+
+        $('#draft-tab').click(function () {
+            let empNo = ${sessionScope.loginEmpNo}
+            tabData(empNo,'draft')
+        });
+
+        let empNo = ${sessionScope.loginEmpNo};
+        window.onload = () =>
+    {
+        tabData(empNo,'draft');
+    }
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->
 </body>
