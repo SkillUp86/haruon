@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
-import com.haruon.groupware.draft.dto.ResponseDraft;
 import com.haruon.groupware.draft.dto.ResponseDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,12 +24,10 @@ public class DraftController {
 	}
 	// 결재 상세보기
 	@GetMapping("/draft/{draNo}")
-	public String draft(@PathVariable int draNo, HttpSession session, Model model) {
-		int empNo = (int)session.getAttribute("loginEmpNo");
-		ResponseDraftDetail draftDetail = draftService.getDraftDetail(draNo, empNo);
+	public String draft(@PathVariable int draNo, Model model) {
+		ResponseDraftDetail draftDetail = draftService.getDraftDetail(draNo);
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
 		log.debug(draftDetail.toString());
-		log.debug(draftFiles.toString());
 		model.addAttribute("d", draftDetail);
 		model.addAttribute("draftFiles", draftFiles);
 		return "draft/draftDetail";
@@ -39,11 +35,7 @@ public class DraftController {
 	
 	// 문서리스트
 	@GetMapping("/draft/list")
-	public String draftList(HttpSession session, Model model) {
-		int empNo = (int)session.getAttribute("loginEmpNo");
-		List<ResponseDraft> draftList = draftService.getDraftByPage(empNo);
-		log.debug(draftList.toString());
-		model.addAttribute("draftList", draftList);
+	public String draftList() {
 		
 		return "draft/draftList";
 	}

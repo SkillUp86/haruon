@@ -202,11 +202,13 @@
                                         </div>
 
                                         <div class="col-xxl-12 col-md-12 mb-4">
-											<button class="btn btn-primary w-100">수정</button>
+                                        	<c:if test="${d.approvalState == '결재대기'}">
+												<button class="btn btn-primary w-100">수정</button>
+                                        	</c:if>
                                         </div>
 
                                         <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
-                                            <a class="btn btn-dark w-100" href="">돌아가기</a>
+                                            <a class="btn btn-dark w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
                                         </div>
 
                                     </div>
