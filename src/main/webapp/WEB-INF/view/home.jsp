@@ -127,31 +127,24 @@
                     
                     <div class="row layout-top-spacing">
                         <!-- 출 퇴근 버튼 -->
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                            (담당자 : 은서)
+                        <div id="todayAttendanceForm" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                             <div class="layout-spacing">
                                 <div class="widget-heading widget-six text-start">
                                     <div class="input-group">
                                         <span class="input-group-text">
-                                            <c:if test="${true}">
-                                                <button id="workStartBtn" class="btn btn-outline-primary btn-lg" style="width:100%">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-right"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="16" cy="12" r="3"></circle></svg>
-                                                    <span class="btn-text-inner">출근하기</span>
-                                                </button>
-                                            </c:if>
-                                            
-                                            <c:if test="${false}">
-                                                <button id="workLeaveBtn" class="btn btn-success btn-lg" style="width:100%">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-left"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="8" cy="12" r="3"></circle></svg>
-                                                    <span class="btn-text-inner">퇴근하기</span>
-                                                </button>
-                                            </c:if>
+											<label id="attendanceBtnSpace"/>
                                         </span>
-                                        <input id="workStartTime" type="text" class="form-control text-end" placeholder="오늘의 출근 기록이 없습니다." readonly>
-                                        <input id="workLeaveTime" type="text" class="form-control text-end" placeholder="오늘의 퇴근 기록이 없습니다." readonly>
+                                        <input id="workStartTime" type="text" class="form-control text-end text-secondary-emphasis" placeholder="오늘의 출근 기록이 없습니다." readonly>
+                                        <input id="workLeaveTime" type="text" class="form-control text-end text-secondary-emphasis" placeholder="오늘의 퇴근 기록이 없습니다." readonly>
                                     </div>
                                 </div>
                             </div>
+                            <c:if test="${not empty registerAttendanceResult}">
+	                            <div class="alert alert-light-primary alert-dismissible fade show border-0" role="alert">
+    								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								    <strong>${registerAttendanceResult}</strong>
+								</div> 
+							</c:if>
                         </div>
 
 
@@ -282,6 +275,54 @@
     <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
     <script src="../src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    
+    <!-- 공통 : 로그인 하지 않았을 때 비정상적으로 접근시, 로그이 화면으로 페이지 덮어 씌우기 -->
+    <script>
+		let empNo = "${loginEmpNo}"; 
+		
+		if(!empNo) {
+			location.replace("login");
+		}
+    </script>
+    
+    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 -->
+    <script>    
+		$.ajax({
+			url: "/attendance/employee/"+"${loginEmpNo}",
+			method: 'GET',
+			}).done(function(result) {
+				$(result).each(function(index, item) {
+				   $('#workStartTime').val(item.attendanceStartTime).addClass('text-secondary-emphasis');
+				   if(item.attendanceEndTime !== '-1') {
+				       $('#workLeaveTime').val(item.attendanceEndTime).addClass('text-secondary-emphasis');
+				   }
+				});
+
+				if($('#workStartTime').val() == '') {
+				     $("#attendanceBtnSpace").html(`<a id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" href="/employee/registerAttendance">
+				                                       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-right"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="16" cy="12" r="3"></circle></svg>
+				                                       <span class="btn-text-inner">출근하기</span>
+				                                      </a>`); 
+				 }
+				 
+				 if(($('#workStartTime').val() != '') && ($('#workLeaveTime').val() == '') ) {
+				      $("#attendanceBtnSpace").html(`<a id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" href="/employee/registerAttendance">
+				                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-left"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="8" cy="12" r="3"></circle></svg>
+				                                            <span class="btn-text-inner">퇴근하기</span>
+				                                        </a>`);
+				 }
+				 
+				 if($('#workLeaveTime').val() != '') {
+				      $("#attendanceBtnSpace").html(`<button class="btn btn-outline-primary btn-lg disabled" style="width:100%" >
+				                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+				                                         <span class="btn-text-inner">일과종료</span>
+				                                     </button>`);
+				 }
+			}).fail(function() {
+				 console.log("로그인 정보 없음");
+				 //location.replace("login");
+			});
+    </script>
 
 </body>
 </html>
