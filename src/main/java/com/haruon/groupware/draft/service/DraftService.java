@@ -27,7 +27,7 @@ public class DraftService {
 
 	// 결재 상세보기
 	public ResponseDraftDetail getDraftDetail(int draNo) {
-		return draftMapper.findByDraftNo(draNo);
+		return draftMapper.findByBasicDraftNo(draNo);
 	}
 	
 	// 결재 상세보기 파일리스트

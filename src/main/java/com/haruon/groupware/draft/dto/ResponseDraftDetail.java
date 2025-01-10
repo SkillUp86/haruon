@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ResponseDraftDetail {
+	// 공통 반환값
 	private Integer draNo;
 	private String draftType;
 	private String location;
@@ -23,4 +24,15 @@ public class ResponseDraftDetail {
 	private String midDate;
 	private String finalDate;
 	private String approvalState;
+	
+	// 출장결재 값
+	private String place;
+	private String vacStartDate;
+	private String vacFinishDate;
+	// 매출결재 값
+	private Integer franchiseNo;
+	private String franchiseName;
+	private String ym;
+    private Long revenue;
+    // 휴가결재 값	
 }

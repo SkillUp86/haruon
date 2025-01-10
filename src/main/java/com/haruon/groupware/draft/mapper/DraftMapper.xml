@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
-
-	<!-- 결재 상세보기 -->
-	<select id="findByDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<!-- 매출보고서 상세보기 -->
+	<select id="findBySalesDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
 		select 
 				d.dra_no draNo
 			,	kc.descript draftType
@@ -20,6 +19,10 @@
 			,	re.ename referName
 			,	d.title title
 			,	d.content content
+            ,	s.fra_no franchiseNo
+            ,	fc.fname franchiseName
+            ,	s.ym ym
+            ,	s.revenue revenue
 			,	d.create_date createDate
 			,	a.mid_app_date midDate
 			,	a.final_app_date finalDate
@@ -37,6 +40,105 @@
 			on d.kind = kc.common_code
 		inner join common_code sc
 			on a.state = sc.common_code
+		inner join sales s
+			on d.dra_no = s.dra_no
+		inner join franchise fc
+			on s.fra_no = fc.fra_no
+		left join refer r
+			on a.app_no = r.app_no
+		left join emp re
+			on r.emp_no = re.emp_no
+		left join emp me
+			on a.mid_app = me.emp_no
+		left join emp fe
+			on a.final_app = fe.emp_no
+		where d.dra_no = #{draNo}
+	</select>
+	<!-- 출장결재 상세보기 -->
+	<select id="findByVactionDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+		select 
+				d.dra_no draNo
+			,	kc.descript draftType
+			,	de.emp_no drafterNo
+			,	de.ename drafterName
+			,	lc.descript location
+			,	de.dep_no depNo
+			,	dt.dname deptName
+			,	a.mid_app midApp
+			,	me.ename midAppName
+			,	a.final_app finApp
+			,	fe.ename finalAppName
+			,	re.emp_no referEmpNo
+			,	re.ename referName
+			,	d.title title
+			,	d.content content
+            ,	bt.place place
+            , 	bt.start_date vacStartDate
+            ,	bt.finish_date vacFinishDate
+			,	d.create_date createDate
+			,	a.mid_app_date midDate
+			,	a.final_app_date finalDate
+			,	sc.descript approvalState
+		from draft d
+		inner join emp de
+			on d.emp_no = de.emp_no
+		inner join dept dt
+			on de.dep_no = dt.dep_no
+		inner join common_code lc
+			on de.location = lc.common_code
+		inner join approval a
+			on d.dra_no = a.dra_no
+		inner join common_code kc
+			on d.kind = kc.common_code
+		inner join common_code sc
+			on a.state = sc.common_code
+		inner join business_trip bt
+			on d.dra_no = bt.dra_no
+		left join refer r
+			on a.app_no = r.app_no
+		left join emp re
+			on r.emp_no = re.emp_no
+		left join emp me
+			on a.mid_app = me.emp_no
+		left join emp fe
+			on a.final_app = fe.emp_no
+		where d.dra_no = #{draNo}
+	</select>
+	<!-- 기본결재 상세보기 -->
+	<select id="findByBasicDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+		select 
+			d.dra_no draNo
+		,	(select descript
+			 from common_code
+			 where common_code = d.kind)draftType
+		,	de.emp_no drafterNo
+		,	de.ename drafterName
+		,	(select descript
+			 from common_code
+			 where common_code = de.location) location
+		,	de.dep_no depNo
+		,	dt.dname deptName
+		,	a.mid_app midApp
+		,	me.ename midAppName
+		,	a.final_app finApp
+		,	fe.ename finalAppName
+		,	re.emp_no referEmpNo
+		,	re.ename referName
+		,	d.title title
+		,	d.content content
+		,	d.create_date createDate
+		,	a.mid_app_date midDate
+		,	a.final_app_date finalDate
+		,	(select descript
+			 from common_code
+			 where common_code = a.state) approvalState
+		from draft d
+		inner join emp de
+			on d.emp_no = de.emp_no
+		inner join dept dt
+			on de.dep_no = dt.dep_no
+		inner join approval a
+			on d.dra_no = a.dra_no
 		left join refer r
 			on a.app_no = r.app_no
 		left join emp re
