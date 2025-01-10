@@ -11,7 +11,7 @@
 		 WHERE emp_no=#{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%')
 	</select>	
 	<!-- 어제, 한 사원의 연차 기록과 출장 기록 조회 --> 
-	<select id="findYesterDayAttByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
+	<select id="findDaySchByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
 			resultType="Map">
 		
 		 SELECT s.sch_no schNo
@@ -49,17 +49,38 @@
 
 	<!-- 근태 정보 생성 (스케쥴링)-->
 	<insert id="insertAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
-		Insert INTO attendance(
-			emp_no, start_time, end_time, state
-		) VALUES (
-			#{empNo}, #{startTime}, #{endTime}
-			, (SELECT common_code from common_code
-				WHERE parent_code 
-				   IN (SELECT common_code FROM common_code
-					    WHERE descript = 'attendance_state')
-				  AND descript = #{state}) 
-		)	
+	    Insert into attendance(
+	        emp_no, start_time
+	        <if test="endTime != ''">
+	            , end_time
+	        </if>
+	        <if test="state != ''">
+	            , state
+	        </if>
+	    ) VALUES (
+	        #{empNo}, #{startTime}
+	        <if test="endTime != ''">
+	            , #{endTime}
+	        </if>
+	        <if test="state != ''">
+	            , (SELECT common_code from common_code
+	                WHERE parent_code 
+	                   IN (SELECT common_code FROM common_code
+	                        WHERE descript = 'attendance_state')
+	                  AND descript = #{state})
+	        </if>
+	    )
 	</insert>
+	
+	<!-- 오늘 출/퇴근 시간 조회 -->
+	<select id="findAttendanceByEmp" parameterType="int" resultType="com.haruon.groupware.attendance.dto.ResponseAttendance">
+		SELECT emp_no empNo
+			 , start_time attendanceStartTime
+		 	 , IFNULL(end_time, -1) attendanceEndTime
+		  FROM attendance 
+		 WHERE emp_no=#{empNo}
+		   AND start_time LIKE CONCAT('%',DATE_FORMAT(NOW(), '%Y-%m-%d'), '%');
+	</select>
 	
 	
 </mapper>

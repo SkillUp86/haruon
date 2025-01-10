@@ -3,7 +3,9 @@ package com.haruon.groupware.attendance.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haruon.groupware.attendance.dto.ResponseAttendance;
 import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.mapper.AttendanceMapper;
 import com.haruon.groupware.user.entity.Emp;
@@ -30,14 +33,14 @@ public class AttendanceService {
 	// 하루 전(근태리스트 조회 조건, 스케쥴링)
 	private LocalDate yesterdayLD = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1);
 	private String yesterday = yesterdayLD.toString();
+	
 	// 하루 전이 속한 달의 1일(근태리스트 조회 조건)
 	private String listTargetStart = LocalDate.of(yesterdayLD.getYear(), yesterdayLD.getMonthValue(), 1).toString();
-
+	
 	// 시간 비교 및 연산을 위한 DateTime 포맷팅 형식
 	SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-	
-	// 시간을 형식을 파싱하는 메서드 
+	// 시간을 형식을 Lont으로 파싱하는 메서드 
 	private Long parsingDate(String paramDate) {
 		try {
 			return dateFormat1.parse(paramDate).getTime();
@@ -61,6 +64,81 @@ public class AttendanceService {
 		
 		return (int) ( (end - start) / 1000 / 60 / 60);
 	}
+	
+	// 메인페이지 오늘의 출/퇴근 시간 반환
+	public ResponseAttendance findAttendanceByEmp(Integer empNo) {
+		return attendanceMapper.findAttendanceByEmp(empNo);
+	}
+	
+	// 메인페이지 오늘 출/퇴근 시간 등록
+	public String registerAttendance(Object empNb) {
+		// 현재 로그인한 사람
+		Integer empNo = Integer.parseInt(String.valueOf(empNb));
+		
+		// 현재시간 
+		String nowTime = LocalDateTime
+					.now(ZoneId.of("Asia/Seoul"))
+					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		// 오늘 attendance 중 startTime이 있는지 확인
+		
+		
+		// 근태기록 update / insert parameter
+		Attendance attForRegister = new Attendance();
+		attForRegister.setEmpNo(empNo);
+		
+		if(attendanceMapper.findAttendanceByEmp(empNo) != null) {
+			attForRegister.setStartTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString());
+			attForRegister.setEndTime(nowTime);
+			Integer result = attendanceMapper.updateAttendance(attForRegister);
+			return "퇴근시간등록-정상등록";
+		} else {	// 오늘자 근태내용없으면
+			// (0) 연차, 출장 기록 가져오기 - todaySchedules
+			String today = LocalDate.now(ZoneId.of("Asia/Seoul")).toString();
+			Attendance attForSearch = new Attendance();
+			attForSearch.setEmpNo(Integer.parseInt(String.valueOf(empNo)));
+			attForSearch.setStartTime(today);
+			List<Map<String, Object>> todaySchedules = attendanceMapper.findDaySchByEmpAndDay(attForSearch);
+			
+			String businessTripStart = null;  // 출장 시작 시간
+			
+			// (1) 오늘이 [연차]라면 등록 막고, [출장]이 있다면 현재시간과 비교하여 더 이른시간으로 등록하게끔하기
+			for(Map<String, Object> sch : todaySchedules) {
+	        	if(sch.get("schType").equals("연차")) {
+	        		return "연차-미등록";
+	        	}
+	        	if(sch.get("schType").equals("출장")) {
+	        		if(businessTripStart != null) {
+	        			log.debug("오늘 출장 기록이 2번 이상 있음");
+	        			Long startInVar = parsingDate(businessTripStart);
+	        			Long startInMap = parsingDate(sch.get("startTime").toString());
+	        			
+		        		businessTripStart = (startInVar > startInMap)? sch.get("startTime").toString() : businessTripStart;
+	        		} else {
+	        			businessTripStart = sch.get("startTime").toString();
+	        		}
+	        	}
+			}
+			
+			String startTimeForRegister;
+			
+			if(businessTripStart != null) {
+				if(calculateHours(nowTime, businessTripStart) < 0) {
+					startTimeForRegister = businessTripStart;
+					attForRegister.setStartTime(startTimeForRegister);
+					attendanceMapper.insertAttendance(attForRegister);
+					return "시작시간등록-출장시간";
+				}
+			} 
+			
+			startTimeForRegister = nowTime;
+			attForRegister.setStartTime(startTimeForRegister);
+			attendanceMapper.insertAttendance(attForRegister);
+			return "시작시작등록-정상등록";
+		}
+	}
+	
+
 	
 	
 	@Scheduled(cron = "00 00 00 * * *")
@@ -86,7 +164,7 @@ public class AttendanceService {
 			
 			yesterDayAtt.setEmpNo(emp.getEmpNo());
 			yesterDayAtt.setStartTime(yesterday);
-			findVacationAtt = attendanceMapper.findYesterDayAttByEmpAndDay(yesterDayAtt);	// 어제자 연차/출장 기록
+			findVacationAtt = attendanceMapper.findDaySchByEmpAndDay(yesterDayAtt);	// 어제자 연차/출장 기록
 			
 			yesterDayAtt = attendanceMapper.findAttendance(yesterDayAtt);	// 어제자 근태 기록
 	        
@@ -138,7 +216,7 @@ public class AttendanceService {
 	        
 			// 근무시간(workHour) 확인
 			int workHour = 0; // 출장시간을 고려한 출퇴근 기간 
-			Integer attHour = workHour + halfDayOffTime;	// 근태상태 판단기준 시간 = 출퇴근(출장시간) + 반가시간
+			Integer attHour = workHour + halfDayOffTime;	// 근태상태 판단기준 시간 = 출퇴근(출장시간 고려) + 반가시간
 			
 			if(yesterDayAtt != null) { // 출근버튼이라도 찍었을 경우
 				log.debug("이미 대상 attendance 행이 있음");
@@ -189,7 +267,7 @@ public class AttendanceService {
 				
 				
 				if(businessTripStart != null && businessTripEnd != null) {	// 출장기록이 있는 경우
-					workHour = calculateHours(businessTripStart, businessTripEnd);						/// 여기서 시간 parsing 오류 남					
+					workHour = calculateHours(businessTripStart, businessTripEnd);										
 					attHour = workHour + halfDayOffTime;
 					newAtt.setStartTime(businessTripStart);
 	        		newAtt.setEndTime(businessTripEnd);
@@ -216,7 +294,6 @@ public class AttendanceService {
 				log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 인스턴스가 없는 경우, 근태시각 파악 및 insert");
 			}
 		}
-		 	
 	}
 }
 
