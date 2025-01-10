@@ -6,6 +6,9 @@ import lombok.Data;
 public class ResponseDraftDetail {
 	private Integer draNo;
 	private String draftType;
+	private String location;
+	private Integer depNo;
+	private String deptName;
 	private String midApp; // 양식타입
 	private String midAppName;
 	private String finApp;

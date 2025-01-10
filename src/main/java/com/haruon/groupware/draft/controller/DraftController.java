@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.draft.dto.ResponseDraft;
 import com.haruon.groupware.draft.dto.ResponseDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
@@ -28,7 +29,11 @@ public class DraftController {
 	public String draft(@PathVariable int draNo, HttpSession session, Model model) {
 		int empNo = (int)session.getAttribute("loginEmpNo");
 		ResponseDraftDetail draftDetail = draftService.getDraftDetail(draNo, empNo);
+		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+		log.debug(draftDetail.toString());
+		log.debug(draftFiles.toString());
 		model.addAttribute("d", draftDetail);
+		model.addAttribute("draftFiles", draftFiles);
 		return "draft/draftDetail";
 	}
 	

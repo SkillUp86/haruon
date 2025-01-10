@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.draft.dto.RequestDraftDetail;
 import com.haruon.groupware.draft.dto.ResponseDraft;
 import com.haruon.groupware.draft.dto.ResponseDraftDetail;
@@ -26,6 +27,11 @@ public class DraftService {
 		draftDetail.setDraNo(draNo);
 		draftDetail.setEmpNo(empNo);
 		return draftMapper.findByDraftNo(draftDetail);
+	}
+	
+	// 결재 상세보기 파일리스트
+	public List<DraftFileEntity> getDraftFiles(int draNo){
+		return draftMapper.findDraftByFile(draNo);
 	}
 	
 	// 결재 리스트
