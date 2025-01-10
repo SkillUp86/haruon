@@ -6,7 +6,7 @@
                     <div class="nav-logo">
                         <div class="nav-item theme-logo">
                             <a href="${pageContext.request.contextPath}/home">
-                                <img src="../src/assets/img/logo.svg" class="navbar-logo" alt="logo">
+                                <img src="${pageContext.request.contextPath}/src/assets/img/logo.svg" class="navbar-logo" alt="logo">
                             </a>
                         </div>
                         <div class="nav-item theme-text">
@@ -95,7 +95,7 @@
                                 <a href="${pageContext.request.contextPath}/draft/list"> 내문서함 </a>
                             </li>
                             <li>
-                                <a href="./component-accordion.html"> 참조문서서함  </a>
+                                <a href="${pageContext.request.contextPath}/component-accordion.html"> 참조문서서함  </a>
                             </li>
                            
                         </ul>
@@ -169,16 +169,16 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="layouts" data-bs-parent="#accordionExample">
                             <li>
-                                <a href="./layout-blank-page.html"> 가맹점 조회 </a>
+                                <a href="${pageContext.request.contextPath}/franchises"> 가맹점 조회 </a>
                             </li>
                             <li>
-                                <a href="./layout-empty.html"> 가맹점 등록 </a>
+                                <a href="${pageContext.request.contextPath}/franchises/insert"> 가맹점 등록 </a>
                             </li>
                             <li>
-                                <a href="./layout-boxed.html"> 가맹점 교육 </a>
+                                <a href="${pageContext.request.contextPath}/franchises/courses"> 가맹점 교육 </a>
                             </li>
                             <li>
-                                <a href="./layout-collapsible-menu.html"> 가맹점 문의 </a>
+                                <a href="${pageContext.request.contextPath}/franchises/questions"> 가맹점 문의 </a>
                             </li>
                         </ul>
                     </li>

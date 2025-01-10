@@ -3,6 +3,8 @@
 <mapper
 	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
 	
+	<!-- 가맹점 활성화 -->
+	
 	<!-- 가맹점 수정 -->
 	<update id="modifyFranchise" parameterType="com.haruon.groupware.franchise.entity.Franchise">
 		UPDATE franchise f
@@ -28,6 +30,9 @@
 			<if test="email != null">
 				, f.email = #{email}
 			</if>
+			<if test="openYn != null">
+				, f.open_yn = #{openYn}
+			</if>
 		</set>
 		WHERE f.fra_no = #{fraNo}
 	</update>
@@ -43,6 +48,7 @@
 			, leader
 			, phone
 			, email
+			, open_yn openYn
 		FROM franchise
 		WHERE fra_no = #{fraNo}
 	</select>
@@ -61,12 +67,6 @@
 			#{fname}, #{address}, #{postCode}, #{id}, #{leader}, #{phone}, #{email}
 		)
 	</insert>
-	
-	<!-- 가맹점 수 -->
-	<select id="selectFranchisesCount" resultType="Integer">
-		SELECT count(*)
-		FROM franchise
-	</select>	
 	
 	<!-- 가맹점 리스트 -->
 	<select id="selectFranchiseList" resultType="com.haruon.groupware.franchise.entity.Franchise">

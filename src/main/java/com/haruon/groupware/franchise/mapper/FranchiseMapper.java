@@ -20,7 +20,4 @@ public interface FranchiseMapper {
 	
 	// 가맹점 리스트
 	List<Franchise> selectFranchiseList();
-	
-	// 가맹점 개수
-	Integer selectFranchisesCount();
 }

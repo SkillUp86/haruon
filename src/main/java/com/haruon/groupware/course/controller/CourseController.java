@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.haruon.groupware.course.dto.CourseDto;
 import com.haruon.groupware.course.service.CourseService;
 import com.haruon.groupware.user.entity.Emp;
@@ -18,12 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class CourseController {
 	@Autowired CourseService courseService;
-
+	
+//	// 교육 상세
+//	@GetMapping("/franchises/course/{eduNo}")
+//	public String courseOne(@PathVariable Integer eduNo) {
+//		
+//	}
 	
 	// 교육 추가
 	@GetMapping("/franchises/courses/insert")
 	public String insertCourse(Model model) {
-		Integer deptNo = 3; // 나중에 수정 예정
+		Integer deptNo = 3; // 나중에 수정 예정 #######################################
 		List<Emp> empList = courseService.getEmpList(deptNo);
 		
 		model.addAttribute("empList", empList);

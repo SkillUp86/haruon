@@ -5,7 +5,7 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="${pageContext.request.contextPath}/home">
-                        <img src="../src/assets/img/logo2.svg" class="navbar-logo" alt="logo">
+                        <img src="${pageContext.request.contextPath}/src/assets/img/logo2.svg" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
@@ -92,7 +92,7 @@
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-container">
                             <div class="avatar avatar-sm avatar-indicators avatar-online">
-                                <img alt="avatar" src="../src/assets/img/profile-30.png" class="rounded-circle">
+                                <img alt="avatar" src="${pageContext.request.contextPath}/src/assets/img/profile-30.png" class="rounded-circle">
                             </div>
                         </div>
                     </a>
