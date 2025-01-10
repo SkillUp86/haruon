@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.haruon.groupware.schedule.mapper.ScheduleMapper">
+	
+		<select id="schedulesList" 
+			resultType="com.haruon.groupware.schedule.entity.Schedules">
+	SELECT
+		 sch_no schNo
+		 ,c.descript
+		 ,title title
+		 ,content content
+		 ,start_time startTime
+		 ,end_time endTime
+	FROM schedules s
+		inner join common_code c on
+		s.kind = c.common_code		
+	</select>
 </mapper>
