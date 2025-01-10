@@ -27,12 +27,18 @@ public class ResponseDraftDetail {
 	
 	// 출장결재 값
 	private String place;
-	private String vacStartDate;
-	private String vacFinishDate;
+	private String bizStartDate;
+	private String bizFinishDate;
 	// 매출결재 값
 	private Integer franchiseNo;
 	private String franchiseName;
 	private String ym;
     private Long revenue;
     // 휴가결재 값	
+    
+    private String subEmpName; // 대체업무자
+    private String vacType; // 연차,반차
+    private String vacStartDate;
+	private String vacFinishDate;
+	private String emergPhone;
 }

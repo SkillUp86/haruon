@@ -502,34 +502,15 @@
 				emp.forEach(function(item) {
 					//console.log(item)
 
-					// let empList = $(`
-					// 			<li class="form-check">
-					// 				<input type="radio" class="form-check-input" name="employeeRadio" id="${item.empNo}" value="${item.empNo}">
-					// 				<label class="form-check-label" for="${item.empNo}">(${item.descript}) ${item.ename}</label>
-					// 			</li>
-					// 			`);
-					// console.log(test[0].outerHTML)	
+					let selectEmpList = $(`
+								<li class="form-check">
+									<input type="radio" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+									<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
+								</li>
+								`);
 					
-
-					let radioButton = $('<input type="radio" class="form-check-input" name="employeeRadio">')
-						.val(item.empNo)
-						.attr('id', item.empNo)
-						.on('change', function() {
-							// 체크박스 해제
-							$('input[type="radio"]').not(this).prop('checked', false);
-						});
-
-					let label = $('<label class="form-check-label">')
-						.attr('for', item.empNo)
-						.text('(' + item.descript + ')' + item.ename); 
-
-					let listItem = $('<div class="form-check form-check-primary form-check-inline">')
-						.append($('<li class="form-check">'))
-						.append(radioButton)
-						.append(label);
-						
-					empList.append(listItem.clone());
-					empSubList.append(listItem.clone());
+					empSubList.append(selectEmpList.clone());
+					empList.append(selectEmpList.clone());
 				});
 			} 
 		}

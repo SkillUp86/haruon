@@ -22,7 +22,7 @@ public interface DraftMapper {
 	// 매출결재 상세문서
 	ResponseDraftDetail findBySalesDraftNo(int draNo);
 	// 출장결재 상세문서
-	ResponseDraftDetail findByVactionDraftNo(int draNo);
+	ResponseDraftDetail findByBusinessDraftNo(int draNo);
 	// 기본결재 상세문서
 	ResponseDraftDetail findByBasicDraftNo(int draNo);
 }
