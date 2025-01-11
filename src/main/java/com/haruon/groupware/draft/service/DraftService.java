@@ -7,7 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.draft.dto.ResponseDraft;
-import com.haruon.groupware.draft.dto.ResponseDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseSalesDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseVacationDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseBasicDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.mapper.DraftMapper;
 
 @Service
@@ -25,8 +28,20 @@ public class DraftService {
 		return draftMapper.findDraftByApproval(empNo);
 	}
 
-	// 결재 상세보기
-	public ResponseDraftDetail getDraftDetail(int draNo) {
+	// 휴가 결재 상세보기
+	public ResponseVacationDraftDetail getVacationDraftDetail(int draNo) {
+		return draftMapper.findByVacationDraftNo(draNo);
+	}
+	// 매출 결재 상세보기
+	public ResponseSalesDraftDetail getSalesDraftDetail(int draNo) {
+		return draftMapper.findBySalesDraftNo(draNo);
+	}
+	// 출장 결재 상세보기
+	public ResponseBusinessDraftDetail getBusinessDraftDetail(int draNo) {
+		return draftMapper.findByBusinessDraftNo(draNo);
+	}
+	// 기본 결재 상세보기
+	public ResponseBasicDraftDetail getBasicDraftDetail(int draNo) {
 		return draftMapper.findByBasicDraftNo(draNo);
 	}
 	

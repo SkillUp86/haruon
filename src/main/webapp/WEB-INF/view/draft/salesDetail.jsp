@@ -138,11 +138,21 @@
                                                             <span class="input-group-text label-text">직위</span>
                                                             <input class="form-control" value="${d.location}" readonly>
                                                         </div>
-                                                        <div class="input-group mb-1">
+                                                        <div class="input-group">
                                                             <span class="input-group-text label-text">기안자</span>
                                                             <input class="form-control" value="${d.drafterName}" readonly>
                                                             <span class="input-group-text label-text">기안일자</span>
                                                             <input class="form-control" value="${d.createDate}" readonly>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text label-text">가맹점</span>
+                                                            <input class="form-control" value="${d.franchiseName}" readonly>
+                                                        </div>
+                                                        <div class="input-group mb-1">
+                                                            <span class="input-group-text label-text">매출연월</span>
+                                                            <input class="form-control" value="${d.ym}" readonly>
+                                                            <span class="input-group-text label-text">매출액</span>
+                                                            <input class="form-control" value="${d.revenue}" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="input-group mb-2">
@@ -201,12 +211,12 @@
                                         <div class="col-xxl-12 col-md-12 mb-4">
                                         </div>
 
-                                       <c:if test="${d.approvalState == '결재대기'}">
+                                        <c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/vacUpdate?draNo=${d.draNo}">수정</a>
+													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/salesUpdate?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/basicDelete?draNo=${d.draNo}&appNo=${d.appNo}">삭제</a>
+													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/salesDelete?draNo=${d.draNo}&appNo=${d.appNo}">삭제</a>
 	                                        </div>
                                        	</c:if>
 
@@ -222,14 +232,14 @@
                         <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
                     </div>
                 </div>
+
             </div>
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
             <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
-            <script src="${pageContext.request.contextPath}/src/assets/js/template.js""></script>
-    		<script src=" ${pageContext.request.contextPath}/src/plugins/src/apex/apexcharts.min.js"></script>
+    		<script src="${pageContext.request.contextPath}/src/plugins/src/apex/apexcharts.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>

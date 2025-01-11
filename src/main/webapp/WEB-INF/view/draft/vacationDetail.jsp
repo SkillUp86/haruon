@@ -195,20 +195,20 @@
                                         <div class="col-xxl-12 mb-4">
                                                 <label class="form-control text-center">${d.approvalState}</label>
                                         </div>
-                                        <div class="col-xxl-12 col-md-12 mb-4">
-                                        </div>
-
-                                        <div class="col-xxl-12 col-md-12 mb-4">
-                                        </div>
-
-                                       <c:if test="${d.approvalState == '결재대기'}">
+                                       	<c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/vacUpdate?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/basicDelete?draNo=${d.draNo}&appNo=${d.appNo}">삭제</a>
+													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/vacDelete?draNo=${d.draNo}&appNo=${d.appNo}">삭제</a>
 	                                        </div>
                                        	</c:if>
+                                        <div class="col-xxl-12 col-md-12 mb-4">
+                                        </div>
+
+                                        <div class="col-xxl-12 col-md-12 mb-4">
+                                        </div>
+
 
                                         <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
                                             <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
@@ -222,6 +222,7 @@
                         <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
                     </div>
                 </div>
+
             </div>
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>

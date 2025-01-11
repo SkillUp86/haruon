@@ -5,7 +5,7 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="${pageContext.request.contextPath}/home">
-                        <img src="${pageContext.request.contextPath}/src/assets/img/logo2.svg" class="navbar-logo" alt="logo">
+                    	<img alt="" src="${pageContext.request.contextPath}/src/assets/img/logo.svg">
                     </a>
                 </li>
                 <li class="nav-item theme-text">

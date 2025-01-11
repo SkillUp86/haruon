@@ -3,7 +3,7 @@ package com.haruon.groupware.draft.dto;
 import lombok.Data;
 
 @Data
-public class ResponseBasicDraftDetail {
+public class ResponseBusinessDraftDetail {
 	private Integer draNo;
 	private Integer appNo;
 	private String draftType;
@@ -20,6 +20,9 @@ public class ResponseBasicDraftDetail {
 	private String referName;
 	private String title;
 	private String content;
+	private String place;
+	private String bizStartDate;
+	private String bizFinishDate;
 	private String createDate;
 	private String midDate;
 	private String finalDate;

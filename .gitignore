@@ -42,3 +42,4 @@ Thumbs.db
 ehthumbs.db
 .mvn/repository/
 src/main/resources/application-db.yaml
+src/main/resources/application-mail.yaml

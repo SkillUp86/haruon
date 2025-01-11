@@ -21,8 +21,8 @@
             <!-- END GLOBAL MANDATORY STYLES -->
 
             <!--  BEGIN CUSTOM STYLE FILE  -->
-            <link rel="stylesheet" type="text/css" href="../src/plugins/src/table/datatable/datatables.css">
-            <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/table/datatable/dt-global_style.css">
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
+            <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
             <!--  END CUSTOM STYLE FILE  -->
 
             <!-- 페이지 제목 입력칸 -->
@@ -123,7 +123,7 @@
                                                     <th class=" dt-no-sorting">제목</th>
                                                     <th class=" dt-no-sorting">기안날짜</th>
                                                     <th class=" dt-no-sorting">결재상태</th>
-                                                    <th class="text-center dt-no-sorting">이동</th>
+                                                    <th class="text-center dt-no-sorting">확인</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -146,17 +146,17 @@
             <!-- END MAIN CONTAINER -->
 
             <!-- BEGIN GLOBAL MANDATORY STYLES -->
-            <script src="../src/plugins/src/global/vendors.min.js"></script>
-            <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-            <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-            <script src="../src/plugins/src/waves/waves.min.js"></script>
-            <script src="../layouts/vertical-light-menu/app.js"></script>
-            <script src="../src/assets/js/custom.js"></script>
+            <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+            <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+            <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+            <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+            <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
             <!-- END GLOBAL MANDATORY STYLES -->
 
             <!-- BEGIN PAGE LEVEL SCRIPTS -->
-            <script src="../src/plugins/src/table/datatable/datatables.js"></script>
+            <script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
 
 
             <script>
@@ -171,6 +171,12 @@
                         "sSearchPlaceholder": "Search...",
                         "sLengthMenu": "Results :  _MENU_",
                     },
+                    "columnDefs": [
+                        {
+                            "targets": -1, // 마지막 열
+                            "className": 'text-center'
+                        }
+                    ],
                     "stripeClasses": [],
                     "lengthMenu": [7, 10, 20],
                     "pageLength": 10
@@ -179,27 +185,39 @@
             <script>
                 function tabData(tabType) {
                     let empNo = ${ sessionScope.loginEmpNo }; // 로그인한 사용자 번호
-                    
+
                     $.ajax({
                         method: 'GET',
                         url: (tabType === 'draft') ? `/drafts/` + empNo : `/approvals/` + empNo,
                         success: function (data) {
-                            let table = $('#zero-config').DataTable(); 
+                            let table = $('#zero-config').DataTable();
                             table.clear();
                             data.forEach(item => {
-                            	console.log(item)
                                 let rowData = [
                                     item.draNo,
                                     item.draftType,
                                     item.title,
                                     item.createDate,
                                     item.approvalState,
-                                     `<a class="btn btn-primary" href="/draft/\${item.draNo}">이동</a>`
+                                    (function () {
+                                        let url = "";
+                                        if (item.kind === "C01") {
+                                            url = "/draft/detail/basic?draNo=" + item.draNo;
+                                        } else if (item.kind === "C02") {
+                                            url = "/draft/detail/business?draNo=" + item.draNo;
+                                        } else if (item.kind === "C03") {
+                                            url = "/draft/detail/sales?draNo=" + item.draNo;
+                                        } else if (item.kind === "C04") {
+                                            url = "/draft/detail/vacation?draNo=" + item.draNo;
+                                        } else {
+                                            url = "/error/404";
+                                        }
+                                        return `<a class="btn btn-primary" href="\${url}">확인</a>`;
+                                    })()
                                 ];
-                                table.row.add(rowData); 
+                                table.row.add(rowData);
                             });
-
-                            table.draw(); 
+                            table.draw();
                         },
                         error: function (xhr, status, error) {
                             console.error(`Error: ${status}, ${error}`);

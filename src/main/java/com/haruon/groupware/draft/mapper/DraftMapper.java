@@ -5,8 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
+import com.haruon.groupware.draft.dto.ResponseBasicDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.ResponseDraft;
-import com.haruon.groupware.draft.dto.ResponseDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseSalesDraftDetail;
+import com.haruon.groupware.draft.dto.ResponseVacationDraftDetail;
 
 @Mapper
 public interface DraftMapper {
@@ -20,9 +23,11 @@ public interface DraftMapper {
 	List<ResponseDraft> findDraftByEmp(int empNo);
 	
 	// 매출결재 상세문서
-	ResponseDraftDetail findBySalesDraftNo(int draNo);
+	ResponseVacationDraftDetail findByVacationDraftNo(int draNo);
+	// 매출결재 상세문서
+	ResponseSalesDraftDetail findBySalesDraftNo(int draNo);
 	// 출장결재 상세문서
-	ResponseDraftDetail findByBusinessDraftNo(int draNo);
+	ResponseBusinessDraftDetail findByBusinessDraftNo(int draNo);
 	// 기본결재 상세문서
-	ResponseDraftDetail findByBasicDraftNo(int draNo);
+	ResponseBasicDraftDetail findByBasicDraftNo(int draNo);
 }

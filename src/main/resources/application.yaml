@@ -22,10 +22,8 @@ logging:
   level:
     com:
       haruon:
-        groupware:
-          mapper: debug
-          controller: debug
-          nodeValue: debug
+        groupware: debug
+          
 
 
 

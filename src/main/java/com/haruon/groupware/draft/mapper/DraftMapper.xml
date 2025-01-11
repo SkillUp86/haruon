@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
 	<!-- 휴가보고서 상세보기 -->
-	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseVacationDraftDetail">
 		select 
 				d.dra_no draNo
+			,	a.app_no appNo
 			,	(select descript
 				 from common_code
 				 where common_code = d.kind)draftType
@@ -59,9 +60,10 @@
 	</select>
 	
 	<!-- 매출보고서 상세보기 -->
-	<select id="findBySalesDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<select id="findBySalesDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseSalesDraftDetail">
 		select 
 				d.dra_no draNo
+			,	a.app_no appNo
 			,	(select descript
 				 from common_code
 				 where common_code = d.kind)draftType
@@ -112,9 +114,10 @@
 		where d.dra_no = #{draNo}
 	</select>
 	<!-- 출장결재 상세보기 -->
-	<select id="findByBusinessDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<select id="findByBusinessDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail">
 		select 
 				d.dra_no draNo
+			,	a.app_no appNo
 			,	(select descript
 				 from common_code
 				 where common_code = d.kind)draftType
@@ -162,9 +165,10 @@
 		where d.dra_no = #{draNo}
 	</select>
 	<!-- 기본결재 상세보기 -->
-	<select id="findByBasicDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraftDetail">
+	<select id="findByBasicDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseBasicDraftDetail">
 		select 
 			d.dra_no draNo
+		,	a.app_no appNo
 		,	(select descript
 			 from common_code
 			 where common_code = d.kind)draftType
@@ -223,6 +227,7 @@
 	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
 		select 
 				d.dra_no draNo
+			,	d.kind kind
 			,	kc.descript draftType
 			,	d.title title
 			,	d.content content
@@ -243,6 +248,7 @@
 	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
 		select 
 				d.dra_no draNo
+			,	d.kind kind
 			,	kc.descript draftType
 		    ,	d.title title
 		    ,	d.content content
