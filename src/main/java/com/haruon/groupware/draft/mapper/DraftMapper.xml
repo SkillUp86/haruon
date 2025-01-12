@@ -54,7 +54,7 @@
 			on r.emp_no = re.emp_no
 		left join emp me
 			on a.mid_app = me.emp_no
-		left join emp fe
+		inner join emp fe
 			on a.final_app = fe.emp_no
 		where d.dra_no = #{draNo}
 	</select>
@@ -109,7 +109,7 @@
 			on r.emp_no = re.emp_no
 		left join emp me
 			on a.mid_app = me.emp_no
-		left join emp fe
+		inner join emp fe
 			on a.final_app = fe.emp_no
 		where d.dra_no = #{draNo}
 	</select>
@@ -160,7 +160,7 @@
 			on r.emp_no = re.emp_no
 		left join emp me
 			on a.mid_app = me.emp_no
-		left join emp fe
+		inner join emp fe
 			on a.final_app = fe.emp_no
 		where d.dra_no = #{draNo}
 	</select>
@@ -206,7 +206,7 @@
 			on r.emp_no = re.emp_no
 		left join emp me
 			on a.mid_app = me.emp_no
-		left join emp fe
+		inner join emp fe
 			on a.final_app = fe.emp_no
 		where d.dra_no = #{draNo}
 	</select>

@@ -216,7 +216,7 @@
 													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/salesUpdate?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/salesDelete?draNo=${d.draNo}&appNo=${d.appNo}">삭제</a>
+													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>
 	                                        </div>
                                        	</c:if>
 

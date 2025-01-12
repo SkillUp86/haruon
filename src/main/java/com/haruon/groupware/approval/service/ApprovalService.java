@@ -63,30 +63,28 @@ public class ApprovalService {
 
 	// 결재 첨부파일 존재시 추가
 	private void existApprovalFile(RequestApproval approval, String path, int basicRow, Integer draNo) {
-		if (basicRow == 1 && approval.getFormFile() != null) {
+		if(basicRow == 1 && approval.getFormFile()!= null) {
 			List<MultipartFile> file = approval.getFormFile();
-			for (MultipartFile f : file) {
-				DraftFileEntity draftFile = new DraftFileEntity();
-				draftFile.setDraNo(draNo);
-				draftFile.setKind(f.getContentType());
-				draftFile.setSize(f.getSize());
-				int dotInx = f.getOriginalFilename().lastIndexOf(".");
-				String originName = f.getOriginalFilename().substring(0, dotInx);
-				String fileName = UUID.randomUUID().toString().replace("-", "");
-				String ext = f.getOriginalFilename().substring(dotInx + 1);
-				draftFile.setFileName(fileName);
-				draftFile.setOriginName(originName);
-				draftFile.setExt(ext);
-				System.out.println("File Path: " + path + fileName + "." + ext);
-				int draftFileRow = approvalMapper.saveDraftFileByUser(draftFile);
-				File upload = new File(path + fileName + "." + ext);
-				if (draftFileRow == 1) {
+			for(MultipartFile f : file) {
+			DraftFileEntity draftFile = new DraftFileEntity();
+			draftFile.setDraNo(draNo);
+			draftFile.setKind(f.getContentType());
+			draftFile.setSize(f.getSize());
+			int dotInx = f.getOriginalFilename().lastIndexOf(".");
+			String originName = f.getOriginalFilename().substring(0,dotInx);
+			String fileName = UUID.randomUUID().toString().replace("-", "");
+			String ext = f.getOriginalFilename().substring(dotInx+1);
+			draftFile.setFileName(fileName);
+			draftFile.setOriginName(originName);
+			draftFile.setExt(ext);
+			
+			int draftFileRow = approvalMapper.saveDraftFileByUser(draftFile);
+				if(draftFileRow == 1) {
 					try {
-						f.transferTo(upload);
-						System.out.println("File saved to: " + path + fileName + "." + ext);
+						f.transferTo(new File(path + fileName +"."+ext));
 					} catch (IllegalStateException | IOException e) {
 						e.printStackTrace();
-						throw new RuntimeException();
+						throw new IllegalArgumentException("파일이 없습니다");
 					}
 				}
 			}

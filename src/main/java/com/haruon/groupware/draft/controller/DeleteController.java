@@ -18,10 +18,11 @@ public class DeleteController {
 		this.deleteService = deleteService;
 	}
 
-	@GetMapping("/draft/basicDelete")
-	public String deleteBasicDraft(@RequestParam int draNo, @RequestParam int appNo, HttpSession session ) {
-		String path = session.getServletContext().getRealPath("/uploadDraft");
-		deleteService.getDeleteBasicDraft(draNo, appNo, path);
+	@GetMapping("/draft/delete")
+	public String deleteBasicDraft(@RequestParam int draNo, @RequestParam int appNo, @RequestParam String docType, HttpSession session ) {
+		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		deleteService.getDeleteDraft(docType, draNo, appNo, path);
 		return "redirect:/draft/list";
 	}
+	
 }
