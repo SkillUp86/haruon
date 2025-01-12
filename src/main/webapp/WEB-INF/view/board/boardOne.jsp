@@ -133,13 +133,28 @@
                              	
                              	<div>
                              		<p style="text-align: right;">
-                             			<c:if test="${b.catNo != 1}">
-                             				<a href="${pageContext.request.contextPath}/board/update?boaNo=${b.boaNo}">수정</a> &nbsp;
+                             			<c:if test="${b.catNo != 1}"> <!-- 자유 게시판 글일 때  -->
+                             				<a href="${pageContext.request.contextPath}/board/update?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
+                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+											</a> &nbsp;
+											<a href="${pageContext.request.contextPath}/board/delete?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
+	                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+	                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+	                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+											</a>
                              			</c:if>
-                             			<c:if test="${b.catNo == 1}">
-                             				<a href="${pageContext.request.contextPath}/board/updateNotice?boaNo=${b.boaNo}">수정</a> &nbsp;
+                             			<c:if test="${b.catNo == 1}"> <!-- 공지 글일 때  -->
+                             				<a href="${pageContext.request.contextPath}/board/updateNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
+                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+											</a> &nbsp;
+											<a href="${pageContext.request.contextPath}/board/deleteNotice?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
+	                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+	                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+	                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+											</a>
                              			</c:if>
-                             			<a href="${pageContext.request.contextPath}/board/delete">삭제</a> &nbsp;
                              		</p>
                              	</div>
                              </div>
@@ -155,14 +170,17 @@
 	                                         <div class="meta-info mb-0">${c.createDate}</div>
 	                                         <p class="media-text mt-2 mb-0">${c.content}</p>
 	
-	                                         <!-- 수정 버튼 -->
-	                                         <button class="btn btn-success btn-icon btn-reply btn-rounded">
-	                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-	                                         </button>
+	                                         <!-- 삭제 버튼 -->
+	                                         <a href="${pageContext.request.contextPath}/board/deleteComment?boaNo=${c.boaNo}&comNo=${c.comNo}" class="btn btn-dark btn-icon btn-reply btn-rounded remove" id="btnDeleteComment">
+	                                         	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+	                                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+	                                            <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+	                                         </a>
 	                                     </div>
 	                                 </div>
 	                             </c:forEach>
                              </div>
+                             <!-- 댓글 입력 -->
                              <div class="post-form mt-5">
                                  <div class="section add-comment">
                                  	<form id="formComment" action="${pageContext.request.contextPath}/board/comment" method="post">
@@ -215,8 +233,5 @@
     <script src="../src/plugins/src/highlight/highlight.pack.js"></script>
     <!-- END GLOBAL MANDATORY STYLES -->
 
-	<script>
-		
-	</script>
 </body>
 </html>

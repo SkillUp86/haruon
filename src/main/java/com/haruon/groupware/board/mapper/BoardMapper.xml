@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.board.mapper.BoardMapper">
-	<!-- /board - 자유 전체 -->
+	<!-- 자유 게시판 리스트 - 전체 -->
 	<select id="selectBoardList" parameterType="Map" resultType="Map">
 		SELECT 
 			b.boa_no boaNo
@@ -16,14 +16,37 @@
 			ON b.emp_no = e.emp_no
 		INNER JOIN category c
 			ON b.cat_no = c.cat_no
-		INNER JOIN board_like bl
+		LEFT JOIN board_like bl
 			ON b.boa_no = bl.boa_no
 		WHERE b.cat_no != 1
 		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
 		ORDER BY b.boa_no DESC
 	</select>
 	
-	<!-- /board/insert -->
+	<!-- 카테고리 별 게시판 리스트 -->
+	<select id="selectBoardListByCatNo" parameterType="Map" resultType="Map">
+		 SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+			, b.create_date createDate
+			, b.view_cnt viewCnt
+			, c.cat_name catName
+			, b.cat_no catNo
+			, COUNT(bl.like_no) countLike
+	    FROM board b
+	    INNER JOIN emp e 
+	    	ON b.emp_no = e.emp_no
+	    INNER JOIN category c 
+	    	ON b.cat_no = c.cat_no
+	    LEFT JOIN board_like bl 
+	    	ON b.boa_no = bl.boa_no
+	    WHERE b.cat_no = #{catNo}
+	    GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
+	    ORDER BY b.boa_no DESC
+	</select>
+	
+	<!-- 게시글 입력 -->
 	<insert id="insertBoard" parameterType="com.haruon.groupware.board.entity.Board">
 		INSERT INTO board(
 			emp_no
@@ -35,6 +58,7 @@
 			#{empNo}, #{catNo}, #{title}, #{content}, NOW()
 		)
 	</insert>
+	<!-- 첨부파일 등록 -->
 	<insert id="insertBoardFile" parameterType="com.haruon.groupware.board.entity.BoardFile">
 		INSERT INTO board_file(
 			boa_no
@@ -49,7 +73,7 @@
 		)
 	</insert>
 	
-	<!-- /board/{boaNo} -->
+	<!-- 글 상세 -->
 	<select id="selectBoardOne" parameterType="Integer" resultType="Map">
 		SELECT
 			b.boa_no boaNo
@@ -68,9 +92,12 @@
 			ON b.cat_no = c.cat_no
 		WHERE boa_no = #{boaNo}
 	</select>
+	
+	<!-- 댓글 리스트 -->
 	<select id="selectCommentList" parameterType="Integer" resultType="Map">
 		SELECT
 			bc.com_no comNo
+			, bc.boa_no boaNo
 			, e.ename ename
 			, bc.content content
 			, bc.create_date createDate
@@ -80,16 +107,20 @@
 		WHERE bc.boa_no = #{boaNo}
 		ORDER BY bc.create_date
 	</select>
+	<!-- 댓글 수 -->
 	<select id="countComment" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM board_comment
 		WHERE boa_no = #{boaNo}
 	</select>
+	<!-- 추천 수 -->
 	<select id="countLike" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*)
 		FROM board_like
 		WHERE boa_no = #{boaNo}
 	</select>
+	
+	<!-- 댓글 입력 -->
 	<insert id="insertComment" parameterType="com.haruon.groupware.board.entity.BoardComment">
 		INSERT INTO board_comment(
 			boa_no
@@ -100,8 +131,13 @@
 			#{boaNo}, #{empNo}, #{content}, NOW()
 		)
 	</insert>
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="Integer">
+		DELETE FROM board_comment
+		WHERE com_no = #{comNo}
+	</delete>
 	
-	<!-- /board/update -->
+	<!-- 글 수정 -->
 	<update id="updateBoard" parameterType="Map">
 		UPDATE board
 		SET cat_no = #{catNo}
@@ -110,6 +146,7 @@
 			, update_date = NOW()
 		WHERE boa_no = #{boaNo}
 	</update>
+	<!-- 첨부파일 리스트 -->
 	<select id="selectBoardFiles" parameterType="Integer" resultType="com.haruon.groupware.board.entity.BoardFile">
 		SELECT
 			boaf_no boafNo
@@ -123,9 +160,9 @@
 	</select>
 	
 	<!-- 	
-		공지
-	 		-->
-	<!-- /board/notice -->
+공지
+	-->
+	<!-- 공지 리스트 -->
 	<select id="selectNoticeList" parameterType="Map" resultType="Map">
 		SELECT 
 			b.boa_no boaNo
@@ -141,7 +178,7 @@
 		ORDER BY b.boa_no DESC
 	</select>
 	
-	<!-- /board/insertNotice -->
+	<!-- 공지 입력 -->
 	<insert id="insertNotice" parameterType="com.haruon.groupware.board.entity.Board" useGeneratedKeys="true" keyProperty="boaNo">
 		INSERT INTO board(
 			emp_no
@@ -154,7 +191,7 @@
 		)
 	</insert>
 	
-	<!-- /board/updateNotice -->
+	<!-- 공지 수정 -->
 	<update id="updateNotice" parameterType="Map">
 		UPDATE board
 		SET cat_no = 1
@@ -170,4 +207,25 @@
 		SET cat_no = #{newCatNo} 
 		WHERE cat_no = #{catNo}
 	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM board
+		WHERE boa_no = #{boaNo}
+	</delete>
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteBoardFile" parameterType="Integer">
+		DELETE FROM board_file
+		WHERE boa_no = #{boaNo}
+	</delete>
+	<!-- 글 삭제 전 댓글 삭제 -->
+	<delete id="deleteCommentByBoaNo" parameterType="Integer">
+		DELETE FROM board_comment
+		WHERE boa_no = #{boaNo}
+	</delete>
+	<!--  -->
+	<delete id="deleteLike" parameterType="Integer">
+		DELETE FROM board_like
+		WHERE boa_no = #{boaNo}
+	</delete>
 </mapper>

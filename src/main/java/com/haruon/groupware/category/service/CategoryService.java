@@ -17,25 +17,27 @@ public class CategoryService {
 	@Autowired CategoryMapper categoryMapper;
 	@Autowired BoardMapper boardMapper;
 	
+	// 자유 게시판 카테고리
 	public List<Category> getCategoryListFree(){
 		return categoryMapper.selectCategoryListFree();
 	}
 	
+	// 모든 카테고리
 	public List<Category> getAllCategory(){
 		return categoryMapper.selectAllCategory();
 	}
 	
-	// /category/insert
+	// 카테고리 등록
 	public Integer insertCategory(Category category) {
 		return categoryMapper.insertCategory(category);
 	}
 	
-	// /category/update
+	// 카테고리 수정
 	public Integer updateCategory(Category category) {
 	    return categoryMapper.updateCategory(category);
 	}
 	
-	// /category/delete
+	// 카테고리 삭제
 	public void deleteCategory(Integer catNo) {
 		try {
 	        categoryMapper.deleteCategory(catNo);

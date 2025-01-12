@@ -7,26 +7,27 @@
     <title>자유 게시판</title>
     <!-- 페이지 제목 입력칸 -->
     
-     <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link rel="stylesheet" type="text/css" href="../src/plugins/src/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
     
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/table/datatable/dt-global_style.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/table/datatable/dt-global_style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
     <!--  END CUSTOM STYLE FILE  -->
+    
+    <!-- 페이지 제목 입력칸 -->
+    <title>자유게시판</title>
+    <!-- 페이지 제목 입력칸 -->
 
     <style>
         #blog-list img {
@@ -102,12 +103,15 @@
                                     <h2>자유 게시판</h2>
                                     
                                     <div class="simple-tab">
-										<!-- 탭 -->
+										<!-- 탭 title -->
 	                                    <ul class="nav nav-tabs d-flex justify-content-between" id="pills-tab" role="tablist">
 	                                    	<div class="d-flex">
+	                                    		<li class="nav-item" role="presentation">
+	                                            	<button class="nav-link active" id="전체-tab" data-bs-toggle="tab" data-bs-target="#전체-tab-pane" type="button" role="tab" aria-controls="#전체-tab-pane" aria-selected="true">전체</button>
+	                                            </li>
 		                                    	<c:forEach var="ct" items="${categoryList}">
 		                                            <li class="nav-item" role="presentation">
-		                                            	<button class="nav-link active" id="${ct.catName}-tab" data-bs-toggle="pill" data-bs-target="#탭페이지id" type="button" role="tab" aria-controls="탭페이지id" aria-selected="true">${ct.catName}</button>
+		                                            	<button class="nav-link" id="tab${ct.catNo}" data-bs-toggle="tab" data-bs-target="#${ct.catName}-tab-pane" type="button" role="tab" aria-controls="#${ct.catName}-tab-pane" aria-selected="false">${ct.catName}</button>
 		                                            </li>
 		                                        </c:forEach>
 		                                	</div>
@@ -118,11 +122,11 @@
 	                                       		</a>
 	                                       	</span>
 	                                    </ul>
-	                                    <!-- 탭 끝 -->
+	                                    <!-- END 탭 title -->
                                 
 			                            <div class="tab-content" id="tabContent">
 			                                <!-- 탭1 - 전체 -->
-			                                <div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
+			                                <div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="전체-tab" tabindex="0">
 		                                    	<div class="widget-content widget-content-area br-8">
 		                                    	
 			                                        <table id="board-list" class="table dt-table-hover" style="width:100%">
@@ -159,20 +163,36 @@
 					                                </table>
 			                                    </div>
 			                                </div>
+			                                <!-- END 탭1 - 전체 -->
 			                                
 			                                <!-- 탭2 - 인기글 --> <!-- 추천수 10개 이상 -->
-			                               <div class="tab-pane fade show" id="animated-underline-전체" role="tabpanel" aria-labelledby="tab1">
-		                                    	<div class="widget-content widget-content-area br-8">
-			                                      
-			                                    </div>
-			                                </div>
-			    
-			    							<!-- 탭3 - 잡담 -->
-			                                <div class="tab-pane fade show" id="animated-underline-전체" role="tabpanel" aria-labelledby="tab1">
-		                                    	<div class="widget-content widget-content-area br-8">
-			                                      
-			                                    </div>
-			                                </div>
+			                                
+			                                <!-- 탭3 ~ -->
+			                                <c:forEach var="ct" items="${categoryList}">
+            									<c:if test="${ct.catNo != 1}"> <!-- 공지(catNo=1) 제외 -->
+	            									<div class="tab-pane fade" id="${ct.catName}-tab-pane" role="tabpanel" aria-labelledby="tab${ct.catNo}" tabindex="0">
+	                
+						                                <div class="widget-content widget-content-area br-8">    
+												            <table id="${ct.catName}-board-list" class="table dt-table-hover" style="width:100%">
+												                <thead>
+							                                        <tr>
+							                                            <th style="text-align: center;">번호</th>
+							                                            <th>제목</th>
+							                                            <th>작성자</th>
+							                                            <th>작성일</th>
+							                                            <th style="text-align: center;">조회수</th>
+							                                            <th style="text-align: center;">추천</th>
+							                                        </tr>
+							                                    </thead>
+							                                    <tbody>
+							                                    	<!-- ajax -->
+							                                    </tbody>
+												            </table>
+												     	</div>
+												     </div>
+												</c:if>
+											 </c:forEach>
+											 <!-- END 탭 -->
 			                                
 			                            </div>
                            			</div> <!-- END #simple-tab -->
@@ -228,6 +248,68 @@
 	            "pageLength": 10 
 	        });
     </script>
-    <!-- END PAGE LEVEL SCRIPTS -->  
+    <!-- END PAGE LEVEL SCRIPTS --> 
+    
+    <script>
+	    $(document).ready(function() {
+	        // 기본적으로 전체 탭의 데이터를 로드
+	        tabData('전체');
+	
+	        // 탭 클릭 이벤트
+	        $('#pills-tab button[data-bs-toggle="tab"]').click(function() {
+	            let buttonId = $(this).attr('id'); // 현재 클릭된 버튼의 ID
+	            let tabDataType;
+	
+	            // tabDataType을 설정
+	            if (buttonId === '전체-tab') {
+	                tabDataType = '전체';
+	            } else {
+	                tabDataType = buttonId.replace('tab', ''); // tabDataType을 버튼 ID에서 'tab'을 제거한 값으로 설정
+	            }
+	
+	            // 해당 탭의 데이터를 로드
+	            tabData(tabDataType);
+	        });
+	
+	        function tabData(tabData) {
+	            let url; 
+	            if (tabData === '전체') {
+	                url = '/board';
+	            } else {
+	                let catNo = tabData.replace('tab', '').trim();
+	                console.log(catNo);
+	                url = `/board/byCategory/`+catNo; // 카테고리별 게시글을 가져오는 URL
+	                console.log(url);
+	            }
+	
+	            /* fetch(url)
+	                .then(response => response.json())
+	                .then(data => {
+	                    let tbody;
+	                    if (tabData === '전체') {
+	                        tbody = $('#board-list tbody'); // 전체 탭의 tbody
+	                    } else {
+	                        tbody = $(`#${tabData}-board-list tbody`); // 카테고리 탭의 tbody
+	                    }
+	
+	                    tbody.empty(); // 기존 데이터 초기화
+	
+	                    data.forEach(item => {
+	                    	console.log(item)
+	                        let row = $('<tr></tr>');
+	                        row.append($('<td></td>').text(item.boaNo));
+	                        row.append($('<td></td>').html(`[${item.catName}] <a href="/board/${item.boaNo}">${item.title}</a>`));
+	                        row.append($('<td></td>').text(item.ename));
+	                        row.append($('<td></td>').text(item.createDate));
+	                        row.append($('<td></td>').text(item.viewCnt));
+	                        row.append($('<td></td>').text(item.countLike));
+	
+	                        tbody.append(row); // 새로운 행 추가
+	                    });
+	                })
+	                .catch(error => console.error('Error loading data:', error)); */
+	        }
+	    });
+	</script> 
 </body>
 </html>
