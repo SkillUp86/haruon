@@ -15,7 +15,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haruon.groupware.attendance.dto.RequestAttendanceList;
 import com.haruon.groupware.attendance.dto.ResponseAttendance;
+import com.haruon.groupware.attendance.dto.ResponseAttendanceList;
+import com.haruon.groupware.attendance.dto.ResponseBusinessTripList;
+import com.haruon.groupware.attendance.dto.ResponseLeaveList;
 import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.mapper.AttendanceMapper;
 import com.haruon.groupware.user.entity.Emp;
@@ -29,33 +33,32 @@ import lombok.extern.slf4j.Slf4j;
 public class AttendanceService {
 	@Autowired private AttendanceMapper attendanceMapper;
 	@Autowired private EmpMapper empMapper;
-	
-	// 하루 전(근태리스트 조회 조건, 스케쥴링)
-	private LocalDate yesterdayLD = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1);
-	private String yesterday = yesterdayLD.toString();
-	
-	// 하루 전이 속한 달의 1일(근태리스트 조회 조건)
-	private String listTargetStart = LocalDate.of(yesterdayLD.getYear(), yesterdayLD.getMonthValue(), 1).toString();
-	
-	// 시간 비교 및 연산을 위한 DateTime 포맷팅 형식
-	SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-	// 시간을 형식을 Lont으로 파싱하는 메서드 
+
+	// 시간을 형식을 Long으로 파싱하는 메서드 
 	private Long parsingDate(String paramDate) {
+		// 시간 비교 및 연산을 위한 DateTime 포맷팅 형식
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		
 		try {
 			return dateFormat1.parse(paramDate).getTime();
 		} catch(ParseException e1) {
 			try {
 				return dateFormat2.parse(paramDate).getTime();
 			} catch(Exception e2) {
-				log.debug("DateFormat으로 지정하지 않는 형식, Parsing 오류(AttendanceService - parsingDate 오류)");
-				e2.printStackTrace();
-				return null;
+				try {
+                    return dateFormat3.parse(paramDate).getTime();
+                } catch(ParseException e3) {
+                	log.debug("DateFormat으로 지정하지 않는 형식, Parsing 오류(AttendanceService - parsingDate 오류)");
+                    e3.printStackTrace();
+                    return null;
+                }
 			}
 		}
 	}
 	
-	// DB에서 가져온 두 시간 간격 계산
+	// 두 시간 간격 계산
 	private Integer calculateHours(String startTime, String endTime) {
 		Long end = 0L;
 		Long start = 0L;
@@ -65,11 +68,165 @@ public class AttendanceService {
 		return (int) ( (end - start) / 1000 / 60 / 60);
 	}
 	
-	// 메인페이지 오늘의 출/퇴근 시간 반환
-	public ResponseAttendance findAttendanceByEmp(Integer empNo) {
-		return attendanceMapper.findAttendanceByEmp(empNo);
-	}
+    // 연차 및 출장 리스트 조회조건(To)에 사용 : 조회를 원하는 달의 말일 계산
+    private String calculateMonthEnd(String beginDate) throws ParseException {
+    	LocalDate date = LocalDate.parse(beginDate);
+    	String end = LocalDate.of(date.getYear()
+    			, date.getMonth()
+    			, LocalDate.of(date.getYear(), date.getMonth(), 1).lengthOfMonth())
+    			.toString();
+    	
+    	return end;
+    }
+    
+    // 근태리스트 조회조건(To)에 사용 : 조회를 원하는 달의 말일 계산 + 어제날짜와 비교
+    private String getMonthEndOrYesterday(String beginDate) throws ParseException {
+    	String yesterDay = LocalDate.now(ZoneId.of("Asia/Seoul"))
+					                .minusDays(1)
+					                .toString();
+        String end = calculateMonthEnd(beginDate);
+        
+		return calculateHours(end, yesterDay) > 0 ? end : yesterDay;
+    }
+    
+
+    
+	// 근태리스트(월별) - deptNo : 부서원 전부
+    public List<ResponseAttendanceList> findDeptAttendanceListByMonth(Integer deptNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+        	
+			end = getMonthEndOrYesterday(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findDeptAttendanceListByMonth - 예외 발생");
+			e.printStackTrace();
+		}
+		
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setDeptNo(deptNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		
+    	return attendanceMapper.findAttendanceListByMonth(requestAttendanceList);
+    }
+    
+    // 근태리스트(월별) - empNo : 개인
+    public List<ResponseAttendanceList> findEmpAttendanceListByMonth(Integer empNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+			end = getMonthEndOrYesterday(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findEmpAttendanceListByMonth - 예외 발생");
+			e.printStackTrace();
+		}
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setEmpNo(empNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		log.debug("findEmpAttendanceListByMonth - 서비스 단" + requestAttendanceList.toString());
+    	return attendanceMapper.findAttendanceListByMonth(requestAttendanceList);
+    }
+    
+	// 휴가 신청 리스트(월별) - deptNo : 부서원 전부
+    public List<ResponseLeaveList> findtDeptLeaveReqListByMonth(Integer deptNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+			end = calculateMonthEnd(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findtDeptLeaveReqListByMonth - 파싱 예외 발생");
+			e.printStackTrace();
+		}
+		
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setDeptNo(deptNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		
+    	return attendanceMapper.findtLeaveReqListByMonth(requestAttendanceList);
+    }
+    
+    // 휴가 신청 리스트(월별) - empNo : 개인
+    public List<ResponseLeaveList> findtEmpLeaveReqListByMonth(Integer empNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+			end = calculateMonthEnd(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findtEmpLeaveReqListByMonth - 날짜 파싱 예외 발생");
+			e.printStackTrace();
+		}
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setEmpNo(empNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		log.debug("findEmpAttendanceListByMonth - 서비스 단" + requestAttendanceList.toString());
+    	return attendanceMapper.findtLeaveReqListByMonth(requestAttendanceList);
+    }
+    
+    // 평균 유급휴가 사용률(연간) - x : 회사 평균 / empNo : 개인 평균 / deptNo : 부서 평균
+    public Double findLeaveUsageRateForYear(RequestAttendanceList requestAttendanceList) {
+    	return attendanceMapper.findLeaveUsageRateForYear(requestAttendanceList);
+    }
+    
+    
+	// 출장 신청 리스트(월별) - deptNo : 부서원 전부
+    public List<ResponseBusinessTripList> findDeptBusinessTripReqListByMonth(Integer deptNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+			end = calculateMonthEnd(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findDeptBusinessTripReqListByMonth - 파싱 예외 발생");
+			e.printStackTrace();
+		}
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setDeptNo(deptNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		log.debug("findDeptBusinessTripReqListByMonth - 서비스 단" + requestAttendanceList.toString());
+		
+    	return attendanceMapper.findBusinessTripListByMonth(requestAttendanceList);
+    }
+    
+    // 출장 신청 리스트(월별) - empNo : 개인
+    public List<ResponseBusinessTripList> findEmpBusinessTripReqListByMonth(Integer empNo, String yearMonth) {
+    	String begin = yearMonth + "-01";
+        String end = null;
+        try {
+			end = calculateMonthEnd(begin);
+			log.debug("calculateEndDayOfMonth 결과 = " + end);
+		} catch (ParseException e) {
+			log.debug("findDeptBusinessTripReqListByMonth - 날짜 파싱 예외 발생");
+			e.printStackTrace();
+		}
+        
+		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+		requestAttendanceList.setEmpNo(empNo);
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
+		log.debug("findEmpBusinessTripReqListByMonth - 서비스 단" + requestAttendanceList.toString());
+    	return attendanceMapper.findBusinessTripListByMonth(requestAttendanceList);
+    }
 	
+	// 메인페이지 오늘의 출/퇴근 시간 조회
+	public ResponseAttendance findAttendanceByEmp(Integer empNo) {
+		Attendance att = attendanceMapper.findAttendanceByEmp(empNo);
+		return (att == null)? null : new ResponseAttendance(att);
+	}
+
 	// 메인페이지 오늘 출/퇴근 시간 등록
 	public String registerAttendance(Object empNb) {
 		// 현재 로그인한 사람
@@ -126,23 +283,22 @@ public class AttendanceService {
 				if(calculateHours(nowTime, businessTripStart) < 0) {
 					startTimeForRegister = businessTripStart;
 					attForRegister.setStartTime(startTimeForRegister);
-					attendanceMapper.insertAttendance(attForRegister);
+					attendanceMapper.createAttendance(attForRegister);
 					return "시작시간등록-출장시간";
 				}
 			} 
 			
 			startTimeForRegister = nowTime;
 			attForRegister.setStartTime(startTimeForRegister);
-			attendanceMapper.insertAttendance(attForRegister);
+			attendanceMapper.createAttendance(attForRegister);
 			return "시작시작등록-정상등록";
 		}
 	}
 	
-
-	
-	
+	// 전날 전 직원 attendance 데이터 업데이트
 	@Scheduled(cron = "00 00 00 * * *")
 	public void schedulePreviousDayAttState() {
+		String yesterday = (LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1)).toString();
 		
 		// 1) 퇴사일자가 null인 모든 직원 리스트 가져오기 - 스케쥴링 대상
 		List<Emp> empList = empMapper.findAllEmp();
@@ -179,7 +335,7 @@ public class AttendanceService {
 	        		newAtt.setStartTime(yesterday + " 00:00:00");
 	        		newAtt.setEndTime(yesterday + " 23:59:59");
 	        		newAtt.setState("연차");
-	        		attendanceMapper.insertAttendance(newAtt);
+	        		attendanceMapper.createAttendance(newAtt);
 	        		log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 연차 등록 insert");
 	        		continue loopOut;
 	        	} 
@@ -191,7 +347,7 @@ public class AttendanceService {
 	        		newAtt.setStartTime(sch.get("startTime").toString());
 	        		newAtt.setEndTime(sch.get("endTime").toString());
 	        		newAtt.setState("반차");
-	        		attendanceMapper.insertAttendance(newAtt);
+	        		attendanceMapper.createAttendance(newAtt);
 	        		log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 반차 등록 insert");
 	        	}
 	        	
@@ -290,7 +446,7 @@ public class AttendanceService {
 		        	newAtt.setState("결근");
 				}
 				log.debug("전날 인스턴스가 없는 경우, insert 객체 = " + newAtt.toString());
-				attendanceMapper.insertAttendance(newAtt);
+				attendanceMapper.createAttendance(newAtt);
 				log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 인스턴스가 없는 경우, 근태시각 파악 및 insert");
 			}
 		}
