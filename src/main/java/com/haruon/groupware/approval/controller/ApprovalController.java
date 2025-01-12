@@ -2,6 +2,7 @@ package com.haruon.groupware.approval.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.haruon.groupware.approval.dto.RequestApproval;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.service.ApprovalService;
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
@@ -59,13 +61,14 @@ public class ApprovalController {
 	}
 
 	@GetMapping("/approval")
-	public String approval(HttpSession session, Model model) {
-		String empName = (String) session.getAttribute("loginEmpName");
-		int empNo = (int) session.getAttribute("loginEmpNo");
-		String location = (String) session.getAttribute("loginEmpLocation");
-		String dname = (String) session.getAttribute("loginDname");
-
-		log.debug("location:" + location);
+	public String approval(Authentication authentication, Model model) {
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
+		String empName = userDetails.getEname();
+		int empNo = userDetails.getEmpNo();
+		String location = userDetails.getLocation();
+		String dname = userDetails.getDname();
 
 		// 전자결재 코드
 		String parentCode = "C00";
@@ -86,7 +89,7 @@ public class ApprovalController {
 		model.addAttribute("empName", empName);
 		model.addAttribute("dname", dname);
 
-		return "/approval/approval";
+		return "approval/approval";
 	}
 
 }

@@ -55,7 +55,7 @@
                                     
                                 </div>
                                 <div class="col-md-12">
-								    <form id="empLogin" action="${pageContext.request.contextPath}/login" method="post" novalidate>
+								    <form id="empLogin" action="${pageContext.request.contextPath}/loginSuccess" method="post" novalidate>
 								        <div class="form-row">
 								            <!-- 사원 번호 -->
 								            <div class="col-md-12 mb-4">

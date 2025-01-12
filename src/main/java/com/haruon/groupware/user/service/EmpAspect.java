@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class EmpAspect {
 	@After("execution(* com.haruon.groupware.user.service.EmpService.addEmp(..))")
 	public void postAddEmp() {
 		log.debug("postAddEmp AOP 실행");
-		Emp newEmp = empMapper.findNewEmp();
+		EmpEntity newEmp = empMapper.findNewEmp();
 		log.debug("신규사원 정보 = " + newEmp.toString());
 		
 		Integer joinMonth = Integer.parseInt(newEmp.getJoinDate().substring(5, 7));

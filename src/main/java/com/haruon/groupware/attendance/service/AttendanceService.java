@@ -22,7 +22,7 @@ import com.haruon.groupware.attendance.dto.ResponseBusinessTripList;
 import com.haruon.groupware.attendance.dto.ResponseLeaveList;
 import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.mapper.AttendanceMapper;
-import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -301,7 +301,7 @@ public class AttendanceService {
 		String yesterday = (LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1)).toString();
 		
 		// 1) 퇴사일자가 null인 모든 직원 리스트 가져오기 - 스케쥴링 대상
-		List<Emp> empList = empMapper.findAllEmp();
+		List<EmpEntity> empList = empMapper.findAllEmp();
 		
 		Attendance yesterDayAtt = null;
 		Attendance newAtt = null;	// 갱신된 attendance 인스턴스
@@ -309,7 +309,7 @@ public class AttendanceService {
 		
 		// 2) (전날 + 특정 직원)으로 attendance테이블에 행이 있는지 판단 - 있으면 해당행을 update 하고, 없으면 해당행을 insert 하고
 		loopOut :
-		for(Emp emp : empList) {
+		for(EmpEntity emp : empList) {
 			log.debug("'" + emp.getEmpNo() + "'번 사원의 근태스케쥴링 결과");
 			yesterDayAtt = new Attendance(); // 특정 직원의 어제자 근태 데이터 행
 			newAtt = new Attendance();	// 갱신된 attendance 인스턴스

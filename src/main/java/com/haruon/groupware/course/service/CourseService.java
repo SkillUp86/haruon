@@ -13,7 +13,7 @@ import com.haruon.groupware.course.dto.CourseDto;
 import com.haruon.groupware.course.entity.Education;
 import com.haruon.groupware.course.entity.EducationFile;
 import com.haruon.groupware.course.mapper.CourseMapper;
-import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.user.entity.EmpEntity;
 
 @Service
 @Transactional
@@ -63,7 +63,7 @@ public class CourseService {
 	}
 	
 	// 교육 담당자 리스트
-	public List<Emp> getEmpList(Integer deptNo) {
+	public List<EmpEntity> getEmpList(Integer deptNo) {
 		return courseMapper.selectEmpList(deptNo);
 	}
 	

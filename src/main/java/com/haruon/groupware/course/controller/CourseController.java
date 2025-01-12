@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.course.dto.CourseDto;
 import com.haruon.groupware.course.service.CourseService;
-import com.haruon.groupware.user.entity.Emp;
+import com.haruon.groupware.user.entity.EmpEntity;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class CourseController {
 	@GetMapping("/franchises/courses/insert")
 	public String insertCourse(Model model) {
 		Integer deptNo = 3; // 나중에 수정 예정 #######################################
-		List<Emp> empList = courseService.getEmpList(deptNo);
+		List<EmpEntity> empList = courseService.getEmpList(deptNo);
 		
 		model.addAttribute("empList", empList);
 		return "course/insert";

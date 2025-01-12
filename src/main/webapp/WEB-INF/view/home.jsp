@@ -276,16 +276,16 @@
     <script src="../src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     
-    <!-- 공통 : 로그인 하지 않았을 때 비정상적으로 접근시, 로그이 화면으로 페이지 덮어 씌우기 -->
+    <!-- 공통 : 로그인 하지 않았을 때 비정상적으로 접근시, 로그이 화면으로 페이지 덮어 씌우기 
     <script>
 		let empNo = "${loginEmpNo}"; 
 		
 		if(!empNo) {
 			location.replace("login");
 		}
-    </script>
+    </script> -->
     
-    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 -->
+    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 
     <script>    
 		$.ajax({
 			url: "/attendance/employee/"+"${loginEmpNo}",
@@ -322,7 +322,7 @@
 				 console.log("로그인 정보 없음");
 				 //location.replace("login");
 			});
-    </script>
+    </script>-->
 
 </body>
 </html>

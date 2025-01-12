@@ -18,7 +18,7 @@
 	</insert>
 	
 	<!-- 교육 등록 시 담당자 리스트 -->
-	<select id="selectEmpList" parameterType="Integer" resultType="com.haruon.groupware.user.entity.Emp">
+	<select id="selectEmpList" parameterType="Integer" resultType="com.haruon.groupware.user.entity.EmpEntity">
 		SELECT 
 			emp_no empNo
 			, ename
