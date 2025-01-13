@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DeleteMapper">
-
 	<!-- 첨부파일 개별 삭제 -->
 	<delete id="removeDraftFile" parameterType="Integer">
 		delete
 		from draft_file
 		where draf_no = #{drafNo}
 	</delete>
+	<!-- 첨부파일 하나 검색 -->
+	<select id="findDraftFileByDrafNo" parameterType="Integer" resultType="com.haruon.groupware.approval.entity.DraftFileEntity">
+		select
+				draf_no drafNo
+			,	dra_no draNo
+			,	origin_name originName
+			,	file_name fileName
+			,	ext
+			,	kind
+			,	size
+		from draft_file
+		where draf_no = #{drafNo}
+	</select>
 	<!-- 매출문서 삭제 -->
 	<delete id="removeSalesDraftByDraNo" parameterType="Integer">
 		delete

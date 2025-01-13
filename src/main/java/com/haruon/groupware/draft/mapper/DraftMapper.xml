@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
+	<!-- 유효성 검증 -->
+	<select id="hasAccess" parameterType="Integer">
+		select count(*)
+		from draft
+		where dra_no = #{draNo}
+		and emp_no = #{empNo}
+	</select>
 	<!-- 휴가보고서 상세보기 -->
 	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseVacationDraftDetail">
 		select 

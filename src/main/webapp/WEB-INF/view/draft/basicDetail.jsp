@@ -203,7 +203,7 @@
 
                                        <c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/vacUpdate?draNo=${d.draNo}">수정</a>
+													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/update/basic?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>
