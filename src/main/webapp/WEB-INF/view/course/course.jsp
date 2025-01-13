@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 등록</title>
+    <title>교육 상세</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -85,7 +85,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Insert Franchise</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Course</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -100,67 +100,73 @@
                 <div class="row layout-spacing layout-top-spacing" id="cancel-row">
                     <div class="col-lg-12">
                         <div class="widget-content searchable-container list">
-
                             <div class="row">
-								<div class="row">
 
-                        <div id="flLoginForm" class="col-lg-12 layout-spacing">
-                            <div class="statbox widget box box-shadow">
-                                <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h2 class="mt-3 mb-3">&nbsp; 가맹점 등록</h2>
-                                        </div>                                                                        
-                                    </div>
-                                </div>
-                                <div class="widget-content widget-content-area">
-                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/insert" class="row g-3">
-                                        <div class="col-12">
-                                            <label for="fname" class="form-label">FNAME</label>
-                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
-                                        </div>
-                                        <div class="col-12">
-	                                            <label for="postCode" class="form-label">POST CODE</label>
-	                                            <div class="row">
-		                                            <div class="col-md-6 d-flex">
-			                                            <input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호" readonly>
-		                                            </div>
-		                                            <div class="col-md-2 d-flex">
-			                                        	<input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-gray">
-		                                            </div>
-	                                            </div><br>
-	                                        <div class="col-md-12">
-	                                            <label for="address" class="form-label">ADDRESS</label>
-	                                            <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
-	                                        </div>
-	                                            <label for="" class="form-label"></label>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="id" class="form-label">ID</label>
-                                            <input type="text" class="form-control" id="id" name="id" placeholder="사업자번호">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="leader" class="form-label">LEADER</label>
-                                            <input type="text" class="form-control" id="leader" name="leader" placeholder="가맹점주">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="phone" class="form-label">PHONE</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="연락처">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="email" class="form-label">EMAIL</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
-                                        </div>
-                                        <div class="col-12 ">
-                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">등록</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+		                        <div id="flLoginForm" class="col-lg-12 layout-spacing">
+		                            <div class="statbox widget box box-shadow">
+		                                <div class="widget-header">
+	                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+	                                            <h2 class="mt-3 mb-3">&nbsp; 교육 상세</h2>
+	                                        </div>                                                                        
+		                                </div>
+		                                <div class="widget-content widget-content-area">
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                    <label class="form-label"> 교육 번호 </label>
+				                                    <label class="form-control">${c.eduNo}</label>
+				                                </div>
+				                                <div class="col-md-6">
+					                                <input type="hidden" name="empNo" value="${c.empNo}">
+				                                    <label class="form-label"> 담당자 </label>
+				                                    <label class="form-control">${c.ename}</label>
+				                                </div>
+			                                </div>
+			                                
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                    <label class="form-label"> 장소 </label>
+				                                    <label class="form-control">${c.place}</label>
+				                                </div>
+				                                <div class="col-md-6">
+				                                    <label class="form-label"> 일정 </label>
+				                                    <label class="form-control">${c.eduDate}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 제목 </label>
+				                                    <label class="form-control">${c.title}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 내용 </label>
+				                                    <label class="form-control">${c.content}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 정원 </label>
+				                                    <label class="form-control">${c.capacity}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row mb-3">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 첨부파일 </label>
+				                                    <c:forEach items="${cfl}" var="cfl">
+					                                    <a href="${pageContext.request.contextPath}/uploadCourse/${cfl.fileName}.${cfl.ext}" download="${cfl.originName}.${cfl.ext}"> 
+					                                    	<label class="form-control">${cfl.originName}.${cfl.ext}</label>
+					                                    </a>
+				                                    </c:forEach>
+				                                </div>
+			                                </div>
+			                                <a href="${pageContext.request.contextPath}/franchises/courses/modify?eduNo=${c.eduNo}" class="btn btn-gray"> 수정 </a>
+			                                <a href="${pageContext.request.contextPath}/" class="btn btn-gray"> 삭제 </a>
+		                                </div>
+		                            </div>
+		                        </div>
 
-                    </div>
-	                        </div>
+                    		</div>
                         </div>
                   	</div>
                	</div>

@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 등록</title>
+    <title>교육 수정</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -85,7 +85,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Insert Franchise</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Modify Course</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -109,50 +109,52 @@
                                 <div class="widget-header">
                                     <div class="row">
                                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h2 class="mt-3 mb-3">&nbsp; 가맹점 등록</h2>
+                                            <h2 class="mt-3 mb-3">&nbsp; 교육 수정</h2>
                                         </div>                                                                        
                                     </div>
                                 </div>
                                 <div class="widget-content widget-content-area">
-                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/insert" class="row g-3">
+                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
                                         <div class="col-12">
-                                            <label for="fname" class="form-label">FNAME</label>
-                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
+                                            <label for="empNo" class="form-label">EMP</label>
+                                            <select id="empNo" name="empNo" class="form-control">
+                                            	<option value="${c.empNo}">${c.ename}</option>
+                                            	<c:forEach items="${empList}" var="el">
+	                                            	<option value="${el.empNo}">${el.ename}</option>
+                                            	</c:forEach>
+                                            </select>
                                         </div>
                                         <div class="col-12">
-	                                            <label for="postCode" class="form-label">POST CODE</label>
-	                                            <div class="row">
-		                                            <div class="col-md-6 d-flex">
-			                                            <input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호" readonly>
-		                                            </div>
-		                                            <div class="col-md-2 d-flex">
-			                                        	<input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-gray">
-		                                            </div>
-	                                            </div><br>
-	                                        <div class="col-md-12">
-	                                            <label for="address" class="form-label">ADDRESS</label>
-	                                            <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
-	                                        </div>
-	                                            <label for="" class="form-label"></label>
+                                            <label for="place" class="form-label">PLACE</label>
+                                            <input type="text" class="form-control" id="place" name="place" value="${c.place}" placeholder="장소">
                                         </div>
                                         <div class="col-12">
-                                            <label for="id" class="form-label">ID</label>
-                                            <input type="text" class="form-control" id="id" name="id" placeholder="사업자번호">
+                                            <label for="eduDate" class="form-label">EDU DATE</label>
+                                            <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" value="${c.eduDate}" placeholder="교육 일정">
                                         </div>
                                         <div class="col-12">
-                                            <label for="leader" class="form-label">LEADER</label>
-                                            <input type="text" class="form-control" id="leader" name="leader" placeholder="가맹점주">
+                                            <label for="title" class="form-label">TITLE</label>
+                                            <input type="text" class="form-control" id="title" name="title" value="${c.title}" placeholder="제목">
                                         </div>
+										<div class="col-12">
+										    <label for="contents" class="form-label">CONTENT</label>
+										    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40">${c.content}</textarea>
+										</div>
                                         <div class="col-12">
-                                            <label for="phone" class="form-label">PHONE</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="연락처">
+                                            <label for="capacity" class="form-label">CAPACITY</label>
+                                            <input type="number" class="form-control" id="capacity" name="capacity" value="${c.capacity}" placeholder="정원">
                                         </div>
+										<div class="form-group">
+                                            <label for="educationFile" class="form-label">FILE</label>
+											<input class="form-control file-upload-input" type="file" id="educationFile" name="educationFile" multiple="multiple">
+											<c:forEach items="${cfl}" var="cfl">
+												<label class="form-control mt-1"> ${cfl.originName}.${cfl.ext} 
+													<a href="${pageContext.request.contextPath}/franchises/courses/deleteFile?fileName=${cfl.fileName}" class="btn btn-gray ms-4"> 삭제 </a>		
+												</label>
+											</c:forEach>	
+										</div>		                                        
                                         <div class="col-12">
-                                            <label for="email" class="form-label">EMAIL</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
-                                        </div>
-                                        <div class="col-12 ">
-                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">등록</button>
+                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">수정</button>
                                         </div>
                                     </form>
                                 </div>
@@ -189,100 +191,27 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	
+	
 	<script>
 		$('#addBtn').click(function() {
-			if($('#fname').val() == '') {
-				alert('FNAME을 입력하세요');
-			} else if($('#address').val() == '') {
-				alert('ADDRESS를 입력하세요');
-			} else if(!/^\d{10}$/.test($('#id').val())) {
-				alert('ID : 10자리 숫자를 입력하세요');
-			} else if($('#leader').val() == '') {
-				alert('가맹점주 이름을 입력하세요');
-			} else if(!/^\d{11}$/.test($('#phone').val())) {
-				alert('휴대폰번호 11자리를 입력하세요');
-			} else if($('#email').val() == '') {
-				alert('이메일을 입력하세요');
+			if($('#empNo').val() == '') {
+				alert('담당자를 선택하세요');
+			} else if($('#title').val() == '') {
+				alert('제목을 입력하세요');
+			} else if($('#contents').val() == '') {
+				alert('내용을 입력하세요');
+			} else if($('#place').val() == '') {
+				alert('장소를 입력하세요');
+			} else if($('#eduDate').val() == '') {
+				alert('일정을 입력하세요');
+			} else if($('#capacity').val() == '') {
+				alert('정원을 입력하세요');
 			} else {
 				$('#addForm').submit();
 			}
 		});
 	</script>
-	
-	<!-- 주소 -->
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		function sample4_execDaumPostcode() {
-          new daum.Postcode({
-              oncomplete: function(data) {
-                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                  // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                  var roadAddr = data.roadAddress; // 도로명 주소 변수
-                  var extraRoadAddr = ''; // 참고 항목 변수
-
-                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                      extraRoadAddr += data.bname;
-                  }
-                  // 건물명이 있고, 공동주택일 경우 추가한다.
-                  if(data.buildingName !== '' && data.apartment === 'Y'){
-                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                  }
-                  // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                  if(extraRoadAddr !== ''){
-                      extraRoadAddr = ' (' + extraRoadAddr + ')';
-                  }
-
-                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                  let resultAddress = '';
-                  /*
-                  document.getElementById('sample4_postcode').value = data.zonecode;
-                  document.getElementById("sample4_roadAddress").value = roadAddr;
-                  document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-                  */
-                  resultAddress = ' '+ roadAddr + ' ' + data.jibunAddress
-                  // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                  if(roadAddr !== ''){
-                      //document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                     resultAddress += ' ' + extraRoadAddr;
-                  } else {
-                      //document.getElementById("sample4_extraAddress").value = '';
-                  }
-                  document.getElementById('postCode').value = data.zonecode;
-                  document.getElementById('address').value = resultAddress;
-                  var guideTextBox = document.getElementById("guide");
-                  // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                  if(data.autoRoadAddress) {
-                      var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                      guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                      guideTextBox.style.display = 'block';
-
-                  } else if(data.autoJibunAddress) {
-                      var expJibunAddr = data.autoJibunAddress;
-                      guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                      guideTextBox.style.display = 'block';
-                  } else {
-                      guideTextBox.innerHTML = '';
-                      guideTextBox.style.display = 'none';
-                  }
-                  
-                  // 주소 선택 후, Daum Postcode API의 기본 팝업 모달을 닫는 방법
-                  var postcodeModal = document.querySelector('.daumPostcodeModal');
-                  if (postcodeModal) {
-                      postcodeModal.style.display = 'none'; // 모달을 숨김
-                  }
-
-                  // 또는 daum.Postcode 객체의 close() 메서드를 사용
-                  if (typeof daum.Postcode().close === 'function') {
-                      daum.Postcode().close(); // 모달을 닫는 메서드 호출
-                  }
-              }
-          }).open();
-      }
-   </script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

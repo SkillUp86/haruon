@@ -107,7 +107,7 @@
 		                                <div class="widget-header">
 		                                    <div class="row">
 		                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-		                                            <h2 class="mt-3 mb-3"> 교육 등록</h2>
+		                                            <h2 class="mt-3 mb-3">&nbsp; 교육 등록</h2>
 		                                        </div>                                                                        
 		                                    </div>
 		                                </div>
@@ -123,14 +123,6 @@
 		                                            </select>
 		                                        </div>
 		                                        <div class="col-12">
-		                                            <label for="title" class="form-label">TITLE</label>
-		                                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
-		                                        </div>
-												<div class="col-12">
-												    <label for="contents" class="form-label">CONTENT</label>
-												    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40"></textarea>
-												</div>
-		                                        <div class="col-12">
 		                                            <label for="place" class="form-label">PLACE</label>
 		                                            <input type="text" class="form-control" id="place" name="place" placeholder="장소">
 		                                        </div>
@@ -138,6 +130,14 @@
 		                                            <label for="eduDate" class="form-label">EDU DATE</label>
 		                                            <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" placeholder="교육 일정">
 		                                        </div>
+		                                        <div class="col-12">
+		                                            <label for="title" class="form-label">TITLE</label>
+		                                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+		                                        </div>
+												<div class="col-12">
+												    <label for="contents" class="form-label">CONTENT</label>
+												    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40"></textarea>
+												</div>
 		                                        <div class="col-12">
 		                                            <label for="capacity" class="form-label">CAPACITY</label>
 		                                            <input type="number" class="form-control" id="capacity" name="capacity" placeholder="정원">

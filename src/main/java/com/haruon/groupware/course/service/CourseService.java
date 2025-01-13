@@ -20,6 +20,15 @@ import com.haruon.groupware.user.entity.EmpEntity;
 public class CourseService {
 	@Autowired CourseMapper courseMapper;
 	
+	
+	// 교육 상세 
+	public CourseDto getCourse(Integer eduNo) {
+		return courseMapper.selectCourse(eduNo);
+	}
+	public List<EducationFile> getCourseFile(Integer eduNo) {
+		return courseMapper.selectCourseFile(eduNo);
+	}
+	
 	// 교육 등록
 	public void insertCourse(CourseDto courseDto, String path) {
 		// 교육 NO 생성

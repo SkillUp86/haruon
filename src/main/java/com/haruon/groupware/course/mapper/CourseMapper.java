@@ -13,6 +13,10 @@ import com.haruon.groupware.user.entity.EmpEntity;
 @Mapper
 public interface CourseMapper {
 	
+	// 교육 상세
+	CourseDto selectCourse(Integer eduNo);
+	List<EducationFile> selectCourseFile(Integer eduNo);
+	
 	// 교육 등록
 	Integer insertCourse(CourseDto courseDto);
 	

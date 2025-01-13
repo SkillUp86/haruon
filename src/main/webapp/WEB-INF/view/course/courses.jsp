@@ -120,7 +120,7 @@
 							                <td>${cl.eduDate}</td>
 							                <td>${cl.place}</td>
 							                <td>
-							                	<a href="${pageContext.request.contextPath}/franchises/courses?eduNo=${cl.eduNo}">
+							                	<a href="${pageContext.request.contextPath}/franchises/courses/${cl.eduNo}">
 							                		${cl.title}
 							                	</a>	
 							                </td>

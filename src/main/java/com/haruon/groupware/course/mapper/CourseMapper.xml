@@ -2,6 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.course.mapper.CourseMapper">
 	
+	<!-- 교육 상세 -->
+	<select id="selectCourse" parameterType="Integer" resultType="com.haruon.groupware.course.dto.CourseDto">
+		SELECT
+			edu.edu_no eduNo
+			, edu.emp_no empNo
+			, e.ename ename
+			, edu.title title
+			, edu.content content
+			, edu.place place
+			, edu.edu_date eduDate
+			, edu.capacity capacity
+			, edu.create_date createDate
+			, edu.update_date updateDate
+			, edu.cancle_yn cancleYn
+		FROM education edu 
+			JOIN emp e ON edu.emp_no = e.emp_no
+	   WHERE edu.edu_no = #{eduNo}
+	</select>
+	
+	<!-- 교육 상세 파일 -->
+	<select id="selectCourseFile" parameterType="Integer" resultType="com.haruon.groupware.course.entity.EducationFile">
+		SELECT
+			origin_name originName
+			, file_name fileName
+			, ext ext
+		FROM education_file
+	   WHERE edu_no = #{eduNo}
+	</select>
+	
 	<!-- 교육 등록 -->
 	<insert id="insertCourse" parameterType="com.haruon.groupware.course.dto.CourseDto"
 			useGeneratedKeys="true" keyProperty="eduNo"> 
