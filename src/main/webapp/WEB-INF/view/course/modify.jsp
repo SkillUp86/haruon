@@ -114,7 +114,8 @@
                                     </div>
                                 </div>
                                 <div class="widget-content widget-content-area">
-                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
+                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/modify" class="row g-3" enctype="multipart/form-data">
+                                    	<input type="hidden" name="eduNo" value="${c.eduNo}">
                                         <div class="col-12">
                                             <label for="empNo" class="form-label">EMP</label>
                                             <select id="empNo" name="empNo" class="form-control">
@@ -146,10 +147,10 @@
                                         </div>
 										<div class="form-group">
                                             <label for="educationFile" class="form-label">FILE</label>
-											<input class="form-control file-upload-input" type="file" id="educationFile" name="educationFile" multiple="multiple">
+											<input class="form-control file-upload-input mb-3" type="file" id="educationFile" name="educationFile" multiple="multiple">
 											<c:forEach items="${cfl}" var="cfl">
 												<label class="form-control mt-1"> ${cfl.originName}.${cfl.ext} 
-													<a href="${pageContext.request.contextPath}/franchises/courses/deleteFile?fileName=${cfl.fileName}" class="btn btn-gray ms-4"> 삭제 </a>		
+													<a href="${pageContext.request.contextPath}/franchises/courses/deleteFile?eduNo=${c.eduNo}&edufNo=${cfl.edufNo}" class="btn btn-gray ms-4"> 삭제 </a>		
 												</label>
 											</c:forEach>	
 										</div>		                                        
@@ -211,7 +212,6 @@
 			}
 		});
 	</script>
-
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

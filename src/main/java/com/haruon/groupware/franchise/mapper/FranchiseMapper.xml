@@ -3,8 +3,6 @@
 <mapper
 	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
 	
-	<!-- 가맹점 활성화 -->
-	
 	<!-- 가맹점 수정 -->
 	<update id="modifyFranchise" parameterType="com.haruon.groupware.franchise.entity.Franchise">
 		UPDATE franchise f

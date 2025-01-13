@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class CourseDto { // 교육 등록, 교육 상세
+public class CourseDto { // 교육 등록, 교육 수정
 	private Integer eduNo;
 	private Integer empNo;
 	private String ename;
