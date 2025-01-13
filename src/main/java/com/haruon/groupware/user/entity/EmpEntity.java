@@ -3,9 +3,6 @@ package com.haruon.groupware.user.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-
-import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.auth.Role;
 
 import lombok.Data;
@@ -56,12 +53,4 @@ public class EmpEntity {
 
 		return authorities;
 	}
-	
-	public boolean checkRole(Authentication authentication, Role role) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-		return userDetails.getAuthorities().contains(Role.ROLE_HEAD);
-	}
-	
-
 }

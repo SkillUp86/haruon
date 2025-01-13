@@ -1,20 +1,20 @@
 package com.haruon.groupware.attendance.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.attendance.service.AttendanceService;
-import com.haruon.groupware.auth.CustomUserDetails;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class AttendanceController {
 	@Autowired AttendanceService attendanceService;
-	
 	// 개인 근태/연가/출장 관리 페이지
 	@GetMapping("/employee/attendance")
 	public String attendanceEmp() {
@@ -28,9 +28,8 @@ public class AttendanceController {
 	
 	//출퇴근 등록
 	@GetMapping("/employee/registerAttendance")
-	public String registerAttendance(Authentication authentication, RedirectAttributes ra) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		String result = attendanceService.registerAttendance(userDetails.getEmpNo());
+	public String registerAttendance(HttpSession session, RedirectAttributes ra) {
+		String result = attendanceService.registerAttendance(session.getAttribute("loginEmpNo"));
 		
 		String registerAttendanceResult = switch(result) {
 			case "시작시간등록-출장시간" -> "현재시간보다 더 이른 출장일정이 있어, 해당 시간으로 등록합니다.";
@@ -44,7 +43,7 @@ public class AttendanceController {
 		  
 		log.debug(result);
 		log.debug(registerAttendanceResult);
-		return "redirect:/home";
+		return "redirect:/";
 	}
 	
 }

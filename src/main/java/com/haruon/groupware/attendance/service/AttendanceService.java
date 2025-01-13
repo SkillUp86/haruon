@@ -70,7 +70,7 @@ public class AttendanceService {
 	
     // 연차 및 출장 리스트 조회조건(To)에 사용 : 조회를 원하는 달의 말일 계산
     private String calculateMonthEnd(String beginDate) throws ParseException {
-    	LocalDate date = LocalDate.parse(beginDate.trim());
+    	LocalDate date = LocalDate.parse(beginDate);
     	String end = LocalDate.of(date.getYear()
     			, date.getMonth()
     			, LocalDate.of(date.getYear(), date.getMonth(), 1).lengthOfMonth())
@@ -96,6 +96,7 @@ public class AttendanceService {
     	String begin = yearMonth + "-01";
         String end = null;
         try {
+        	
 			end = getMonthEndOrYesterday(begin);
 			log.debug("calculateEndDayOfMonth 결과 = " + end);
 		} catch (ParseException e) {
@@ -106,8 +107,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setDeptNo(deptNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		
     	return attendanceMapper.findAttendanceListByMonth(requestAttendanceList);
     }
@@ -126,8 +127,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setEmpNo(empNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		log.debug("findEmpAttendanceListByMonth - 서비스 단" + requestAttendanceList.toString());
     	return attendanceMapper.findAttendanceListByMonth(requestAttendanceList);
     }
@@ -147,8 +148,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setDeptNo(deptNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		
     	return attendanceMapper.findtLeaveReqListByMonth(requestAttendanceList);
     }
@@ -167,8 +168,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setEmpNo(empNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		log.debug("findEmpAttendanceListByMonth - 서비스 단" + requestAttendanceList.toString());
     	return attendanceMapper.findtLeaveReqListByMonth(requestAttendanceList);
     }
@@ -193,8 +194,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setDeptNo(deptNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		log.debug("findDeptBusinessTripReqListByMonth - 서비스 단" + requestAttendanceList.toString());
 		
     	return attendanceMapper.findBusinessTripListByMonth(requestAttendanceList);
@@ -214,8 +215,8 @@ public class AttendanceService {
         
 		RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 		requestAttendanceList.setEmpNo(empNo);
-		requestAttendanceList.setFrom(begin + " 00:00:00");
-		requestAttendanceList.setTo(end + " 23:59:59");
+		requestAttendanceList.setFrom(begin);
+		requestAttendanceList.setTo(end);
 		log.debug("findEmpBusinessTripReqListByMonth - 서비스 단" + requestAttendanceList.toString());
     	return attendanceMapper.findBusinessTripListByMonth(requestAttendanceList);
     }
@@ -226,8 +227,9 @@ public class AttendanceService {
 	}
 
 	// 메인페이지 오늘 출/퇴근 시간 등록
-	public String registerAttendance(Integer empNo) {
+	public String registerAttendance(Object empNb) {
 		// 현재 로그인한 사람
+		Integer empNo = Integer.parseInt(String.valueOf(empNb));
 		
 		// 현재시간 
 		String nowTime = LocalDateTime
@@ -244,7 +246,7 @@ public class AttendanceService {
 		if(attendanceMapper.findAttendanceByEmp(empNo) != null) {
 			attForRegister.setStartTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString());
 			attForRegister.setEndTime(nowTime);
-			attendanceMapper.updateAttendance(attForRegister);
+			Integer result = attendanceMapper.updateAttendance(attForRegister);
 			return "퇴근시간등록-정상등록";
 		} else {	// 오늘자 근태내용없으면
 			// (0) 연차, 출장 기록 가져오기 - todaySchedules
