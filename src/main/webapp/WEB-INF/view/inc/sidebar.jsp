@@ -65,7 +65,7 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="apps" data-bs-parent="#accordionExample">
                             <li>
-                                <a href="./app-calendar.html"> 일정 관리 </a>
+                                <a href="/calendar"> 일정 관리 </a>
                             </li>
                             
                            
