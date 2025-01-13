@@ -142,7 +142,7 @@
 	                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록</a>
 	                                       	</div>
 	                                       	
-	                                       	<!-- Modal -->
+	                                       	<!-- Modal - insert-->
 												<div class="modal fade inputForm-modal" id="inputFormModal" tabindex="-1" role="dialog" aria-labelledby="inputFormModalLabel" aria-hidden="true">
 													<div class="modal-dialog modal-dialog-centered" role="document">
 														<div class="modal-content">
@@ -223,8 +223,25 @@
 																	</div> <!-- END Modal - update -->
 								                            </td>
 								                            <td>
-								                            	<div class="widget-content">
-								                            		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4 warning" data-depNo="${d.depNo}" onclick="setModalData(this)">${d.activeYn}</button>
+								                            	<div class="widget-content warning">
+								                            		<button type="button" class="btn btn-rounded mb-2 me-4 warning
+								                            			<c:choose>
+																	        <c:when test="${d.activeYn == 'Y'}">
+																	            btn-dark
+																	        </c:when>
+																	        <c:when test="${d.activeYn == 'N'}">
+																	            btn-light-dark
+																	        </c:when>
+																	    </c:choose>" data-depNo="${d.depNo}" data-activeYn="${d.activeYn}" onclick="setModalData(this)">
+									                            			<c:choose>
+																			    <c:when test="${d.activeYn == 'Y'}">
+																			        활성화
+																			    </c:when>
+																			    <c:when test="${d.activeYn == 'N'}">
+																			        비활성화
+																			    </c:when>
+																			</c:choose>
+								                            		</button>
 								                            	</div>
 								                            </td>
 								                        </tr>
@@ -306,34 +323,56 @@
         }
     });
 	 
-	 // 삭제 버튼
-	 document.querySelectorAll('.widget-content .warning').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 링크 동작 방지
-            const depNo = this.getAttribute('data-depNo'); // 데이터 속성에서 depNo 추출
-
-		    Swal.fire({ // sweet alert
-		        title: '부서를 활성화/비활성화 하시겠습니까?',
-		        icon: 'warning',
-		        showCancelButton: true,
-		        confirmButtonColor: '#3085d6',
-		        cancelButtonColor: '#d33',
-		        confirmButtonText: '네'
-		    }).then((result) => {
-		        if (result.isConfirmed) {
-		        	$.ajax({
-	                    url: `${window.location.origin}/depts/updateActive`,
-	                    type: 'GET',
-	                    data: { depNo: depNo },
-	                    success: function(response) {
-	                    	Swal.fire('완료되었습니다','success')
-	                    	location.reload(); // 페이지 새로 고침
-	                    }
-		        	});
-		        }
-		    });
+	 // 활성화/비활성화 버튼
+	 //document.addEventListener('DOMContentLoaded', function() {
+		 document.querySelectorAll('.widget-content .warning').forEach(button => {
+	        button.addEventListener('click', function(event) {
+	            event.preventDefault(); // 기본 링크 동작 방지
+	            const depNo = this.getAttribute('data-depNo'); // 데이터 속성에서 depNo 추출
+	            console.log('depNo:', depNo);
+	            const activeYn = button.getAttribute('data-activeYn') === 'Y' ? 'N' : 'Y'; 
+	            
+	         	// 버튼 색깔 변경
+	            if (activeYn === 'Y') {
+	                this.classList.remove('btn-light-dark');
+	                this.classList.add('btn-dark');
+	            } else {
+	                this.classList.remove('btn-dark');
+	                this.classList.add('btn-light-dark');
+	            }
+	            
+	            this.setAttribute('data-activeYn', activeYn); // data-activeYn 값 업데이트
+	            console.log("activeYn: "+activeYn);
+	            console.log("전송 값:", { depNo: parseInt(depNo, 10), activeYn: activeYn });
+	            
+			    Swal.fire({ // sweet alert
+			        title: '부서를 활성화/비활성화 하시겠습니까?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonColor: '#3085d6',
+			        cancelButtonColor: '#d33',
+			        confirmButtonText: 'Yes'
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			        	$.ajax({
+		                    url: `${window.location.origin}/depts/activeYN`,
+		                    type: 'POST',
+		                    data: { depNo:  parseInt(depNo, 10), activeYn: activeYn},
+		                    success: function(response) {
+		                    	Swal.fire('완료되었습니다','success')
+		                    	location.reload(); // 페이지 새로 고침
+		                    },
+	                        error: function(xhr, status, error) {
+	                            console.error("Error: ", error);
+	                            console.log("Response Text: ", xhr.responseText);
+	                            Swal.fire('오류 발생', '업데이트에 실패했습니다.', 'error');
+	                        }
+			        	});
+			        }
+			    });
+			});
 		});
-	});
+	//});
     </script>
 
 </body>

@@ -2,6 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.course.mapper.CourseMapper">
 	
+	<!-- 교육 삭제 -->
+	<delete id="deleteCourse" parameterType="Integer">
+		DELETE FROM education
+		WHERE edu_no = #{eduNo}
+	</delete>
+	
+	<!-- 교육 삭제 -->
+	<delete id="deleteCourseFiles" parameterType="Integer">
+		DELETE FROM education_file
+		WHERE edu_no = #{eduNo}
+	</delete>
+	
+	<!-- 교육 수정 -->
+	<update id="modifyCourse" parameterType="com.haruon.groupware.course.dto.CourseDto">
+		UPDATE education e
+		<set>
+			<if test="empNo != null">
+				e.emp_no = #{empNo}
+			</if>
+			<if test="place != null">
+				, e.place = #{place}
+			</if>
+			<if test="eduDate != null">
+				, e.edu_date = #{eduDate}
+			</if>
+			<if test="title != null">
+				, e.title = #{title}
+			</if>
+			<if test="content != null">
+				, e.content = #{content}
+			</if>
+			<if test="capacity != null">
+				, e.capacity = #{capacity}
+			</if>
+		</set>
+		WHERE e.edu_no = #{eduNo}
+	</update>
+	
+	<!-- 교육 수정 시 파일 삭제 -->
+	<delete id="deleteCourseFile" parameterType="Integer">
+		DELETE FROM education_file
+		WHERE eduf_no = #{edufNo}
+	</delete>
+	
+	<!-- 삭제할 파일 조회 -->
+	<select id="selectCourseFile" parameterType="Integer" resultType="com.haruon.groupware.course.entity.EducationFile">
+		SELECT
+			eduf_no edufNo
+			, origin_name originName
+			, file_name fileName
+			, ext ext
+		FROM education_file
+	   WHERE eduf_no = #{edufNo}
+	</select>
+	
 	<!-- 교육 상세 -->
 	<select id="selectCourse" parameterType="Integer" resultType="com.haruon.groupware.course.dto.CourseDto">
 		SELECT
@@ -21,10 +76,11 @@
 	   WHERE edu.edu_no = #{eduNo}
 	</select>
 	
-	<!-- 교육 상세 파일 -->
-	<select id="selectCourseFile" parameterType="Integer" resultType="com.haruon.groupware.course.entity.EducationFile">
+	<!-- 교육 상세 파일 리스트 -->
+	<select id="selectCourseFiles" parameterType="Integer" resultType="com.haruon.groupware.course.entity.EducationFile">
 		SELECT
-			origin_name originName
+			eduf_no edufNo
+			, origin_name originName
 			, file_name fileName
 			, ext ext
 		FROM education_file

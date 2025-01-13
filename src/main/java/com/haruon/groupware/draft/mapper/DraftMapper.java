@@ -13,21 +13,27 @@ import com.haruon.groupware.draft.dto.ResponseVacationDraftDetail;
 
 @Mapper
 public interface DraftMapper {
+	// 유효성 검증
+	int hasAccess(int draNo, int empNo);
+
 	// 사원별 결재문서 리스트
 	List<ResponseDraft> findDraftByApproval(int empNo);
-	
+
 	// 문서별 파일 리스트
 	List<DraftFileEntity> findDraftByFile(int draNo);
 
 	// 사원별 기안문서 리스트
 	List<ResponseDraft> findDraftByEmp(int empNo);
-	
+
 	// 매출결재 상세문서
 	ResponseVacationDraftDetail findByVacationDraftNo(int draNo);
+
 	// 매출결재 상세문서
 	ResponseSalesDraftDetail findBySalesDraftNo(int draNo);
+
 	// 출장결재 상세문서
 	ResponseBusinessDraftDetail findByBusinessDraftNo(int draNo);
+
 	// 기본결재 상세문서
 	ResponseBasicDraftDetail findByBasicDraftNo(int draNo);
 }

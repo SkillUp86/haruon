@@ -153,6 +153,9 @@
 			                                <div class="row mb-3">
 				                                <div class="col-md-12">
 				                                    <label class="form-label"> 첨부파일 </label>
+				                                    <c:if test="${empty cfl}">
+				                                    	<label class="form-control">첨부된 파일이 없습니다</label>
+				                                    </c:if>
 				                                    <c:forEach items="${cfl}" var="cfl">
 					                                    <a href="${pageContext.request.contextPath}/uploadCourse/${cfl.fileName}.${cfl.ext}" download="${cfl.originName}.${cfl.ext}"> 
 					                                    	<label class="form-control">${cfl.originName}.${cfl.ext}</label>
@@ -161,7 +164,7 @@
 				                                </div>
 			                                </div>
 			                                <a href="${pageContext.request.contextPath}/franchises/courses/modify?eduNo=${c.eduNo}" class="btn btn-gray"> 수정 </a>
-			                                <a href="${pageContext.request.contextPath}/" class="btn btn-gray"> 삭제 </a>
+			                                <a href="${pageContext.request.contextPath}/franchises/courses/delete?eduNo=${c.eduNo}" class="btn btn-gray" id="btnDelete"> 삭제 </a>
 		                                </div>
 		                            </div>
 		                        </div>
@@ -213,6 +216,21 @@
 				$('#addForm').submit();
 			}
 		});
+		
+	    $('#btnDelete').click(function(event) {
+	        // 삭제 확인 메시지
+	        var isConfirmed = confirm('해당 교육을 삭제하시겠습니까?');
+	        
+	        // 사용자가 '확인'을 클릭했을 경우
+	        if (isConfirmed) {
+	            // 기본 동작(페이지 이동)을 취소
+	            // 'href' 속성을 가져와서 실제 삭제 요청을 처리
+	            window.location.href = $(this).attr('href');
+	        } else {
+	            // 취소 시 아무 일도 하지 않음
+	            event.preventDefault();
+	        }
+	    });
 	</script>
 	
 	<!-- 주소 -->

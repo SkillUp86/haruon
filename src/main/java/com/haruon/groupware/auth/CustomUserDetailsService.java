@@ -16,18 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	private final EmpMapper empMapper;
-	private final BCryptPasswordEncoder passwordEncoder;
 	
 	public CustomUserDetailsService(EmpMapper empMapper, BCryptPasswordEncoder passwordEncoder) {
 		this.empMapper = empMapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		EmpEntity empEntity = empMapper.empLogin(email);
-		CustomUserDetails details = new CustomUserDetails(empEntity);
-		log.debug("details:--------------"+details.toString());
-		return details;
+		log.debug(empEntity.toString());
+		return new CustomUserDetails(empEntity);
 	}
 }

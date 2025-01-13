@@ -10,6 +10,9 @@ import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.draft.mapper.DeleteMapper;
 import com.haruon.groupware.draft.mapper.DraftMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class DeleteService {
@@ -20,6 +23,16 @@ public class DeleteService {
 	public DeleteService(DeleteMapper deleteMapper, DraftMapper draftMapper) {
 		this.deleteMapper = deleteMapper;
 		this.draftMapper = draftMapper;
+	}
+	
+	public int getDeleteFile(int drafNo, String path) {
+		DraftFileEntity file = deleteMapper.findDraftFileByDrafNo(drafNo);
+		log.debug(file.toString());
+		String filname = path + file.getFileName()+"."+file.getExt();
+		File f = new File(filname);
+		f.delete();
+		int row = deleteMapper.removeDraftFile(drafNo);
+		return row;
 	}
 
 	// 기안서 삭제
@@ -42,14 +55,14 @@ public class DeleteService {
 		deleteMapper.removeReferencesByAppNo(appNo);
 		deleteMapper.removeApprovalByAppNo(appNo);
 		List<DraftFileEntity> fileList = draftMapper.findDraftByFile(draNo);
-		int removeDraftRow = deleteMapper.removeDraftFileByDraNo(draNo);
-		if (removeDraftRow == 1 && fileList.size() > 0) {
+		if (fileList.size() > 0) {
 			for (DraftFileEntity f : fileList) {
 				String filename = path + f.getFileName() + "." + f.getExt();
 				File file = new File(filename);
 				file.delete();
 			}
 		}
+		deleteMapper.removeDraftFileByDraNo(draNo);
 		
 	}
 

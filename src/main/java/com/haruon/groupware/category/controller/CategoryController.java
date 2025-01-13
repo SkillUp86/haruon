@@ -23,7 +23,7 @@ public class CategoryController {
 		List<Category> categoryList = categoryService.getAllCategory();
 		model.addAttribute("categoryList", categoryList);
 		
-		return "/board/categories";
+		return "board/categories";
 	}
 	
 	// 카테고리 등록
