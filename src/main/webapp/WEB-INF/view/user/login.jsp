@@ -60,7 +60,7 @@
 								            <!-- 사원 번호 -->
 								            <div class="col-md-12 mb-4">
 								                <label for="empNo" class="form-label">이메일</label>
-								                <input type="text" class="form-control" id="email" name="email" value="eunseokim43@naver.com" placeholder="이메일을 입력하세요" required>
+								                <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
 								                <div class="valid-feedback">입력완료</div>
 								                <div class="invalid-feedback">이메일을 입력해주세요</div>
 								            </div>
@@ -68,7 +68,7 @@
 								            <!-- 비밀번호 -->
 								            <div class="col-md-12 mb-4">
 								                <label for="empPw" class="form-label">비밀번호</label>
-								                <input type="password" class="form-control" id="empPw" name="empPw" value="126a03" placeholder="비밀번호를 입력하세요" required>
+								                <input type="password" class="form-control" id="empPw" name="empPw" placeholder="비밀번호를 입력하세요" required>
 								                <div class="valid-feedback">입력완료</div>
 								                <div class="invalid-feedback">비밀번호를 입력해주세요</div>
 								            </div>
