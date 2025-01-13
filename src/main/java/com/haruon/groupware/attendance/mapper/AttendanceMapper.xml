@@ -11,9 +11,8 @@
 		 WHERE emp_no=#{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%')
 	</select>	
 	<!-- 어제, 한 사원의 연차 기록과 출장 기록 조회 --> 
-	<select id="findYesterDayAttByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
+	<select id="findDaySchByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
 			resultType="Map">
-		
 		 SELECT s.sch_no schNo
 		      , cc.descript schType
 			  , s.start_time startTime
@@ -26,45 +25,161 @@
 		    AND s.kind IN (SELECT common_code from common_code
 							WHERE parent_code 
 							   IN (SELECT common_code FROM common_code
-								    WHERE descript LIKE 'schedule_kind')
-							  AND (descript Like '연차' OR descript LIKE '반차' OR descript LIKE  '출장'))
+								    WHERE descript = 'schedule_kind')
+							  AND (descript = '연차' OR descript = '출장' OR descript = '반차'))
 	</select>
 	
-	<!-- 근태 업데이트 -->
+	<!-- 근태 업데이트 : 스케쥴링 -->
 	<update id="updateAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
 		UPDATE attendance 
-		<set>
-			<choose>
-				<when test = "${endTime} != null">
-					end_time = ${endTime}
-				</when>
-				<when test = "${state} != null">
-					state = ${state}
-				</when>
-				<when test = "${approvalYN} != null">
-					approvalYN = ${approvalYN}
-				</when>
-				<when test ="${reasonMod != null}">
-					reason_mod = ${reasonMod}
-				</when>
-			</choose>
-		</set>
-		WHERE emp_no = ${emp_no} AND start_time LIKE CONCAT('%', #{startTime}, '%');
+		<trim prefix="set" suffixOverrides=",">
+			<if test = "endTime != null">
+				end_time = #{endTime},
+			</if>
+			<if test = "state != null">
+				state = (SELECT common_code FROM common_code 
+					  	  WHERE descript = #{state}
+					  	    AND parent_code = (SELECT common_code FROM common_code 
+												WHERE descript='attendance_state')),
+			</if>
+		</trim>
+		WHERE emp_no = #{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%') AND state is null
 	</update>
 
 	<!-- 근태 정보 생성 (스케쥴링)-->
-	<insert id="insertAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
-		Insert INTO attendance(
-			emp_no, start_time, end_time, state
-		) VALUES (
-			#{empNo}, #{startTime}, #{endTime}
-			, (SELECT common_code from common_code
-				WHERE parent_code 
-				   IN (SELECT common_code FROM common_code
-					    WHERE descript LIKE 'schedule_kind')
-				  AND descript LIKE #{state}) 
-		)	
+	<insert id="createAttendance" parameterType="com.haruon.groupware.attendance.entity.Attendance">
+	    Insert into attendance(
+	        emp_no, start_time
+	        <if test="endTime != ''">
+	            , end_time
+	        </if>
+	        <if test="state != ''">
+	            , state
+	        </if>
+	    ) VALUES (
+	        #{empNo}, #{startTime}
+	        <if test="endTime != ''">
+	            , #{endTime}
+	        </if>
+	        <if test="state != ''">
+	            , (SELECT common_code from common_code
+	                WHERE parent_code 
+	                   IN (SELECT common_code FROM common_code
+	                        WHERE descript = 'attendance_state')
+	                  AND descript = #{state})
+	        </if>
+	    )
 	</insert>
+	
+	<!-- 오늘 출/퇴근 시간 조회 -->
+	<select id="findAttendanceByEmp" parameterType="int" resultType="com.haruon.groupware.attendance.entity.Attendance">
+		SELECT emp_no empNo
+			 , start_time startTime
+		 	 , IFNULL(end_time, -1) endTime
+		  FROM attendance 
+		 WHERE emp_no=#{empNo}
+		   AND start_time LIKE CONCAT('%',CURDATE(),'%');
+	</select>
+	
+	<!-- 근태리스트(월별) -->
+	<select id="findAttendanceListByMonth" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+											  resultType="com.haruon.groupware.attendance.dto.ResponseAttendanceList">
+	    SELECT a.emp_no empNo
+	    	 , d.dname dName
+   	  		 , e.ename eName
+ 		 	 , (SELECT descript FROM common_code WHERE common_code = e.location) location
+			 , a.start_time startTime
+		 	 , IFNULL(a.end_time, -1) endTime
+		 	 , (SELECT descript FROM common_code WHERE common_code = a.state) state
+		 	 , a.approvalYN approvalYN
+		  FROM attendance a
+	INNER JOIN emp e ON e.emp_no = a.emp_no
+	INNER JOIN dept d ON d.dep_no = e.dep_no
+	   <where>
+			   start_time BETWEEN #{from} AND #{to}
+			   <if test="deptNo != null">
+			   	    AND d.dep_no = #{deptNo}		
+			   </if>
+			   <if test="empNo != null">
+			    	AND a.emp_no = #{empNo} 
+			   </if>
+	  </where>
+	</select>
+	
+	<!-- 휴가신청 리스트(월별) -->
+	<select id="findtLeaveReqListByMonth" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+									    resultType="com.haruon.groupware.attendance.dto.ResponseLeaveList">
+		 SELECT e.ename ename
+			  , (SELECT descript FROM common_code WHERE common_code = e.location) location
+			  , v.start_date startTime
+			  , v.finish_date endTime
+			  , (SELECT descript FROM common_code WHERE common_code = ap.state) approvalState
+			  , dr.dra_no draNo
+			  , (SELECT ename FROM emp WHERE emp_no = v.emp_no) substituteEmp
+			  , (YEAR(NOW()) - YEAR(e.join_date)) YearsOfService
+			  , e.total_leave totalLeave
+			  , e.used_leave usedLeve
+           FROM draft dr
+          INNER JOIN vacation v ON dr.dra_no = v.dra_no
+          INNER JOIN approval ap ON dr.dra_no = ap.dra_no
+          INNER JOIN emp e ON dr.emp_no = e.emp_no
+          INNER JOIN dept d ON e.dep_no = d.dep_no		
+        <where>
+          	 v.start_date BETWEEN #{from} AND #{to}
+			 <if test="deptNo != null">
+			    AND d.dep_no = #{deptNo}		
+			 </if>
+			 <if test="empNo != null">
+			  	AND e.emp_no = #{empNo} 
+			 </if>
+        </where>							    
+	</select>
+	
+	<!-- 연차 사용 요약 -->
+	<select id="findLeaveSumForYear" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+									    resultType="com.haruon.groupware.attendance.dto.ResponseLeaveList">
+	</select>
+	
+	<!-- 연차 사용률 -->
+	<select id="findLeaveUsageRateForYear" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+									    resultType="Double">
+		SELECT (sum(used_leave) / sum(total_leave))* 100 FROM emp
+		<if test="empNo != null || deptNo != null">
+			<where>
+				<if test="empNo != null">
+					emp_no = #{empNo}
+				</if>
+				<if test="deptNo != null">
+					dep_no = #{deptNo}
+				</if>
+			</where>
+		</if>
+	</select>
+	
+	<select id="findBusinessTripListByMonth" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+				resultType="com.haruon.groupware.attendance.dto.ResponseBusinessTripList">
+		 SELECT e.ename eName
+			  , (SELECT descript FROM common_code WHERE common_code = e.location) location
+			  , bt.start_date startTime
+			  , bt.finish_date endTime
+			  , bt.place place
+			  , (SELECT descript FROM common_code WHERE common_code = ap.state) approvalState
+			  , dr.dra_no draNo
+		   FROM draft dr
+	 INNER JOIN business_trip bt ON dr.dra_no = bt.dra_no
+	 INNER JOIN approval ap ON dr.dra_no = ap.dra_no
+	 INNER JOIN emp e ON dr.emp_no = e.emp_no
+	 INNER JOIN dept d ON e.dep_no = d.dep_no
+		<where>
+	        bt.start_date BETWEEN #{from} AND #{to}
+			 <if test="deptNo != null">
+		  	   	AND d.dep_no = #{deptNo}		
+		 	</if>
+		 	<if test="empNo != null">
+		  		AND e.emp_no = #{empNo} 
+		 	</if>
+       </where>		
+	</select>
 	
 	
 </mapper>

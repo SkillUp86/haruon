@@ -10,4 +10,12 @@ import com.haruon.groupware.department.entity.Dept;
 public interface DeptMapper {
 	
 	public List<Dept> findByAll();
+	
+	List<Dept> selectDeptList(); 
+	
+	Integer insertDept(Dept dept);
+	
+	Integer updateDept(Dept dept);
+	
+	Integer updateDeptActive(Dept dept);
 }

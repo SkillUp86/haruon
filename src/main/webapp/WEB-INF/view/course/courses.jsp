@@ -7,27 +7,27 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
 
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 조회</title>
+    <title>교육 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -81,7 +81,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Franchise List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Course List</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -98,48 +98,34 @@
 
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                	<a href="${pageContext.request.contextPath}/franchises/insert" class="btn">+ 등록</a>
+                                	<a href="${pageContext.request.contextPath}/franchises/courses/insert" class="btn">+ 등록</a>
                                 </div>
                             </div>
 
                             <table class="table text-center" id="board-list">
 							    <thead>
 							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
-							            <th>등록번호</th>
-							            <th>가맹점명</th>
-							            <th>우편번호</th>
-							            <th>주소</th>
-							            <th>사업자번호</th>
-							            <th>가맹점주</th>
-							            <th>연락처</th>
-							            <th>이메일</th>
-							            <th>영업유무</th>
-							            <th>오픈일</th>
-							            <th>폐업일</th>
-							            <th>활성화</th>
+							            <th>번호</th>
+							            <th>교육일정</th>
+							            <th>장소</th>
+							            <th>제목</th>
+							            <th>설명</th>
+							            <th>수용인원</th>
 							        </tr>
 								</thead>
 							    <tbody>
-							        <c:forEach items="${franchiseList}" var="f">
+							        <c:forEach items="${courseList}" var="cl">
 							            <tr>
-							                <td>${f.fraNo}</td>
-							                <td>${f.fname}</td>
-							                <td>${f.postCode}</td>
-							                <td>${f.address}</td>
-							                <td>${f.id}</td>
-							                <td>${f.leader}</td>
-							                <td>${f.phone}</td>
-							                <td>${f.email}</td>
-							                <td>${f.openYn}</td>
-							                <td>${f.createDate}</td>
-							                <td>${f.updateDate}</td>
+							                <td>${cl.eduNo}</td>
+							                <td>${cl.eduDate}</td>
+							                <td>${cl.place}</td>
 							                <td>
-							                	<!-- 활성화 여부 -->
-							                    <!-- 수정 아이콘 -->
-							                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit">
-							                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-							                    </svg>
+							                	<a href="${pageContext.request.contextPath}/franchises/courses?eduNo=${cl.eduNo}">
+							                		${cl.title}
+							                	</a>	
 							                </td>
+							                <td>${cl.content}</td>
+							                <td>${cl.capacity}</td>
 							            </tr>
 							        </c:forEach>
 							    </tbody>
@@ -173,18 +159,18 @@
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/plugins/src/global/vendors.min.js"></script>
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/custom.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../src/assets/js/apps/contact.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	
-	<script src="../src/plugins/src/table/datatable/datatables.js"></script>
+	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
     <script>
       $('#board-list').DataTable({
          "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +

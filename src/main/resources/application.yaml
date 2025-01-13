@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /
+  port: '80'
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  servlet:
+    multipart:
+      enabled: 'true'
+      max-request-size: 100MB
+      max-file-size: 10MB
+  application:
+    name: groupware
+  profiles:
+    include: db,mail
+
+logging:
+  level:
+    com:
+      haruon:
+        groupware: debug
+
+
+
+
+

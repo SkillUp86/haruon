@@ -29,10 +29,10 @@ public class BoardController {
 	@Autowired BoardService boardService;
 	@Autowired CategoryService categoryService;
 	
-	/* 자유 */
-	// /board
+/* 자유 */
+	// 자유 게시판 리스트
 	@GetMapping("/board")
-	public String boardList(Model model) {
+	public String getBoardList(Model model) {
 		List<Map<String,Object>> boardList = boardService.getBoardList();
 		model.addAttribute("boardList", boardList);
 		
@@ -42,28 +42,32 @@ public class BoardController {
 		return "/board/board";
 	}
 	
-	// /board/{boaNo}
+	// 게시글 상세
 	@GetMapping("/board/{boaNo}")
     public String getBoardOne(@PathVariable Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
+        // 댓글 리스트
         List<Map<String,Object>> commentList = boardService.getCommentList(boaNo);
         model.addAttribute("commentList",commentList);
         
+        // 댓글 수
         Integer countCommnet = boardService.countComment(boaNo);
         model.addAttribute("countCommnet",countCommnet);
         
+        // 추천 수
         Integer countLike = boardService.countLike(boaNo);
         model.addAttribute("countLike",countLike);
         
+        // 첨부파일 리스트
         List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
         return "/board/boardOne";
     }
 	
-	// /board/comment
+	// 댓글 입력
 	@PostMapping("/board/comment")
 	public String insertComment(@RequestParam Integer boaNo, @RequestParam String content) {
 		BoardComment boardComment = new BoardComment();
@@ -75,7 +79,14 @@ public class BoardController {
 		return "redirect:/board/"+ boaNo;
 	}
 	
-	// /board/insert
+	// 댓글 삭제
+	@GetMapping("/board/deleteComment")
+	public String deleteComment(@RequestParam Integer boaNo, @RequestParam Integer comNo) {
+		boardService.deleteComment(comNo);
+		return "redirect:/board/"+ boaNo;
+	}
+	
+	// 글 입력
 	@GetMapping("/board/insert")
     public String insertBoard(Model model) {
         List<Category> categoryList = categoryService.getCategoryListFree();
@@ -85,13 +96,16 @@ public class BoardController {
     }
 	@PostMapping("/board/insert")
 	public String insertBoard(HttpSession session, BoardDto boardDto) {
+		Integer empNo = (Integer) session.getAttribute("loginEmpNo");
+		boardDto.setEmpNo(empNo);
+		
 		String path = session.getServletContext().getRealPath("/uploadBoard/");
 		boardService.insertBoard(boardDto, path);
 		
 		return "redirect:/board";
 	}
 	
-	// /board/update
+	// 글 수정
 	@GetMapping("/board/update")
     public String updateBoard(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
@@ -126,8 +140,8 @@ public class BoardController {
 		return "redirect:/board/"+boaNo;
 	}
 	
-	/* 공지 */
-	// /board/notice
+/* 공지 */
+	// 공지 리스트
 	@GetMapping("/board/notice")
 	public String noticeList(Model model) {
 		List<Map<String,Object>> noticeList = boardService.getNoticeList();
@@ -135,7 +149,18 @@ public class BoardController {
 		return "/board/notice";
 	}
 	
-	// /board/notice/insert
+	// 공지 입력
+	@GetMapping("/board/insertNotice")
+	public String insertNotice(HttpSession session, Model model) {
+		/*
+		 * String empName = (String) session.getAttribute("loginEmpName"); 
+		 * int empNo = (int) session.getAttribute("loginEmpNo"); 
+		 * model.addAttribute("empName", empName); 
+		 * model.addAttribute("empNo", empNo);
+		 */
+		
+		return "/board/insertNotice";
+	}
 	@PostMapping("/board/insertNotice")
 	public String insertNotice(HttpSession session, BoardDto boardDto) {
 		String path = session.getServletContext().getRealPath("/uploadBoard/");
@@ -144,7 +169,7 @@ public class BoardController {
 		return "redirect:/board/notice";
 	}	
 	
-	// /board/update
+	// 공지 수정
 	@GetMapping("/board/updateNotice")
     public String updateNotice(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
@@ -173,5 +198,20 @@ public class BoardController {
 		boardService.insertBoard(boardDto, path);
 		
 		return "redirect:/board/notice"+boaNo;
+	}
+	
+	// 글 삭제
+	@GetMapping("/board/delete")
+	public String deleteBoard(HttpSession session, @RequestParam Integer boaNo) {
+		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		boardService.deleteBoard(boaNo, path);
+		return "redirect:/board";
+	}
+	// 공지 삭제
+	@GetMapping("/board/deleteNotice")
+	public String deleteNotice(HttpSession session, @RequestParam Integer boaNo) {
+		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		boardService.deleteBoard(boaNo, path);
+		return "redirect:/board/notice";
 	}
 }

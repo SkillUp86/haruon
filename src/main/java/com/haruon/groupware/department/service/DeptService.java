@@ -21,5 +21,24 @@ public class DeptService {
 	public List<Dept> findByAll() {
 		return deptMapper.findByAll();
 	}
-
+	
+	// 모든 부서 리스트
+	public List<Dept> getDeptList() {
+		return deptMapper.selectDeptList();
+	}
+	
+	// 부서 등록
+	public Integer insertDept(Dept dept) {
+		return deptMapper.insertDept(dept);
+	}
+	
+	// 부서 수정
+	public Integer updateDept(Dept dept) {
+		return deptMapper.updateDept(dept);
+	}
+	
+	// 부서 활성화/비활성화
+	public Integer updateDeptActive(Dept dept) {
+		return deptMapper.updateDeptActive(dept);
+	}
 }

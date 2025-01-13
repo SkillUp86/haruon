@@ -114,23 +114,23 @@
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
-	                                        <input type="number" class="form-control" id="empNo" name="empNo" placeholder="사원번호" style="width: 150px;"> <!-- readonly -->
+	                                        <input type="number" class="form-control" id="empNo" name="empNo" value="${loginEmpNo}" placeholder="사원번호" style="width: 150px;" readonly>
 	                                    </div>
 	                                </div>
 	                                
 	                                <div class="col-xxl-12 col-md-4 mb-4">
 	                                    <label>카테고리</label>
-	                                    <select id="category" class="form-select" style="width: 50%;">
+	                                    <select id="category" name="catNo" class="form-select" style="width: 50%;">
 										    <option value="" selected>카테고리</option>
 										    <c:forEach var="ct" items="${categoryList}">
-										    	<option value="${ct.catName}">${ct.catName}</option>
+										    	<option value="${ct.catNo}">${ct.catName}</option>
 										    </c:forEach>
 										</select>
 	                                </div>
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>제목</label>
-	                                        <input type="text" class="form-control" id="title" placeholder="제목">
+	                                        <input type="text" class="form-control" id="title" name="title" placeholder="제목">
 	                                    </div>
 	                                </div>
 	                                

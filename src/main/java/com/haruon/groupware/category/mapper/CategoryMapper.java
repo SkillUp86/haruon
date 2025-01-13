@@ -13,5 +13,10 @@ public interface CategoryMapper {
 	List<Category> selectCategoryListFree(); 
 	List<Category> selectAllCategory();
 	
+	Integer insertCategory(Category category);
+	
 	Integer updateCategory(Category category);
+	
+	Integer deleteCategory(Integer catNo);
+	
 }

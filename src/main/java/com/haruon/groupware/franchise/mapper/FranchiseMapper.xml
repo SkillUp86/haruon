@@ -3,6 +3,56 @@
 <mapper
 	namespace="com.haruon.groupware.franchise.mapper.FranchiseMapper">
 	
+	<!-- 가맹점 활성화 -->
+	
+	<!-- 가맹점 수정 -->
+	<update id="modifyFranchise" parameterType="com.haruon.groupware.franchise.entity.Franchise">
+		UPDATE franchise f
+		<set>
+			<if test="fname != null">
+				f.fname = #{fname}
+			</if>
+			<if test="postCode != null">
+				, f.post_code = #{postCode}
+			</if>
+			<if test="address != null">
+				, f.address = #{address}
+			</if>
+			<if test="id != null">
+				, f.id = #{id}
+			</if>
+			<if test="leader != null">
+				, f.leader = #{leader}
+			</if>
+			<if test="phone != null">
+				, f.phone = #{phone}
+			</if>
+			<if test="email != null">
+				, f.email = #{email}
+			</if>
+			<if test="openYn != null">
+				, f.open_yn = #{openYn}
+			</if>
+		</set>
+		WHERE f.fra_no = #{fraNo}
+	</update>
+	
+	<!-- 가맹점 정보 조회 -->
+	<select id="selectFranchise" parameterType="Integer" resultType="com.haruon.groupware.franchise.entity.Franchise">
+		SELECT 
+			fra_no fraNo
+			, fname
+			, post_code postCode
+			, address
+			, id
+			, leader
+			, phone
+			, email
+			, open_yn openYn
+		FROM franchise
+		WHERE fra_no = #{fraNo}
+	</select>
+	
 	<!-- 가맹점 추가 -->
 	<insert id="insertFranchise" parameterType="com.haruon.groupware.franchise.entity.Franchise">
 		INSERT INTO franchise (
@@ -17,12 +67,6 @@
 			#{fname}, #{address}, #{postCode}, #{id}, #{leader}, #{phone}, #{email}
 		)
 	</insert>
-	
-	<!-- 가맹점 수 -->
-	<select id="selectFranchisesCount" resultType="Integer">
-		SELECT count(*)
-		FROM franchise
-	</select>	
 	
 	<!-- 가맹점 리스트 -->
 	<select id="selectFranchiseList" resultType="com.haruon.groupware.franchise.entity.Franchise">

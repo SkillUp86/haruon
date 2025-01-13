@@ -12,32 +12,52 @@ import com.haruon.groupware.board.entity.BoardFile;
 
 @Mapper
 public interface BoardMapper {
-	/* 자유 */
-	// /board
+/* 자유 */
+	// 자유 게시판 리스트
 	List<Map<String,Object>> selectBoardList(Map<String,Object> map);
 	
-	// /board/insert
+	// 카테고리 별 리스트
+	List<Map<String,Object>> selectBoardListByCatNo(Map<String,Object> map);
+	
+	// 게시글 입력
 	Integer insertBoard(Board board);
 	Integer insertBoardFile(BoardFile boardFile);
 	
-	// /board/{boaNo}
+	// 게시글 상세
 	Map<String,Object> selectBoardOne(Integer boaNo);
 	List<Map<String,Object>> selectCommentList(Integer boaNo);
 	Integer countComment(Integer boaNo);
 	Integer countLike(Integer boaNo);
+	
+	// 댓글 입력
 	Integer insertComment(BoardComment boardComment);
 	
-	// /board/update
+	// 댓글 삭제
+	Integer deleteComment(Integer comNo);
+	
+	// 글 수정
 	Integer updateBoard(Map<String,Object> map);
 	List<BoardFile> selectBoardFiles(Integer boaNo);
 	
-	/* 공지 */
-	// /board/notice
+/* 공지 */
+	// 공지 리스트
 	List<Map<String,Object>> selectNoticeList(Map<String,Object> map);
 	
-	// /board/notice/insert
+	// 공지 입력
 	Integer insertNotice(Board board);
 	
-	// /board/updateNotice
+	// 공지 수정
 	Integer updateNotice(Map<String,Object> map);
+	
+	// (카테고리 삭제) board 테이블에서 특정 cat_no를 기타 카테고리로 업데이트
+	Integer updateCatNo(Integer catNo, Integer newCatNo);
+	
+	// 글 삭제
+	Integer deleteBoard(Integer boaNo);
+	// 첨부파일 삭제
+	Integer deleteBoardFile(Integer boaNo);
+	// 글 삭제 전 댓글 삭제
+	Integer deleteCommentByBoaNo(Integer boaNo);
+	// 글 삭제 전 추천 삭제
+	Integer deleteLike(Integer boaNo);
 }

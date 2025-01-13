@@ -16,12 +16,23 @@
 		FROM category
 	</select>
 	
-	<update id="updateCategory" parameterType="com.haruon.groupware.category.entity.Category">
+	<insert id="insertCategory" parameterType="com.haruon.groupware.category.entity.Category">
 		INSERT INTO category(
 			cat_name
 		) VALUES(
 			#{catName}
 		)
-		WHERE cat_no = #{catNo}
+	</insert>
+	
+	<update id="updateCategory" parameterType="com.haruon.groupware.category.entity.Category">
+		UPDATE category
+	    SET cat_name = #{catName}
+	    WHERE cat_no = #{catNo}
 	</update>
+	
+	<delete id="deleteCategory" parameterType="Integer">
+		DELETE FROM category
+		WHERE cat_no = #{catNo}
+	</delete>
+	
 </mapper>

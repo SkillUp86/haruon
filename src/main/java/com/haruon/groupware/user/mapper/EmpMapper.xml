@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.user.mapper.EmpMapper">
-	<select id="empLogin"
-		resultType="com.haruon.groupware.user.entity.Emp"
-		parameterType="com.haruon.groupware.user.entity.Emp">
+	<select id="empLogin" parameterType="String" resultType="com.haruon.groupware.user.entity.EmpEntity" >
 		SELECT
-			 e.email email
+			 e.emp_no empNo
+			,e.email email
 			,e.emp_pw empPw
 			,e.ename ename
 			,e.location location
-			,e.emp_no empNo
 			,e.dep_no depNo
 			,d.dname dname
 		FROM emp e
 		INNER JOIN dept d
 		ON e.dep_no = d.dep_no
-		WHERE email = #{email} AND emp_pw = #{empPw}
+		WHERE email = #{email}
 	</select>
-	
 
 	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto" >
 		INSERT INTO emp (
@@ -55,7 +52,7 @@
 	
 	
 	<!-- EMP : 퇴사하지 않은 모든 사원의 사원번호를 가져오기 -->
-	<select id="findAllEmp" resultType="com.haruon.groupware.user.entity.Emp">
+	<select id="findAllEmp" resultType="com.haruon.groupware.user.entity.EmpEntity">
 		SELECT emp_no empNo , dep_no depNo
 			 , email	    , ename 
 			 , location     , join_date
@@ -65,21 +62,21 @@
 	</select>
 	
 	<!-- EMP : 직원의 연가 수 업데이트(매년 + 사원 등록시)  -->
-	<update id="updateLeaveByAnnualorJoin" parameterType="com.haruon.groupware.user.entity.Emp">
+	<update id="updateLeaveByAnnualorJoin" parameterType="com.haruon.groupware.user.entity.EmpEntity">
 		UPDATE emp
 	   	   SET total_leave = #{totalLeave}, used_leave=0
 	   	 WHERE emp_no = #{empNo}
 	</update>
 	
 	<!-- EMP : 기중 부서장이 한명의 연가 수 업데이트 -->
-	<update id="updateTotalLeaveByDivision" parameterType="com.haruon.groupware.user.entity.Emp">
+	<update id="updateTotalLeaveByDivision" parameterType="com.haruon.groupware.user.entity.EmpEntity">
 		UPDATE emp
 	   	   SET total_leave = #{totalLeave}
 	   	 WHERE emp_no = #{empNo}
 	</update>
 	
 	<!-- EMP : 가장 최근에 등록한 사원 -->
-	<select id="findNewEmp" resultType="com.haruon.groupware.user.entity.Emp">
+	<select id="findNewEmp" resultType="com.haruon.groupware.user.entity.EmpEntity">
 		SELECT emp_no empNo, join_date joinDate FROM emp WHERE emp_no = (SELECT MAX(emp_no) FROM emp)
 	</select>
 </mapper>

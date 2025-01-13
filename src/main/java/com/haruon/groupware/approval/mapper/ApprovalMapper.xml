@@ -8,7 +8,7 @@
 			,	emp_no
 		) values (
 				#{appNo}
-			,	#{empNo}
+			,	#{refNo}
 		)
 	</insert>
 	<!-- 결재 첨부파일 -->
