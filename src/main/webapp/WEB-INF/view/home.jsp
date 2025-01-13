@@ -285,16 +285,16 @@
 		}
     </script> -->
     
-    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 
+    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 -->
     <script>    
 		$.ajax({
 			url: "/attendance/employee/"+"${loginEmpNo}",
 			method: 'GET',
 			}).done(function(result) {
 				$(result).each(function(index, item) {
-				   $('#workStartTime').val(item.attendanceStartTime).addClass('text-secondary-emphasis');
-				   if(item.attendanceEndTime !== '-1') {
-				       $('#workLeaveTime').val(item.attendanceEndTime).addClass('text-secondary-emphasis');
+				   $('#workStartTime').val(item.startTime).addClass('text-secondary-emphasis');
+				   if(item.endTime !== '-1') {
+				       $('#workLeaveTime').val(item.endTime).addClass('text-secondary-emphasis');
 				   }
 				});
 
@@ -322,7 +322,7 @@
 				 console.log("로그인 정보 없음");
 				 //location.replace("login");
 			});
-    </script>-->
+    </script>
 
 </body>
 </html>

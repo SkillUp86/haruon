@@ -222,9 +222,8 @@ public class AttendanceService {
     }
 	
 	// 메인페이지 오늘의 출/퇴근 시간 조회
-	public ResponseAttendance findAttendanceByEmp(Integer empNo) {
-		Attendance att = attendanceMapper.findAttendanceByEmp(empNo);
-		return (att == null)? null : new ResponseAttendance(att);
+	public Attendance findAttendanceByEmp(Integer empNo) {
+		return attendanceMapper.findAttendanceByEmp(empNo);
 	}
 
 	// 메인페이지 오늘 출/퇴근 시간 등록

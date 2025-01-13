@@ -17,19 +17,5 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class HomeRestController {
-	@Autowired private AttendanceService attendanceService;
-	
-	// 로그인한 사람의 출근/퇴근 시간
-	@GetMapping("/attendance/employee/{empNo}")
-	public ResponseEntity<ResponseAttendance> attendance(@PathVariable Integer empNo, HttpSession session) {
-
-		if(session.getAttribute("empNo") == null) {
-			ResponseAttendance attendanceByEmp = attendanceService.findAttendanceByEmp(empNo);
-			//log.debug(attendanceByEmp.toString());
-			return ResponseEntity.ok(attendanceByEmp);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(400)).build();
-		}
-	}
 	
 }
