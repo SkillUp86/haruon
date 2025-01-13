@@ -86,7 +86,7 @@
 											  resultType="com.haruon.groupware.attendance.dto.ResponseAttendanceList">
 	    SELECT a.emp_no empNo
 	    	 , d.dname dName
-   	  		 , e.ename eName
+   	  		 , e.ename empName
  		 	 , (SELECT descript FROM common_code WHERE common_code = e.location) location
 			 , a.start_time startTime
 		 	 , IFNULL(a.end_time, -1) endTime

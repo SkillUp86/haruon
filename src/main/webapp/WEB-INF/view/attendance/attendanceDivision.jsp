@@ -141,15 +141,16 @@
                                 </div>
                                 <!-- 월 네비게이션션-->
                                 <div>
+                                	<input id="setYearAndMonth" type="hidden"/>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-hover">
+                                        <button id="setPreviousMonthBtn" type="button" class="btn btn-hover">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
                                             </svg>
                                             이전달
                                         </button>
                                         
-                                        <button type="button" class="btn btn-hover">
+                                        <button id="setNextMonthBtn" type="button" class="btn btn-hover">
                                             다음달
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
@@ -171,36 +172,20 @@
                                                 <button type="button" class="btn btn-hover btn-primary">전체 승인</button>     
                                             </div>
                                         </div>  
-                                        <div class="widget-content widget-content-area br-8">                                            
-                                            <table class="zero-config table dt-table-hover" style="width:100%">
+                                        <div class="widget-content widget-content-area br-8">  
+                                            <table id="zero-config" class="table dt-table-hover" style="width:100%">
                                                 <thead>
-                                                    <tr class="text-center">
-                                                        <th>선택</th>
+                                                    <tr role="row" class="text-center">
+                                                        <th>날짜</th>
                                                         <th>이름</th>
                                                         <th>직급</th>
-                                                        <th>날짜</th>
                                                         <th>상태</th>
                                                         <th>출근</th>
                                                         <th>퇴근</th>
                                                         <th>승인여부</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr class="text-center">
-                                                        <td>
-                                                            <div class="form-check form-check-primary form-check-inline">
-                                                                <input class="form-check-input" type="checkbox" value="" id="form-check-primary">
-                                                                <label class="form-check-label" for="form-check-primary"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>Architect</td>
-                                                        <td>2025.01.07</td>
-                                                        <td>정상근무 <button type="button" class="btn btn-hover btn-primary btn-sm">EDIT</button></td>
-                                                        <td>08:00:00</td>
-                                                        <td>16:00:00</td>
-                                                        <td><button type="button" class="btn btn-hover btn-primary btn-sm">승인</button></td></td>
-                                                    </tr>
+                                                <tbody id="deptAttendancies">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -438,24 +423,96 @@
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../src/plugins/src/table/datatable/datatables.js"></script>
+
+    <!-- (부서) 월별 근태 리스트 -->
     <script>
-        // 페이징, 검색, rowPerPage 관리 항목목
-        $('.zero-config').DataTable({
-            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-center text-center'<'dt--pagination'p>>",
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 10 
-        });
+	    function showAttendanceList() {
+	        $.ajax({
+	            url: "/department/attendance/"+"${depNo}/"+$("#setYearAndMonth").val(),
+	            method: 'GET',
+	        }).done(function(result) {
+	            // 기존 DataTable 인스턴스, <tbody> 데이터 삭제
+	            $('#zero-config').DataTable().destroy(); 
+	            $("#deptAttendancies").empty();
+	            let html = "";
+	           
+	            $(result).each(function(index, item) {
+	                const startTime = item.startTime.replace(" ", "/");
+	                
+	                html += `"<tr role="row" class="text-center">"`;
+	                html += `
+	                        <td class="sorting_01">` + item.startTime + `</td>
+	                        <td>` + item.location + `</td>
+	                        <td>` + item.empName + `</td>
+	                        <td>` + item.state + `<a id="modifyStateBtn" href="attendance/modify?target=` + item.empNo + "/" + startTime + `" class="btn btn-hover btn-primary btn-sm">EDIT</a></td>
+	                        <td>` + item.startTime + `</td>
+	                        <td>` + item.endTime + `</td>`;
+	                if (item.approvalYN === 'Y') {
+	                    html += `<td>
+			                    	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+		                        </td>`;
+	                } else {        
+	                    html += `<td class="d-flex align-item-center">
+	                    			<svg class="ml-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+	                    			<div>
+		                    			<div class="form-check form-check-primary form-check-inline me-2">
+				                            <input class="form-check-input" type="checkbox" value="` + item.empNo + item.startTime + `" id="modifyTarget">
+				                            <label class="form-check-label" for="modifyTarget"></label>
+				                        </div>
+				                        <button id="modifyApprovalYN" type="button" class="btn btn-hover btn-primary btn-sm me-4">승인하기</button>
+			                        </div>
+                        		</td>`;
+	                }
+	                html += "</tr>";
+	
+	                $("#deptAttendancies").append(html);
+	            });
+	             
+	            // 페이징, 검색, rowPerPage 관리 항목 객체 생성
+	            $('#zero-config').DataTable({
+	                "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+	                       "<'table-responsive'tr>" +
+	                       "<'dt--bottom-section d-sm-flex justify-content-sm-center text-center'<'dt--pagination'p>>",
+	                "oLanguage": {
+	                    "oPaginate": { 
+	                        "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+	                        "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' 
+	                    },
+	                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+	                    "sSearchPlaceholder": "Search...",
+	                    "sLengthMenu": "Results :  _MENU_",
+	                },
+	                "stripeClasses": [],
+	                "lengthMenu": [7, 10, 20, 50],
+	                "pageLength": 10
+	            });
+	        }).fail(function() {
+	            console.log("");
+	        });
+	    }
+	
+	    <!-- 年-月 setting : yearAndMonth -->
+	    let date = new Date();
+	    $(document).ready(function() {
+	        $("#setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+	        showAttendanceList();
+	    });
+	
+	    $("#setPreviousMonthBtn").click(function() {
+	        console.log("이전달 클릭");
+	        date = new Date(date.setMonth(date.getMonth() - 1));
+	        $("#setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+	        showAttendanceList();
+	    });
+	
+	    $("#setNextMonthBtn").click(function() {
+	        console.log("다음달 클릭");
+	        date = new Date(date.setMonth(date.getMonth() + 1));
+	        $("#setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+	        showAttendanceList();
+	    });
     </script>
-        
+ 
 
     <!-- END PAGE LEVEL SCRIPTS -->
 </body>

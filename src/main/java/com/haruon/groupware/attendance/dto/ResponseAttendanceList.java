@@ -13,7 +13,7 @@ import lombok.ToString;
 public class ResponseAttendanceList {
 	private String empNo;		// 사원번호
 	private String dName;		// 부서번호
-	private String eName;		// 사원명
+	private String empName;		// 사원명
 	private String location;	// 사원의 직급 (common_code의 descript)
 	private String startTime;	// 근태 시작시간
 	private String endTime;		// 근태 종료시간

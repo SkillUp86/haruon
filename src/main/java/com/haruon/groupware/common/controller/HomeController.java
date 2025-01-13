@@ -14,7 +14,7 @@ public class HomeController {
 	public String home(Authentication authentication, Model model) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		model.addAttribute("empNo", userDetails.getEmpNo());
-		
+		model.addAttribute("deptNo", userDetails.getDepNo());
 		return "home";
 	}
 	
