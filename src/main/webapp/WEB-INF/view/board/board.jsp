@@ -3,11 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- 페이지 제목 입력칸 -->
-    <title>자유 게시판</title>
-    <!-- 페이지 제목 입력칸 -->
-    
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
@@ -282,7 +278,7 @@
 	                console.log(url);
 	            }
 	
-	            /* fetch(url)
+	            fetch(url)
 	                .then(response => response.json())
 	                .then(data => {
 	                    let tbody;
@@ -307,7 +303,7 @@
 	                        tbody.append(row); // 새로운 행 추가
 	                    });
 	                })
-	                .catch(error => console.error('Error loading data:', error)); */
+	                .catch(error => console.error('Error loading data:', error));
 	        }
 	    });
 	</script> 

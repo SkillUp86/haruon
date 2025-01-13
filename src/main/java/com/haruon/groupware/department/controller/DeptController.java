@@ -22,7 +22,7 @@ public class DeptController {
 		List<Dept> deptList = deptService.getDeptList();
 		model.addAttribute("deptList",deptList);
 		
-		return "/dept/depts";
+		return "dept/depts";
 	}
 	
 	// 부서 등록
@@ -37,9 +37,9 @@ public class DeptController {
 	
 	// 부서 수정
 	@PostMapping("/depts/update")
-	public String updateDept(@RequestParam Integer deptNo, @RequestParam String dname) {
+	public String updateDept(@RequestParam Integer depNo, @RequestParam String dname) {
 		Dept dept = new Dept();
-		dept.setDepNo(deptNo);
+		dept.setDepNo(depNo);
 		dept.setDname(dname);
 		deptService.updateDept(dept);
 		
@@ -47,10 +47,10 @@ public class DeptController {
 	}
 	
 	// 부서 활성화/비활성화
-	@PostMapping("/depts/updateActive")
-	public String updateDeptActive(@RequestParam Integer deptNo, @RequestParam String activeYn) {
+	@PostMapping("/depts/activeYN")
+	public String activeYN(@RequestParam Integer depNo, @RequestParam String activeYn) {
 		Dept dept = new Dept();
-		dept.setDepNo(deptNo);
+		dept.setDepNo(depNo);
 		dept.setActiveYn(activeYn);
 		deptService.updateDept(dept);
 		

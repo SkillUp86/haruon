@@ -39,7 +39,7 @@ public class BoardController {
 		List<Category> categoryList = categoryService.getCategoryListFree();
 		model.addAttribute("categoryList", categoryList);
 	
-		return "/board/board";
+		return "board/board";
 	}
 	
 	// 게시글 상세
@@ -64,7 +64,7 @@ public class BoardController {
         List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
-        return "/board/boardOne";
+        return "board/boardOne";
     }
 	
 	// 댓글 입력
@@ -92,7 +92,7 @@ public class BoardController {
         List<Category> categoryList = categoryService.getCategoryListFree();
         model.addAttribute("categoryList", categoryList);
         
-        return "/board/insert";
+        return "board/insert";
     }
 	@PostMapping("/board/insert")
 	public String insertBoard(HttpSession session, BoardDto boardDto) {
@@ -117,7 +117,7 @@ public class BoardController {
 		List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
-        return "/board/update";
+        return "board/update";
     }
 	@PostMapping("/board/update")
 	public String updateBoard(@RequestParam Integer boaNo , @RequestParam Integer catNo, @RequestParam String title
@@ -146,7 +146,7 @@ public class BoardController {
 	public String noticeList(Model model) {
 		List<Map<String,Object>> noticeList = boardService.getNoticeList();
 		model.addAttribute("noticeList",noticeList);
-		return "/board/notice";
+		return "board/notice";
 	}
 	
 	// 공지 입력
@@ -159,7 +159,7 @@ public class BoardController {
 		 * model.addAttribute("empNo", empNo);
 		 */
 		
-		return "/board/insertNotice";
+		return "board/insertNotice";
 	}
 	@PostMapping("/board/insertNotice")
 	public String insertNotice(HttpSession session, BoardDto boardDto) {
@@ -178,7 +178,7 @@ public class BoardController {
 		List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
-        return "/board/updateNotice";
+        return "board/updateNotice";
     }
 	@PostMapping("/board/updateNotice")
 	public String updateNotice(@RequestParam Integer boaNo , @RequestParam String title
