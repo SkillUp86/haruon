@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.attendance.dto.RequestAttendanceList;
+import com.haruon.groupware.attendance.dto.ResponseAttendance;
 import com.haruon.groupware.attendance.dto.ResponseAttendanceList;
 import com.haruon.groupware.attendance.dto.ResponseBusinessTripList;
 import com.haruon.groupware.attendance.dto.ResponseLeaveList;
-import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.service.AttendanceService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,10 +26,10 @@ public class AttendanceRestController {
 	
 	// 로그인한 사람의 출근/퇴근 시간
 	@GetMapping("/attendance/employee/{empNo}")
-	public ResponseEntity<Attendance> getEmpAttendance(@PathVariable Integer empNo, HttpSession session) {
+	public ResponseEntity<ResponseAttendance> getEmpAttendance(@PathVariable Integer empNo, HttpSession session) {
 
 		if(session.getAttribute("loginEmpNo") != null) {
-			Attendance attendanceByEmp = attendanceService.findAttendanceByEmp(empNo);
+			ResponseAttendance attendanceByEmp = attendanceService.findAttendanceByEmp(empNo);
 			//log.debug(attendanceByEmp.toString());
 			return ResponseEntity.ok(attendanceByEmp);
 		} else {

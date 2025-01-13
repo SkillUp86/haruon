@@ -285,8 +285,8 @@
 		}
     </script> -->
     
-    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 -->
- 	<script>    
+    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 
+    <script>    
 		$.ajax({
 			url: "/attendance/employee/"+"${loginEmpNo}",
 			method: 'GET',
@@ -322,7 +322,7 @@
 				 console.log("로그인 정보 없음");
 				 //location.replace("login");
 			});
-    </script>
+    </script>-->
 
 </body>
 </html>
