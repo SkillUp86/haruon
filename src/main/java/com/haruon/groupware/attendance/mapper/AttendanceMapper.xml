@@ -109,16 +109,13 @@
 	<!-- 휴가신청 리스트(월별) -->
 	<select id="findtLeaveReqListByMonth" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
 									    resultType="com.haruon.groupware.attendance.dto.ResponseLeaveList">
-		 SELECT e.ename ename
-			  , (SELECT descript FROM common_code WHERE common_code = e.location) location
+		 SELECT e.ename empName
+			  , (SELECT descript FROM common_code WHERE common_code = e.location) role
 			  , v.start_date startTime
 			  , v.finish_date endTime
 			  , (SELECT descript FROM common_code WHERE common_code = ap.state) approvalState
 			  , dr.dra_no draNo
 			  , (SELECT ename FROM emp WHERE emp_no = v.emp_no) substituteEmp
-			  , (YEAR(NOW()) - YEAR(e.join_date)) YearsOfService
-			  , e.total_leave totalLeave
-			  , e.used_leave usedLeve
            FROM draft dr
           INNER JOIN vacation v ON dr.dra_no = v.dra_no
           INNER JOIN approval ap ON dr.dra_no = ap.dra_no
@@ -135,15 +132,38 @@
         </where>							    
 	</select>
 	
-	<!-- 연차 사용 요약 -->
-	<select id="findLeaveSumForYear" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
+	<!-- 연간 연차 정보 요약 -->
+	<select id="findLeaveSumAndUsageRateList" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
 									    resultType="com.haruon.groupware.attendance.dto.ResponseLeaveList">
+		 SELECT emp_no empNo
+			  , ename empName
+			  , (SELECT descript FROM common_code WHERE common_code = location) role
+			  , total_leave totalLeave
+			  , used_leave usedLeave
+			  , (YEAR(NOW()) - YEAR(join_date)) yearsOfService
+			  , total_leave 
+			  		- (case when((YEAR(NOW()) - YEAR(join_date)) > 2) 
+					  		  then (15 + (YEAR(NOW()) - YEAR(join_date) - 1) / 2) 
+						ELSE 15 end) modifiedLeave
+			  , (SELECT ((SUM(e2.used_leave) / SUM(e2.total_leave))* 100) 
+			  	  FROM emp e2 
+				  WHERE e2.emp_no = e1.emp_no) leaveUsageRate 
+			  , join_date joinDate
+		   FROM emp e1
+		   <where>
+		   		 <if test="deptNo != null">
+				    dep_no = #{deptNo}		
+				 </if>
+				 <if test="empNo != null">
+				  	emp_no = #{empNo} 
+				 </if>
+		   </where>
 	</select>
 	
 	<!-- 연차 사용률 -->
 	<select id="findLeaveUsageRateForYear" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
 									    resultType="Double">
-		SELECT (sum(used_leave) / sum(total_leave))* 100 FROM emp
+		SELECT (sum(used_leave) / sum(total_leave))* 100 rate FROM emp
 		<if test="empNo != null || deptNo != null">
 			<where>
 				<if test="empNo != null">

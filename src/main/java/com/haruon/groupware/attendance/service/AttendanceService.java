@@ -89,8 +89,6 @@ public class AttendanceService {
 		return calculateHours(end, yesterDay) > 0 ? end : yesterDay;
     }
     
-
-    
 	// 근태리스트(월별) - deptNo : 부서원 전부
     public List<ResponseAttendanceList> findDeptAttendanceListByMonth(Integer deptNo, String yearMonth) {
     	String begin = yearMonth + "-01";
@@ -176,6 +174,11 @@ public class AttendanceService {
     // 평균 유급휴가 사용률(연간) - x : 회사 평균 / empNo : 개인 평균 / deptNo : 부서 평균
     public Double findLeaveUsageRateForYear(RequestAttendanceList requestAttendanceList) {
     	return attendanceMapper.findLeaveUsageRateForYear(requestAttendanceList);
+    }
+    
+	// 연차 요약 및 사용률 리스트(연간) - empNo : 개인 / deptNo : 부서원
+    public List<ResponseLeaveList> findLeaveUsageRateList(RequestAttendanceList requestAttendanceList) {
+    	return attendanceMapper.findLeaveSumAndUsageRateList(requestAttendanceList);
     }
     
     

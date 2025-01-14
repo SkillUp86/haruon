@@ -10,8 +10,8 @@ public class ResponseLeaveList {
 	private Integer empNo;			// 사원 번호
 	private Integer deptNo;			// 부서 번호
 	
-	private String eName;			// 사원명
-	private String location;		// 사원 직급 (common_code의 descript)
+	private String empName;			// 사원명
+	private String role;		// 사원 직급 (common_code의 descript)
 	
 	private String startTime;		// 휴가 시작시간
 	private String endTime;			// 휴가 종료시간
@@ -22,7 +22,9 @@ public class ResponseLeaveList {
 	private String substituteEmp;	// 휴가신청서에 기재된 대체근무자
 	
 	private Integer totalLeave;		// 총 연차수
-	private Integer usedLeve;		// 사용한 연차수
-	
-	private String YearsOfService;	// 근속기간
+	private Integer usedLeave;		// 사용한 연차수
+	private Double leaveUsageRate;	// 사용한 연차 비율
+	private Integer yearsOfService;	// 근속기간
+	private String joinDate;		// 입사일
+	private Integer modifiedLeave;	// 조정연차
 }

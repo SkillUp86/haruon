@@ -134,6 +134,21 @@ public class AttendanceRestController {
 		}
 	}
 	
+	// 부서원 각각 유급휴가 사용 요약(연간) - 연차 유급휴가 사용률
+	@GetMapping("/department/leaves/information/{deptNo}")
+	public ResponseEntity<List<ResponseLeaveList>> findDeptLeaveUsageRateList(@PathVariable Integer deptNo
+																				, Authentication authentication) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		if(userDetails.getDepNo().equals(deptNo)) {
+			RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+			requestAttendanceList.setDeptNo(deptNo);
+			List<ResponseLeaveList> deptLeaveUsageRateList = attendanceService.findLeaveUsageRateList(requestAttendanceList);
+			return ResponseEntity.ok(deptLeaveUsageRateList);
+		} else {
+			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
+		}
+	}
+	
 	// 개인 유급휴가 사용률(연간)
 	@GetMapping("/employee/leave/UsageRate/{empNo}")
 	public ResponseEntity<Double> findEmpLeaveUsageRateForYear(@PathVariable Integer empNo
@@ -144,6 +159,21 @@ public class AttendanceRestController {
 			requestAttendanceList.setEmpNo(empNo);
 			Double empLeaveUsageRate = attendanceService.findLeaveUsageRateForYear(requestAttendanceList);
 			return ResponseEntity.ok(empLeaveUsageRate);
+		} else {
+			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
+		}
+	}
+	
+	// 개인 유급휴가 사용 요약(연간) - 연차 유급휴가 사용률
+	@GetMapping("/employee/leave/sum/{empNo}")
+	public ResponseEntity<List<ResponseLeaveList>> findEmpLeaveUsageRateList(@PathVariable Integer empNo
+																				, Authentication authentication) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		if(userDetails.getEmpNo().equals(empNo)) {
+			RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
+			requestAttendanceList.setEmpNo(empNo);
+			List<ResponseLeaveList> deptLeaveUsageRateList = attendanceService.findLeaveUsageRateList(requestAttendanceList);
+			return ResponseEntity.ok(deptLeaveUsageRateList);
 		} else {
 			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
 		}

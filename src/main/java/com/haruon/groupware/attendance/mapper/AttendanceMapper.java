@@ -36,9 +36,10 @@ public interface AttendanceMapper {
 	
 	// 휴가신청 리스트(월별) - empNo : 개인 / deptNo : 부서원
 	List<ResponseLeaveList> findtLeaveReqListByMonth(RequestAttendanceList requestAttendance);
+	
+	// 연차 요약 및 사용률 리스트(연간) - empNo : 개인 / deptNo : 부서원
+	List<ResponseLeaveList>  findLeaveSumAndUsageRateList(RequestAttendanceList requestAttendance);
 
-	// 연차 요약 - empNo : 개인 / deptNo : 부서원
-	List<ResponseLeaveList> findLeaveSumForYear(RequestAttendanceList requestAttendance);
 	
 	// 평균 유급휴가 사용률 - x : 회사 평균 / empNo : 개인 평균 / deptNo : 부서 평균
 	Double findLeaveUsageRateForYear(RequestAttendanceList requestAttendance);
