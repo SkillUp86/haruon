@@ -8,7 +8,7 @@
 		WHERE edu_no = #{eduNo}
 	</delete>
 	
-	<!-- 교육 삭제 -->
+	<!-- 교육 삭제 시 파일삭제 -->
 	<delete id="deleteCourseFiles" parameterType="Integer">
 		DELETE FROM education_file
 		WHERE edu_no = #{eduNo}

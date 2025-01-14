@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>교육 상세</title>
+    <title>문의 상세</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -85,7 +85,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Course</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Q&A</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -106,65 +106,84 @@
 		                            <div class="statbox widget box box-shadow">
 		                                <div class="widget-header">
 	                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-	                                            <h2 class="mt-3 mb-3">&nbsp; 교육 상세</h2>
+	                                            <h2 class="mt-3 mb-3">&nbsp; 문의 상세</h2>
 	                                        </div>                                                                        
 		                                </div>
 		                                <div class="widget-content widget-content-area">
 			                                <div class="row">
 				                                <div class="col-md-6">
-				                                    <label class="form-label"> 교육 번호 </label>
-				                                    <label class="form-control">${c.eduNo}</label>
+				                                    <label class="form-label"> 문의 번호 </label>
+				                                    <label class="form-control">${q.fraAskNo}</label>
 				                                </div>
 				                                <div class="col-md-6">
-					                                <input type="hidden" name="empNo" value="${c.empNo}">
-				                                    <label class="form-label"> 담당자 </label>
-				                                    <label class="form-control">${c.ename}</label>
-				                                </div>
-			                                </div>
-			                                
-			                                <div class="row">
-				                                <div class="col-md-6">
-				                                    <label class="form-label"> 장소 </label>
-				                                    <label class="form-control">${c.place}</label>
-				                                </div>
-				                                <div class="col-md-6">
-				                                    <label class="form-label"> 일정 </label>
-				                                    <label class="form-control">${c.eduDate}</label>
+				                                    <label class="form-label"> 가맹점 </label>
+				                                    <label class="form-control">${q.fname}</label>
 				                                </div>
 			                                </div>
 			                                <div class="row">
 				                                <div class="col-md-12">
 				                                    <label class="form-label"> 제목 </label>
-				                                    <label class="form-control">${c.title}</label>
+				                                    <label class="form-control">${q.title}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 등록일 </label>
+				                                    <label class="form-control">${q.createDate}</label>
 				                                </div>
 			                                </div>
 			                                <div class="row">
 				                                <div class="col-md-12">
 				                                    <label class="form-label"> 내용 </label>
-				                                    <label class="form-control">${c.content}</label>
-				                                </div>
-			                                </div>
-			                                <div class="row">
-				                                <div class="col-md-12">
-				                                    <label class="form-label"> 정원 </label>
-				                                    <label class="form-control">${c.capacity}</label>
+				                                    <label class="form-control">${q.content}</label>
 				                                </div>
 			                                </div>
 			                                <div class="row mb-3">
 				                                <div class="col-md-12">
 				                                    <label class="form-label"> 첨부파일 </label>
-				                                    <c:if test="${empty cfl}">
+				                                    <c:if test="${empty qfl}">
 				                                    	<label class="form-control">첨부된 파일이 없습니다</label>
 				                                    </c:if>
-				                                    <c:forEach items="${cfl}" var="cfl">
-					                                    <a href="${pageContext.request.contextPath}/uploadCourse/${cfl.fileName}.${cfl.ext}" download="${cfl.originName}.${cfl.ext}"> 
-					                                    	<label class="form-control">${cfl.originName}.${cfl.ext}</label>
+				                                    <c:forEach items="${qfl}" var="qfl">
+					                                    <a href="${pageContext.request.contextPath}/uploadCourse/${qfl.fileName}.${qfl.ext}" download="${qfl.originName}.${qfl.ext}"> 
+					                                    	<label class="form-control">${qfl.originName}.${qfl.ext}</label>
 					                                    </a>
 				                                    </c:forEach>
 				                                </div>
 			                                </div>
-			                                <a href="${pageContext.request.contextPath}/franchises/courses/modify?eduNo=${c.eduNo}" class="btn btn-gray"> 수정 </a>
-			                                <a href="${pageContext.request.contextPath}/franchises/courses/delete?eduNo=${c.eduNo}" class="btn btn-gray" id="btnDelete"> 삭제 </a>
+			                                
+			                                <h3 class="ms-1 mt-3 mb-4">답변</h3>
+			                                
+			                                <c:if test="${a.content == null}"><!-- 답변 등록 안했다면 -->
+			                                	<form method="post" action="${pageContext.request.contextPath}/franchises/questions/${q.fraAskNo}">
+					                                <div class="row">
+						                                <div class="col-md-11">
+						                                    <textarea class="form-control" id="contents" name="content" placeholder="답변" rows="5" cols="40"></textarea>
+						                                </div>
+						                                <div class="col-md-1 d-flex align-items-center">
+						                                	<button type="button" class="btn btn-gray btn-lg">등록</button>
+						                                </div>
+					                                </div>
+			                                	</form>
+			                                </c:if>
+			                                <c:if test="${a.content != null}"><!-- 답변 등록했다면 -->
+				                                <div class="row">
+					                                <div class="col-md-6">
+					                                    <label class="form-label"> 담당자 </label>
+					                                    <label class="form-control">${a.ename}</label>
+					                                </div>
+					                                <div class="col-md-6">
+					                                    <label class="form-label"> 등록일 </label>
+					                                    <label class="form-control">${a.createDate}</label>
+					                                </div>
+				                                </div>
+				                                <div class="row">
+					                                <div class="col-md-12">
+					                                    <label class="form-label"> 내용 </label>
+					                                    <textarea class="form-control" rows="5" cols="40" readonly>${a.content}</textarea>
+					                                </div>
+				                                </div>
+			                                </c:if>
 		                                </div>
 		                            </div>
 		                        </div>
@@ -199,6 +218,7 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	
 	<script>
+		// !!!!!!!!!!!! 답변 등록 질문으로 변경 !!!!!!!!!!
 	    $('#btnDelete').click(function(event) {
 	        // 삭제 확인 메시지
 	        var isConfirmed = confirm('해당 교육을 삭제하시겠습니까?');

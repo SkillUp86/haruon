@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>교육 조회</title>
+    <title>문의 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -81,7 +81,7 @@
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">Franchises</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Course List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Question List</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -96,32 +96,29 @@
                     <div class="col-lg-12">
                         <div class="widget-content searchable-container list">
 
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                	<a href="${pageContext.request.contextPath}/franchises/courses/insert" class="btn">+ 등록</a>
-                                </div>
-                            </div>
-
                             <table class="table text-center" id="board-list">
 							    <thead>
 							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
-							            <th>번호</th>
-							            <th>교육일정</th>
-							            <th>장소</th>
+							            <th>문의번호</th>
+							            <th>지점이름</th>
 							            <th>제목</th>
-							            <th>설명</th>
-							            <th>수용인원</th>
+							            <th>등록일</th>
+							            <th>답변상태</th>
 							        </tr>
 								</thead>
 							    <tbody>
-							        <c:forEach items="${courseList}" var="cl">
-							            <tr onclick="window.location='${pageContext.request.contextPath}/franchises/courses/${cl.eduNo}'">
-							                <td>${cl.eduNo}</td>
-							                <td>${cl.eduDate}</td>
-							                <td>${cl.place}</td>
-							                <td>${cl.title}</td>
-							                <td>${cl.content}</td>
-							                <td>${cl.capacity}</td>
+							        <c:forEach items="${ql}" var="ql">
+							            <tr onclick="window.location='${pageContext.request.contextPath}/franchises/questions/${ql.fraAskNo}'">
+							                <td>${ql.fraAskNo}</td>
+							                <td>${ql.fname}</td>
+							                <td>${ql.title}</td>
+							                <td>${ql.createDate}</td>
+							                <c:if test="${ql.replyYn == 'Y'}">
+								                <td>완료</td>
+							                </c:if>
+							                <c:if test="${ql.replyYn == 'N'}">
+								                <td><strong>대기</strong></td>
+							                </c:if>
 							            </tr>
 							        </c:forEach>
 							    </tbody>

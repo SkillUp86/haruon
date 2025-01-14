@@ -39,7 +39,7 @@ public class CourseController {
 		List<EducationFile> courseFileList = courseService.getCourseFiles(eduNo);
 		
 		// 담당자 이름 불러오기 => 나중에 수정 예정 #######################################
-		Integer deptNo = 3; 
+		Integer deptNo = 2; 
 		List<EmpEntity> empList = courseService.getEmpList(deptNo);
 		
 		model.addAttribute("c", course);
@@ -85,7 +85,7 @@ public class CourseController {
 	@GetMapping("/franchises/courses/insert")
 	public String insertCourse(Model model) {
 		// 담당자 리스트 불러오기 =? 나중에 수정 예정 #######################################
-		Integer deptNo = 3; 
+		Integer deptNo = 2; 
 		List<EmpEntity> empList = courseService.getEmpList(deptNo);
 		
 		model.addAttribute("empList", empList);
