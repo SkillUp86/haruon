@@ -11,4 +11,8 @@ public interface CommonMapper {
 
 	// 결재코드
 		List<CommonCode> findByParentCode(String parentCode);
+
+		
+		
+	
 }

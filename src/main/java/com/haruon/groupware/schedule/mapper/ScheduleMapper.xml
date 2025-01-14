@@ -14,6 +14,25 @@
 		 ,end_time endTime
 	FROM schedules s
 		inner join common_code c on
-		s.kind = c.common_code		
+		s.kind = c.common_code
 	</select>
+
+   <insert id="addSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
+    INSERT INTO schedules (
+        title,
+        kind,
+        content,
+        start_time,
+        end_time
+    ) 
+    VALUES (
+        #{title}, #{kind}, #{content}, #{startTime}, #{endTime}
+    )
+</insert>
+	
+<delete id="deleteSchedule" parameterType="Integer">
+DELETE FROM schedules
+WHERE sch_no = #{schNo}
+</delete>
+	
 </mapper>

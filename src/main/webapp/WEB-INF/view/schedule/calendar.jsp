@@ -121,73 +121,72 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">신규 사내 일정 추가</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-    
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="n-chk">
-                                                <label class="form-label">일정 제목</label>
-                                                <input id="event-title" type="text" class="form-control">
-                                            </div>
-                                        </div>
-    
-                                        <div class="col-md-12 ">
-                                            <div class="n-chk">
-                                                <label class="form-label">시작 날짜</label>
-                                                <input id="event-start-date" type="datetime" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 ">
-                                            <div class="n-chk">
-                                                <label class="form-label">종료 날짜</label>
-                                                <input id="event-end-date" type="datetime" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 ">
-                                            <div class="n-chk">
-                                                <label class="form-label">일정 종류</label>
-                                                <label>
-                                                    <input class="form-check-input" type="radio" name="event-level" value="Work" id="rwork">개인
-                                                </label>
-                                                <label>
-                                                    <input class="form-check-input" type="radio" name="event-level" value="Work" id="rwork">회사
-                                                </label>
-                                                <label>
-                                                    <input class="form-check-input" type="radio" name="event-level" value="Work" id="rwork">팀
-                                                </label>
-                                            </div>
-                                        </div>
-                                       <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="n-chk">
-                                                <label class="form-label">일정 내용</label>
-                                                <input id="" type="text" class="form-control">
-                                            </div>
-                                        </div>
-    
-                                      </div>
-                                    </div>
-									</div>
-                                    
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary btn-add-event">일정 추가</button>
-                                        <button type="button" class="btn" id="deleteEventBtn">삭제</button>
-                                    <button type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-                                    <button type="button" class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
-                                </div>
-                                </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">신규 사내 일정 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addSchedule" method="post" action="${pageContext.request.contextPath}/addSchedule"> 
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="n-chk">
+                                <label class="form-label">일정 제목</label>
+                                <input id="title" name="title" type="text" class="form-control"> <!-- name 속성 추가 -->
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-12 ">
+                        <div class="n-chk">
+                            <label class="form-label">시작 날짜</label>
+                            <input id="event-start-date" name="startTime" type="datetime-local" class="form-control"> <!-- name 속성 추가 -->
                         </div>
+                    </div>
+
+                    <div class="col-md-12 ">
+                        <div class="n-chk">
+                            <label class="form-label">종료 날짜</label>
+                            <input id="event-end-date" name="endTime" type="datetime-local" class="form-control"> <!-- name 속성 추가 -->
                         </div>
+                    </div>
+
+                   <div class="col-md-12">
+                            <div class="n-chk">
+                                <label class="form-label">일정 종류</label>
+                                <select id="kind" name="kind" class="form-control">
+                                    <c:forEach items="${kindList}" var="k">
+                                        <option value="${k.commonCode}">${k.descript}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="n-chk">
+                                <label class="form-label">일정 내용</label>
+                                <input id="text" name="content" type="text" class="form-control"> <!-- name 속성 추가 -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="sub" class="btn btn-primary btn-add-event">일정 추가</button>
+                <button type="button" class="btn" id="deleteEventBtn">삭제</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+                                    
+                           
 		
 			<!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
@@ -211,5 +210,64 @@
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
     <script src="../src/plugins/src/fullcalendar/custom-fullcalendar.js"></script>
     <!--  END CUSTOM SCRIPTS FILE  -->
+  <script>
+  $(document).ready(function() {
+	    // 일정 추가 버튼 클릭 시
+	    $(".btn-add-event").click(function(e) {
+	        e.preventDefault(); // 기본 폼 제출 방지
+
+	        // 폼에서 데이터 가져오기
+	        var title = $("#title").val(); // 선택된 일정 제목
+	        var startDate = $("#event-start-date").val(); // 시작 날짜
+	        var endDate = $("#event-end-date").val(); // 종료 날짜
+	        var content = $("#text").val(); // 일정 내용
+
+	        // 일정 종류 라디오 버튼 값
+	        var eventType = $("input[name='title']:checked").val();
+
+	        // 폼 값 확인 (디버깅용)
+	        console.log(title, startDate, endDate, content, eventType);
+
+	        // 서버로 데이터를 전송하는 Ajax 요청
+	        $.ajax({
+	            url: "${pageContext.request.contextPath}/addSchedule", // 서버 URL
+	            type: "POST",
+	            data: {
+	                title: kind,
+	                startDate: startDate,
+	                endDate: endDate,
+	                content: content,
+	                eventType: even	tType
+	            },
+	            success: function(response) {
+	                // 서버에서 응답이 정상적으로 돌아오면
+	                if(response.success) {
+	                    alert("일정이 추가되었습니다.");
+	                    
+	                    // 캘린더에 일정 추가 (여기서 calendarObject는 캘린더 객체로 가정)
+	                    var newEvent = {
+	                        title: title,
+	                        start: startDate,
+	                        end: endDate,
+	                        description: content,
+	                        eventType: eventType
+	                    };
+	                    // 예시로 FullCalendar 사용 시
+	                    $('#calendar').fullCalendar('renderEvent', newEvent, true); 
+
+	                    // 모달 닫기
+	                    $('#exampleModal').modal('hide');
+	                } else {
+	                    alert("일정 추가에 실패했습니다.");
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.log("Ajax Error: " + error);
+	                alert("서버 오류가 발생했습니다.");
+	            }
+	        });
+	    });
+	});
+  </script>
 </body>
 </html>
