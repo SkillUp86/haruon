@@ -16,4 +16,6 @@ public class ResponseEmpInfo {
 	private String gender;
 	private String birth;
 	private String joinDate;
+	private String fileName;
+	private String ext;
 }

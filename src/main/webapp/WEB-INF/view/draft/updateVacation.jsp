@@ -246,7 +246,7 @@
                 </div>
             </div>
             <!-- 대체 업무자 모달 START-->
-	<div class="modal fade common-employee-modal" id="subWorkerModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="subWorkerModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">

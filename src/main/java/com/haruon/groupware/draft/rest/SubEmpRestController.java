@@ -13,10 +13,10 @@ import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.auth.CustomUserDetails;
 
 @RestController
-public class SubEmpList {
+public class SubEmpRestController {
 private final ApprovalService approvalService;
 	
-	public SubEmpList(ApprovalService approvalService) {
+	public SubEmpRestController(ApprovalService approvalService) {
 		this.approvalService = approvalService;
 	}
 	

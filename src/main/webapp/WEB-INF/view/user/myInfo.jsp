@@ -20,8 +20,7 @@
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
+    
     <link href="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
@@ -32,16 +31,25 @@
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/list-group.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/users/account-setting.css" rel="stylesheet" type="text/css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
     <style>
 	.form-control[readonly] {
 		background-color: #fff !important;
 		color: #000 !important;
 	}
-	.colorlib-aside .author-img {
-    width: 150px; /* 원하는 너비 */
-    height: 150px; /* 원하는 높이 */
-    object-fit: cover; /* 이미지 비율 유지하며 잘라냄 */
+    
+	.author-img {
+    width: 200px; /* 원하는 너비 */
+    height: 200px; /* 원하는 높이 */
+    background-size: cover; 
+    background-position: center; /* 이미지 중앙 정렬 */
     border-radius: 50%; /* 원형으로 만들기 */
+     display: block;
+    margin: 0 auto;
+	}
+	.profile-image-area {
+    text-align: center;
+	}
 	</style>
 </head>
 
@@ -108,20 +116,22 @@
                 <div class="tab-content" id="animateLineContent-4">
                     <div class="tab-pane fade show active" id="animated-underline-home" role="tabpanel" aria-labelledby="animated-underline-home-tab">
                         <div class="row">
-                            <form id="" method="post" action="" class="section general-info">
+                            <div id="" class="widget-content widget-content-area br-8">
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                     <div class="info">
-                                        <h1>정보 수정</h1>
+                                        <h4>정보</h4>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-11 mx-auto">
                                             <div class="row">
 												<div class="col-xl-2 col-lg-12 col-md-4">
 												    <div class="profile-image mt-4 pe-md-4">
-												        <!-- 두 번째 파일 업로드 및 삭제 버튼 -->
-												        <div class="img-uploader-content">
-												            <input type="file" class="filepond" name="filepond" accept="image/png, image/jpeg, image/gif"/>
-												        </div>
+												       <div class="profile-image-area mb-2">
+								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/uploadProfile/${e.fileName}.${e.ext}" id="author-img">
+								                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                                                이미지 변경
+                                                            </button>
+									                    </div>
 												    </div>
 												</div>
 												
@@ -160,7 +170,7 @@
                                                                 <div class="form-group">
                                                                     <label for="address">주소</label>
                                                                     <input type="text" class="form-control mb-3" value="${e.postCode}" id="postCode" name="postCode" value="" placeholder="우편번호" >
-                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="address" name="address" value="" placeholder="우편번호" >
+                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="address" name="address" value="" placeholder="주소" >
                                                                 </div>
                                                                 <div class="form-group">
 														            <input type="button" class="btn btn-warning mb-3" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
@@ -192,7 +202,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="extNum">내선번호</label>
-                                                                    <input type="text" class="form-control mb-3" value="${e.extNum}" id="extNum" name="extNum" readonly>
+                                                                    <input type="text" class="form-control mb-3" value="${e.extNum}" id="extNum" name="extNum">
                                                                 </div>
                                                             </div>
 
@@ -228,7 +238,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>    
                     </div>
                 </div>
@@ -237,7 +247,30 @@
         </div>
 
     </div>
+<!-- Modal -->
 
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileImageModalLabel">프로필 이미지 변경</h5>
+            </div>
+            <form id="FormUploadProfile" action="${pageContext.request.contextPath}/upload/profile" method="post" enctype="multipart/form-data">
+                <div class="modal-body container">
+                    <div class="modal-body">
+                        <input class="form-control file-upload-input" type="file" id="file" name="file">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button id="btnUploadProfile" type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 모달END -->
     
 
    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
@@ -249,80 +282,17 @@
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
-<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
 <script src="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.js"></script>
 <script src="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.min.js"></script>
 <!--  END CUSTOM SCRIPTS FILE  -->	
 
 <script>
-	let empNo = ${user.empNo}
-	//FilePond 플러그인 설정
-	FilePond.create(document.querySelector('.filepond'), {
-	    imagePreviewHeight: 170,
-	    imageCropAspectRatio: '1:1',
-	    imageResizeTargetWidth: 200,
-	    imageResizeTargetHeight: 200,
-	    stylePanelLayout: 'compact circle',
-	    styleLoadIndicatorPosition: 'center bottom',
-	    styleProgressIndicatorPosition: 'right bottom',
-	    styleButtonRemoveItemPosition: 'left bottom',
-	    styleButtonProcessItemPosition: 'right bottom',
-	    onprocessfile: (error, file) => {
-	        if (error) {
-	            console.error("File upload failed", error);
-	            return;
-	        }
+	$('#btnUploadProfile').click(function(){
+        $('#FormUploadProfile').submit();
+    })
+
 	
-	        const formData = new FormData();
-	        formData.append("file", file.file);
-	        formData.append("userId", empNo); 
-	        console.log("File ready for upload:", file.file);
-	       
-	        $.ajax({
-	            url: '/mypage/uploadProfile', 
-	            method: 'POST',
-	            data: formData,
-	            contentType: false,
-	            processData: false,
-	            success: function(response) {
-	                console.log("File uploaded successfully:", response);
-	            },
-	            error: function(xhr, status, error) {
-	                console.error("File upload failed:", error);
-	            }
-	        });
-	    }
-	});
-	
-	$(document).ready(function() {
-	    $.ajax({
-	        url: '/mypage/profileImage',
-	        method: 'GET',
-	        data: { empNo: empNo },
-	        success: function(response) {
-	            if (response.profileImagePath) {
-	                FilePond.setOptions({
-	                    files: [
-	                        {
-	                            source: response.profileImagePath,  // 서버에서 받은 이미지 경로
-	                            options: { type: 'image' }
-	                        }
-	                    ]
-	                });
-	            }
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("Error loading profile image:", error);
-	        }
-	    });
-	});
+</script>
 </script>
 </body>
 </html>

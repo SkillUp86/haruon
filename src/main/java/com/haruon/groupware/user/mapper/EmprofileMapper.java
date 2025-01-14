@@ -11,4 +11,6 @@ public interface EmprofileMapper {
 	
 	EmpFile findEmpFileByUser(int empNo);
 
+	int removeProfileFile(int empNo);
+
 }

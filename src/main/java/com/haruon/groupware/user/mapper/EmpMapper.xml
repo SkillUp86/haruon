@@ -4,22 +4,26 @@
 	<!-- 사원 상세정보 -->
 	<select id="findByEmpInfo" parameterType="Integer" resultType="com.haruon.groupware.user.dto.ResponseEmpInfo">
 		select
-				emp_no empNo
-			,	email
-			,	dep_no deptNo
-			,	ename
+				e.emp_no empNo
+			,	e.email
+			,	e.dep_no deptNo
+			,	e.ename
 			,	(select descript
 				 from common_code
 				 where common_code = location) location
-			,	ext_num extNum
-			,	phone
-			,	address
-			,	post_code postCode
-			,	gender
-			,	birth
-			, 	join_date joinDate
-		from emp
-		where emp_no = #{empNo}
+			,	e.ext_num extNum
+			,	e.phone
+			,	e.address
+			,	e.post_code postCode
+			,	e.gender
+			,	e.birth
+			, 	e.join_date joinDate
+			,	f.file_name fileName
+			,	f.ext ext
+		from emp e
+		inner join emp_file f
+			on e.emp_no = f.emp_no
+		where e.emp_no = #{empNo}
 	</select>
 
 	<select id="findByEmp" parameterType="String" resultType="com.haruon.groupware.user.entity.EmpEntity" >

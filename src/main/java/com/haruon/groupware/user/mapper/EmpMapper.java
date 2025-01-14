@@ -13,6 +13,7 @@ public interface EmpMapper {
 	// 마이페이지
 	ResponseEmpInfo findByEmpInfo(int empNo);
 	
+	// 시큐리티 로그인
 	EmpEntity findByEmp(String email);
 	
 	int insertEmp(EmpDto emp);
