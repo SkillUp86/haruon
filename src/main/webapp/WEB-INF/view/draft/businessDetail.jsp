@@ -152,9 +152,9 @@
                                                         </div>
                                                         <div class="input-group mb-1">
                                                             <span class="input-group-text label-text">시작날짜</span>
-                                                            <input class="form-control" value="${d.bizStartDate}" readonly>
+                                                            <input class="form-control" type="datetime-local" value="${d.bizStartDate}" readonly>
                                                             <span class="input-group-text label-text">종료날짜</span>
-                                                            <input class="form-control" value="${d.bizFinishDate}" readonly>
+                                                            <input class="form-control" type="datetime-local" value="${d.bizFinishDate}" readonly>
                                                         </div>
                                                         
                                                     </div>
@@ -216,7 +216,7 @@
 
                                         <c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/bizUpdate?draNo=${d.draNo}">수정</a>
+													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/update/business?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>

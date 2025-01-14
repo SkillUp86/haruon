@@ -119,20 +119,7 @@ type="text/css">
                                             ${d.draftType} 결재
                                         </div>
                                     </h1>
-                                    <div class="approval-section">
-                                        <c:if test="${d.midApp != null}">
-                                            <div class="approver mt-4">
-                                                <p>중간결재자</p>
-                                                <div class="signature-box"></div>
-                                                <p>${d.midAppName}</p>
-                                            </div>
-                                        </c:if>
-                                        <div class="approver mt-4">
-                                            <p>최종결재자</p>
-                                            <div class="signature-box"></div>
-                                            <p>${d.finalAppName}</p>
-                                        </div>
-                                    </div><br><br><br><br><br><br><br><br><br>
+                                    <br><br><br><br><br><br><br><br><br>
                                     <div class="input-group mb-2 mt-4">
                                         <div class="input-group">
                                             <span class="input-group-text label-text">문서번호</span>
@@ -153,7 +140,7 @@ type="text/css">
                                                 readonly>
                                         </div>
                                     </div>
-                                    <form id="formUpdateBasic" action="${pageContext.request.contextPath}/update/basicDraft" method="post" enctype="multipart/form-data">
+                                    <form id="formUpdateBasic" action="${pageContext.request.contextPath}/draft/update/basicDraft" method="post" enctype="multipart/form-data">
                                         <div class="input-group mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text label-text">제목</span>
@@ -170,7 +157,7 @@ type="text/css">
                                                     <div class="d-flex flex-wrap">
                                                         <c:forEach var="f" items="${draftFiles}">
                                                             &nbsp;
-                                                            <a href="${pageContext.request.contextPath}/uploadDraft/${f.fileName}.${f.ext}" download="${f.originName}.${f.ext}" class="btn btn-dark mt-1 file">
+                                                            <a href="${pageContext.request.contextPath}/uploadDraft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
                                                                 ${f.originName}.${f.ext}
                                                             </a>
                                                             <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/deleteFile/basic?drafNo=${f.drafNo}&draNo=${d.draNo}">삭제</a>

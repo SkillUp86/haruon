@@ -63,9 +63,15 @@ public class ApprovalService {
 
 	// 결재 첨부파일 존재시 추가
 	private void existApprovalFile(RequestApproval approval, String path, int basicRow, Integer draNo) {
-		if(basicRow == 1 && approval.getFormFile()!= null) {
+		log.debug("getFormFile {}",approval.getFormFile().isEmpty());
+		log.debug("getFormFile {}",approval.getFormFile());
+		if(basicRow == 1) {
 			List<MultipartFile> file = approval.getFormFile();
 			for(MultipartFile f : file) {
+			if(f.getOriginalFilename().isEmpty()) {
+				continue;
+			}
+			log.debug("getOriginalFilename = {}",f.getOriginalFilename());
 			DraftFileEntity draftFile = new DraftFileEntity();
 			draftFile.setDraNo(draNo);
 			draftFile.setKind(f.getContentType());

@@ -1,4 +1,4 @@
-package com.haruon.groupware.draft.dto;
+package com.haruon.groupware.draft.dto.response;
 
 import lombok.Data;
 

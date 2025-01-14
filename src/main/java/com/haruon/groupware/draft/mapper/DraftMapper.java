@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
-import com.haruon.groupware.draft.dto.ResponseBasicDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseDraft;
-import com.haruon.groupware.draft.dto.ResponseSalesDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseVacationDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseDraft;
+import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 
 @Mapper
 public interface DraftMapper {

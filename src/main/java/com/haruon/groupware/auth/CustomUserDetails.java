@@ -69,7 +69,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public String getLocation() {
-        return empEntity.getLocation(); // 위치
+        return empEntity.getLocation(); // 직급
     }
 
     public Integer getDepNo() {

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.auth.CustomUserDetails;
-import com.haruon.groupware.draft.dto.ResponseBasicDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseSalesDraftDetail;
-import com.haruon.groupware.draft.dto.ResponseVacationDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
+import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 
 import lombok.extern.slf4j.Slf4j;

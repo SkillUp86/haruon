@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
      
 	<style type="text/css">
@@ -24,17 +24,17 @@
 	</style>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/light/forms/bootstrap-form.css" rel="stylesheet" type="text/css">
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/forms/bootstrap-form.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 	<!--  BEGIN CUSTOM STYLE FILE  -->
-    <link href="../src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/light/components/carousel.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
-	<link href="../src/assets/css/light/elements/infobox.css" rel="stylesheet" type="text/css" />
-	<link href="../src/assets/css/light/elements/color_library.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/carousel.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/src/assets/css/light/elements/infobox.css" rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/src/assets/css/light/elements/color_library.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
@@ -408,16 +408,17 @@
         </div>
     </div>
 </div>
+</div>
 
     <!--  BEGIN FOOTER  -->
     <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
     <!--  END FOOTER  -->
     <!-- END MAIN CONTAINER -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
     
 
 </body>
@@ -447,20 +448,6 @@
 		    
 		    $('#kind').trigger('change');".gitignore"
 		});
-   
-	   $('.dept').click(function() {
-		   //debugger;
-		   let deptNo = $(this).val();
-		   $.ajax({
-			   url: 'approval/depts/'+deptNo+'/employees'
-			 , method: "GET"
-			}).done(function(response) {
-				//console.log(response);
-				employeeList(response);
-			}).fail(function() {
-				alert('실패');
-			})
-		})
 
 		// 중복체크
 		let emp = [];
@@ -527,7 +514,7 @@
 			let empInfo = selectedEmp.next().text();
 			let dept = empInfo.substring(empInfo.indexOf('(')+1,empInfo.indexOf(')'))
 			//console.log(dept)
-			let empName = empInfo.substring(empInfo.indexOf(')') + 1);  // 사원 이름만 가져오기
+			let empName = empInfo.substring(empInfo.indexOf(')') + 2);  // 사원 이름만 가져오기
 
 			//  중복 체크크
 			if(existEmployee){

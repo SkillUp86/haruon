@@ -138,12 +138,35 @@
                                                             <span class="input-group-text label-text">직위</span>
                                                             <input class="form-control" value="${d.location}" readonly>
                                                         </div>
-                                                        <div class="input-group mb-1">
+                                                        <div class="input-group">
                                                             <span class="input-group-text label-text">기안자</span>
                                                             <input class="form-control" value="${d.drafterName}" readonly>
                                                             <span class="input-group-text label-text">기안일자</span>
                                                             <input class="form-control" value="${d.createDate}" readonly>
                                                         </div>
+                                                        <div class="input-group">
+                                                        	<div class="input-group">
+																<span class="input-group-text label-text">대체업무자</span>
+																<input class="form-control" value="${d.subEmpNo}" id="subEmpNumber" name="subEmpNumber" type="hidden" readonly>
+																<input class="form-control" value="${d.subEmpName}" type="text" id="subEmpName" name="subEmpName" placeholder="대체업무자" aria-label="대체업무자" required readonly>
+																<span class="input-group-text label-text">부서</span>
+																<input class="form-control" value="${d.subEmpDept}" type="text"  id="subDept" name="subDept" placeholder="대체업무자 부서 입력" aria-label="대체업무자 부서"  required readonly>
+															</div>
+														</div>
+														<div class="input-group">
+															<span class="input-group-text label-text">유형</span>
+															<input class="form-control" value="${d.vacType}" type="text" id="vacFinishDate" name="vacFinishDate" readonly>
+															<span class="input-group-text label-text">비상연락처</span>
+															<input class="form-control" value="${d.emergPhone}" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" id="urgentPhone" placeholder="010-0000-0000" readonly>
+														</div>
+														<div class="input-group mb-2">
+															<span class="input-group-text label-text">시작날짜</span>
+															<input class="form-control" value="${d.vacStartDate}" type="datetime-local" id="vacStartDate" name="vacStartDate" readonly>
+													
+															<span class="input-group-text label-text">종료날짜</span>
+															<input class="form-control" value="${d.vacFinishDate}" type="datetime-local" id="vacFinishDate" name="vacFinishDate" readonly>
+														</div>
+														
                                                     </div>
                                                     <div class="input-group mb-2">
                                                         <div class="input-group">
@@ -197,7 +220,7 @@
                                         </div>
                                        	<c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/vacUpdate?draNo=${d.draNo}">수정</a>
+													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/update/vacation?draNo=${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>

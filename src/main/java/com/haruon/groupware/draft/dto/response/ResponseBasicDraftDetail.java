@@ -1,12 +1,14 @@
-package com.haruon.groupware.draft.dto;
+package com.haruon.groupware.draft.dto.response;
 
 import lombok.Data;
 
 @Data
-public class ResponseVacationDraftDetail {
+public class ResponseBasicDraftDetail {
 	private Integer draNo;
 	private Integer appNo;
 	private String draftType;
+	private String drafterNo;
+	private String drafterName;
 	private String location;
 	private Integer depNo;
 	private String deptName;
@@ -16,17 +18,10 @@ public class ResponseVacationDraftDetail {
 	private String finalAppName;
 	private String referEmpNo; // 결재상태
 	private String referName;
-	private String drafterNo;
-	private String drafterName;
 	private String title;
 	private String content;
 	private String createDate;
 	private String midDate;
 	private String finalDate;
 	private String approvalState;
-	private String subEmpName; // 대체업무자
-	private String vacType; // 연차,반차
-	private String vacStartDate;
-	private String vacFinishDate;
-	private String emergPhone;
 }

@@ -9,7 +9,7 @@
 		and emp_no = #{empNo}
 	</select>
 	<!-- 휴가보고서 상세보기 -->
-	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseVacationDraftDetail">
+	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail">
 		select 
 				d.dra_no draNo
 			,	a.app_no appNo
@@ -31,9 +31,13 @@
 			,	re.ename referName
 			,	d.title title
 			,	d.content content
-			,	(select ename
-				 from emp
-				 where vc.emp_no = emp_no) subEmpName
+			,	vc.emp_no subEmpNo
+			,	sb.ename subEmpName
+			,	sb.dep_no depNo
+			,	(select dname
+				 from dept
+				 where dep_no = sb.dep_no) subEmpDept
+			,	vc.kind kind
 			,	vc.start_date vacStartDate
 			,	vc.finish_date vacFinishDate
 			,	(select descript
@@ -63,11 +67,13 @@
 			on a.mid_app = me.emp_no
 		inner join emp fe
 			on a.final_app = fe.emp_no
+		inner join emp sb
+			on vc.emp_no = sb.emp_no
 		where d.dra_no = #{draNo}
 	</select>
 	
 	<!-- 매출보고서 상세보기 -->
-	<select id="findBySalesDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseSalesDraftDetail">
+	<select id="findBySalesDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail">
 		select 
 				d.dra_no draNo
 			,	a.app_no appNo
@@ -121,7 +127,7 @@
 		where d.dra_no = #{draNo}
 	</select>
 	<!-- 출장결재 상세보기 -->
-	<select id="findByBusinessDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseBusinessDraftDetail">
+	<select id="findByBusinessDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail">
 		select 
 				d.dra_no draNo
 			,	a.app_no appNo
@@ -172,34 +178,34 @@
 		where d.dra_no = #{draNo}
 	</select>
 	<!-- 기본결재 상세보기 -->
-	<select id="findByBasicDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseBasicDraftDetail">
+	<select id="findByBasicDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail">
 		select 
-			d.dra_no draNo
-		,	a.app_no appNo
-		,	(select descript
-			 from common_code
-			 where common_code = d.kind)draftType
-		,	de.emp_no drafterNo
-		,	de.ename drafterName
-		,	(select descript
-			 from common_code
-			 where common_code = de.location) location
-		,	de.dep_no depNo
-		,	dt.dname deptName
-		,	a.mid_app midApp
-		,	me.ename midAppName
-		,	a.final_app finApp
-		,	fe.ename finalAppName
-		,	re.emp_no referEmpNo
-		,	re.ename referName
-		,	d.title title
-		,	d.content content
-		,	d.create_date createDate
-		,	a.mid_app_date midDate
-		,	a.final_app_date finalDate
-		,	(select descript
-			 from common_code
-			 where common_code = a.state) approvalState
+				d.dra_no draNo
+			,	a.app_no appNo
+			,	(select descript
+				 from common_code
+				 where common_code = d.kind)draftType
+			,	de.emp_no drafterNo
+			,	de.ename drafterName
+			,	(select descript
+				 from common_code
+				 where common_code = de.location) location
+			,	de.dep_no depNo
+			,	dt.dname deptName
+			,	a.mid_app midApp
+			,	me.ename midAppName
+			,	a.final_app finApp
+			,	fe.ename finalAppName
+			,	re.emp_no referEmpNo
+			,	re.ename referName
+			,	d.title title
+			,	d.content content
+			,	d.create_date createDate
+			,	a.mid_app_date midDate
+			,	a.final_app_date finalDate
+			,	(select descript
+				 from common_code
+				 where common_code = a.state) approvalState
 		from draft d
 		inner join emp de
 			on d.emp_no = de.emp_no
@@ -231,7 +237,7 @@
 		where dra_no = #{draNo}
 	</select>
 	<!-- 사원별 결재문서 리스트 -->
-	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
+	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 				d.dra_no draNo
 			,	d.kind kind
@@ -252,7 +258,7 @@
 	</select>
 	
 	<!-- 사원별 기안문서 리스트 -->
-	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.ResponseDraft">
+	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 				d.dra_no draNo
 			,	d.kind kind
