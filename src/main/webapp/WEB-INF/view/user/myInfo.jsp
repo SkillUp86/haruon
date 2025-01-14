@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="user" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,43 +9,40 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Account Settings | CORK - Multipurpose Bootstrap Dashboard Template</title>
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <title>Haruon | 마이페이지</title>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
 
     <!-- Global Styles -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
-
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="../src/plugins/src/filepond/filepond.min.css">
-    <link rel="stylesheet" href="../src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
-    <link href="../src/plugins/src/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../src/plugins/src/sweetalerts2/sweetalerts2.css">
-    <link href="../src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/light/elements/alert.css">
-    <link href="../src/plugins/css/light/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="../src/plugins/css/light/notification/snackbar/custom-snackbar.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/light/forms/switches.css">
-    <link href="../src/assets/css/light/components/list-group.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/users/account-setting.css" rel="stylesheet" type="text/css" />
-
-    <!-- Dark Mode Custom Styles -->
-    <link href="../src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/components/tabs.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/dark/elements/alert.css">
-    <link href="../src/plugins/css/dark/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="../src/plugins/css/dark/notification/snackbar/custom-snackbar.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/dark/forms/switches.css">
-    <link href="../src/assets/css/dark/components/list-group.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/dark/users/account-setting.css" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
+    <link href="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/elements/alert.css">
+    <link href="${pageContext.request.contextPath}/src/plugins/css/light/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/plugins/css/light/notification/snackbar/custom-snackbar.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/forms/switches.css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/list-group.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/users/account-setting.css" rel="stylesheet" type="text/css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    
+    <style>
+	.form-control[readonly] {
+		background-color: #fff !important;
+		color: #000 !important;
+	}
+	.colorlib-aside .author-img {
+    width: 150px; /* 원하는 너비 */
+    height: 150px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지 비율 유지하며 잘라냄 */
+    border-radius: 50%; /* 원형으로 만들기 */
+	</style>
 </head>
 
 <body class="layout-boxed">
@@ -94,8 +93,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">문서</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">결재신청</li>
+                                                <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">정보</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -117,8 +116,6 @@
                                     <div class="row">
                                         <div class="col-lg-11 mx-auto">
                                             <div class="row">
-                                              
-												
 												<div class="col-xl-2 col-lg-12 col-md-4">
 												    <div class="profile-image mt-4 pe-md-4">
 												        <!-- 두 번째 파일 업로드 및 삭제 버튼 -->
@@ -128,55 +125,52 @@
 												    </div>
 												</div>
 												
-												
                                                 <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                     <div class="form">
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="fullName">이름</label>
-                                                                    <input type="text" class="form-control mb-3" id="ename" name="ename">
+                                                                    <input type="text" class="form-control mb-3" value="${e.ename}" id="ename" name="ename" readonly>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label for="empNo">사원번호</label>
-                                                                    <input type="text" class="form-control mb-3" id="empNo" name="empNo">
+                                                                    <label for="empNo">입사날짜</label>
+                                                                    <input type="text" class="form-control mb-3" value="${e.joinDate}" id="joinDate" name="joinDate" readonly>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="country">부서</label>
-                                                                    <select class="form-select mb-3" id="depNo" name="depNo">
-                                                                    <c:forEach items="${deptList}" var="d">
-								            							<option value="${d.depNo}">${d.dname}</option>
-								            						</c:forEach>
-                                                                    </select>
+                                                                    <input class="form-control mb-3" value="${e.location}" id="depNo" name="depNo" readonly>
+                                                                    
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="gender">성별</label>
-                                                                    <select class="form-select mb-3" id="gender" name="gender">
-                                                                    </select>
+                                                                    <input class="form-control mb-3" value="${e.gender}" id="gender" name="gender" readonly>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="address">주소</label>
-                                                                    <input type="text" class="form-control mb-3" id="address">
-                                                                    <input type="text" id="postCode" name="postCode" placeholder="우편번호" >
-														            <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
+                                                                    <input type="text" class="form-control mb-3" value="${e.postCode}" id="postCode" name="postCode" value="" placeholder="우편번호" >
+                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="address" name="address" value="" placeholder="우편번호" >
                                                                 </div>
+                                                                <div class="form-group">
+														            <input type="button" class="btn btn-warning mb-3" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
+													            </div>
                                                             </div>
 														            
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="location">직급</label>
-                                                                    <select class="form-select mb-3" id="location" readonly>
+                                                                    <input class="form-control mb-3" value="${e.location}" id="location" name="location" readonly>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -184,28 +178,28 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="phone">연락처</label>
-                                                                    <input type="text" class="form-control mb-3" id="phone" name="phone">
+                                                                    <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone" readonly>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="email">이메일</label>
-                                                                    <input type="email" class="form-control mb-3" id="email" name="email">
+                                                                    <input type="email" class="form-control mb-3" value="${e.email}" id="email" name="email" readonly >
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="extNum">내선번호</label>
-                                                                    <input type="text" class="form-control mb-3" id="extNum" name="extNum">
+                                                                    <input type="text" class="form-control mb-3" value="${e.extNum}" id="extNum" name="extNum" readonly>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="birthdate">생일</label>
-                                                                    <input type="date" class="form-control mb-3" id="birth" name="birth">
+                                                                    <input type="date" class="form-control mb-3" value="${e.birth}" id="birth" name="birth" readonly>
                                                                 </div>
                                                             </div>
 
@@ -239,98 +233,96 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- END CONTENT AREA -->
-
-        <!-- BEGIN FOOTER -->
         <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-        <!-- END FOOTER -->
+        </div>
+
     </div>
 
     
 
    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-<script src="../src/plugins/src/waves/waves.min.js"></script>
-<script src="../layouts/vertical-light-menu/app.js"></script>
+<script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+<script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
-<script src="../src/plugins/src/filepond/filepond.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
-<script src="../src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
-<script src="../src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
-<script src="../src/plugins/src/notification/snackbar/snackbar.min.js"></script>
-<script src="../src/plugins/src/sweetalerts2/sweetalerts2.min.js"></script>
-<script src="../src/assets/js/users/account-settings.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.js"></script>
+<script src="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.min.js"></script>
 <!--  END CUSTOM SCRIPTS FILE  -->	
 
 <script>
-function sample4_execDaumPostcode() {
-          new daum.Postcode({
-              oncomplete: function(data) {
-                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                  // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                  var roadAddr = data.roadAddress; // 도로명 주소 변수
-                  var extraRoadAddr = ''; // 참고 항목 변수
-
-                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                      extraRoadAddr += data.bname;
-                  }
-                  // 건물명이 있고, 공동주택일 경우 추가한다.
-                  if(data.buildingName !== '' && data.apartment === 'Y'){
-                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                  }
-                  // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                  if(extraRoadAddr !== ''){
-                      extraRoadAddr = ' (' + extraRoadAddr + ')';
-                  }
-
-                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                  let resultAddress = '';
-                  /*
-                  document.getElementById('sample4_postcode').value = data.zonecode;
-                  document.getElementById("sample4_roadAddress").value = roadAddr;
-                  document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-                  */
-                  resultAddress = ' '+ roadAddr + ' ' + data.jibunAddress
-                  // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                  if(roadAddr !== ''){
-                      //document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                     resultAddress += ' ' + extraRoadAddr;
-                  } else {
-                      //document.getElementById("sample4_extraAddress").value = '';
-                  }
-                  document.getElementById('postCode').value = data.zonecode;
-                  document.getElementById('address').value = resultAddress;
-                  var guideTextBox = document.getElementById("guide");
-                  // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                  if(data.autoRoadAddress) {
-                      var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                      guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                      guideTextBox.style.display = 'block';
-
-                  } else if(data.autoJibunAddress) {
-                      var expJibunAddr = data.autoJibunAddress;
-                      guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                      guideTextBox.style.display = 'block';
-                  } else {
-                      guideTextBox.innerHTML = '';
-                      guideTextBox.style.display = 'none';
-                  }
-              }
-          }).open();
-      }
-   </script>
+	let empNo = ${user.empNo}
+	//FilePond 플러그인 설정
+	FilePond.create(document.querySelector('.filepond'), {
+	    imagePreviewHeight: 170,
+	    imageCropAspectRatio: '1:1',
+	    imageResizeTargetWidth: 200,
+	    imageResizeTargetHeight: 200,
+	    stylePanelLayout: 'compact circle',
+	    styleLoadIndicatorPosition: 'center bottom',
+	    styleProgressIndicatorPosition: 'right bottom',
+	    styleButtonRemoveItemPosition: 'left bottom',
+	    styleButtonProcessItemPosition: 'right bottom',
+	    onprocessfile: (error, file) => {
+	        if (error) {
+	            console.error("File upload failed", error);
+	            return;
+	        }
+	
+	        const formData = new FormData();
+	        formData.append("file", file.file);
+	        formData.append("userId", empNo); 
+	        console.log("File ready for upload:", file.file);
+	       
+	        $.ajax({
+	            url: '/mypage/uploadProfile', 
+	            method: 'POST',
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	                console.log("File uploaded successfully:", response);
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("File upload failed:", error);
+	            }
+	        });
+	    }
+	});
+	
+	$(document).ready(function() {
+	    $.ajax({
+	        url: '/mypage/profileImage',
+	        method: 'GET',
+	        data: { empNo: empNo },
+	        success: function(response) {
+	            if (response.profileImagePath) {
+	                FilePond.setOptions({
+	                    files: [
+	                        {
+	                            source: response.profileImagePath,  // 서버에서 받은 이미지 경로
+	                            options: { type: 'image' }
+	                        }
+	                    ]
+	                });
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("Error loading profile image:", error);
+	        }
+	    });
+	});
+</script>
 </body>
 </html>

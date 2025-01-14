@@ -20,7 +20,9 @@ import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
 import com.haruon.groupware.user.dto.EmpDto;
+import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
+import com.haruon.groupware.user.mapper.EmpMapper;
 import com.haruon.groupware.user.service.EmpService;
 
 import jakarta.servlet.http.HttpSession;
@@ -48,19 +50,6 @@ public class EmpController {
 	public String empLogin() {
 		return "user/login";
 	}
-
-//	@PostMapping("/loginSuccess")
-//	public String login(Model model,@RequestParam String email, @RequestParam String empPw) {
-//		EmpEntity emp = empService.findByEmail(email);
-//		CustomUserDetails cusUserDetails = new CustomUserDetails(emp);
-//		log.debug("로그인 성공");
-//		// 로그인 성공 시 정보 저장
-//		Authentication authentication = new UsernamePasswordAuthenticationToken(cusUserDetails,null,cusUserDetails.getAuthorities());
-//		log.debug(authentication.toString());
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//		return "redirect:/home";
-//	}
 
 	@GetMapping("/addEmp")
 	public String addEmp(Model model) {
@@ -108,9 +97,13 @@ public class EmpController {
 		}
 		return "user/findPw";
 	}
-
-	@GetMapping("modifyMyInfo")
-	public String modifyMyInfo() {
-		return "user/modifyMyInfo";
+	// 내 정보
+	@GetMapping("/myInfo")
+	public String MyInfo(Authentication authentication, Model model) {
+		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = details.getEmpNo();
+		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
+		model.addAttribute("e",empInfo);
+		return "user/myInfo";
 	}
 }

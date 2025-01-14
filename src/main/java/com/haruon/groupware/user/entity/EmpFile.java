@@ -10,6 +10,6 @@ public class EmpFile {
 	private String fileName;
 	private String ext;
 	private String kind;
-	private String size;
+	private Long size;
 	private String createDate;
 }

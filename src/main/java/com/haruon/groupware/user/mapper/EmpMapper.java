@@ -5,19 +5,20 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.user.dto.EmpDto;
+import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
 
 @Mapper
 public interface EmpMapper {
+	// 마이페이지
+	ResponseEmpInfo findByEmpInfo(int empNo);
 	
-	EmpEntity empLogin(String email);
+	EmpEntity findByEmp(String email);
 	
 	int insertEmp(EmpDto emp);
 	
 	String mailCheck(String mailCheck);
 
-    EmpDto findEmpByEmail(EmpDto empDto);
-	
 	int updateEmpPw(EmpDto emp);
 	
 	// 퇴사하지 않은 모든 사원의 사원번호를 가져오기 
@@ -28,5 +29,7 @@ public interface EmpMapper {
 	Integer updateTotalLeaveByDivision(EmpEntity emp);
 	// 방금 addEmp한 직원 정보 가져오기
 	EmpEntity findNewEmp();
+
+	
 
 }

@@ -2,7 +2,6 @@ package com.haruon.groupware.user.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.haruon.groupware.user.dto.EmpDto;
+import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
 
@@ -28,9 +28,13 @@ public class EmpService {
 		this.javaMailSender = javaMailSender;
 		this.passwordEncoder = passwordEncoder;
 	}
+	// 사원 마이페이지
+	public ResponseEmpInfo findByEmpInfo(int empNo) {
+		return empMapper.findByEmpInfo(empNo);
+	}
 	
 	public EmpEntity findByEmail(String email) {
-		return empMapper.empLogin(email);
+		return empMapper.findByEmp(email);
 	}
 	public void addEmp(EmpDto emp) {
 		emp.setEmpPw(passwordEncoder.encode(emp.getEmpPw()));

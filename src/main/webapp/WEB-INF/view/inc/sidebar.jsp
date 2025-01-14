@@ -33,13 +33,13 @@
                         </a>
                           <ul class="collapse submenu list-unstyled show" id="dashboard" data-bs-parent="#accordionExample">
                             <li class="active">
-                                <a href="./index.html">내 정보 </a>
+                                <a href="${pageContext.request.contextPath}/myInfo">내 정보 </a>
                             </li>
                             <li>
                                 <a href="./index2.html">근태 관리 </a>
                             </li>
                             <li>
-                                <a href="/modifyMyInfo">정보 수정 </a>
+                                <a href="/MyInfo">정보 수정 </a>
                             </li>
                         </ul>
                     </li>

@@ -19,6 +19,7 @@
         type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css"
         rel="stylesheet" type="text/css" />
+        <
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
