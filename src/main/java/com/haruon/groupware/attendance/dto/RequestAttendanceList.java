@@ -1,5 +1,7 @@
 package com.haruon.groupware.attendance.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +16,5 @@ public class RequestAttendanceList {
 	private Integer deptNo;	// 부서번호
     private String to;		// 조회 시작일자
     private String from;	// 조회 종료일자
-    
 }
 

@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseBusinessTripList {
-	private String eName;			// 사원의 이름
-	private String location;		// 사원의 직급 (common_code의 descript)
+	private String empName;			// 사원의 이름
+	private String role;		// 사원의 직급 (common_code의 descript)
 	private String startTime;		// 출장 시작시간
 	private String endTime;			// 출장 종료시간
 	private String place;			// 출장 장소

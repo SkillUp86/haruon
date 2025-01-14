@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.attendance.dto.RequestAttendanceList;
-import com.haruon.groupware.attendance.dto.ResponseAttendance;
 import com.haruon.groupware.attendance.dto.ResponseAttendanceList;
 import com.haruon.groupware.attendance.dto.ResponseBusinessTripList;
 import com.haruon.groupware.attendance.dto.ResponseLeaveList;
@@ -181,7 +180,6 @@ public class AttendanceService {
     	return attendanceMapper.findLeaveSumAndUsageRateList(requestAttendanceList);
     }
     
-    
 	// 출장 신청 리스트(월별) - deptNo : 부서원 전부
     public List<ResponseBusinessTripList> findDeptBusinessTripReqListByMonth(Integer deptNo, String yearMonth) {
     	String begin = yearMonth + "-01";
@@ -294,6 +292,38 @@ public class AttendanceService {
 			return "시작시작등록-정상등록";
 		}
 	}
+	
+	// 근태 승인여부 변경 approvalYN modify - 1
+	public boolean modifyAttendancies(List<String> modifyTargets) {
+		
+		try {
+			Attendance att = null;
+			int predictedExecuteCnt = modifyTargets.size();
+			int actualExecuteCnt = 0;
+			
+			for(String target : modifyTargets) {
+				String[] targetArr = target.split(" ");
+				att = new Attendance();
+				att.setEmpNo(Integer.parseInt(targetArr[0]));
+				att.setStartTime(targetArr[1]);
+				att.setApprovalYN("Y");
+				log.debug(att.toString());
+				
+				
+				attendanceMapper.updateAttendance(att);
+				actualExecuteCnt++;
+			}
+			
+			if(predictedExecuteCnt == actualExecuteCnt) {
+				return true;
+			} 
+			throw new RuntimeException("AttendanceService - modifyAttendancies 에러 : 선택한 갯수와 update된 쿼리 실행 결과가 달라, 초기화");
+		} catch(RuntimeException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 	// 전날 전 직원 attendance 데이터 업데이트
 	@Scheduled(cron = "00 00 00 * * *")

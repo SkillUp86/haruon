@@ -25,6 +25,7 @@ public interface AttendanceMapper {
 	
 	// 근태 업데이트 (수정대상 : 종료시간, 상태, 승인여부, 수정사유) (필요 조건값 : empNo. startDate)
 	Integer updateAttendance(Attendance attendance);
+	
 	// 근태 생성 (컬럼 : emp_no, start_time, end_time, state) 
 	Integer createAttendance(Attendance attendance);
 	

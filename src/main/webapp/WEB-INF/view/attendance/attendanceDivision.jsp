@@ -162,23 +162,23 @@
                                             </div>
                                         </div>  
                                         <div class="widget-content widget-content-area br-8">  
-                                            <table class="zero-config table dt-table-hover" class="table dt-table-hover" style="width:100%">
-                                                <thead>
-                                                    <tr role="row" class="text-center">
-                                                        <th>날짜</th>
-                                                        <th>이름</th>
-                                                        <th>직급</th>
-                                                        <th>상태</th>
-                                                        <th>출근</th>
-                                                        <th>퇴근</th>
-                                                        <th>승인하기</th>
-                                                    </tr>
-                                                </thead>
-                                                <form id="selectFormForModApproval" method="get" action="${pageContext.request.contextPath}/attendance/modifyApprovalYN">
+                                            <form id="selectFormForModApproval" method="post" action="${pageContext.request.contextPath}/attendance/modifyApprovalYN">
+	                                            <table class="zero-config table dt-table-hover" class="table dt-table-hover" style="width:100%">
+	                                                <thead>
+	                                                    <tr role="row" class="text-center">
+	                                                        <th>날짜</th>
+	                                                        <th>직급</th>
+	                                                        <th>이름</th>
+	                                                        <th>출근</th>
+	                                                        <th>퇴근</th>
+	                                                        <th>상태</th>
+	                                                        <th>승인하기</th>
+	                                                    </tr>
+	                                                </thead>
 	                                                <tbody id="deptAttendancies">
 	                                                </tbody>
-                                                </form>
-                                            </table>
+	                                            </table>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -187,37 +187,36 @@
                                <!-- 연차 관리 start -->
 								<div class="tab-pane fade" id="vacation-tab-pane" role="tabpanel" aria-labelledby="vacation-tab" tabindex="0">
 								    <div class="tab-content" id="myTabContent">
-								        <div class="tab-pane fade show active" id="vacation-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+								        <div class="tab-pane fade show active" id="vacation-tab-paㅇne" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 								            <div id="toggleAccordion" class="no-icons accordion">
 								                <!-- 부서 연차 기록 시작 -->
 								                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
 								                    <input class="setYearAndMonth btn btn-primary" readonly/>
 								                    <div class="widget-content widget-content-area br-8">   
-								                            <div class="card">
-								                                <div class="card-header" id="vacationDraftHeader">
-								                                    <section class="mb-0 mt-0">
-								                                        <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#vacationDraft" aria-expanded="true" aria-controls="vacationDraft">
-								                                            부서원 휴가신청 리스트
-								                                        </div>
-								                                    </section>
-								                                </div>
-								                                <div id="vacationDraft" class="collapse show" aria-labelledby="vacationDraftHeader" data-bs-parent="#toggleAccordion">
-								                                    <div class="card-body">
-								                                        <table class="zero-config table dt-table-hover" style="width:100%">
-								                                            <thead>
-								                                                <tr class="text-center">
-								                                                    <th>이름</th>
-								                                                    <th>직급</th>
-								                                                    <th>시작일자</th>
-								                                                    <th>종료일자</th>
-								                                                    <th>결재상태</th>
-								                                                    <th>상세보기</th>
-								                                                </tr>
-								                                            </thead>
-								                                            <tbody id="deptLeavesReq">
-								                                            </tbody>
-								                                        </table>
+								                        <div class="card">
+								                            <div class="card-header" id="vacationDraftHeader">
+								                                <section class="mb-0 mt-0">
+								                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#vacationDraft" aria-expanded="true" aria-controls="vacationDraft">
+								                                        부서원 휴가신청 리스트
 								                                    </div>
+								                                </section>
+								                            </div>
+								                            <div id="vacationDraft" class="collapse show" aria-labelledby="vacationDraftHeader" data-bs-parent="#toggleAccordion">
+								                                <div class="card-body">
+								                                    <table class="zero-config table dt-table-hover" style="width:100%">
+								                                        <thead>
+								                                            <tr class="text-center">
+								                                                <th>이름</th>
+								                                                <th>직급</th>
+								                                                <th>시작일자</th>
+								                                                <th>종료일자</th>
+								                                                <th>결재상태</th>
+								                                                <th>상세보기</th>
+								                                            </tr>
+								                                        </thead>
+								                                        <tbody id="deptLeavesReq">
+								                                        </tbody>
+								                                    </table>
 								                                </div>
 								                            </div>
 								                        </div>
@@ -227,49 +226,47 @@
 								                <!-- 연차 사용률 시작 -->
 								                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
 								                    <div class="widget-content widget-content-area br-8">   
-								                        
-								                            <div class="card">
-								                                <div class="card-header" id="annualUsageRateHeader">
-								                                    <section class="mb-0 mt-0">
-								                                        <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#annualUsageRate" aria-expanded="false" aria-controls="annualUtilRate">
-								                                            연차 유급휴가 사용률
-								                                        </div>
-								                                    </section>
-								                                </div>
-								                                <div id="annualUsageRate" class="collapse" aria-labelledby="annualUsageRateHeader" data-bs-parent="#toggleAccordion">
-								                                    <div class="card-body">
-								                                        <div class="progress br-30 progress-xl">
-								                                            <div id ="companyLeaveUsageRateBar" class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-								                                                <div class="progress-title">
-								                                                    <span>회사 평균</span>
-								                                                    <span id="companyLeaveUsageRate"></span>
-								                                                </div>
-								                                            </div>
-								                                        </div>
-								                                        <div class="progress br-30 progress-xl">
-								                                            <div id="deptLeaveUsageRateBar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-								                                                <div class="progress-title">
-								                                                    <span>부서 평균</span>
-								                                                    <span id="deptLeaveUsageRate"></span> 
-								                                                </div>
-								                                            </div>
-								                                        </div>
-								                                        <hr>
-								                                        <table class="zero-config table dt-table-hover" style="width:100%">
-								                                            <thead>
-								                                                <tr class="text-center">
-								                                                    <th>이름</th>
-								                                                    <th>직급</th>
-								                                                    <th>총 일수</th>
-								                                                    <th>사용한 일수</th>
-								                                                    <th>사용률</th>
-								                                                </tr>
-								                                            </thead>
-								                                            <tbody id="deptLeaveUsageRateList">
-								                                            </tbody>
-								                                        </table>
+								                        <div class="card">
+								                            <div class="card-header" id="annualUsageRateHeader">
+								                                <section class="mb-0 mt-0">
+								                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#annualUsageRate" aria-expanded="false" aria-controls="annualUsageRate">
+								                                        연차 유급휴가 사용률
 								                                    </div>
-								                                    
+								                                </section>
+								                            </div>
+								
+								                            <div id="annualUsageRate" class="collapse" aria-labelledby="annualUsageRateHeader" data-bs-parent="#toggleAccordion">
+								                                <div class="card-body">
+								                                    <div class="progress br-30 progress-xl">
+								                                        <div id ="companyLeaveUsageRateBar" class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+								                                            <div class="progress-title">
+								                                                <span>회사 평균</span>
+								                                                <span id="companyLeaveUsageRate"></span>
+								                                            </div>
+								                                        </div>
+								                                    </div>
+								                                    <div class="progress br-30 progress-xl">
+								                                        <div id="deptLeaveUsageRateBar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+								                                            <div class="progress-title">
+								                                                <span>부서 평균</span>
+								                                                <span id="deptLeaveUsageRate"></span> 
+								                                            </div>
+								                                        </div>
+								                                    </div>
+								                                    <hr>
+								                                    <table class="zero-config table dt-table-hover" style="width:100%">
+								                                        <thead>
+								                                            <tr class="text-center">
+								                                                <th>이름</th>
+								                                                <th>직급</th>
+								                                                <th>총 일수</th>
+								                                                <th>사용한 일수</th>
+								                                                <th>사용률</th>
+								                                            </tr>
+								                                        </thead>
+								                                        <tbody id="deptLeaveUsageRateList">
+								                                        </tbody>
+								                                    </table>
 								                                </div>
 								                            </div>
 								                        </div>
@@ -301,8 +298,8 @@
 								                                                <th>연차관리</th>
 								                                            </tr>
 								                                        </thead>
-							                                            <tbody id="manageDeptLeaveList">
-							                                            </tbody>
+								                                        <tbody id="manageDeptLeaveList">
+								                                        </tbody>
 								                                    </table>
 								                                </div>
 								                                
@@ -315,35 +312,27 @@
 								        </div>
 								    </div>
 								</div>
+							
 								<!-- 연가관리 end -->
 
                                 <!--출장관리 start -->
                                 <div class="tab-pane fade" id="businessTrip-tab-pane" role="tabpanel" aria-labelledby="businessTrip-tab" tabindex="0">
                                     <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+                                    	<input class="setYearAndMonth btn btn-primary" readonly/>
                                         <div class="widget-content widget-content-area br-8">                                            
                                             <table class="zero-config table dt-table-hover" style="width:100%">
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th>시작일자</th>
-                                                        <th>종료일자</th>
+                                                        <th>이름</th>
+                                                        <th>직급</th>
+                                                        <th>시작</th>
+                                                        <th>종료</th>
                                                         <th>장소</th>
-                                                        <th>목적</th>
                                                         <th>결재상태</th>
-                                                        <th>상세보기</th>
+                                                        <th>출장신청서</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr class="text-center">
-                                                        <td>2025.01.01 12:50:00</td>
-                                                        <td>2025.01.03 12:50:00</td>
-                                                        <td>구로</td>
-                                                        <td>Object</td>
-                                                        <td>결재완료</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary">상세보기</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                <tbody id="deptBusinessTripReqList"></tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -398,7 +387,7 @@
 	<!-- 탭클릭시 이전달/다음달 버튼 세팅 시작 -->
 	<script>
 		let date = new Date();
-	   const now = new Date();
+	    const now = new Date();
 	   
 		var attendanceBtnHtml = `
 								<button id="setPreviousMonthForAttendance" type="button" class="btn btn-hover">
@@ -414,8 +403,6 @@
 							       </svg>
 						        </button> `;
 						        
-						        
-						        
         var leaveBtnHtml = `<button id="setPreviousMonthForLeave" type="button" class="btn btn-hover">
 						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
 						        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
@@ -428,6 +415,7 @@
 						        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
 						    </svg>
 						    </button>`;
+						    
         var businessTripBtnHtml = `<button id="setPreviousMonthForBusinessTrip" type="button" class="btn btn-hover">
 								       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
 								       <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
@@ -462,6 +450,15 @@
 	        // 연차 사용률
 	        showCompanyLeaveUsageRate();
         });
+	
+	// <출장 Tab 클릭시> 이전달/다음달이 출장 리스트에 맞게 세팅 및 리스트 불러오기
+		$("#businessTrip-tab").click(function() {
+			$("#btnSetMonthAndYear").empty();
+            $("#btnSetMonthAndYear").append(businessTripBtnHtml);
+            date = new Date();
+            $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+			showBusinessTripReqList();
+		});
 	// <연가 - 연차 유급휴가 사용률 Tab 클릭시>
 		$("#annualUsageRateHeader").click(function() {
 			showDeptLeaveUsageRateList ();
@@ -518,6 +515,21 @@
             $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
             showLeaveReqList();
         });
+     	
+     // <출장버튼 동작> 연-월 세팅 및 기능에 맞는 yearAndMonth설정 및 리스트 출력 - 출장
+     	$(document).on("click", "#setPreviousMonthForBusinessTrip", function() {
+            console.log("이전달 클릭");
+            date = new Date(date.setMonth(date.getMonth() - 1));
+            $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+            showBusinessTripReqList();
+        });
+     
+     	$(document).on("click", "#setNextMonthBtnForBusinessTrip", function() {
+            console.log("다음달 클릭");
+            date = new Date(date.setMonth(date.getMonth() + 1));
+            $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
+            showBusinessTripReqList();
+        });
 	</script>
 	<!-- 탭클릭시 이전달/다음달 버튼 세팅 종료 -->
 	
@@ -539,17 +551,20 @@
 	       $("#selectAllBtn").show();
 	   });
 	   
-	   $("#approvalOnCheckedBtn").click(function() {
+	   $(document).on("click", "#approvalOnCheckedBtn", function() {
 	       // 선택한 근태행이 없으면 alert창 띄우기 
 	       if($('input:checkbox:checked').length < 1) {
 	           alert("승인할 행을 선택해주세요.");
 	           return;
 	       }
+	       
 	       // 선택한 근태행이 1개 이상이라면 /department/attendance/modifyApprovalYN 로 이동
-	       $("#selectFormForModApproval").submit();
+	       	$("#selectFormForModApproval").submit();
+   	   		const formData = $("#selectFormForModApproval").serialize();
+   	    	alert("Form Data:", formData); // 데이터를 확인합니다.
 	   });
 	</script>
-	<!-- attendance 전체선택/전체해제/선택승인 버튼 기능 끝-->
+	<!-- 전체선택/전체해제/선택승인 버튼 기능 끝-->
 	
 	<!-- ajax 호출 성공시 zero-config 초기화/삭제 하는 함수 시작 -->
 	<script>
@@ -580,7 +595,7 @@
 	</script>
 	<!-- ajax 호출 성공시 zero-config 초기화 하는 함수 끝 -->
 	
-    <!-- 부서원 근태 리스트 시작 -->
+    <!-- 부서원 근태관련 ajax 호출 시작 -->
     <script>
 	   function showAttendanceList() {
 	       $.ajax({
@@ -600,11 +615,11 @@
 	                       <td class="sorting_01">` + item.startTime.substr(0,10) + `</td>
 	                       <td>` + item.location + `</td>
 	                       <td>` + item.empName + `</td>
+	                       <td>` + (item.state === "결근" && item.startTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.startTime.substr(11))) + `</td>
+	                       <td>` + (item.state === "결근" && item.endTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.endTime.substr(11))) + `</td>
 	                       <td>
 	                           ` + (item.state == null? "미지정" : item.state) + `<a id="modifyStateBtn" href="attendance/modifyState?target=` + item.empNo + "/" + startTime + `" class="btn btn-hover btn-outline-primary btn-sm ms-4">EDIT</a>
-	                       </td>
-	                       <td>` + (item.state === "결근" && item.startTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.startTime.substr(11))) + `</td>
-	                       <td>` + (item.state === "결근" && item.endTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.endTime.substr(11))) + `</td>`;
+	                       </td>`;
 	               if (item.approvalYN === 'Y') {
 	                   html += `
 	                           <td>
@@ -616,7 +631,8 @@
 	                            <td class="d-flex align-items-center justify-content-center">
 	                               <div>
 	                                   <div class="form-check form-check-primary form-check-inline me-2">
-	                                       <input class="form-check-input" type="checkbox" value="` + item.empNo + item.startTime + `" id="modifyTarget">
+	                                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                                       <input name="modifyTarget[]" class="checkbox" type="checkbox" value="` + item.empNo + " " + item.startTime + `">
 	                                       <label class="form-check-label" for="modifyTarget"></label>
 	                                   </div>
 	                                   <a id="modifyApprovalYN" type="button" href="attendance/modifyApprovalYN?target=` + item.empNo + "/" + startTime + `" class="btn btn-hover btn-outline-primary btn-sm me-4">승인하기</a>
@@ -625,8 +641,8 @@
 	               }
 	               html += "</tr>";
 	
-	               $("#deptAttendancies").append(html);
 	           });
+	               $("#deptAttendancies").append(html);
 	            
 	           initDataTable();
 	       }).fail(function() {
@@ -634,9 +650,9 @@
 	       });
 	   }
 	</script>
-	<!-- 부서원 근태 리스트 끝 -->
+	<!-- 부서원 근태관련 ajax 호출 끝 -->
 
-	<!-- 부서원 휴가신청 리스트 시작 -->
+	<!-- 부서원 휴가관련 ajax 호출 시작 -->
 	<script>
 	   // 부서원 휴가 신청서 리스트 
 	   function showLeaveReqList() {
@@ -712,12 +728,12 @@
 								                      <td>` + item.role + `</td>
 								                      <td>` + item.totalLeave + `</td>
 								                      <td>` + item.usedLeave + `</td>
-								                      <td>
-									                      <div class="progress br-30 progress-xl">
-					                                           <div class="progress-bar bg-info" role="progressbar" style="` + item.leaveUsageRate + `" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+								                      <td class="d-flex justify-content-center align-items-center">
+	                                                   <span class="text-dark me-2">` + item.leaveUsageRate.toFixed(2) + `%</span>
+									                      <div class="progress br-30 progress-xl text-center" style="min-height: 30px; min-width: 200px">
+					                                           <div class="progress-bar bg-info" role="progressbar" style="min-height: 30px; width:` + item.leaveUsageRate + `%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
 					                                               <div class="progress-title">
 					                                                   <span></span>
-					                                                   <span>` + item.leaveUsageRate.toFixed(2) + `</span>
 					                                               </div>
 					                                           </div>
 					                                      </div>
@@ -758,7 +774,41 @@
 		}
 	   
 	</script>
-	<!-- 부서원 휴가신청 리스트 끝 -->
+	<!-- 부서원 휴가관련 ajax 호출 끝 -->
+	
+	<!-- 부서원 출장관련 ajax 호출 시작 -->
+	<script>
+		function showBusinessTripReqList() {
+			$.ajax({
+				url: "/department/businessTrips/"+"${depNo}/"+$(".setYearAndMonth").val(),
+				method: 'GET',
+			}).done(function(result) {
+				destroyDataTable();
+				$("#deptBusinessTripReqList").empty();
+	            let BusinessTriphtml = "";
+	            
+	            $(result).each(function(index, item) {
+	         	   BusinessTriphtml += `"<tr role="row" class="text-center">"`;
+	         	   BusinessTriphtml += `   <td>` + item.empName + `</td>
+	         	   						   <td>` + item.role + `</td>
+	         	   						   <td  class="sorting_01">` + item.startTime + `</td>
+			 		                       <td>` + item.endTime + `</td>
+			 		                       <td>` + item.place + `</td>
+			 		                       <td>` + item.approvalState + `</td>
+			 		                       <td><a href=/draft/detail/businessTrip/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
+	               BusinessTriphtml += "</tr>";
+	            
+	            });
+	            
+	            $("#deptBusinessTripReqList").append(BusinessTriphtml);
+				
+				initDataTable();
+			}).fail(function() {
+				console.log("showBusinessTripReqList ajax fail");
+			});
+		} 
+	</script>
+	<!-- 부서원 출장관련 ajax 호출 끝 -->
 <!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

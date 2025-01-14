@@ -42,8 +42,19 @@
 					  	    AND parent_code = (SELECT common_code FROM common_code 
 												WHERE descript='attendance_state')),
 			</if>
+			<if test = "approvalYN != null">
+				approvalYN = #{approvalYN},
+			</if>
 		</trim>
-		WHERE emp_no = #{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%') AND state is null
+		<where>
+			emp_no = #{empNo} AND start_time LIKE CONCAT('%', #{startTime}, '%') 
+			<if test = "endTime != null">
+				AND state is null 
+			</if>
+			<if test = "state != null or approvalYN != null">
+				AND state is not null
+			</if>
+		</where>
 	</update>
 
 	<!-- 근태 정보 생성 (스케쥴링)-->
@@ -176,10 +187,11 @@
 		</if>
 	</select>
 	
+	<!-- 출장 리스트 -->
 	<select id="findBusinessTripListByMonth" parameterType="com.haruon.groupware.attendance.dto.RequestAttendanceList" 
 				resultType="com.haruon.groupware.attendance.dto.ResponseBusinessTripList">
-		 SELECT e.ename eName
-			  , (SELECT descript FROM common_code WHERE common_code = e.location) location
+		 SELECT e.ename empName
+			  , (SELECT descript FROM common_code WHERE common_code = e.location) role
 			  , bt.start_date startTime
 			  , bt.finish_date endTime
 			  , bt.place place
