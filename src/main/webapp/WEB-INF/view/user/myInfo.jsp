@@ -13,14 +13,14 @@
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Global Styles -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Custom Styles -->
-    
+    <script src="${pageContext.request.contextPath}/src/assets/js/signature_pad.min.js"></script> ><!--사인-->
     <link href="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
@@ -50,6 +50,10 @@
 	.profile-image-area {
     text-align: center;
 	}
+    .custom-margin {
+    position: relative;
+    top: -18px;
+}
 	</style>
 </head>
 
@@ -169,11 +173,15 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="address">주소</label>
-                                                                    <input type="text" class="form-control mb-3" value="${e.postCode}" id="postCode" name="postCode" value="" placeholder="우편번호" >
-                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="address" name="address" value="" placeholder="주소" >
+                                                                    <input type="text" class="form-control mb-3" value="${e.postCode}" id="selectPostcode" name="postCode" value="" placeholder="우편번호" >
+                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="roadAddress" name="address" value="" placeholder="주소" >
+                                                                    <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
+                                                                    <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
+                                                                    <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
+                                                                    <span id="guide" style="color:#999;display:none"></span>
                                                                 </div>
                                                                 <div class="form-group">
-														            <input type="button" class="btn btn-warning mb-3" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
+														            <input type="button" class="btn btn-warning mb-3" onclick="Postcode()" value="주소 찾기"><br>
 													            </div>
                                                             </div>
 														            
@@ -191,6 +199,8 @@
                                                                     <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone" readonly>
                                                                 </div>
                                                             </div>
+
+
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
@@ -219,14 +229,13 @@
                                                                     <input type="password" class="form-control mb-3" id="password" name="password">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="password">서명 추가</label>
-                        											<input type="file" name="empfNo" id="empfNo" class="goodsFile form-control">
-                                                                </div>
+                                                            <div class="col-md-6 d-grid   col-6 mx-auto" >
+                                                                    <label for="sign">서명</label>
+                        											<button class="btn btn-outline-primary custom-margin" data-bs-toggle="modal" data-bs-target="#signModal">확인</button>
                                                             </div>
+                                                           
 
-                                                            <div class="col-md-12 mt-1">
+                                                            <div class="col-md-12 mt-2 ">
                                                                 <div class="form-group text-end">
                                                                     <button class="btn btn-secondary">변경</button>
                                                                 </div>
@@ -247,7 +256,41 @@
         </div>
 
     </div>
-<!-- Modal -->
+<!-- 사인 Modal -->
+<div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="signModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">전자 서명</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <svg> ... </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="pad">         
+                    <div class="input-group mb-4">
+                        <span class="input-group-text label-text">이름</span>
+                        <input type="text" class="form-control" id="empName" name="empName" value="${e.ename}" readonly>
+                    </div>
+                    <div class="input-group mb-4">
+                        <img src="${pageContext.request.contextPath}/uploadSign/${e.signfileName}.${e.signExt}">
+                    </div>
+                    <canvas style="border:1px solid rgb(41, 37, 37);"></canvas>        
+                    <div class="input-group mb-4 ">
+                        <button class="btn btn-light-danger " type="button" id="btnClear">지우기</button>         
+                        <button class="btn btn-light-primary" type="button" id="btnAdd">저장</button>        
+                    </div>
+                </div>	
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn btn-light-dark" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i> 취소</button>
+                <button type="button" class="btn btn-primary">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 프로필 Modal -->
 
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -271,7 +314,102 @@
 </div>
 
 <!-- 모달END -->
+<script>
+    // API 소스코드가 canvas배열형태로 접근하도록 되어있음
+    let canvas = $("#pad canvas")[0];
     
+    let sign = new SignaturePad(canvas, {
+        minWidth : 5, // 펜굵기
+        maxWidth : 5, // 펜굵기
+        penColor : '#000000' // 펜색상
+    });
+    
+    // 삭제
+    $('#btnClear').click(function(){
+        sign.clear();
+    });
+    
+    $('#btnAdd').click(function(){
+        if(sign.isEmpty()) {
+            alert('사인이 없습니다');
+        } else {
+            $.ajax({
+                async : true
+                , url : '/saveSign'
+                , method : 'POST'
+                , data : {
+                        sign:sign.toDataURL()
+                        }
+            }).done(function(result){
+                alert(result);
+                sign.clear();
+                location.reload();
+            }).fail(function(request, status, error){
+                alert('실패'+ request.responseText);
+            });
+        }
+    });
+
+</script>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function Postcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('selectPostcode').value = data.zonecode;
+                document.getElementById("roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
 
    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>

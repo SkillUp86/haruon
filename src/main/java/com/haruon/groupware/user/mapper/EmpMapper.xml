@@ -20,9 +20,13 @@
 			, 	e.join_date joinDate
 			,	f.file_name fileName
 			,	f.ext ext
+			,	sf.file_name signfileName
+			,	sf.ext signExt
 		from emp e
-		inner join emp_file f
+		left join emp_file f
 			on e.emp_no = f.emp_no
+		left join sign_file sf
+			on e.emp_no = sf.emp_no
 		where e.emp_no = #{empNo}
 	</select>
 

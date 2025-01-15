@@ -18,4 +18,6 @@ public class ResponseEmpInfo {
 	private String joinDate;
 	private String fileName;
 	private String ext;
+	private String signfileName;
+	private String signExt;
 }
