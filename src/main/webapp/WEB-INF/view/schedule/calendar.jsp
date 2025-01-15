@@ -133,8 +133,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="n-chk">
-                                <label class="form-label">일정 제목</label>
-                                <input id="title" name="title" type="text" class="form-control"> <!-- name 속성 추가 -->
+                            <label class="form-label">일정 제목</label>
+				            <select id="title" name="title" class="form-control">
+				                <option value="연차">연차</option>
+				                <option value="출장">출장</option>
+				                <option value="회의">회의</option>
+				            </select>
+ <!-- name 속성 추가 -->
                             </div>
                         </div>
                     </div>
@@ -175,17 +180,17 @@
             </div>
             
             <div class="modal-footer">
-                <button type="sub" class="btn btn-primary btn-add-event">일정 추가</button>
-                <button type="button" class="btn" id="deleteEventBtn">삭제</button>
-                <button type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
+                <button  class="btn btn-primary btn-add-event">일정 추가</button>
+                <button  class="btn" id="deleteEventBtn">삭제</button>
+        		 <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button  class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 
-                                    
+    
                            
 		
 			<!--  BEGIN FOOTER  -->
