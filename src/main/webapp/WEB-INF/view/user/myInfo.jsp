@@ -138,7 +138,7 @@
 									                    </div>
 												    </div>
 												</div>
-												
+												<form id="formUpdateUser" action="${pageContext.request.contextPath}/update/user" method="post">
                                                 <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                     <div class="form">
                                                         <div class="row">
@@ -169,75 +169,73 @@
                                                                     <input class="form-control mb-3" value="${e.gender}" id="gender" name="gender" readonly>
                                                                 </div>
                                                             </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="address">주소</label>
-                                                                    <input type="text" class="form-control mb-3" value="${e.postCode}" id="selectPostcode" name="postCode" value="" placeholder="우편번호" >
-                                                                    <input type="text" class="form-control mb-3" value="${e.address}" id="roadAddress" name="address" value="" placeholder="주소" >
-                                                                    <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
-                                                                    <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
-                                                                    <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
-                                                                    <span id="guide" style="color:#999;display:none"></span>
+                                                            
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="address">주소</label>
+                                                                        <input type="text" class="form-control mb-3" value="${e.postCode}" id="selectPostcode" name="postCode" value="" placeholder="우편번호" >
+                                                                        <input type="text" class="form-control mb-3" value="${e.address}" id="roadAddress" name="address" value="" placeholder="주소" >
+                                                                        <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
+                                                                        <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
+                                                                        <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
+                                                                        <span id="guide" style="color:#999;display:none"></span>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="button" class="btn btn-warning mb-3" onclick="Postcode()" value="주소 찾기"><br>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="form-group">
-														            <input type="button" class="btn btn-warning mb-3" onclick="Postcode()" value="주소 찾기"><br>
-													            </div>
-                                                            </div>
-														            
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="location">직급</label>
-                                                                    <input class="form-control mb-3" value="${e.location}" id="location" name="location" readonly>
-                                                                    </select>
+                                                                    
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="location">직급</label>
+                                                                        <input class="form-control mb-3" value="${e.location}" id="location" name="location" readonly>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="phone">연락처</label>
-                                                                    <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone" readonly>
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="phone">연락처</label>
+                                                                        <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone" readonly>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="email">이메일</label>
-                                                                    <input type="email" class="form-control mb-3" value="${e.email}" id="email" name="email" readonly >
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="email">이메일</label>
+                                                                        <input type="email" class="form-control mb-3" value="${e.email}" id="email" name="email" readonly >
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="extNum">내선번호</label>
-                                                                    <input type="text" class="form-control mb-3" value="${e.extNum}" id="extNum" name="extNum">
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="extNum">내선번호</label>
+                                                                        <input type="text" class="form-control mb-3" value="${e.extNum}" id="extNum" name="extNum">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="birthdate">생일</label>
-                                                                    <input type="date" class="form-control mb-3" value="${e.birth}" id="birth" name="birth" readonly>
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="birthdate">생일</label>
+                                                                        <input type="date" class="form-control mb-3" value="${e.birth}" id="birth" name="birth" readonly>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="password">비밀번호 변경</label>
-                                                                    <input type="password" class="form-control mb-3" id="password" name="password">
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="password">비밀번호 변경</label>
+                                                                        <input type="password" class="form-control mb-3" id="password" name="password">
+                                                                        <input type="hidden" class="form-control mb-3" value="${e.empNo}" id="empNo" name="empNo">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                             <div class="col-md-6 d-grid   col-6 mx-auto" >
                                                                     <label for="sign">서명</label>
-                        											<button class="btn btn-outline-primary custom-margin" data-bs-toggle="modal" data-bs-target="#signModal">확인</button>
+                        											<button type="button" class="btn btn-outline-primary custom-margin" data-bs-toggle="modal" data-bs-target="#signModal">확인</button>
                                                             </div>
-                                                           
 
                                                             <div class="col-md-12 mt-2 ">
                                                                 <div class="form-group text-end">
-                                                                    <button class="btn btn-secondary">변경</button>
+                                                                    <button id="btnUpdateUser" type="button" class="btn btn-secondary">변경</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -315,6 +313,12 @@
 
 <!-- 모달END -->
 <script>
+    $('#btnUpdateUser').click(function(){
+        $('#formUpdateUser').submit();
+    })
+
+</script>
+<script>
     // API 소스코드가 canvas배열형태로 접근하도록 되어있음
     let canvas = $("#pad canvas")[0];
     
@@ -345,7 +349,7 @@
                 sign.clear();
                 location.reload();
             }).fail(function(request, status, error){
-                alert('실패'+ request.responseText);
+                alert('실패');
             });
         }
     });

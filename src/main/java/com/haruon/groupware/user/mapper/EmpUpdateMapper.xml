@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haruon.groupware.user.mapper.EmpUpdateMapper">
+	<!-- 유저정보 유효성검증 -->
+	<select id="isAccess" parameterType="Integer">
+		select emp_no empNo
+		from emp
+		where emp_no = #{empNo}
+	</select>
+	<!-- 유저정보 업데이트 -->
+	<update id="updateEmpByEmpNo" parameterType="Integer">
+		update emp
+		<set>
+			<if test="postCode != null">
+				post_code = #{postCode},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			<if test="postCode != null">
+				ext_num = #{extNum},
+			</if>
+			<if test="password != null">
+				emp_pw = #{password},
+			</if>
+		</set>
+		where emp_no = #{empNo}
+	</update>
+</mapper>
