@@ -131,12 +131,22 @@
                                             <div class="row">
 												<div class="col-xl-2 col-lg-12 col-md-4">
 												    <div class="profile-image mt-4 pe-md-4">
-												       <div class="profile-image-area mb-2">
-								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/uploadProfile/${e.fileName}.${e.ext}" id="author-img">
-								                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                                                이미지 변경
-                                                            </button>
-									                    </div>
+												    	<c:if test="${e.fileName != null}">
+													       <div class="profile-image-area mb-2">
+									                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
+									                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#profileModal">
+	                                                                이미지 변경
+	                                                            </button>
+										                    </div>
+												    	</c:if>
+												    	<c:if test="${e.fileName == null}">
+													       <div class="profile-image-area mb-2">
+									                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/profile.svg" id="author-img">
+									                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#profileModal">
+	                                                                이미지 변경
+	                                                            </button>
+										                    </div>
+												    	</c:if>
 												    </div>
 												</div>
                                                 <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
@@ -271,9 +281,16 @@
                         <span class="input-group-text label-text">이름</span>
                         <input type="text" class="form-control" id="empName" name="empName" value="${e.ename}" readonly>
                     </div>
-                    <div class="input-group mb-4">
-                        <img src="${pageContext.request.contextPath}/uploadSign/${e.signfileName}.${e.signExt}">
-                    </div>
+                    <c:if test="${e.signfileName !=null }">
+	                    <div class="input-group mb-4">
+	                        <img src="${pageContext.request.contextPath}/upload/sign/${e.signfileName}.${e.signExt}">
+	                    </div>
+                    </c:if>
+                    <c:if test="${e.signfileName ==null }">
+	                    <div class="input-group mb-4">
+	                        
+	                    </div>
+                    </c:if>
                     <canvas style="border:1px solid rgb(41, 37, 37);"></canvas>        
                     <div class="input-group mb-4 ">
                         <button class="btn btn-light-danger " type="button" id="btnClear">지우기</button>         

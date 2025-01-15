@@ -52,7 +52,7 @@ public class UpdateController {
 		if (!draftService.isAccess(vacationDraft.getDraNo())) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		updateService.getUpdateVacationDraft(vacationDraft, path);
 		return "redirect:/draft/detail/vacation/" + vacationDraft.getDraNo();
 	}
@@ -85,7 +85,7 @@ public class UpdateController {
 		if (!draftService.isAccess(salesDraft.getDraNo())) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		updateService.getUpdateSalesDraft(salesDraft, path);
 		return "redirect:/draft/detail/sales/" + salesDraft.getDraNo();
 	}
@@ -112,7 +112,7 @@ public class UpdateController {
 		if (!draftService.isAccess(businessDraft.getDraNo())) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		updateService.getUpdateBusinessDraft(businessDraft, path);
 		return "redirect:/draft/detail/business/" + businessDraft.getDraNo();
 	}
@@ -137,7 +137,7 @@ public class UpdateController {
 		if (!draftService.isAccess(basicDraft.getDraNo())) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		updateService.getUpdateBasicDraft(basicDraft, path);
 		return "redirect:/draft/detail/basic/" + basicDraft.getDraNo();
 	}

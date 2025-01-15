@@ -28,7 +28,7 @@ private final EmpProfileService empProfileService;
 	@PostMapping("/upload/profile")
 	public String postMethodName(@RequestParam MultipartFile file, HttpSession session, Authentication authentication) {
 		log.debug("file = {}",file.getOriginalFilename());
-		String path = session.getServletContext().getRealPath("/uploadProfile/");
+		String path = session.getServletContext().getRealPath("/upload/profile/");
 		CustomUserDetails details = (CustomUserDetails)authentication.getPrincipal();
 		int empNo = details.getEmpNo();
 		log.debug("empNo = {}",empNo);

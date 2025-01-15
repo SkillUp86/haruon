@@ -157,7 +157,7 @@ type="text/css">
                                                     <div class="d-flex flex-wrap">
                                                         <c:forEach var="f" items="${draftFiles}">
                                                             &nbsp;
-                                                            <a href="${pageContext.request.contextPath}/uploadDraft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
+                                                            <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
                                                                 ${f.originName}.${f.ext}
                                                             </a>
                                                             <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/deleteFile/basic?drafNo=${f.drafNo}&draNo=${d.draNo}">삭제</a>

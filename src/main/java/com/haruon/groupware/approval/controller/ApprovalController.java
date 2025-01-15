@@ -53,7 +53,7 @@ public class ApprovalController {
 			}
 		}
 
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		approvalService.addApproval(approval, path);
 
 		return "redirect:/home";

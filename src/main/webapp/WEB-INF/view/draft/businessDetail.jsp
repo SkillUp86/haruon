@@ -172,7 +172,7 @@
 														            <div class="d-flex flex-wrap">
 														                <c:forEach var="f" items="${draftFiles}">
 														                &nbsp;
-														                    <a href="${pageContext.request.contextPath}/uploadDraft/${f.fileName}.${f.ext}" 
+														                    <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}" 
 														                       download="${f.originName}.${f.ext}" class="btn btn-dark mt-1 file">
 														                       ${f.originName}.${f.ext}
 														                    </a>

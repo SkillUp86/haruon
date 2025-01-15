@@ -32,7 +32,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		deleteService.getDeleteDraft(docType, draNo, appNo, path);
 		return "redirect:/draft/list";
 
@@ -45,7 +45,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/vacation?draNo=" + draNo;
@@ -58,7 +58,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/sales?draNo=" + draNo;
@@ -71,7 +71,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/business?draNo=" + draNo;
@@ -84,7 +84,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/uploadDraft/");
+		String path = session.getServletContext().getRealPath("/upload/draft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/basic?draNo=" + draNo;
