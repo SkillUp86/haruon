@@ -50,7 +50,7 @@ public class EmpEntity {
 			authorities.add(Role.ROLE_EMPLOYEE);
 		} else if ("I02".equalsIgnoreCase(location)) { // 팀장
 			authorities.add(Role.ROLE_MANAGER);
-		} else if ("I02".equalsIgnoreCase(location)) { // 부서장
+		} else if ("I03".equalsIgnoreCase(location)) { // 부서장
 			authorities.add(Role.ROLE_HEAD);
 		}
 

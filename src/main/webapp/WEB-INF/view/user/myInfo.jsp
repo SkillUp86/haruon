@@ -125,6 +125,7 @@
                                     <div class="info">
                                         <h4>정보</h4>
                                     </div>
+                                    <form id="formUpdateUser" action="${pageContext.request.contextPath}/update/user" method="post">
                                     <div class="row">
                                         <div class="col-lg-11 mx-auto">
                                             <div class="row">
@@ -138,7 +139,6 @@
 									                    </div>
 												    </div>
 												</div>
-												<form id="formUpdateUser" action="${pageContext.request.contextPath}/update/user" method="post">
                                                 <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                     <div class="form">
                                                         <div class="row">
@@ -154,6 +154,7 @@
                                                                     <input type="text" class="form-control mb-3" value="${e.joinDate}" id="joinDate" name="joinDate" readonly>
                                                                 </div>
                                                             </div>
+												
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">

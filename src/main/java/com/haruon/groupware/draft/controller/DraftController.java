@@ -34,7 +34,8 @@ public class DraftController {
 	public String vacationDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
-			return "login";
+			log.debug("실패");
+			return "redirect:/login";
 		}
 		ResponseVacationDraftDetail draftDetail = draftService.getVacationDraftDetail(draNo);
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
@@ -48,7 +49,7 @@ public class DraftController {
 	public String salesDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
-			return "login";
+			return "redirect:/login";
 		}
 		ResponseSalesDraftDetail draftDetail = draftService.getSalesDraftDetail(draNo);
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
@@ -63,7 +64,7 @@ public class DraftController {
 	public String businessDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
-			return "login";
+			return "redirect:/login";
 		}
 		ResponseBusinessDraftDetail draftDetail = draftService.getBusinessDraftDetail(draNo);
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
@@ -77,7 +78,7 @@ public class DraftController {
 	public String basicDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
-			return "login";
+			return "redirect:/login";
 		}
 		ResponseBasicDraftDetail draftDetail = draftService.getBasicDraftDetail(draNo);
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);

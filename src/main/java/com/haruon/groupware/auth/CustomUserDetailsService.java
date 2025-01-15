@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		EmpEntity empEntity = empMapper.findByEmp(email);
-		log.debug(empEntity.toString());
+		log.debug(new CustomUserDetails(empEntity).getAuthorities().toString());
 		return new CustomUserDetails(empEntity);
 	}
 }

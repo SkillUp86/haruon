@@ -1,7 +1,9 @@
 package com.haruon.groupware.draft.service;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +30,13 @@ public class DraftService {
 	// 유효성 검증
 	public Boolean isAccess(int draNo) {
 		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		int empNo = (int)details.getEmpNo();
 		int draftByEmpNo = draftMapper.isAccess(draNo).getEmpNo();
+		
+		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD"))) {
+			return true;
+		}
 		
 		if(empNo == draftByEmpNo) {
 			return true;
