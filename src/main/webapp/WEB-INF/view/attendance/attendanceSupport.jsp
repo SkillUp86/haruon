@@ -62,7 +62,7 @@
 	$(document).on("click", "#setNextMonthBtnForAttendance", function() {
 	  console.log("다음달 클릭");
 	  date = new Date(date.setMonth(date.getMonth() + 1));
-	  if(now >= date.setSeconds(0)) {
+	  if(now >= date.setMinutes(00,00,0)) {	// 1달 여유있음에도 다음달을 클릭하는 순간 date+1이 now보다 미래가 되지 않도록 분/초단위 설정 
 	      $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
 	      showAttendanceList();
 	  } else {

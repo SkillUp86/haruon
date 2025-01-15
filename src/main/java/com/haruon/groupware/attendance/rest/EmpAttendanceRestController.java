@@ -18,6 +18,7 @@ import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.service.AttendanceService;
 import com.haruon.groupware.attendance.service.EmpAttendanceService;
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.auth.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -84,6 +85,7 @@ public class EmpAttendanceRestController {
 	public ResponseEntity<Double> findEmpLeaveUsageRateForYear(@PathVariable Integer empNo
 																, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		if(userDetails.getEmpNo().equals(empNo)) {
 			RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
 			requestAttendanceList.setEmpNo(empNo);
@@ -128,3 +130,4 @@ public class EmpAttendanceRestController {
 	}
 
 }
+

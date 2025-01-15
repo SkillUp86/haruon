@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -152,13 +151,12 @@
 	                            <br>
 	                            <div class="tab-content" id="myTabContent">
 	                                <!-- 근태관리 start -->
-	                                
 	                                <div class="tab-pane fade show active" id="attendance-tab-pane" role="tabpanel" aria-labelledby="attendance-tab" tabindex="0">
 	                                    <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
 	                                        <div class="text-start">
 	                                        	<input class="setYearAndMonth btn btn-primary" readonly/>
 	                                        </div>  
-	                                        <div class="widget-content widget-content-area br-8">  
+	                                        <div class="widget-content widget-content-area br-8">     
 	                                            <table class="zero-config table dt-table-hover" class="table dt-table-hover" style="width:100%">
 	                                                <thead>
 	                                                    <tr role="row" class="text-center">
@@ -166,7 +164,7 @@
 	                                                        <th>출근</th>
 	                                                        <th>퇴근</th>
 	                                                        <th>상태</th>
-	                                                        <th>승인하기</th>
+	                                                        <th>승인상태</th>
 	                                                    </tr>
 	                                                </thead>
 	                                                <tbody id="empAttendancies">
@@ -175,7 +173,6 @@
 	                                        </div>
 	                                    </div>
 	                                </div>
-	                                
 	                                <!-- 근태관리 end -->
 	
 	                               <!-- 연차 관리 start -->
@@ -183,6 +180,46 @@
 									    <div class="tab-content" id="myTabContent">
 									        <div class="tab-pane fade show active" id="vacation-tab-paㅇne" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 									            <div id="toggleAccordion" class="no-icons accordion">
+									                
+									                <!-- 연차 사용률 시작 -->
+									                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
+									                    <div class="widget-content widget-content-area br-8">   
+									                        <div class="card">
+									                            <div class="card-header" id="annualUsageRateHeader">
+									                                <section class="mb-0 mt-0">
+									                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#annualUsageRate" aria-expanded="false" aria-controls="annualUsageRate">
+									                                        나의 연차 요약
+									                                    </div>
+									                                </section>
+									                            </div>
+									
+									                            <div id="annualUsageRate" class="collapse" aria-labelledby="annualUsageRateHeader" data-bs-parent="#toggleAccordion">
+									                                <div class="card-body">
+									                                	<div id="empLeaveInfo" class="w-25 text-start" style="min-width: 25%"></div>
+                                 										<hr>
+									                                    <div class="progress br-30 progress-xl">
+									                                        <div id ="deptLeaveUsageRateBar" class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+									                                            <div class="progress-title">
+									                                                <span>부서 평균</span>
+									                                                <span id="deptLeaveUsageRate"></span>
+									                                            </div>
+									                                        </div>
+									                                    </div>
+									                                    <div class="progress br-30 progress-xl">
+									                                        <div id="empLeaveUsageRateBar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+									                                            <div class="progress-title">
+									                                                <span>나의 사용률</span>
+									                                                <span id="empLeaveUsageRate"></span> 
+									                                            </div>
+									                                        </div>
+									                                    </div>
+									                                </div>
+									                            </div>
+									                        </div>
+									                    </div>
+									                </div>
+									                <!-- 연가 사용률 끝 -->
+									
 									                <!-- 부서 연차 기록 시작 -->
 									                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
 									                    <input class="setYearAndMonth btn btn-primary" readonly/>
@@ -200,15 +237,14 @@
 									                                    <table class="zero-config table dt-table-hover" style="width:100%">
 									                                        <thead>
 									                                            <tr class="text-center">
-									                                                <th>이름</th>
-									                                                <th>직급</th>
 									                                                <th>시작일자</th>
 									                                                <th>종료일자</th>
+									                                                <th>대체업무자</th>
 									                                                <th>결재상태</th>
 									                                                <th>상세보기</th>
 									                                            </tr>
 									                                        </thead>
-									                                        <tbody id="deptLeavesReq">
+									                                        <tbody id="empLeavesReq">
 									                                        </tbody>
 									                                    </table>
 									                                </div>
@@ -217,91 +253,6 @@
 									                    </div>
 									                </div>
 									                <!-- 부서 연차 기록 끝 -->
-									                <!-- 연차 사용률 시작 -->
-									                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-									                    <div class="widget-content widget-content-area br-8">   
-									                        <div class="card">
-									                            <div class="card-header" id="annualUsageRateHeader">
-									                                <section class="mb-0 mt-0">
-									                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#annualUsageRate" aria-expanded="false" aria-controls="annualUsageRate">
-									                                        연차 유급휴가 사용률
-									                                    </div>
-									                                </section>
-									                            </div>
-									
-									                            <div id="annualUsageRate" class="collapse" aria-labelledby="annualUsageRateHeader" data-bs-parent="#toggleAccordion">
-									                                <div class="card-body">
-									                                    <div class="progress br-30 progress-xl">
-									                                        <div id ="deptLeaveUsageRateBar" class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-									                                            <div class="progress-title">
-									                                                <span>부서 평균</span>
-									                                                <span id="deptLeaveUsageRate"></span>
-									                                            </div>
-									                                        </div>
-									                                    </div>
-									                                    <div class="progress br-30 progress-xl">
-									                                        <div id="empLeaveUsageRateBar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-									                                            <div class="progress-title">
-									                                                <span>나의 사용률</span>
-									                                                <span id="empLeaveUsageRate"></span> 
-									                                            </div>
-									                                        </div>
-									                                    </div>
-									                                    <hr>
-									                                    <table class="zero-config table dt-table-hover" style="width:100%">
-									                                        <thead>
-									                                            <tr class="text-center">
-									                                                <th>이름</th>
-									                                                <th>직급</th>
-									                                                <th>총 일수</th>
-									                                                <th>사용한 일수</th>
-									                                                <th>사용률</th>
-									                                            </tr>
-									                                        </thead>
-									                                        <tbody id="deptLeaveUsageRateList">
-									                                        </tbody>
-									                                    </table>
-									                                </div>
-									                            </div>
-									                        </div>
-									                    </div>
-									                </div>
-									                <!-- 연가 사용률 끝 -->
-									
-									                <!-- 연차 관리 시작 -->
-									                <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
-									                    <div class="widget-content widget-content-area br-8">   
-									                        <div class="card">
-									                            <div class="card-header" id="manageAnnualHeader">
-									                                <section class="mb-0 mt-0">
-									                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#manageAnnual" aria-expanded="false" aria-controls="manageAnnual">
-									                                        부서원 연차 관리
-									                                    </div>
-									                                </section>
-									                            </div>
-									
-									                            <div id="manageAnnual" class="collapse" aria-labelledby="manageAnnualHeader" data-bs-parent="#toggleAccordion">
-									                                <div class="card-body">
-									                                    <table class="zero-config table dt-table-hover" style="width:100%">
-									                                        <thead>
-									                                            <tr class="text-center">
-									                                                <th>이름</th>
-									                                                <th>직급</th>
-									                                                <th>연차(현재연도 - 입사년도)</th>
-									                                                <th>총 연차 유급휴가 일수</th>
-									                                                <th>연차관리</th>
-									                                            </tr>
-									                                        </thead>
-									                                        <tbody id="manageDeptLeaveList">
-									                                        </tbody>
-									                                    </table>
-									                                </div>
-									                                
-									                            </div>
-									                        </div>
-									                    </div>
-									                </div>
-									                <!-- 연가 사용률 집계 끝 -->
 									            </div>
 									        </div>
 									    </div>
@@ -317,16 +268,14 @@
 	                                            <table class="zero-config table dt-table-hover" style="width:100%">
 	                                                <thead>
 	                                                    <tr class="text-center">
-	                                                        <th>이름</th>
-	                                                        <th>직급</th>
 	                                                        <th>시작</th>
 	                                                        <th>종료</th>
 	                                                        <th>장소</th>
-	                                                        <th>결재상태</th>
-	                                                        <th>출장신청서</th>
+	                                                        <th>승인여부</th>
+	                                                        <th>상세보기</th>
 	                                                    </tr>
 	                                                </thead>
-	                                                <tbody id="deptBusinessTripReqList"></tbody>
+	                                                <tbody id="empBusinessTripReqList"></tbody>
 	                                            </table>
 	                                        </div>
 	                                    </div>
@@ -414,16 +363,7 @@
 	            $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
 				showBusinessTripReqList();
 			});
-			
-	   		// <출장 Tab 클릭시> 이전달/다음달이 출장 리스트에 맞게 세팅 및 리스트 불러오기
-	        $("#businessTrip-tab").click(function() {  
-	     	   $("#btnSetMonthAndYear").empty();
-	           $("#btnSetMonthAndYear").append(businessTripBtnHtml);
-	
-	            date = new Date();	// setYearAndMonth 초기화
-	            $(".setYearAndMonth").val(date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0'));
-	            showBusinessTripReqList();
-	        });
+
 		</script>
 		<!-- 탭클릭시 이전달/다음달 버튼 세팅 종료 -->
 		
@@ -447,8 +387,10 @@
 		                       <td class="sorting_01">` + item.startTime.substr(0,10) + `</td>
 		                       <td>` + (item.state === "결근" && item.startTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.startTime.substr(11))) + `</td>
 		                       <td>` + (item.state === "결근" && item.endTime.substr(11) == "23:59:59"?  "미등록" : (item.state === "연차"? "미등록": item.endTime.substr(11))) + `</td>
-		                       <td>` + (item.state == null? "미지정" : item.state) + ``;
-		                       <td>` + item.approvalYN + `</td>
+		                       <td>` + (item.state == null? "미지정" : item.state) + `</td> 
+		                       <td>` + (item.approvalYN == 'Y'? 
+		                       `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>` 
+		                       : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>` ) + `</td>`;
 		               html += "</tr>";
 		           });
 		           
@@ -460,42 +402,40 @@
 		       });
 		   }
 		</script>
-		<!-- 부서원 근태관련 ajax 호출 끝 -->
+		<!-- 개인 근태관련 ajax 호출 끝 -->
 	
-		<!-- 부서원 휴가관련 ajax 호출 시작 -->
+		<!-- 개인 휴가관련 ajax 호출 시작 -->
 		<script>
 		   function showLeaveReqList() {
 		       $.ajax({
-		           url: "/department/leaves/"+"${depNo}/"+$(".setYearAndMonth").val(),
+		           url: "/employee/leaves/"+"${empNo}/"+$(".setYearAndMonth").val(),
 		           method: 'GET',
 		       }).done(function(result) {
 		           // 기존 DataTable 인스턴스, <tbody> 데이터 삭제
 		           destroyDataTable(); 
-		           $("#deptLeavesReq").empty();
+		           $("#empLeavesReq").empty();
 		           let html = "";
 		          
 		           $(result).each(function(index, item) {
 		               const startTime = item.startTime.replace(" ", "/");
 		               
 		               html += `"<tr role="row" class="text-center">"`;
-		               html += `
-		                       <td>` + item.empName + `</td>
-		                       <td>` + item.role + `</td>
-		                       <td class="sorting_01">` + item.startTime + `</td>
+		               html += `<td class="sorting_01">` + item.startTime + `</td>
 		                       <td>` + item.endTime + `</td>
+		                       <td>` + item.substituteEmp + `</td>
 		                       <td>` + item.approvalState + `</td>
 		                       <td><a href=/draft/detail/vacation/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
 		               html += "</tr>";
 		
 		           });
-		           $("#deptLeavesReq").append(html);
+		           $("#empLeavesReq").append(html);
 		           initDataTable();
 		       }).fail(function() {
 		           console.log("showLeaveReqList ajax error");
 		       });
 		   	}
 		
-			// 부서원 유급휴가 평균 사용률	
+			// 부서 유급휴가 평균 사용률	
 		   function showDeptLeaveUsageRate() {
 			   $.ajax({
 		           url: "/department/leave/UsageRate/" + "${depNo}",
@@ -511,141 +451,62 @@
 		       });
 			}
 			
-			// 개인 유급휴가 평균 사용률	
+			// 개인 유급휴가 사용 요약 및 연차 유급휴가 사용률
 		   function showEmpLeaveUsageRate() {
 			   $.ajax({
-		           url: "/department/leave/UsageRate/" + "${empNo}",
+		           url: "/employee/leave/sum/" + "${empNo}",
 		           method: 'GET',
 		       }).done(function(result) {
-		    	   $("#deptLeaveUsageRate").empty();
+		    	   $("#empLeaveInfo").empty();		
+		    	   $("#empLeaveUsageRate").empty();
+		    	   var empLeaveSumHtml = "";
+		    	   var empLeaveUsageRateHtml = "";
+
+		    	   empLeaveInfoHtml = `<div class="input-group mb-3">
+						    		      <span class="input-group-text" id="basic-addon1">기본 연차</span>
+						    		      <div class="form-control text-end">` + result[0].totalLeave + `</div>
+						    		   </div>
+						    		   <div class="input-group mb-3">
+						    		      <span class="input-group-text" id="basic-addon1">조정 연차</span>
+						    		      <div class="form-control text-end">` + result[0].modifiedLeave + `</div>
+						    		   </div>
+						    		   <div class="input-group mb-3">
+						    		      <span class="input-group-text" id="basic-addon1">조정 + 기본</span>
+						    		      <div class="form-control text-end">` + (parseInt(result[0].totalLeave) + parseInt(result[0].modifiedLeave)) + `</div>
+						    		   </div>
+						    		   <div class="input-group mb-3">
+						    		      <span class="input-group-text" id="basic-addon1">사용 연차</span>
+						    		      <div class="form-control text-end">` + result[0].usedLeave + `</div>
+						    		   </div>
+									   `;
+
+		    	   $("#empLeaveInfo").append(empLeaveInfoHtml);		
+
+		    	   empLeaveUsageRateHtml = `<span class="ms-3">`+ result[0].leaveUsageRate.toFixed(2) +`</span>`;
+		    	   $("#empLeaveUsageRate").append(empLeaveUsageRateHtml);
+		    	   $("#empLeaveUsageRateBar").css("width", result[0].leaveUsageRate +"%");
 		    	   
-		    	   var deptUsageRateHtml = `<span class="ms-3">`+ result.toFixed(2) +`</span>`
-		       	   $("#deptLeaveUsageRate").append(deptUsageRateHtml);
-		    	   $("#deptLeaveUsageRateBar").css("width", result+"%");
 		       }).fail(function() {
-		    	  console.log("showDeptLeaveUsageRate ajax fail"); 
+		    	  console.log("showEmpLeaveUsageRate ajax fail"); 
 		       });
 			}
-   
 		</script>
-		<script>
-			// 부서원 연차 요약 및 사용량 리스트
-			function showDeptLeaveUsageRateList() {
-				destroyDataTable(); 
-				$.ajax({
-					url: "/department/leaves/information/" + "${depNo}",
-					method: 'GET',
-				}).done(function(result) {
-		    	   destroyDataTable();
-					let deptLeaveUsageRateListHtml = "";
-					$("#deptLeaveUsageRateList").empty();
-					
-					$(result).each(function(index, item) {					
-						deptLeaveUsageRateListHtml += `<tr role="row" class="text-center">`;
-						deptLeaveUsageRateListHtml += `	  <td class="sorting_01">` + item.empName + `</td>
-									                      <td>` + item.role + `</td>
-									                      <td>` + item.totalLeave + `</td>
-									                      <td>` + item.usedLeave + `</td>
-									                      <td class="d-flex justify-content-center align-items-center">
-		                                                   <span class="text-dark me-2">` + item.leaveUsageRate.toFixed(2) + `%</span>
-										                      <div class="progress br-30 progress-xl text-center" style="min-height: 30px; min-width: 200px">
-						                                           <div class="progress-bar bg-info" role="progressbar" style="min-height: 30px; width:` + item.leaveUsageRate + `%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-						                                               <div class="progress-title">
-						                                                   <span></span>
-						                                               </div>
-						                                           </div>
-						                                      </div>
-									                      </td>`;
-	                    deptLeaveUsageRateListHtml += `</tr>`;
-					});
-					
-					$("#deptLeaveUsageRateList").append(deptLeaveUsageRateListHtml);
-					initDataTable();
-				}).fail(function() {
-					console.log("showDeptLeaveUsageRateList ajax fail");
-				});
-			}
+		<!-- 개인 휴가관련 ajax 호출 끝 -->
 		
-			function showManageDeptLeaveList() {
-				destroyDataTable(); 
-				$.ajax({
-					url: "/department/leaves/information/" + "${depNo}",
-					method: 'GET',
-				}).done(function(result) {
-					destroyDataTable();
-					let manageDeptLeaveHtml = "";
-					$("#manageDeptLeaveList").empty();
-					
-					$(result).each(function(index, item) {					                    
-	                    manageDeptLeaveHtml += `<tr role="row" class="text-center">`;
-	                    manageDeptLeaveHtml += `	<td class="sorting_01">` + item.empName + `</td>
-							                        <td>` + item.role + `</td>
-							                        <td>` + item.yearsOfService + `년(입사일 : ` + item.joinDate + `)</td>
-							                        <td>` + item.totalLeave + `일(조정 : ` + item.modifiedLeave + `일)</td>
-							                        <td>
-								                        <button type="button" class="btn btn-primary mr-2 _effect--ripple waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#updateModal`+item.empNo+`">
-								                            연차 수정
-								                        </button>
-								                        <div class="modal fade" id="updateModal`+item.empNo+`" tabindex="-1" role="dialog" aria-labelledby="updateModal`+item.empNo+`Label" aria-hidden="true">
-								                            <div class="modal-dialog" role="document">
-								                                <div class="modal-content">
-								                                    <div class="modal-header">
-								                                        <h5 class="modal-title" id="updateModal`+item.empNo+`Label">연차 조정</h5>
-								                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-								                                            <svg> ... </svg>
-								                                        </button>
-								                                    </div>
-								                                    <div class="modal-body">
-								                                        <p class="modal-text">
-								                                            <form id="updateModalForm`+item.empNo+`" method="post" action="/employee/modify/totalLeave">
-								                                                <input type="hidden" name="empNo" value="` + item.empNo + `">
-								                                                <div class="input-group mb-3">
-								                                                    <span class="input-group-text" id="current">현재 연차 수</span>
-								                                                    <input type="text" placeholder="` + item.totalLeave + `" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="current" readonly>
-								                                                </div>
-								                                                <div class="input-group mb-3">
-								                                                    <span class="input-group-text" id="updated">조정 후 연차</span>
-								                                                    <input name="totalLeave" type="number" class="form-control" placeholder="" aria-label="Username" aria-describedby="updated">
-								                                                </div>
-								                                            </form>
-								                                        </p>
-								                                    </div>
-								                                    <div class="modal-footer">
-								                                        <button class="btn btn btn-light-dark" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i>취소</button>
-								                                        <button id="updateModalBtn` + item.empNo + `" class="btn btn btn-light-dark"><i class="flaticon-cancel-12"></i>연차 조정</button>
-								                                    </div>
-								                                </div>
-								                            </div>
-								                        </div>
-								                    </td>`;
-	                    manageDeptLeaveHtml += `</tr>`;
-					});
-					
-					$("#manageDeptLeaveList").append(manageDeptLeaveHtml);
-					initDataTable();
-				}).fail(function() {
-					console.log("showDeptLeaveUsageRateList ajax fail");
-				});
-			}
-		</script>
-		<!-- 부서원 휴가관련 ajax 호출 끝 -->
-		
-		<!-- 부서원 출장관련 ajax 호출 시작 -->
+		<!-- 개인 출장관련 ajax 호출 시작 -->
 		<script>
 			function showBusinessTripReqList() {
 				$.ajax({
-					url: "/department/businessTrips/"+"${depNo}/"+$(".setYearAndMonth").val(),
+					url: "/employee/businessTrips/"+"${empNo}/"+$(".setYearAndMonth").val(),
 					method: 'GET',
 				}).done(function(result) {
 					destroyDataTable();
-					$("#deptBusinessTripReqList").empty();
+					$("#empBusinessTripReqList").empty();
 		            let BusinessTriphtml = "";
 		            
 		            $(result).each(function(index, item) {
 		         	   BusinessTriphtml += `"<tr role="row" class="text-center">"`;
-		         	   BusinessTriphtml += `   <td>` + item.empName + `</td>
-		         	   						   <td>` + item.role + `</td>
-		         	   						   <td  class="sorting_01">` + item.startTime + `</td>
+		         	   BusinessTriphtml += `   <td  class="sorting_01">` + item.startTime + `</td>
 				 		                       <td>` + item.endTime + `</td>
 				 		                       <td>` + item.place + `</td>
 				 		                       <td>` + item.approvalState + `</td>
@@ -654,7 +515,7 @@
 		            
 		            });
 		            
-		            $("#deptBusinessTripReqList").append(BusinessTriphtml);
+		            $("#empBusinessTripReqList").append(BusinessTriphtml);
 					
 					initDataTable();
 				}).fail(function() {

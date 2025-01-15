@@ -16,6 +16,7 @@ public class AttendanceController {
 	public String attendanceEmp(Authentication authentication, Model model) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		model.addAttribute("empNo", userDetails.getEmpNo());
+		model.addAttribute("depNo", userDetails.getDepNo());
 		return "attendance/attendanceEmp";
 	}
 	// 부서 근태/연가/출장 관리 페이지
