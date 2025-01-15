@@ -1,8 +1,10 @@
 package com.haruon.groupware.board.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -46,7 +48,7 @@ public class BoardController {
 	
 	// 게시글 상세
 	@GetMapping("/board/{boaNo}")
-    public String getBoardOne(Authentication authentication, @PathVariable Integer boaNo, Model model) {
+    public String getBoardOne(Authentication authentication, HttpSession session, @PathVariable Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
@@ -69,7 +71,11 @@ public class BoardController {
         // 첨부파일 리스트
         List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
-        
+		
+		// 조회수
+		Integer updatedViewCnt = boardService.getViewCnt(boaNo); // 최신 조회수 가져오기
+	    model.addAttribute("updatedViewCnt", updatedViewCnt);
+		
         return "board/boardOne";
     }
 	
@@ -113,7 +119,7 @@ public class BoardController {
 		int empNo = userDetails.getEmpNo();
 		boardDto.setEmpNo(empNo);
 		
-		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		String path = session.getServletContext().getRealPath("/upload/board/");
 		boardService.insertBoard(boardDto, path);
 		
 		return "redirect:/board";
@@ -178,7 +184,7 @@ public class BoardController {
 		int empNo = userDetails.getEmpNo();
 		boardDto.setEmpNo(empNo);
 		
-		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		String path = session.getServletContext().getRealPath("/upload/board/");
 		boardService.insertNotice(boardDto, path);
 		
 		return "redirect:/board/notice";
@@ -209,7 +215,7 @@ public class BoardController {
 		if(list != null && list.size()!=0) {
 				return "/board/modifyNotice";
 		}
-		String path = session.getServletContext().getRealPath("/upload/");
+		String path = session.getServletContext().getRealPath("/upload/board/");
 		boardService.insertBoard(boardDto, path);
 		
 		return "redirect:/board/notice"+boaNo;
@@ -218,14 +224,14 @@ public class BoardController {
 	// 글 삭제
 	@GetMapping("/board/delete")
 	public String deleteBoard(HttpSession session, @RequestParam Integer boaNo) {
-		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		String path = session.getServletContext().getRealPath("/upload/board/");
 		boardService.deleteBoard(boaNo, path);
 		return "redirect:/board";
 	}
 	// 공지 삭제
 	@GetMapping("/board/deleteNotice")
 	public String deleteNotice(HttpSession session, @RequestParam Integer boaNo) {
-		String path = session.getServletContext().getRealPath("/uploadBoard/");
+		String path = session.getServletContext().getRealPath("/upload/board/");
 		boardService.deleteBoard(boaNo, path);
 		return "redirect:/board/notice";
 	}

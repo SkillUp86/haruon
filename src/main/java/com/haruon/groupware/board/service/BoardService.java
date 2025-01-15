@@ -16,6 +16,7 @@ import com.haruon.groupware.board.dto.BoardDto;
 import com.haruon.groupware.board.entity.Board;
 import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
+import com.haruon.groupware.board.entity.BoardLike;
 import com.haruon.groupware.board.mapper.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,23 @@ public class BoardService {
 	// 추천 수
 	public Integer countLike(Integer boaNo) {
 		return boardMapper.countLike(boaNo);
+	}
+	// 조회수 업데이트
+	public Integer updateViewCnt(Integer boaNo) {
+		return boardMapper.updateViewCnt(boaNo);
+	}
+	// 조회수만 조회
+	public Integer getViewCnt(Integer boaNo) {
+        Map<String, Object> board = boardMapper.selectBoardOne(boaNo);
+        return (Integer) board.get("viewCnt");
+    }
+	// 글 추천
+	public Integer insertBoardLike(Integer boaNo, Integer empNo) {
+        BoardLike boardLike = new BoardLike();
+        boardLike.setBoaNo(boaNo);
+        boardLike.setEmpNo(empNo);
+        
+		return boardMapper.insertBoardLike(boardLike);
 	}
 	
 	// 댓글 입력
@@ -218,4 +236,5 @@ public class BoardService {
 			}
 		}
 	}
+	
 }

@@ -98,6 +98,7 @@
 		SELECT
 			bc.com_no comNo
 			, bc.boa_no boaNo
+			, bc.emp_no empNo
 			, e.ename ename
 			, bc.content content
 			, bc.create_date createDate
@@ -119,6 +120,22 @@
 		FROM board_like
 		WHERE boa_no = #{boaNo}
 	</select>
+	<!-- 조회수 업데이트 -->
+	<update id="updateViewCnt" parameterType="Integer">
+		UPDATE board
+		SET view_cnt = view_cnt + 1
+		WHERE boa_no = #{boaNo}
+	</update>
+	<!-- 글 추천 -->
+	<insert id="insertBoardLike" parameterType="com.haruon.groupware.board.entity.BoardLike">
+	    INSERT INTO board_like (
+	    	boa_no
+	    	, emp_no
+	    ) VALUES (
+	    	#{boaNo}
+	    	, #{empNo}
+	    )
+	</insert>
 	
 	<!-- 댓글 입력 -->
 	<insert id="insertComment" parameterType="com.haruon.groupware.board.entity.BoardComment">
@@ -261,5 +278,4 @@
 		WHERE boa_no = #{boaNo}
 	</delete>
 	
-
 </mapper>

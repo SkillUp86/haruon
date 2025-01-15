@@ -7,36 +7,36 @@
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link rel="stylesheet" href="../src/plugins/src/filepond/filepond.min.css">
-    <link rel="stylesheet" href="../src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/src/tagify/tagify.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.css">
     
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/light/forms/switches.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/editors/quill/quill.snow.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/tagify/custom-tagify.css">
-    <link href="../src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/forms/switches.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/editors/quill/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/tagify/custom-tagify.css">
+    <link href="${pageContext.request.contextPath}/src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
     
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/dark/forms/switches.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/editors/quill/quill.snow.css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/tagify/custom-tagify.css">
-    <link href="../src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/dark/forms/switches.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/dark/editors/quill/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/dark/tagify/custom-tagify.css">
+    <link href="${pageContext.request.contextPath}/src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link rel="stylesheet" href="../src/assets/css/light/apps/ecommerce-create.css">
-    <link rel="stylesheet" href="../src/assets/css/dark/apps/ecommerce-create.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/light/apps/ecommerce-create.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/dark/apps/ecommerce-create.css">
     <!--  END CUSTOM STYLE FILE  -->
        
     <!-- 페이지 제목 입력칸 -->
@@ -113,7 +113,7 @@
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
-	                                        <input type="number" class="form-control" id="empNo" name="empNo" value="${loginEmpNo}" style="width: 150px;" readonly>
+	                                        <input type="number" class="form-control" id="empNo" name="empNo" value="${empNo}" style="width: 150px;" readonly>
 	                                    </div>
 	                                </div>
 	                                
@@ -164,30 +164,30 @@
     <!-- END MAIN CONTAINER -->
 
    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <script src="../src/plugins/src/global/vendors.min.js"></script>
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
     
-    <script src="../src/plugins/src/highlight/highlight.pack.js"></script>
-    <script src="../src/assets/js/custom.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/highlight/highlight.pack.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="../src/plugins/src/editors/quill/quill.js"></script>
-    <script src="../src/plugins/src/filepond/filepond.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
-    <script src="../src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
-    <script src="../src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/editors/quill/quill.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
 
-    <script src="../src/plugins/src/tagify/tagify.min.js"></script>
-    <script src="../src/assets/js/apps/ecommerce-create.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 
 	<script>
     	$('#btnInsert').click(function(){

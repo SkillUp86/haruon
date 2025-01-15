@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.haruon.groupware.board.entity.Board;
 import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
+import com.haruon.groupware.board.entity.BoardLike;
 
 
 @Mapper
@@ -25,9 +26,11 @@ public interface BoardMapper {
 	
 	// 게시글 상세
 	Map<String,Object> selectBoardOne(Integer boaNo);
-	List<Map<String,Object>> selectCommentList(Integer boaNo);
-	Integer countComment(Integer boaNo);
-	Integer countLike(Integer boaNo);
+	List<Map<String,Object>> selectCommentList(Integer boaNo); // 댓글 리스트
+	Integer countComment(Integer boaNo); // 댓글 수 
+	Integer countLike(Integer boaNo); // 추천 수
+	Integer updateViewCnt(Integer boaNo); // 조회수 업데이트
+	Integer insertBoardLike(BoardLike boardLike); // 글 추천
 	
 	// 댓글 입력
 	Integer insertComment(BoardComment boardComment);
@@ -66,4 +69,5 @@ public interface BoardMapper {
 	Integer deleteCommentByBoaNo(Integer boaNo);
 	// 글 삭제 전 추천 삭제
 	Integer deleteLike(Integer boaNo);
+
 }

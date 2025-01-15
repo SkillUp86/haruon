@@ -7,23 +7,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link href="../src/assets/css/light/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/light/apps/blog-post.css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/apps/blog-post.css">
 
-    <link href="../src/assets/css/dark/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../src/assets/css/dark/apps/blog-post.css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/dark/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/dark/apps/blog-post.css">
     <!--  END CUSTOM STYLE FILE  -->
         
     <!-- 페이지 제목 입력칸 -->
@@ -125,38 +125,43 @@
                              	
                              	<!-- 추천 버튼 -->
                              	<div style="display: flex; justify-content: center; align-items: center; margin-top: 10vh;">
-                             		<button class="btn btn-secondary me-4 mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                        <span class="btn-text-inner">${countLike}</span>
+                             		<button id="btnLike-${b.boaNo}" type="button" class="btn btn-secondary me-4 mb-2" onclick="insertLike(${b.boaNo})">
+                                        <svg  id="heartIcon-${b.boaNo}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                        <span id="countLike" class="btn-text-inner">${countLike}</span>
                                     </button>
                              	</div>
                              	
-                             	<div>
-                             		<p style="text-align: right;">
-                             			<c:if test="${b.catNo != 1}"> <!-- 자유 게시판 글일 때  -->
-                             				<a href="${pageContext.request.contextPath}/board/modify?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
-                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-											</a> &nbsp;
-											<a href="${pageContext.request.contextPath}/board/delete?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
-	                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
-	                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-	                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-											</a>
-                             			</c:if>
-                             			<c:if test="${b.catNo == 1}"> <!-- 공지 글일 때  -->
-                             				<a href="${pageContext.request.contextPath}/board/modifyNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
-                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-											</a> &nbsp;
-											<a href="${pageContext.request.contextPath}/board/deleteNotice?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
-	                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
-	                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-	                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-											</a>
-                             			</c:if>
-                             		</p>
-                             	</div>
+                             	<!-- 세션의 empNo와 작성자의 empNo가 같을 때만 수정, 삭제 버튼 표시 -->
+								<c:if test="${empNo == b.empNo}">
+	                             	<div>
+	                             		<p style="text-align: right;">
+	                             			<c:if test="${b.catNo != 1}"> <!-- 자유 게시판 글일 때  -->
+	                             				<a href="${pageContext.request.contextPath}/board/modify?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
+	                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+												</a> &nbsp;
+												<a href="${pageContext.request.contextPath}/board/delete?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
+		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+		                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+		                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+												</a>
+	                             			</c:if>
+	                             			<c:if test="${b.catNo == 1}"> <!-- 공지 글일 때  -->
+	                             				<a href="${pageContext.request.contextPath}/board/modifyNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
+	                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+												</a> &nbsp;
+												<a href="${pageContext.request.contextPath}/board/deleteNotice?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
+		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+		                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+		                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+												</a>
+	                             			</c:if>
+	                             		</p>
+	                             	</div>
+	                             </c:if><!-- END 수정, 삭제 버튼 -->
+	                             
                              </div>
                              
                              <!-- 댓글 -->
@@ -171,11 +176,14 @@
 	                                         <p class="media-text mt-2 mb-0">${c.content}</p>
 	
 	                                         <!-- 삭제 버튼 -->
-	                                         <a href="${pageContext.request.contextPath}/board/deleteComment?boaNo=${c.boaNo}&comNo=${c.comNo}" class="btn btn-dark btn-icon btn-reply btn-rounded remove" id="btnDeleteComment">
-	                                         	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
-	                                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-	                                            <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-	                                         </a>
+	                                         <!-- 세션의 empNo와 댓글 작성자의 empNo가 같을 때만 삭제 버튼 표시 -->
+											 <c:if test="${empNo == c.empNo}">
+		                                         <a href="${pageContext.request.contextPath}/board/deleteComment?boaNo=${c.boaNo}&comNo=${c.comNo}" class="btn btn-dark btn-icon btn-reply btn-rounded remove" id="btnDeleteComment">
+		                                         	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+		                                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+		                                            <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+		                                         </a>
+		                                     </c:if>
 	                                     </div>
 	                                 </div>
 	                             </c:forEach>
@@ -183,7 +191,7 @@
                              <!-- 댓글 입력 -->
                              <div class="post-form mt-5">
                                  <div class="section add-comment">
-                                 	<form id="formComment" action="${pageContext.request.contextPath}/board/comment" method="post">
+                                 	<form id="formComment" action="${pageContext.request.contextPath}/board/comment?boaNo=${b.boaNo}" method="post">
 	                                     <div class="info">
 	                                         <div class="row mt-4">
 	                                         	<div class="col-md-6">
@@ -225,13 +233,54 @@
     <!-- END MAIN CONTAINER -->
 
  	<!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/plugins/src/highlight/highlight.pack.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/highlight/highlight.pack.js"></script>
     <!-- END GLOBAL MANDATORY STYLES -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+	<script>
+	// 조회수 업데이트
+	$(document).ready(function() {
+		var boaNo = ${b.boaNo}; // 현재 게시글 번호
+        $.ajax({
+            type: "POST",
+            url: "/board/updateView/" + boaNo,
+            success: function(response) {
+                $("#viewCount").text(response.updatedViewCnt); // 페이지에 반영
+            },
+            error: function() {
+                alert("조회수 업데이트 중 오류가 발생했습니다.");
+            }
+        });
+    });
+	
+	// 추천 버튼 클릭
+	    function insertLike(boaNo) {
+	        var heartIcon = $("#heartIcon-" + boaNo);
+	        $.ajax({
+	            type: "POST",
+	            url: "/board/like/" + boaNo,
+	            success: function(response) {
+	            	var countLike = response.countLike; // 서버에서 반환한 추천수
+	            	$("#countLike").text(countLike); // 추천 수 갱신
+	            	
+	                // 색상 변경
+	                if (heartIcon.css("fill") === "rgb(255, 255, 255)") { // 흰색
+	                    heartIcon.css("fill", "none"); // 이미 색 채워져 있으면 색상 초기화
+	                } else {
+	                    heartIcon.css("fill", "white"); // 색 채우기
+	                }
+	                
+	            },
+	            error: function() {
+	                alert("추천 처리 중 오류가 발생했습니다.");
+	            }
+	        });
+	    }
+	</script>
 </body>
 </html>
