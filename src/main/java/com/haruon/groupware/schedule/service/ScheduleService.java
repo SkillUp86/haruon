@@ -31,6 +31,8 @@ public class ScheduleService {
 		return commonMapper.findByParentCode(parentCode);
 		
 	}
-
+	public Integer deleteSchedule(Integer schNo) {
+        return scheduleMapper.deleteSchedule(schNo);  
+    }
 	
 }

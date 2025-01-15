@@ -121,79 +121,89 @@
                         </div>
                     </div>
                     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">신규 사내 일정 추가</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="addSchedule" method="post" action="${pageContext.request.contextPath}/addSchedule"> 
-            <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="n-chk">
-                            <label class="form-label">일정 제목</label>
-				            <select id="title" name="title" class="form-control">
-				                <option value="연차">연차</option>
-				                <option value="출장">출장</option>
-				                <option value="회의">회의</option>
-				            </select>
- <!-- name 속성 추가 -->
-                            </div>
-                        </div>
-                    </div>
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">신규 사내 일정 추가</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form id="addSchedule" method="post"
+									action="${pageContext.request.contextPath}/addSchedule">
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 제목</label> 
+													<select id="event-title" name="title" class="form-control">
+													
+														<option value="연차">일정</option>
+														<option value="연차">연차</option>
+														<option value="출장">출장</option>
+														<option value="회의">회의</option>
+													</select>
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
 
-                    <div class="col-md-12 ">
-                        <div class="n-chk">
-                            <label class="form-label">시작 날짜</label>
-                            <input id="event-start-date" name="startTime" type="datetime-local" class="form-control"> <!-- name 속성 추가 -->
-                        </div>
-                    </div>
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">시작 날짜</label> <input
+													id="event-start-date" name="startTime"
+													type="datetime-local" class="form-control">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
 
-                    <div class="col-md-12 ">
-                        <div class="n-chk">
-                            <label class="form-label">종료 날짜</label>
-                            <input id="event-end-date" name="endTime" type="datetime-local" class="form-control"> <!-- name 속성 추가 -->
-                        </div>
-                    </div>
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">종료 날짜</label> <input
+													id="event-end-date" name="endTime" type="datetime-local"
+													class="form-control">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
 
-                   <div class="col-md-12">
-                            <div class="n-chk">
-                                <label class="form-label">일정 종류</label>
-                                <select id="kind" name="kind" class="form-control">
-                                    <c:forEach items="${kindList}" var="k">
-                                        <option value="${k.commonCode}">${k.descript}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
+										<div class="col-md-12">
+											<div class="n-chk">
+												<label class="form-label">일정 종류</label> <select id="kind"
+													name="kind" class="form-control">
+													<c:forEach items="${kindList}" var="k">
+														<option value="${k.commonCode}">${k.descript}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="n-chk">
-                                <label class="form-label">일정 내용</label>
-                                <input id="text" name="content" type="text" class="form-control"> <!-- name 속성 추가 -->
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button  class="btn btn-primary btn-add-event">일정 추가</button>
-                <button  class="btn" id="deleteEventBtn">삭제</button>
-        		 <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                <button  class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 내용</label> 
+													<input id="text" name="content" type="text" class="form-control">
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+									</div>
 
-    
-                           
-		
-			<!--  BEGIN FOOTER  -->
+									<div class="modal-footer">
+										<button class="btn btn-primary btn-add-event">일정 추가</button>
+										<button class="btn" id="deleteEventBtn">삭제</button>
+										<button type="button" class="btn" data-bs-dismiss="modal" id="deleteEventBtn">닫기</button>
+										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
             <!--  END FOOTER  -->
        		 
@@ -222,43 +232,38 @@
 	        e.preventDefault(); // 기본 폼 제출 방지
 
 	        // 폼에서 데이터 가져오기
-	        var title = $("#title").val(); // 선택된 일정 제목
+	        var title = $("#event-title").val(); // 선택된 일정 제목
 	        var startDate = $("#event-start-date").val(); // 시작 날짜
 	        var endDate = $("#event-end-date").val(); // 종료 날짜
 	        var content = $("#text").val(); // 일정 내용
-
-	        // 일정 종류 라디오 버튼 값
-	        var eventType = $("input[name='title']:checked").val();
-
-	        // 폼 값 확인 (디버깅용)
-	        console.log(title, startDate, endDate, content, eventType);
-
+	        var kind = $("#kind").val(); // 일정 종류
+	        
 	        // 서버로 데이터를 전송하는 Ajax 요청
 	        $.ajax({
 	            url: "${pageContext.request.contextPath}/addSchedule", // 서버 URL
 	            type: "POST",
 	            data: {
-	                title: kind,
-	                startDate: startDate,
-	                endDate: endDate,
+	                title: title,
+	                startTime: startDate,
+	                endTime: endDate,
 	                content: content,
-	                eventType: even	tType
+	                kind: kind
 	            },
 	            success: function(response) {
 	                // 서버에서 응답이 정상적으로 돌아오면
-	                if(response.success) {
+	                if (response.success) {
 	                    alert("일정이 추가되었습니다.");
-	                    
-	                    // 캘린더에 일정 추가 (여기서 calendarObject는 캘린더 객체로 가정)
+
+	                    // 캘린더에 일정 추가
 	                    var newEvent = {
 	                        title: title,
 	                        start: startDate,
 	                        end: endDate,
-	                        description: content,
-	                        eventType: eventType
+	                        description: content
 	                    };
+
 	                    // 예시로 FullCalendar 사용 시
-	                    $('#calendar').fullCalendar('renderEvent', newEvent, true); 
+	                    $('#calendar').fullCalendar('renderEvent', newEvent, true);
 
 	                    // 모달 닫기
 	                    $('#exampleModal').modal('hide');
@@ -272,7 +277,9 @@
 	            }
 	        });
 	    });
-	});
+
+	  
+
   </script>
 </body>
 </html>

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.schedule.entity.Schedules;
@@ -36,7 +36,13 @@ public class ScheduleContoller {
 	    model.addAttribute("msg", "일정이 추가되었습니다.");
 	    return "redirect:/calendar"; 
 	}
+
 	
 
+	@GetMapping("/deleteSchedule")
+	public String deleteSchedule(@RequestParam("schNo") Integer schNo) {
+	    scheduleService.deleteSchedule(schNo);
+	    return "schedule/calendar";
+	}
 		
 }

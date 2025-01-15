@@ -34,5 +34,4 @@
 DELETE FROM schedules
 WHERE sch_no = #{schNo}
 </delete>
-	
 </mapper>

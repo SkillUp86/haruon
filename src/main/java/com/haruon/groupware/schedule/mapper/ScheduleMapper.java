@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.schedule.entity.Schedules;
 
-import com.haruon.groupware.schedule.entity.ScheduleAttendance;
-
 
 
 @Mapper
@@ -16,7 +14,6 @@ public interface ScheduleMapper {
 	
 	int addSchedule (Schedules schedules);
 	
-	Integer deleteScheduleAttendance(ScheduleAttendance schNo);
+	Integer deleteSchedule (Integer schNo);
 	
-	Integer deleteSchedule (Schedules schNo);
 }
