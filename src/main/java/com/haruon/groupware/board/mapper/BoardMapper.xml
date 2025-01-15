@@ -159,6 +159,24 @@
 		WHERE boa_no = #{boaNo}
 	</select>
 	
+	<!-- 홈 -->
+	<select id="selectBoardHome" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+			, c.cat_name catName
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		INNER JOIN category c
+			ON b.cat_no = c.cat_no
+		WHERE b.cat_no != 1
+		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
+		ORDER BY b.boa_no DESC
+		LIMIT 5
+	</select>
+	
 	<!-- 	
 공지
 	-->
@@ -208,6 +226,20 @@
 		WHERE cat_no = #{catNo}
 	</update>
 	
+	<!-- 홈 -->
+	<select id="selectNoticeHome" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		WHERE b.cat_no = 1
+		ORDER BY b.boa_no DESC
+		LIMIT 5
+	</select>
+	
 	<!-- 글 삭제 -->
 	<delete id="deleteBoard" parameterType="Integer">
 		DELETE FROM board
@@ -223,9 +255,11 @@
 		DELETE FROM board_comment
 		WHERE boa_no = #{boaNo}
 	</delete>
-	<!--  -->
+	<!-- 글 삭제 전 추천 삭제 -->
 	<delete id="deleteLike" parameterType="Integer">
 		DELETE FROM board_like
 		WHERE boa_no = #{boaNo}
 	</delete>
+	
+
 </mapper>

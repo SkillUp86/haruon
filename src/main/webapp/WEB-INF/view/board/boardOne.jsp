@@ -134,7 +134,7 @@
                              	<div>
                              		<p style="text-align: right;">
                              			<c:if test="${b.catNo != 1}"> <!-- 자유 게시판 글일 때  -->
-                             				<a href="${pageContext.request.contextPath}/board/update?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+                             				<a href="${pageContext.request.contextPath}/board/modify?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
                                                 <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 											</a> &nbsp;
@@ -145,7 +145,7 @@
 											</a>
                              			</c:if>
                              			<c:if test="${b.catNo == 1}"> <!-- 공지 글일 때  -->
-                             				<a href="${pageContext.request.contextPath}/board/updateNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+                             				<a href="${pageContext.request.contextPath}/board/modifyNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
                                                 <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 											</a> &nbsp;
@@ -189,7 +189,7 @@
 	                                         	<div class="col-md-6">
 	                                                 <div class="mb-3">
 	                                                     <label class="form-label">작성자</label>
-	                                                     <input type="number" class="form-control" id="empNo" name="empNo" style="width: 150px;"> <!-- readonly -->
+	                                                     <input type="number" class="form-control" id="empNo" name="empNo" value="${empNo}" style="width: 150px;" readonly>
 	                                                 </div>
 	                                             </div>
 	                                             <div class="col-md-12">

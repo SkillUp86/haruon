@@ -126,6 +126,13 @@ public class BoardService {
 		return boardMapper.selectBoardFiles(boaNo);
 	}
 	
+	// 홈
+	public List<Map<String,Object>> getBoardHome(){
+		Map<String,Object> paramMap = new HashMap<>();
+		List<Map<String,Object>> boardList = boardMapper.selectBoardHome(paramMap);
+		return boardList;
+	}
+	
 /* 공지 */
 	// 공지 리스트
 	public List<Map<String,Object>> getNoticeList(){
@@ -184,6 +191,13 @@ public class BoardService {
 		return boardMapper.updateNotice(map);
 	}
 	
+	// 홈
+	public List<Map<String,Object>> getNoticeHome(){
+		Map<String,Object> paramMap = new HashMap<>();
+		List<Map<String,Object>> boardList = boardMapper.selectNoticeHome(paramMap);
+		return boardList;
+	}
+	
 	// 글 삭제
 	public void deleteBoard(Integer boaNo, String path) {
 		// 추천 삭제
@@ -203,6 +217,5 @@ public class BoardService {
 				f.delete();
 			}
 		}
-		
 	}
 }

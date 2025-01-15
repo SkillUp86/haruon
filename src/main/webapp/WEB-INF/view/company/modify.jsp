@@ -131,50 +131,48 @@
 						<div class="account-content">
 							<div class="row mb-3">
 								<div class="col-md-12">
-									<h2>회사 정보</h2>
+									<h2>회사 정보 수정</h2>
 
 									<div class="widget-content widget-content-area br-8">
 										<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 
 											<div class="container col-xl-6">
-												<div class="d-flex align-items-center mb-5" style="display: flex; justify-content: center;">
-													<img src="${pageContext.request.contextPath}/src/assets/img/logo.svg" style="width: 50px;height: auto;">
-													<h4 class="mb-0 ms-3">${c.comName}</h4>
-												</div>
-
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.comName}" readonly>
+											
+												<form id="formModify" action="${pageContext.request.contextPath}/company/modify" method="post">
+													<div class="form-group row mb-3">
+														<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control form-control-md" id="comName" name="comName" placeholder="Business Name" value="${c.comName}">
+														</div>
 													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.address}" readonly>
+													<div class="form-group row mb-3">
+														<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control form-control-md" id="address" name="address" placeholder="Business Name" value="${c.address}">
+														</div>
 													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.leader}" readonly>
+													<div class="form-group row mb-3">
+														<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control form-control-md" id="leader" name="leader" placeholder="Business Name" value="${c.leader}">
+														</div>
 													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.phone}" readonly>
+													<div class="form-group row mb-3">
+														<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control form-control-md" id="phone" name="phone" placeholder="Business Name" value="${c.phone}">
+														</div>
 													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.email}" readonly>
+													<div class="form-group row mb-3">
+														<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control form-control-md" id="email" name="email" placeholder="Business Name" value="${c.email}">
+														</div>
 													</div>
-												</div>
-												<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
-													<a href="${pageContext.request.contextPath}/company/modify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</a>
-												</div>
+													<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
+														<button id="btnModify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</button>
+													</div>
+												</form>
 											</div>
 										</div>
 									</div>
@@ -191,7 +189,8 @@
                     <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
                 </div>
                 <div class="footer-section f-section-2">
-                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
+                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
                 </div>
             </div>
             <!--  END FOOTER  -->
@@ -220,6 +219,29 @@
     <script src="../src/plugins/src/sweetalerts2/sweetalerts2.min.js"></script>
     <script src="../src/plugins/src/sweetalerts2/custom-sweetalert.js"></script>
     <!-- END THEME GLOBAL STYLE --> 
-  
+    
+    <script>
+    	$('#btnModify').click(function(){
+    		if($('#comName').val() == ''){
+    			alert('회사명을 입력하세요');
+    			return;
+    		} else if($('#address').val() == ''){
+    	        alert('주소를 입력하세요');
+    	        return;
+    	    }  else if($('#leader').val() == ''){
+    	        alert('대표자를 입력하세요');
+    	        return;
+    	    } else if($('#phone').val() == ''){
+    	        alert('대표번호를 입력하세요');
+    	        return;
+    	    } else if($('#email').val() == ''){
+    	        alert('이메일을 입력하세요');
+    	        return;
+    	    } else {
+    			$('#formModify').submit();
+    		}
+    	})
+    </script>
+ 
 </body>
 </html>

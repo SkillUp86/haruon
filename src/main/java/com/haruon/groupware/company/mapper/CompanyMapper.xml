@@ -12,4 +12,13 @@
 		FROM company
 	</select>
 	
+	<update id="modifyCompanyInfo" parameterType="Map">
+		UPDATE company
+		SET com_name = #{comName}
+			, address = #{address}
+			, leader = #{leader}
+			, phone = #{phone}
+			, email = #{email}
+			, update_date = NOW()
+	</update>
 </mapper>

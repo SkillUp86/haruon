@@ -39,6 +39,9 @@ public interface BoardMapper {
 	Integer updateBoard(Map<String,Object> map);
 	List<BoardFile> selectBoardFiles(Integer boaNo);
 	
+	// 홈
+	List<Map<String,Object>> selectBoardHome(Map<String,Object> map);
+	
 /* 공지 */
 	// 공지 리스트
 	List<Map<String,Object>> selectNoticeList(Map<String,Object> map);
@@ -51,6 +54,9 @@ public interface BoardMapper {
 	
 	// (카테고리 삭제) board 테이블에서 특정 cat_no를 기타 카테고리로 업데이트
 	Integer updateCatNo(Integer catNo, Integer newCatNo);
+	
+	// 홈
+	List<Map<String,Object>> selectNoticeHome(Map<String,Object> map);
 	
 	// 글 삭제
 	Integer deleteBoard(Integer boaNo);

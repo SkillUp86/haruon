@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.board.dto.BoardDto;
 import com.haruon.groupware.board.entity.BoardComment;
 import com.haruon.groupware.board.entity.BoardFile;
@@ -44,13 +46,17 @@ public class BoardController {
 	
 	// 게시글 상세
 	@GetMapping("/board/{boaNo}")
-    public String getBoardOne(@PathVariable Integer boaNo, Model model) {
+    public String getBoardOne(Authentication authentication, @PathVariable Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
         // 댓글 리스트
         List<Map<String,Object>> commentList = boardService.getCommentList(boaNo);
         model.addAttribute("commentList",commentList);
+	        // 댓글 입력 칸
+	        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			int empNo = userDetails.getEmpNo();
+			model.addAttribute("empNo",empNo);
         
         // 댓글 수
         Integer countCommnet = boardService.countComment(boaNo);
@@ -69,11 +75,14 @@ public class BoardController {
 	
 	// 댓글 입력
 	@PostMapping("/board/comment")
-	public String insertComment(@RequestParam Integer boaNo, @RequestParam String content) {
+	public String insertComment(Authentication authentication, @RequestParam Integer boaNo, @RequestParam String content) {
 		BoardComment boardComment = new BoardComment();
 	    boardComment.setBoaNo(boaNo);
 	    boardComment.setContent(content);
-	    // boardComment.setEmpNo(로그인empNo); 
+	    
+	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
+	    boardComment.setEmpNo(empNo); 
 	    
 		boardService.insertComment(boardComment);
 		return "redirect:/board/"+ boaNo;
@@ -88,15 +97,20 @@ public class BoardController {
 	
 	// 글 입력
 	@GetMapping("/board/insert")
-    public String insertBoard(Model model) {
+    public String insertBoard(Authentication authentication, Model model) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
+		model.addAttribute("empNo",empNo);
+		
         List<Category> categoryList = categoryService.getCategoryListFree();
         model.addAttribute("categoryList", categoryList);
         
         return "board/insert";
     }
 	@PostMapping("/board/insert")
-	public String insertBoard(HttpSession session, BoardDto boardDto) {
-		Integer empNo = (Integer) session.getAttribute("loginEmpNo");
+	public String insertBoard(Authentication authentication, HttpSession session, BoardDto boardDto) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
 		boardDto.setEmpNo(empNo);
 		
 		String path = session.getServletContext().getRealPath("/uploadBoard/");
@@ -106,8 +120,8 @@ public class BoardController {
 	}
 	
 	// 글 수정
-	@GetMapping("/board/update")
-    public String updateBoard(@RequestParam Integer boaNo, Model model) {
+	@GetMapping("/board/modify")
+    public String modifyBoard(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
@@ -117,10 +131,10 @@ public class BoardController {
 		List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
-        return "board/update";
+        return "board/modify";
     }
-	@PostMapping("/board/update")
-	public String updateBoard(@RequestParam Integer boaNo , @RequestParam Integer catNo, @RequestParam String title
+	@PostMapping("/board/modify")
+	public String modifyBoard(@RequestParam Integer boaNo , @RequestParam Integer catNo, @RequestParam String title
 							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("boaNo", boaNo);
@@ -132,7 +146,7 @@ public class BoardController {
 		
 		List<MultipartFile> list = boardDto.getBoardFile();
 		if(list != null && list.size()!=0) {
-				return "/board/update";
+				return "/board/modify";
 		}
 		String path = session.getServletContext().getRealPath("/upload/");
 		boardService.insertBoard(boardDto, path);
@@ -151,18 +165,19 @@ public class BoardController {
 	
 	// 공지 입력
 	@GetMapping("/board/insertNotice")
-	public String insertNotice(HttpSession session, Model model) {
-		/*
-		 * String empName = (String) session.getAttribute("loginEmpName"); 
-		 * int empNo = (int) session.getAttribute("loginEmpNo"); 
-		 * model.addAttribute("empName", empName); 
-		 * model.addAttribute("empNo", empNo);
-		 */
+	public String insertNotice(Authentication authentication, HttpSession session, Model model) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
+		model.addAttribute("empNo",empNo);
 		
 		return "board/insertNotice";
 	}
 	@PostMapping("/board/insertNotice")
-	public String insertNotice(HttpSession session, BoardDto boardDto) {
+	public String insertNotice(Authentication authentication, HttpSession session, BoardDto boardDto) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
+		boardDto.setEmpNo(empNo);
+		
 		String path = session.getServletContext().getRealPath("/uploadBoard/");
 		boardService.insertNotice(boardDto, path);
 		
@@ -170,18 +185,18 @@ public class BoardController {
 	}	
 	
 	// 공지 수정
-	@GetMapping("/board/updateNotice")
-    public String updateNotice(@RequestParam Integer boaNo, Model model) {
+	@GetMapping("/board/modifyNotice")
+    public String modifyNotice(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
 		List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
         
-        return "board/updateNotice";
+        return "board/modifyNotice";
     }
-	@PostMapping("/board/updateNotice")
-	public String updateNotice(@RequestParam Integer boaNo , @RequestParam String title
+	@PostMapping("/board/modifyNotice")
+	public String modifyNotice(@RequestParam Integer boaNo , @RequestParam String title
 							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("boaNo", boaNo);
@@ -192,7 +207,7 @@ public class BoardController {
 		
 		List<MultipartFile> list = boardDto.getBoardFile();
 		if(list != null && list.size()!=0) {
-				return "/board/updateNotice";
+				return "/board/modifyNotice";
 		}
 		String path = session.getServletContext().getRealPath("/upload/");
 		boardService.insertBoard(boardDto, path);

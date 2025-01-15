@@ -232,7 +232,8 @@
 																	        <c:when test="${d.activeYn == 'N'}">
 																	            btn-light-dark
 																	        </c:when>
-																	    </c:choose>" data-depNo="${d.depNo}" data-activeYn="${d.activeYn}" onclick="setModalData(this)">
+																	    </c:choose>" 
+																	    data-depNo="${d.depNo}" data-activeYn="${d.activeYn}" onclick="setModalData(this)">
 									                            			<c:choose>
 																			    <c:when test="${d.activeYn == 'Y'}">
 																			        활성화
@@ -324,8 +325,8 @@
     });
 	 
 	 // 활성화/비활성화 버튼
-	 //document.addEventListener('DOMContentLoaded', function() {
-		 document.querySelectorAll('.widget-content .warning').forEach(button => {
+	 document.addEventListener('DOMContentLoaded', function() {
+		 document.querySelectorAll('.warning').forEach(button => {
 	        button.addEventListener('click', function(event) {
 	            event.preventDefault(); // 기본 링크 동작 방지
 	            const depNo = this.getAttribute('data-depNo'); // 데이터 속성에서 depNo 추출
@@ -341,13 +342,14 @@
 	                this.classList.add('btn-light-dark');
 	            }
 	            
+	            this.setAttribute('data-depNo', depNo);
 	            this.setAttribute('data-activeYn', activeYn); // data-activeYn 값 업데이트
-	            console.log("activeYn: "+activeYn);
+	            console.log("update activeYn: "+activeYn);
 	            console.log("전송 값:", { depNo: parseInt(depNo, 10), activeYn: activeYn });
 	            
 			    Swal.fire({ // sweet alert
 			        title: '부서를 활성화/비활성화 하시겠습니까?',
-			        icon: 'warning',
+			        icon: 'question',
 			        showCancelButton: true,
 			        confirmButtonColor: '#3085d6',
 			        cancelButtonColor: '#d33',
@@ -355,7 +357,7 @@
 			    }).then((result) => {
 			        if (result.isConfirmed) {
 			        	$.ajax({
-		                    url: `${window.location.origin}/depts/activeYN`,
+		                    url: `\${window.location.origin}/depts/activeYN`,
 		                    type: 'POST',
 		                    data: { depNo:  parseInt(depNo, 10), activeYn: activeYn},
 		                    success: function(response) {
@@ -372,7 +374,7 @@
 			    });
 			});
 		});
-	//});
+	});
     </script>
 
 </body>
