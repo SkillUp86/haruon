@@ -2,10 +2,12 @@ package com.haruon.groupware.draft.service;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
@@ -24,8 +26,15 @@ public class DraftService {
 	}
 
 	// 유효성 검증
-	public boolean hasAccess(int draNo, int empNo) {
-		return draftMapper.hasAccess(draNo, empNo) > 0;
+	public Boolean isAccess(int draNo) {
+		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = (int)details.getEmpNo();
+		int draftByEmpNo = draftMapper.isAccess(draNo).getEmpNo();
+		
+		if(empNo == draftByEmpNo) {
+			return true;
+		}
+		return false;
 	}
 
 	// 결재 문서 리스트

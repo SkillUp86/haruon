@@ -31,11 +31,9 @@ public class DraftController {
 
 	// 휴가 상세보기
 	@GetMapping("/draft/detail/vacation/{draNo}")
-	public String vacationDraft(@PathVariable int draNo, Model model, Authentication authentication) {
+	public String vacationDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseVacationDraftDetail draftDetail = draftService.getVacationDraftDetail(draNo);
@@ -47,11 +45,9 @@ public class DraftController {
 
 	// 매출 상세보기
 	@GetMapping("/draft/detail/sales/{draNo}")
-	public String salesDraft(@PathVariable int draNo, Model model, Authentication authentication) {
+	public String salesDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseSalesDraftDetail draftDetail = draftService.getSalesDraftDetail(draNo);
@@ -64,11 +60,9 @@ public class DraftController {
 
 	// 출장 상세보기
 	@GetMapping("/draft/detail/business/{draNo}")
-	public String businessDraft(@PathVariable int draNo, Model model, Authentication authentication) {
+	public String businessDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseBusinessDraftDetail draftDetail = draftService.getBusinessDraftDetail(draNo);
@@ -80,11 +74,9 @@ public class DraftController {
 
 	// 기본 상세보기
 	@GetMapping("/draft/detail/basic/{draNo}")
-	public String basicDraft(@PathVariable int draNo, Model model, Authentication authentication) {
+	public String basicDraft(@PathVariable int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseBasicDraftDetail draftDetail = draftService.getBasicDraftDetail(draNo);

@@ -27,12 +27,9 @@ public class DeleteController {
 	}
 
 	@GetMapping("/draft/delete")
-	public String deleteBasicDraft(@RequestParam int draNo, @RequestParam int appNo, @RequestParam String docType,
-			HttpSession session, Authentication authentication) {
+	public String deleteBasicDraft(@RequestParam int draNo, @RequestParam int appNo, @RequestParam String docType,HttpSession session) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
@@ -44,24 +41,36 @@ public class DeleteController {
 	// 휴가 기안서 파일 삭제
 	@GetMapping("/deleteFile/vacation")
 	public String deleteFileByVacation(@RequestParam int draNo, @RequestParam int drafNo, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(draNo)) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/vacation?draNo=" + draNo;
 	}
-	
+
 	// 매출 기안서 파일 삭제
 	@GetMapping("/deleteFile/sales")
 	public String deleteFileBySales(@RequestParam int draNo, @RequestParam int drafNo, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(draNo)) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return "redirect:/draft/update/sales?draNo=" + draNo;
 	}
-	
+
 	// 출장 기안서 파일 삭제
 	@GetMapping("/deleteFile/business")
 	public String deleteFileByBusiness(@RequestParam int draNo, @RequestParam int drafNo, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(draNo)) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
@@ -71,6 +80,10 @@ public class DeleteController {
 	// 기본 기안서 파일삭제
 	@GetMapping("/deleteFile/basic")
 	public String deleteFileByBasic(@RequestParam int draNo, @RequestParam int drafNo, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(draNo)) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);

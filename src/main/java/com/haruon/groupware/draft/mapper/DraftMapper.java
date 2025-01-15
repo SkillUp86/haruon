@@ -10,11 +10,12 @@ import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
+import com.haruon.groupware.user.entity.EmpEntity;
 
 @Mapper
 public interface DraftMapper {
 	// 유효성 검증
-	int hasAccess(int draNo, int empNo);
+	EmpEntity isAccess(int empNo);
 
 	// 사원별 결재문서 리스트
 	List<ResponseDraft> findDraftByApproval(int empNo);

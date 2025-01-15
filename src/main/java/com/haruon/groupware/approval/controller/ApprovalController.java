@@ -38,10 +38,9 @@ public class ApprovalController {
 		log.debug(approval.toString());
 		List<MultipartFile> list = approval.getFormFile();
 		if (list != null && !list.isEmpty()) {
-			boolean existFilename = false;
 			for (MultipartFile f : list) {
 				if (f.isEmpty()) {
-					continue; // 비어 있는 파일은 넘김
+					continue;
 				}
 				 if (f.getSize() > 10 * 1024 * 1024) {
 		                model.addAttribute("msg", "첨부파일 크기는 10MB를 초과할 수 없습니다.");

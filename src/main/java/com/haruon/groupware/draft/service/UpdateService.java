@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import com.haruon.groupware.draft.dto.request.RequestUpdateBasicDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateBusinessDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateSalesDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateVacationDraft;
+import com.haruon.groupware.draft.mapper.DraftMapper;
 import com.haruon.groupware.draft.mapper.UpdateMapper;
 
 @Transactional
@@ -23,12 +25,12 @@ public class UpdateService {
 
 	private final UpdateMapper updateMapper;
 	private final ApprovalMapper approvalMapper;
+	
 
-	public UpdateService(UpdateMapper updateMapper, ApprovalMapper approvalMapper) {
+	public UpdateService(UpdateMapper updateMapper, ApprovalMapper approvalMapper, DraftMapper draftMapper) {
 		this.updateMapper = updateMapper;
 		this.approvalMapper = approvalMapper;
 	}
-	
 	
 	// 휴가 업데이트
 	public void getUpdateVacationDraft(RequestUpdateVacationDraft vacationDraft, String path) {

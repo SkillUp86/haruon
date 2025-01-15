@@ -35,12 +35,6 @@ public class EmpProfileService {
 		String filname = path + empFile.getFileName() + "." + empFile.getExt();
 		File f = new File(filname);
 		f.delete();
-		boolean isDeleted = f.delete();
-		if (!isDeleted) {
-		    System.out.println("파일 삭제 실패: " + filname);
-		} else {
-		    System.out.println("파일 삭제 성공: " + filname);
-		}
 		int row = emprofileMapper.removeProfileFile(empNo);
 		if (row == 1) {
 			insertFile(file, empNo, path);

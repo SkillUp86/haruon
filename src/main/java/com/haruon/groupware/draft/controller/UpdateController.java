@@ -48,6 +48,10 @@ public class UpdateController {
 
 	@PostMapping("/update/vacationDraft")
 	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(vacationDraft.getDraNo())) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		updateService.getUpdateVacationDraft(vacationDraft, path);
 		return "redirect:/draft/detail/vacation/" + vacationDraft.getDraNo();
@@ -55,11 +59,9 @@ public class UpdateController {
 
 	// 휴가보고서 수정
 	@GetMapping("/update/vacation")
-	public String updateVacationDraft(@RequestParam int draNo, Model model, Authentication authentication) {
+	public String updateVacationDraft(@RequestParam int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseVacationDraftDetail draftDetail = draftService.getVacationDraftDetail(draNo);
@@ -79,6 +81,10 @@ public class UpdateController {
 
 	@PostMapping("/update/salesDraft")
 	public String updateSalesDraft(RequestUpdateSalesDraft salesDraft, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(salesDraft.getDraNo())) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		updateService.getUpdateSalesDraft(salesDraft, path);
 		return "redirect:/draft/detail/sales/" + salesDraft.getDraNo();
@@ -86,11 +92,9 @@ public class UpdateController {
 
 	// 매출보고서 수정
 	@GetMapping("/update/sales")
-	public String updateSalesDraft(@RequestParam int draNo, Model model, Authentication authentication) {
+	public String updateSalesDraft(@RequestParam int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseSalesDraftDetail draftDetail = draftService.getSalesDraftDetail(draNo);
@@ -104,6 +108,10 @@ public class UpdateController {
 
 	@PostMapping("/update/businessDraft")
 	public String updateBusinessDraft(RequestUpdateBusinessDraft businessDraft, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(businessDraft.getDraNo())) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		updateService.getUpdateBusinessDraft(businessDraft, path);
 		return "redirect:/draft/detail/business/" + businessDraft.getDraNo();
@@ -111,11 +119,9 @@ public class UpdateController {
 
 	// 출장 기안서 수정
 	@GetMapping("/update/business")
-	public String updateBusinessDraft(@RequestParam int draNo, Model model, Authentication authentication) {
+	public String updateBusinessDraft(@RequestParam int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseBusinessDraftDetail draftDetail = draftService.getBusinessDraftDetail(draNo);
@@ -127,6 +133,10 @@ public class UpdateController {
 
 	@PostMapping("/update/basicDraft")
 	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, HttpSession session) {
+		// 유효성검사
+		if (!draftService.isAccess(basicDraft.getDraNo())) {
+			return "login";
+		}
 		String path = session.getServletContext().getRealPath("/uploadDraft/");
 		updateService.getUpdateBasicDraft(basicDraft, path);
 		return "redirect:/draft/detail/basic/" + basicDraft.getDraNo();
@@ -134,11 +144,9 @@ public class UpdateController {
 
 	// 기본 기안서 수정
 	@GetMapping("/update/basic")
-	public String updateBasicDraft(@RequestParam int draNo, Model model, Authentication authentication) {
+	public String updateBasicDraft(@RequestParam int draNo, Model model) {
 		// 유효성검사
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		if (!draftService.hasAccess(draNo, empNo)) {
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		ResponseBasicDraftDetail draftDetail = draftService.getBasicDraftDetail(draNo);
