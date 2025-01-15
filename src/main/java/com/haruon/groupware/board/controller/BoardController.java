@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.haruon.groupware.auth.CustomUserDetails;
@@ -36,7 +37,7 @@ public class BoardController {
 /* 자유 */
 	// 자유 게시판 리스트
 	@GetMapping("/board")
-	public String getBoardList(Model model) {
+	public String board(Model model) {
 		List<Map<String,Object>> boardList = boardService.getBoardList();
 		model.addAttribute("boardList", boardList);
 		
@@ -44,6 +45,13 @@ public class BoardController {
 		model.addAttribute("categoryList", categoryList);
 	
 		return "board/board";
+	}
+	
+	// 자유 게시판 리스트
+	@GetMapping("/board/list")
+	@ResponseBody
+	public List<Map<String,Object>> boardList() {
+		return boardService.getBoardList();
 	}
 	
 	// 게시글 상세

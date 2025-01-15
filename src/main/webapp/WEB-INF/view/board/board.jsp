@@ -103,7 +103,7 @@
 										<ul class="nav nav-tabs d-flex justify-content-between" id="pills-tab" role="tablist">
 											<div class="d-flex">
 												<li class="nav-item" role="presentation">
-													<button class="nav-link active" id="tab-전제"
+													<button class="nav-link active" id="tab-전체"
 														data-bs-toggle="tab" data-bs-target="#전체-tab-pane"
 														type="button" role="tab" aria-controls="#전체-tab-pane" aria-selected="true">전체</button>
 												</li>
@@ -284,7 +284,7 @@
 	        function tabData(tabData) {
 	            let url; 
 	            if (tabData === '전체') {
-	                url = '/board';
+	                url = '/board/list';
 	            } else {
 	                let catNo = tabData.replace('tab', '').trim();
 	                console.log(catNo);
@@ -303,6 +303,7 @@
 	                        let tableId = tabData === '전체' ? 'board-list' : tabData + '-board-list'; // 테이블 ID 선택 = catNo-board-list
 	                        console.log(tableId);
 
+	                        tableId = $('#' + tableId).length == 0 ? tableId + '_wrapper' : tableId;
 	                        let table = $('#' + tableId).DataTable({ // 새로운 DataTable 인스턴스 생성
 	                            paging: true,
 	                            destroy: true, // 기존 데이터를 파괴하고 새로 초기화
@@ -321,7 +322,9 @@
 	                            "lengthMenu": [7, 10, 20, 50],
 	                            "pageLength": 10 
 	                        });
-
+	                        
+	                        table.clear();
+	                        
 	                        // 데이터 추가
 	                        data.forEach(item => {
 	                            // console.log(item);
