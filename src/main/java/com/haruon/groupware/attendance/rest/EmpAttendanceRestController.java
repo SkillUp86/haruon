@@ -16,15 +16,16 @@ import com.haruon.groupware.attendance.dto.ResponseBusinessTripList;
 import com.haruon.groupware.attendance.dto.ResponseLeaveList;
 import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.service.AttendanceService;
+import com.haruon.groupware.attendance.service.EmpAttendanceService;
 import com.haruon.groupware.auth.CustomUserDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @RestController
-public class AttendanceRestController {
+public class EmpAttendanceRestController {
 	@Autowired private AttendanceService attendanceService;
+	@Autowired private EmpAttendanceService empAttendanceService;
 	
 	// 로그인한 사람의 출근/퇴근 시간
 	@GetMapping("/attendance/employee/{empNo}")
@@ -33,26 +34,9 @@ public class AttendanceRestController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
 		if(userDetails.getEmpNo().equals(empNo)) {
-			Attendance attendanceByEmp = attendanceService.findAttendanceByEmp(empNo);
+			Attendance attendanceByEmp = empAttendanceService.findAttendanceByEmp(empNo);
 			//log.debug(attendanceByEmp.toString());
 			return ResponseEntity.ok(attendanceByEmp);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-		}
-	}
-	
-	// (부서) (월) 근태 기록(yearMonth "yyyy-MM")
-	@GetMapping({"/department/attendance/{deptNo}/{yearMonth}"})
-	public ResponseEntity<List<ResponseAttendanceList>> getAttendanceListByDivision(@PathVariable Integer deptNo
-																					, @PathVariable String yearMonth
-																					, Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-		if(userDetails.getDepNo().equals(deptNo)) {
-			List<ResponseAttendanceList> attendanceList = attendanceService
-															.findDeptAttendanceListByMonth(deptNo, yearMonth);
-			//log.debug(attendanceByEmp.toString());
-			return ResponseEntity.ok(attendanceList);
 		} else {
 			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
 		}
@@ -65,7 +49,7 @@ public class AttendanceRestController {
 																					, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		if(userDetails.getEmpNo().equals(empNo)) {
-			List<ResponseAttendanceList> attendanceList = attendanceService
+			List<ResponseAttendanceList> attendanceList = empAttendanceService
 													 		.findEmpAttendanceListByMonth(empNo, yearMonth);
 			log.debug(attendanceList.toString());
 			return ResponseEntity.ok(attendanceList);
@@ -76,23 +60,7 @@ public class AttendanceRestController {
 		
 	}
 	
-	// (부서) (월) 휴가 신청 기록(yearMonth "yyyy-MM")
-	@GetMapping({"/department/leaves/{deptNo}/{yearMonth}"})
-	public ResponseEntity<List<ResponseLeaveList>> getDeptLeaveReqListByMonth(@PathVariable Integer deptNo
-																			  , @PathVariable String yearMonth
-																			  , Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-		if(userDetails.getDepNo().equals(deptNo)) {
-			List<ResponseLeaveList> leaveReqList = attendanceService
-															.findtDeptLeaveReqListByMonth(deptNo, yearMonth);
-			//log.debug(attendanceByEmp.toString());
-			return ResponseEntity.ok(leaveReqList);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-		}
-	}
-	
+
 	// (개인) (월) 휴가 신청 기록
 	@GetMapping("/employee/leaves/{empNo}/{yearMonth}")
 	public ResponseEntity<List<ResponseLeaveList>> getEmpLeaveReqListByMonth(@PathVariable Integer empNo
@@ -100,7 +68,7 @@ public class AttendanceRestController {
 																		 	, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		if(userDetails.getEmpNo().equals(empNo)) {
-			List<ResponseLeaveList> leaveReqList = attendanceService
+			List<ResponseLeaveList> leaveReqList = empAttendanceService
 													 		.findtEmpLeaveReqListByMonth(empNo, yearMonth);
 			log.debug(leaveReqList.toString());
 			return ResponseEntity.ok(leaveReqList);
@@ -109,44 +77,6 @@ public class AttendanceRestController {
 			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
 		}
 		
-	}
-	
-	// 회사 유급휴가 평균 사용률(연간)
-	@GetMapping("/company/leave/UsageRate")
-	public ResponseEntity<Double> findCompanyLeaveUsageRateForYear() {
-		Double empLeaveUsageRate = attendanceService.findLeaveUsageRateForYear(new RequestAttendanceList());
-		return ResponseEntity.ok(empLeaveUsageRate);
-	}
-	
-	// 부서 유급휴가 사용률(연간)
-	@GetMapping("/department/leave/UsageRate/{deptNo}")
-	public ResponseEntity<Double> findDeptLeaveUsageRateForYear(@PathVariable Integer deptNo
-			 													, Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-		if(userDetails.getDepNo().equals(deptNo)) {
-			RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
-			requestAttendanceList.setDeptNo(deptNo);
-			Double empLeaveUsageRate = attendanceService.findLeaveUsageRateForYear(requestAttendanceList);
-			return ResponseEntity.ok(empLeaveUsageRate);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-		}
-	}
-	
-	// 부서원 각각 유급휴가 사용 요약(연간) - 연차 유급휴가 사용률
-	@GetMapping("/department/leaves/information/{deptNo}")
-	public ResponseEntity<List<ResponseLeaveList>> findDeptLeaveUsageRateList(@PathVariable Integer deptNo
-																				, Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		if(userDetails.getDepNo().equals(deptNo)) {
-			RequestAttendanceList requestAttendanceList = new RequestAttendanceList();
-			requestAttendanceList.setDeptNo(deptNo);
-			List<ResponseLeaveList> deptLeaveUsageRateList = attendanceService.findLeaveUsageRateList(requestAttendanceList);
-			return ResponseEntity.ok(deptLeaveUsageRateList);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-		}
 	}
 	
 	// 개인 유급휴가 사용률(연간)
@@ -179,22 +109,6 @@ public class AttendanceRestController {
 		}
 	}
 	
-	// (부서) (월) 출장 신청 기록(yearMonth "yyyy-MM")
-	@GetMapping({"/department/businessTrips/{deptNo}/{yearMonth}"})
-	public ResponseEntity<List<ResponseBusinessTripList>> getDeptBusinessTripListByMonth(@PathVariable Integer deptNo
-																						  , @PathVariable String yearMonth
-																						  , Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-		if(userDetails.getDepNo().equals(deptNo)) {
-			List<ResponseBusinessTripList> businessTripReqList = attendanceService
-															.findDeptBusinessTripReqListByMonth(deptNo, yearMonth);
-			return ResponseEntity.ok(businessTripReqList);
-		} else {
-			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-		}
-	}
-	
 	// (개인) (월) 출장 신청 기록
 	@GetMapping("/employee/businessTrips/{empNo}/{yearMonth}")
 	public ResponseEntity<List<ResponseBusinessTripList>> getEmpBusinessTripReqListByMonth(@PathVariable Integer empNo
@@ -202,7 +116,7 @@ public class AttendanceRestController {
 																							 , Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		if(userDetails.getEmpNo().equals(empNo)) {
-			List<ResponseBusinessTripList> businessTripReqList = attendanceService
+			List<ResponseBusinessTripList> businessTripReqList = empAttendanceService
 													 		.findEmpBusinessTripReqListByMonth(empNo, yearMonth);
 			log.debug(businessTripReqList.toString());
 			return ResponseEntity.ok(businessTripReqList);

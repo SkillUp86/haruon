@@ -51,7 +51,7 @@
 			<if test = "endTime != null">
 				AND state is null 
 			</if>
-			<if test = "state != null or approvalYN != null">
+			<if test = "approvalYN != null">
 				AND state is not null
 			</if>
 		</where>
