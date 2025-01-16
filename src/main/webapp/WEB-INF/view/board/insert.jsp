@@ -114,7 +114,8 @@
 	                                <div class="row mb-4">
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
-	                                        <input type="number" class="form-control" id="empNo" name="empNo" value="${empNo}" placeholder="사원번호" style="width: 150px;" readonly>
+	                                    	<input type="hidden" id="empNo" name="empNo" value="${empNo}">
+                                            <input type="text" class="form-control" id="ename" name="ename" value="${ename}" style="width: 150px;" readonly>
 	                                    </div>
 	                                </div>
 	                                
@@ -145,8 +146,7 @@
 	                                    <div class="col-md-8">
 			                                <label for="product-images">첨부 파일</label>
 			                                <div class="multiple-file-upload">
-			                                    <input type="file" class="filepond file-upload-multiple" name="boardFile" id="boardFile" 
-			                                        multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="5">
+			                                	<input class="form-control file-upload-input" type="file" id="boardFile" name="boardFile" multiple="multiple">
 			                                </div>
 		                               </div>
 		                            </div>

@@ -148,6 +148,9 @@
 																			<div class="d-flex flex-column">
 																				<span class="text-truncate fw-bold">
 																					[${b.catName}] <a href="${pageContext.request.contextPath}/board/${b.boaNo}">${b.title}</a>
+																					<c:if test="${b.countComment > 0}">
+																				        (${b.countComment})
+																				    </c:if>
 																				</span>
 																			</div>
 																		</div>
@@ -163,11 +166,8 @@
 												</div>
 											</div>
 											<!-- END 탭1 - 전체 -->
-
-											<!-- 탭2 - 인기글 -->
-											<!-- 추천수 10개 이상 -->
-
-											<!-- 탭3 ~ -->
+											
+											<!-- 탭2 ~ -->
 											<c:forEach var="ct" items="${categoryList}">
 												<c:if test="${ct.catNo != 1}">
 													<!-- 공지(catNo=1) 제외 -->
@@ -327,10 +327,10 @@
 	                        
 	                        // 데이터 추가
 	                        data.forEach(item => {
-	                            // console.log(item);
+	                            console.log(item);
 	                            let rowDate = [
 	                                item.boaNo,
-	                                `[\${item.catName}] <a href="/board/\${item.boaNo}">\${item.title}</a>`,
+	                                `[\${item.catName}] <a href="/board/\${item.boaNo}">\${item.title}</a> \${item.countComment > 0 ? `(\${item.countComment})` : ''}`,
 	                                item.ename,
 	                                new Date(item.createDate).toLocaleString(), // 날짜 형식 변환
 	                                item.viewCnt,

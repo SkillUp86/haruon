@@ -11,6 +11,7 @@
 			, b.view_cnt viewCnt
 			, c.cat_name catName
 			, COUNT(bl.like_no) countLike
+			, COUNT(bc.com_no) countComment
 		FROM board b
 		INNER JOIN emp e
 			ON b.emp_no = e.emp_no
@@ -18,6 +19,8 @@
 			ON b.cat_no = c.cat_no
 		LEFT JOIN board_like bl
 			ON b.boa_no = bl.boa_no
+		LEFT JOIN board_comment bc
+      		ON b.boa_no = bc.boa_no
 		WHERE b.cat_no != 1
 		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
 		ORDER BY b.boa_no DESC
@@ -34,6 +37,7 @@
 			, c.cat_name catName
 			, b.cat_no catNo
 			, COUNT(bl.like_no) countLike
+			, COUNT(bc.com_no) countComment
 	    FROM board b
 	    INNER JOIN emp e 
 	    	ON b.emp_no = e.emp_no
@@ -41,13 +45,15 @@
 	    	ON b.cat_no = c.cat_no
 	    LEFT JOIN board_like bl 
 	    	ON b.boa_no = bl.boa_no
+	    LEFT JOIN board_comment bc
+      		ON b.boa_no = bc.boa_no
 	    WHERE b.cat_no = #{catNo}
 	    GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
 	    ORDER BY b.boa_no DESC
 	</select>
 	
 	<!-- 게시글 입력 -->
-	<insert id="insertBoard" parameterType="com.haruon.groupware.board.entity.Board">
+	<insert id="insertBoard" parameterType="com.haruon.groupware.board.entity.Board" useGeneratedKeys="true" keyProperty="boaNo">
 		INSERT INTO board(
 			emp_no
 			, cat_no
@@ -77,6 +83,7 @@
 	<select id="selectBoardOne" parameterType="Integer" resultType="Map">
 		SELECT
 			b.boa_no boaNo
+			, b.emp_no empNo
 			, e.ename ename
 			, b.cat_no catNo
 			, c.cat_name catName

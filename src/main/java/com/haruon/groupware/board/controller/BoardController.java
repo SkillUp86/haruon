@@ -67,6 +67,8 @@ public class BoardController {
 	        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			int empNo = userDetails.getEmpNo();
 			model.addAttribute("empNo",empNo);
+			String ename = userDetails.getEname();
+			model.addAttribute("ename",ename);
         
         // 댓글 수
         Integer countCommnet = boardService.countComment(boaNo);
@@ -115,6 +117,8 @@ public class BoardController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
 		model.addAttribute("empNo",empNo);
+		String ename = userDetails.getEname();
+		model.addAttribute("ename",ename);
 		
         List<Category> categoryList = categoryService.getCategoryListFree();
         model.addAttribute("categoryList", categoryList);
@@ -150,22 +154,15 @@ public class BoardController {
 	@PostMapping("/board/modify")
 	public String modifyBoard(@RequestParam Integer boaNo , @RequestParam Integer catNo, @RequestParam String title
 							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boaNo", boaNo);
-		map.put("catNo", catNo);
-		map.put("title", title);
-		map.put("content", content);
-		boardService.updateBoard(map);
-		log.debug("updateBoard: "+map.toString());
-		
-		List<MultipartFile> list = boardDto.getBoardFile();
-		if(list != null && list.size()!=0) {
-				return "/board/modify";
-		}
-		String path = session.getServletContext().getRealPath("/upload/");
-		boardService.insertBoard(boardDto, path);
-		
-		return "redirect:/board/"+boaNo;
+		boardDto.setBoaNo(boaNo);
+	    boardDto.setCatNo(catNo);
+	    boardDto.setTitle(title);
+	    boardDto.setContent(content);
+
+	    String path = session.getServletContext().getRealPath("/upload/board/");
+	    boardService.updateBoard(boardDto, path);
+
+	    return "redirect:/board/" + boaNo;
 	}
 	
 /* 공지 */
@@ -183,6 +180,8 @@ public class BoardController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
 		model.addAttribute("empNo",empNo);
+		String ename = userDetails.getEname();
+		model.addAttribute("ename",ename);
 		
 		return "board/insertNotice";
 	}
@@ -212,21 +211,14 @@ public class BoardController {
 	@PostMapping("/board/modifyNotice")
 	public String modifyNotice(@RequestParam Integer boaNo , @RequestParam String title
 							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boaNo", boaNo);
-		map.put("title", title);
-		map.put("content", content);
-		boardService.updateNotice(map);
-		log.debug("updateBoard: "+map.toString());
-		
-		List<MultipartFile> list = boardDto.getBoardFile();
-		if(list != null && list.size()!=0) {
-				return "/board/modifyNotice";
-		}
-		String path = session.getServletContext().getRealPath("/upload/board/");
-		boardService.insertBoard(boardDto, path);
-		
-		return "redirect:/board/notice"+boaNo;
+		boardDto.setBoaNo(boaNo);
+	    boardDto.setTitle(title);
+	    boardDto.setContent(content);
+
+	    String path = session.getServletContext().getRealPath("/upload/board/");
+	    boardService.updateNotice(boardDto, path);
+
+		return "redirect:/board/"+boaNo;
 	}
 	
 	// 글 삭제

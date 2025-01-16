@@ -110,7 +110,7 @@
 
                             <div class="widget-content widget-content-area ecommerce-create-section">
 
-                                <form id="formUpdate" action="${pageContext.request.contextPath}/board/updateNotice" method="post">
+                                <form id="formUpdate" action="${pageContext.request.contextPath}/board/modifyNotice" method="post" enctype="multipart/form-data">
 	                                <input type="hidden" name="boaNo" value="${b.boaNo}">
 	                               
 	                                <div class="row mb-4">
@@ -131,8 +131,13 @@
 	                                    <div class="col-md-8">
 	                                        <label>첨부파일</label>
 	                                        <div class="multiple-file-upload">
-	                                            <input type="file" class="filepond file-upload-multiple" name="boardFile" id="boardFile" 
-	                                                multiple data-allow-reorder="true" data-instant-upload="false" data-max-file-size="3MB" data-max-files="5">
+	                                            <c:forEach var="bf" items="${boardFiles}">
+						                 			<a href="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}" download="${bf.originalName}.${bf.ext}" class="btn btn-dark mt-1 file">
+								                       ${bf.originalName}.${bf.ext}
+								                    </a><br>
+						                 		</c:forEach>
+						                 		<br>
+	                                            <input class="form-control file-upload-input" type="file" id="boardFile" name="boardFile" multiple="multiple">
 	                                        </div>
 	                                    </div>
 	                                </div>

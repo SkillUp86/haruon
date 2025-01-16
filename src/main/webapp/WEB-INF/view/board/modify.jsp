@@ -110,7 +110,7 @@
 
                             <div class="widget-content widget-content-area ecommerce-create-section">
 
-                                <form id="formUpdate" action="${pageContext.request.contextPath}/board/update" method="post">
+                                <form id="formUpdate" action="${pageContext.request.contextPath}/board/modify" method="post" enctype="multipart/form-data">
 	                                <input type="hidden" name="boaNo" value="${b.boaNo}">
 	                                <div class="col-xxl-12 col-md-6 mb-4">
 	                                     <label for="category">카테고리</label>
@@ -140,8 +140,13 @@
 	                                    <div class="col-md-8">
 	                                        <label>첨부파일</label>
 	                                        <div class="multiple-file-upload">
-	                                            <input type="file" class="filepond file-upload-multiple" name="boardFile" id="boardFile" 
-	                                                multiple data-allow-reorder="true" data-instant-upload="false" data-max-file-size="3MB" data-max-files="5">
+	                                        	<c:forEach var="bf" items="${boardFiles}">
+						                 			<a href="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}" download="${bf.originalName}.${bf.ext}" class="btn btn-dark mt-1 file">
+								                       ${bf.originalName}.${bf.ext}
+								                    </a><br>
+						                 		</c:forEach>
+						                 		<br>
+	                                            <input class="form-control file-upload-input" type="file" id="boardFile" name="boardFile" multiple="multiple">
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -180,42 +185,10 @@
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="${pageContext.request.contextPath}/src/plugins/src/editors/quill/quill.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageCrop.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
-
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 
     <script>
-	    // boardFiles를 JSON으로 변환
-	    var boardFiles = [
-	        <c:forEach var="file" items="${boardFiles}">
-	            {
-	                "boafNo": "${file.boafNo}",
-	                "originalName": "${file.originalName}",
-	                "fileName": "${file.fileName}",
-	                "ext": "${file.ext}",
-	                "kind": "${file.kind}",
-	                "size": "${file.size}"
-	            }
-	        </c:forEach>
-	    ];
-	
-	    // 파일 경로 배열 생성
-	    var filePaths = boardFiles.map(function(file) {
-	        return '${pageContext.request.contextPath}/upload/' + file.fileName; // 웹 애플리케이션의 컨텍스트 경로와 upload 폴더를 결합
-	    });
-	
-	    // ecommerce.addFiles 호출
-	    ecommerce.addFiles(...filePaths); // 스프레드 연산자를 사용하여 배열 전개
-    
     	$('#btnUpdate').click(function(){
     		if($('#category').val() == null || $('#category').val() === ''){
     			$('#category').val('${b.catNo}'); // 카테고리 입력하지 않았으면 원래 카테고리 값 입력

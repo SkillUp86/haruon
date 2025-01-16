@@ -112,9 +112,11 @@
 			                 <c:if test="${not empty boardFiles}">
 				                 <div>
 				                 	<p style="text-align: right;">
-				                 		첨부파일 <br>
+				                 		첨부파일: &nbsp;
 				                 		<c:forEach var="bf" items="${boardFiles}">
-				                 			${bf.filename}.${ext} <br>
+				                 			<a href="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}" download="${bf.originalName}.${bf.ext}" class="btn btn-dark mt-1 file">
+						                       ${bf.originalName}.${bf.ext}
+						                    </a><br>
 				                 		</c:forEach>
 				                 	</p>
 				                 </div>
@@ -197,19 +199,20 @@
 	                                         	<div class="col-md-6">
 	                                                 <div class="mb-3">
 	                                                     <label class="form-label">작성자</label>
-	                                                     <input type="number" class="form-control" id="empNo" name="empNo" value="${empNo}" style="width: 150px;" readonly>
+	                                                     <input type="hidden" id="empNo" name="empNo" value="${empNo}">
+	                                                     <input type="text" class="form-control" id="ename" name="ename" value="${ename}" style="width: 150px;" readonly>
 	                                                 </div>
 	                                             </div>
 	                                             <div class="col-md-12">
 		                                             <div class="mb-3">
-		                                                 <label class="form-label">댓글 작성</label>
+		                                                 <label class="form-label">댓글 내용</label>
 		                                                 <textarea class="form-control" cols="20" rows="4" name="content" id="contents"></textarea>
 		                                             </div>
 	                                             </div>
 	                                         </div>
 	                                         <div class="text-end mt-4">
 	                                             <button class="btn me-3" style="background-color: darkgray; color: #fff !important;">지우기</button>
-	                                             <button id="btnComment" class="btn btn-success">입력</button>
+	                                             <button id="btnComment" class="btn btn-success" type="button">입력</button>
 	                                         </div>
 	                                     </div>
 	                                 </form>   
@@ -243,22 +246,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<script>
-	// 조회수 업데이트
-	$(document).ready(function() {
-		var boaNo = ${b.boaNo}; // 현재 게시글 번호
-        $.ajax({
-            type: "POST",
-            url: "/board/updateView/" + boaNo,
-            success: function(response) {
-                $("#viewCount").text(response.updatedViewCnt); // 페이지에 반영
-            },
-            error: function() {
-                alert("조회수 업데이트 중 오류가 발생했습니다.");
-            }
-        });
-    });
-	
-	// 추천 버튼 클릭
+		// 조회수 업데이트
+		$(document).ready(function() {
+			var boaNo = ${b.boaNo}; // 현재 게시글 번호
+	        $.ajax({
+	            type: "POST",
+	            url: "/board/updateView/" + boaNo,
+	            success: function(response) {
+	                $("#viewCount").text(response.updatedViewCnt); // 페이지에 반영
+	            },
+	            error: function() {
+	                alert("조회수 업데이트 중 오류가 발생했습니다.");
+	            }
+	        });
+	    });
+		
+		// 추천 버튼 클릭
 	    function insertLike(boaNo) {
 	        var heartIcon = $("#heartIcon-" + boaNo);
 	        $.ajax({
@@ -281,6 +284,16 @@
 	            }
 	        });
 	    }
+		
+		// 댓글 입력
+		$('#btnComment').click(function(){
+    		if($('#content').val() == ''){
+    			alert('댓글 내용을 입력하세요');
+    			return;
+    		} else {
+    			$('#formComment').submit();
+    		}
+    	})
 	</script>
 </body>
 </html>

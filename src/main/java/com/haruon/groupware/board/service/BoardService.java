@@ -88,6 +88,42 @@ public class BoardService {
 		boardMapper.deleteComment(comNo);
 	}
 	
+	// 파일 첨부
+	public void insertBoardFiles(BoardDto boardDto, String path) {
+	    List<MultipartFile> list = boardDto.getBoardFile();
+	    Integer boaNo = boardDto.getBoaNo();
+
+	    for (MultipartFile mf : list) {
+	        if (mf != null && !mf.isEmpty()) {
+	            BoardFile boardFile = new BoardFile();
+	            boardFile.setBoaNo(boaNo);
+	            boardFile.setKind(mf.getContentType());
+	            boardFile.setSize((int) mf.getSize());
+
+	            // 파일 이름, 확장자
+	            String filename = UUID.randomUUID().toString().replace("-", "");
+	            boardFile.setFileName(filename);
+	            int dotIdx = mf.getOriginalFilename().lastIndexOf(".");
+	            String originalName = mf.getOriginalFilename().substring(0, dotIdx);
+	            String ext = mf.getOriginalFilename().substring(dotIdx + 1);
+	            boardFile.setOriginalName(originalName);
+	            boardFile.setExt(ext);
+
+	            // DB에 파일 정보 삽입
+	            int row2 = boardMapper.insertBoardFile(boardFile);
+	            log.debug("insertBoardFile row: " + row2);
+	            if (row2 == 1) {
+	                try {
+	                    // 물리적 파일 저장
+	                    mf.transferTo(new File(path + filename + "." + ext));
+	                } catch (IllegalStateException | IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }
+	}
+	
 	// 게시글 입력
 	public void insertBoard(BoardDto boardDto, String path) {
 		Board board = new Board();
@@ -96,49 +132,32 @@ public class BoardService {
 		board.setCatNo(boardDto.getCatNo());
 		board.setEmpNo(boardDto.getEmpNo());
 		
+		Integer row = boardMapper.insertBoard(board);
 		Integer boaNo = board.getBoaNo();
 		boardDto.setBoaNo(boaNo);
+		// log.debug("insertBoard boaNo: "+boaNo);
 		
-		Integer row = boardMapper.insertBoard(board);
-		
-		if(row == 1 && boardDto.getBoardFile() != null && !boardDto.getBoardFile().isEmpty()) { // 첨부파일이 있을때만
-			List<MultipartFile> list = boardDto.getBoardFile();
-			for(MultipartFile mf : list) {
-				if (mf != null && !mf.isEmpty()) { // 파일이 있을 떄
-					BoardFile boardFile = new BoardFile();
-					boardFile.setBoaNo(boaNo);
-					boardFile.setKind(mf.getContentType());
-					boardFile.setSize(Integer.parseInt(String.valueOf(mf.getSize())));
-					
-					// 파일 이름, 확장자
-					String filename = UUID.randomUUID().toString().replace("-", "");
-					boardFile.setFileName(filename);
-					int dotIdx = mf.getOriginalFilename().lastIndexOf(".");
-					String originName = mf.getOriginalFilename().substring(0,dotIdx);
-					String ext = mf.getOriginalFilename().substring(dotIdx+1);
-					boardFile.setOriginalName(originName);
-					boardFile.setExt(ext);
-					
-					// BoardFile을 db에 삽입
-					int row2 = boardMapper.insertBoardFile(boardFile);
-					log.debug("insertBoardFile row: "+Integer.toString(row2));
-					if(row2 == 1) {
-						try { // 물리적 파일 저장
-							mf.transferTo(new File(path + filename + "." + ext));
-						} catch (IllegalStateException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
+		// 첨부파일이 있을때만
+		if(row == 1 && boardDto.getBoardFile() != null && !boardDto.getBoardFile().isEmpty()) { 
+			 insertBoardFiles(boardDto, path);
 		}
 	}
 	
 	// 글 수정
-	public Integer updateBoard(Map<String,Object> map) {
-		return boardMapper.updateBoard(map);
+	public void updateBoard(BoardDto boardDto, String path) {
+	    // 1. 게시글 내용 업데이트
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("boaNo", boardDto.getBoaNo());
+	    map.put("catNo", boardDto.getCatNo());
+	    map.put("title", boardDto.getTitle());
+	    map.put("content", boardDto.getContent());
+
+	    int row = boardMapper.updateBoard(map);
+
+	    // 2. 새 파일 첨부
+	    if (row == 1 && boardDto.getBoardFile() != null && !boardDto.getBoardFile().isEmpty()) {
+	        insertBoardFiles(boardDto, path);
+	    }
 	}
 	public List<BoardFile> getBoardFiles(Integer boaNo){
 		return boardMapper.selectBoardFiles(boaNo);
@@ -164,49 +183,32 @@ public class BoardService {
 		Board board = new Board();
 		board.setTitle(boardDto.getTitle());
 		board.setContent(boardDto.getContent());
-		board.setCatNo(boardDto.getCatNo());
+		board.setEmpNo(boardDto.getEmpNo());
 		
 		Integer row = boardMapper.insertNotice(board);
+		Integer boaNo = board.getBoaNo();
+		boardDto.setBoaNo(boaNo);
 		
-		if(row == 1 && boardDto.getBoardFile() != null) {
-			Integer boaNo = board.getBoaNo();
-			boardDto.setBoaNo(boaNo);
-			
-			List<MultipartFile> list = boardDto.getBoardFile();
-			for(MultipartFile mf : list) {
-				BoardFile boardFile = new BoardFile();
-				boardFile.setBoaNo(boaNo);
-				boardFile.setKind(mf.getContentType());
-				boardFile.setSize(Integer.parseInt(String.valueOf(mf.getSize())));
-				
-				// 파일 이름, 확장자
-				String filename = UUID.randomUUID().toString().replace("-", "");
-				boardFile.setFileName(filename);
-				int dotIdx = mf.getOriginalFilename().lastIndexOf(".");
-				String originName = mf.getOriginalFilename().substring(0,dotIdx);
-				String ext = mf.getOriginalFilename().substring(dotIdx+1);
-				boardFile.setOriginalName(originName);
-				boardFile.setExt(ext);
-				
-				// BoardFile을 db에 삽입
-				int row2 = boardMapper.insertBoardFile(boardFile);
-				log.debug("insertBoardFile row: "+Integer.toString(row2));
-				if(row2 == 1) {
-					try { // 물리적 파일 저장
-						mf.transferTo(new File(path + filename + "." + ext));
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+		// 첨부파일이 있을때만
+		if(row == 1 && boardDto.getBoardFile() != null && !boardDto.getBoardFile().isEmpty()) { 
+			 insertBoardFiles(boardDto, path);
 		}
 	}
 	
 	// 공지 수정
-	public Integer updateNotice(Map<String,Object> map) {
-		return boardMapper.updateNotice(map);
+	public void updateNotice(BoardDto boardDto, String path) {
+		// 1. 게시글 내용 업데이트
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("boaNo", boardDto.getBoaNo());
+	    map.put("title", boardDto.getTitle());
+	    map.put("content", boardDto.getContent());
+
+	    int row = boardMapper.updateNotice(map);
+
+	    // 2. 새 파일 첨부
+	    if (row == 1 && boardDto.getBoardFile() != null && !boardDto.getBoardFile().isEmpty()) {
+	        insertBoardFiles(boardDto, path);
+	    }
 	}
 	
 	// 홈
