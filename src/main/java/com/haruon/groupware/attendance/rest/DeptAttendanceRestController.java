@@ -59,8 +59,7 @@ public class DeptAttendanceRestController {
 		} else {
 			return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
 		}
-	}
-	
+	}	
 	
 	// 회사 유급휴가 평균 사용률(연간)
 	@GetMapping("/company/leave/UsageRate")

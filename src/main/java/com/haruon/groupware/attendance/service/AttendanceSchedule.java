@@ -59,7 +59,7 @@ public class AttendanceSchedule {
 	        newAtt.setEmpNo(emp.getEmpNo());
 	
 	        for(Map<String, Object> sch : findVacationAtt) {
-	        	log.debug(emp.getEmpNo() + "의 스케쥴 객체 = " + sch.toString());
+	        	log.debug("{} 의 스케쥴 객체 = {}", emp.getEmpNo(), sch.toString()); 
 	        	
 	        	// 어제가 연차라면 행등록하고 다음 직원 근태 스케쥴링으로 넘어간다.
 	        	if(sch.get("schType").equals("연차")) {

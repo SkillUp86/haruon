@@ -1,22 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="/WEB-INF/view/inc/authVar.jsp"%>
+	 
 
-	<!-- 권한 정리 
-	    부서장 = ${role_head}
-	    전산과 = ${role_it}
-	    영업지원과 = ${role_sales}
-	    가맹점관리과 = ${role_fm}
-	    인사과 = ${role_hr}
-    -->
-   <sec:authorize access="hasRole('ROLE_HEAD')" var="role_head"></sec:authorize>
-   <sec:authorize access="hasRole('ROLE_IT')" var="role_it"></sec:authorize>
-   <sec:authorize access="hasRole('ROLE_SALES')" var="role_sales"></sec:authorize>
-   <sec:authorize access="hasRole('ROLE_FM')" var="role_fm"></sec:authorize>
-   <sec:authorize access="hasRole('ROLE_HR')" var="role_hr"></sec:authorize>
 
 <nav id="sidebar">
-
 	<div class="navbar-nav theme-brand flex-row  text-center">
 		<div class="nav-logo">
 			<div class="nav-item theme-logo">
@@ -41,7 +29,7 @@
 			<a href="#dashboard" data-bs-toggle="collapse active" aria-expanded="true" class="dropdown-toggle">
 				<div class="">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-					<span>마이페이지</span>
+					<span>마이페이지 ${!role_head }</span>
 				</div>
 				<div>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -130,7 +118,7 @@
 					<a href="${pageContext.request.contextPath}/draft/list"> 내문서함 </a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath}/component-accordion.html"> 참조문서함  </a>
+					<a href="${pageContext.request.contextPath}/component-accordion.html"> 참조문서함(미완)  </a>
 				</li>
 			</ul>
 		</li>
@@ -211,30 +199,66 @@
 				</li>
 			</ul>
 		</li>
-
+		<!-- 가맹점 1계층 시작 -->
 		<c:if test="${role_fm}">
 			<li class="menu">
-				<a href="#franchise" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+				<a href="#aboutfranchise" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
 					<div class="">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
-						<span>가맹점 </span>
+						<span>가맹점 작업중</span>
 					</div>
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 					</div>
 				</a>
-				<ul class="collapse submenu list-unstyled" id="franchise" data-bs-parent="#accordionExample">
+				<ul class="collapse submenu list-unstyled" id="aboutfranchise" data-bs-parent="#accordionExample">
+					<!-- 가맹점 2계층 시작 -->
+					<a href="#franchise" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+						<div class="">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+							<span>가맹점 </span>
+						</div>
+						<div>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+						</div>
+					</a>
+					<ul class="collapse submenu list-unstyled" id="franchise" data-bs-parent="#accordionExample">
+						<li>
+							<a href="/franchises"> 가맹점 조회 </a>
+						</li>
+						<li>
+							<a href="/franchises/insert"> 가맹점 등록 </a>
+						</li>
+						<li>
+							<a href="/franchises/courses"> 가맹점 교육 </a>
+						</li>
+						<li>
+							<a href="/franchises/questions"> 가맹점 문의 </a>
+						</li>
+					</ul>
+					<!-- 가맹점 2계층 종료 -->
+				</ul>
+			</li>
+		</c:if>
+		<!-- 가맹점 1계층 종료 -->
+		
+		<c:if test="${role_it}">
+			<li class="menu">
+				<a href="#companyAndDeptSetting" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<div class="">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+						<span> 회사/부서 관리 </span>
+					</div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+					</div>
+				</a>
+				<ul class="collapse submenu list-unstyled" id="companyAndDeptSetting" data-bs-parent="#accordionExample">
 					<li>
-						<a href="/franchises"> 가맹점 조회 </a>
+						<a href="/company"> 회사 </a>
 					</li>
 					<li>
-						<a href="/franchises/insert"> 가맹점 등록 </a>
-					</li>
-					<li>
-						<a href="/franchises/courses"> 가맹점 교육 </a>
-					</li>
-					<li>
-						<a href="/franchises/questions"> 가맹점 문의 </a>
+						<a href="/depts"> 부서 </a>
 					</li>
 				</ul>
 			</li>
