@@ -16,6 +16,7 @@ import com.haruon.groupware.draft.dto.response.ResponseDraft;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.mapper.DraftMapper;
+import com.haruon.groupware.user.entity.EmpEntity;
 
 @Service
 @Transactional
@@ -32,9 +33,17 @@ public class DraftService {
 		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		int empNo = (int)details.getEmpNo();
-		int draftByEmpNo = draftMapper.isAccess(draNo).getEmpNo();
-		
-		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD"))) {
+		int depNo = (int)details.getDepNo();
+		EmpEntity access = draftMapper.isAccess(draNo);
+		Integer draftByEmpNo = access.getEmpNo();
+		Integer draftByDepNo = access.getDepNo();
+		// 해당 팀 부서장 모든 결재 접근 가능
+		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (draftByDepNo == depNo))) {
+			return true;
+		}
+		// 중간&최종 결재자 접근 가능
+		int approvalAccess = draftMapper.approvalAccess(empNo, draNo);
+		if(approvalAccess == 1) {
 			return true;
 		}
 		

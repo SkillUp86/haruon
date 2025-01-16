@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.haruon.groupware.approval.entity.ApprovalEntity;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
@@ -14,6 +15,9 @@ import com.haruon.groupware.user.entity.EmpEntity;
 
 @Mapper
 public interface DraftMapper {
+	// 중간&최종 결재자 권한
+	int approvalAccess(int empNo, int draNo);
+	
 	// 유효성 검증
 	EmpEntity isAccess(int empNo);
 

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ResponseBusinessDraftDetail {
 	private Integer draNo;
+	private Integer empNo;
 	private Integer appNo;
 	private String draftType;
 	private String drafterNo;
@@ -27,4 +28,9 @@ public class ResponseBusinessDraftDetail {
 	private String midDate;
 	private String finalDate;
 	private String approvalState;
+	private String midFilename;
+	private String midFileExt;
+	private String finalFilename;
+	private String finalFileExt;
+	private String reasonDenial;
 }

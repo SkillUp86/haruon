@@ -181,7 +181,9 @@
             ],
             "stripeClasses": [],
             "lengthMenu": [7, 10, 20],
-            "pageLength": 10
+            "pageLength": 10,
+            "order": [[0, 'desc']]
+            
         });
     </script>
     <script>

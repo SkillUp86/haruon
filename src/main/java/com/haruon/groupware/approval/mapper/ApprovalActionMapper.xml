@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haruon.groupware.approval.mapper.ApprovalActionMapper">
+	<!-- 중간결재자 승인 -->
+	<update id="updateMidApproval" parameterType="Integer">
+		update approval
+		   set state = 'A02'
+		 where dra_no = #{draNo}
+	</update>
+	
+	<!-- 최종결재자 승인 -->
+	<update id="updateFinalApproval" parameterType="Integer">
+		update approval
+		   set state = 'A03'
+		 where dra_no = #{draNo}
+	</update>
+	
+	<!-- 사인 이미지 검사 -->
+	<select id="findSignByEmpNo" parameterType="Integer">
+		select count(*)
+		  from sign_file
+		 where emp_no = #{empNo} 
+	</select>
+	<!-- 중간 결재자 유효성 검사 -->
+	<select id="findMidApprovalByEmpNo" parameterType="Integer" resultType="com.haruon.groupware.approval.entity.ApprovalEntity">
+		select
+			   mid_app midApp
+		  from approval
+		 where mid_app = #{empNo}
+		   and dra_no = #{draNo}
+	</select>
+	<!-- 최종 결재자 유효성 검사 -->
+	<select id="findFinalApprovalByEmpNo" parameterType="Integer" resultType="com.haruon.groupware.approval.entity.ApprovalEntity">
+		select
+			   final_app finalApp
+		  from approval
+		 where mid_app = #{empNo}
+	 	   and dra_no = #{draNo}
+	</select>
+	<!-- 반려 사유 유효성 검사 결재자의 empNo 을 가져옴 -->
+	<select id="findRejectByEmpNo" parameterType="Integer" resultType="com.haruon.groupware.user.entity.EmpEntity">
+		select
+			   case
+			   when mid_app = #{empNo} then mid_app
+			   when final_app = #{empNo} then final_app
+			   else null
+			   end empNo
+		  from approval
+		 where dra_no = #{draNo}
+	</select>
+	<!-- 반려 사유 입력 -->
+	<update id="saveRejectDescript" parameterType="com.haruon.groupware.approval.entity.ApprovalEntity">
+		update approval
+		   set reason_denial = #{reasonDenial}
+		     , state = 'A04'
+		 where dra_no = #{draNo}
+	</update>
+</mapper>
