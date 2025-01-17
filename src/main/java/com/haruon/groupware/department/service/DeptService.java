@@ -1,6 +1,8 @@
 package com.haruon.groupware.department.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,13 @@ public class DeptService {
 	
 	public List<Dept> findByAll() {
 		return deptMapper.findByAll();
+	}
+	
+	// 부서 + 부서장 + 부서직원
+	public List<Map<String,Object>> getDeptHead(){
+		Map<String,Object> map = new HashMap<>();
+		List<Map<String,Object>> deptList = deptMapper.selectDeptHead(map);
+		return deptList;
 	}
 	
 	// 모든 부서 리스트

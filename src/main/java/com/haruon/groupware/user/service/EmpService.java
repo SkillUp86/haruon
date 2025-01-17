@@ -1,8 +1,11 @@
 package com.haruon.groupware.user.service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -95,6 +98,10 @@ public class EmpService {
 			log.debug("scheduleAnnualLeaveUpdate 스케쥴링 오류");
 		}
 	}
-
+	
+	// 직원 목록
+	public List<EmpDto> getEmpList(){
+		return empMapper.selectEmpList();
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.haruon.groupware.user.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,16 @@ public class EmpController {
 		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
 		model.addAttribute("e",empInfo);
 		return "user/myInfo";
+	}
+	
+	// 직원 목록
+	@GetMapping("/employees")
+	public String employees(Model model) {
+		List<EmpDto> employeeList = empService.getEmpList();
+		model.addAttribute("employeeList",employeeList);
+		
+		log.debug("employeeList{}", employeeList.toString());
+	
+		return "dept/employees";
 	}
 }
