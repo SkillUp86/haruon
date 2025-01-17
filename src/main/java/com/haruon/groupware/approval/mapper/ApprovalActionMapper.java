@@ -20,5 +20,5 @@ public interface ApprovalActionMapper {
 	// 반려사유 유효성 검사
 	EmpEntity findRejectByEmpNo(int empNo, int draNo);
 	// 반려사유 입력
-	int saveRejectDescript(ApprovalEntity approvalEntity);
+	int saveRejectDescript(int draNo, String reasonDenial);
 }

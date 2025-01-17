@@ -7,6 +7,7 @@ public class ResponseVacationDraftDetail {
 	private Integer draNo;
 	private Integer empNo;
 	private Integer appNo;
+	private String type;
 	private String draftType;
 	private String location;
 	private Integer depNo;

@@ -34,7 +34,7 @@
 		select
 			   final_app finalApp
 		  from approval
-		 where mid_app = #{empNo}
+		 where final_app = #{empNo}
 	 	   and dra_no = #{draNo}
 	</select>
 	<!-- 반려 사유 유효성 검사 결재자의 empNo 을 가져옴 -->

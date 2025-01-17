@@ -205,14 +205,14 @@
                             item.approvalState,
                             (function () {
                                 let url = "";
-                                if (item.kind === "C01") {
-                                    url = `/draft/detail/basic/\${item.draNo}`
-                                } else if (item.kind === "C02") {
-                                    url = `/draft/detail/business/\${item.draNo}`;
-                                } else if (item.kind === "C03") {
-                                    url = `/draft/detail/sales/\${item.draNo}`;
-                                } else if (item.kind === "C04") {
-                                    url = `/draft/detail/vacation/\${item.draNo}`;
+                                if (item.type === "C01") {
+                                    url = `/draft/\${item.type}/detail/\${item.draNo}`
+                                } else if (item.type === "C02") {
+                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
+                                } else if (item.type === "C03") {
+                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
+                                } else if (item.type === "C04") {
+                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
                                 } else {
                                     url = "/error/404";
                                 }

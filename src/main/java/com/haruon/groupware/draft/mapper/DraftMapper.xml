@@ -24,6 +24,7 @@
 			   d.dra_no draNo
 			 , d.emp_no empNo
 			 , a.app_no appNo
+			 , a.kind type
 			 , (select descript
 			   from common_code
 			   where common_code = d.kind)draftType
@@ -68,7 +69,7 @@
 			 , case
 			   when a.state in('A02', 'A03')
 		       then mf.ext else null
-		       end midExt
+		       end midFileExt
 		     , case
 			   when a.state = 'A03'
 		       then ff.file_name else null
@@ -76,7 +77,7 @@
 		     , case
 			   when a.state = 'A03'
 		       then ff.ext else null
-		       end finalExt
+		       end finalFileExt
 		     , a.reason_denial reasonDenial
 		  from draft d
 		 inner join emp de
@@ -110,6 +111,7 @@
 			   d.dra_no draNo
 			 , d.emp_no empNo
 			 , a.app_no appNo
+			 , d.kind type
 			 , (select descript
 			   from common_code
 			   where common_code = d.kind)draftType
@@ -145,7 +147,7 @@
 		     , case
 			   when a.state in ('A02','A03') 
 			   then mf.ext else null
-		       end midExt
+		       end midFileExt
 		     , case
 			   when a.state = 'A03' 
 			   then ff.file_name else null
@@ -153,7 +155,7 @@
 		     , case
 			   when a.state = 'A03' 
 			   then ff.ext else null
-		       end finalExt
+		       end finalFileExt
 		     , a.reason_denial reasonDenial 
 		  from draft d
 		 inner join emp de
@@ -186,6 +188,7 @@
 			   d.dra_no draNo
 			 , d.emp_no empNo
 			 , a.app_no appNo
+			 , d.kind type
 			 , (select descript
 			   from common_code
 			   where common_code = d.kind)draftType
@@ -220,7 +223,7 @@
 			 , case
 			   when a.state in('A02', 'A03')
 		       then mf.ext else null
-		       end midExt
+		       end midFileExt
 		     , case
 			   when a.state = 'A03'
 		       then ff.file_name else null
@@ -228,7 +231,7 @@
 		     , case
 			   when a.state = 'A03'
 		       then ff.ext else null
-		       end finalExt
+		       end finalFileExt
 		     , a.reason_denial reasonDenial  
 		  from draft d
 		 inner join emp de
@@ -259,6 +262,7 @@
 			  d.dra_no draNo
 			, d.emp_no empNo
 			, a.app_no appNo
+			, d.kind type
 			, (select descript
 			   from common_code
 			   where common_code = d.kind)draftType
@@ -338,7 +342,7 @@
 	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 			   d.dra_no draNo
-			 , d.kind kind
+			 , d.kind type
 			 , kc.descript draftType
 			 , d.title title
 			 , d.content content
@@ -359,7 +363,7 @@
 	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 			   d.dra_no draNo
-			 , d.kind kind
+			 , d.kind type
 			 , kc.descript draftType
 		     , d.title title
 		     , d.content content

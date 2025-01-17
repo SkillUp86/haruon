@@ -7,7 +7,7 @@ public class ResponseDraft {
 	private Integer draNo;
 	private Integer empNo;
 	private Integer appNo;
-	private String kind;
+	private String type;
 	private String draftType; // 양식타입
 	private String title;
 	private String content;

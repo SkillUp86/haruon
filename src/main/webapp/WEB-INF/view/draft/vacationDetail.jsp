@@ -113,20 +113,8 @@
                                                             ${d.draftType} 결재
                                                         </div>
                                                     </h1>
-                                                    <div class="approval-section">
-                                                    	<c:if test="${d.midApp != null}">
-	                                                        <div class="approver mt-4">
-	                                                            <p>중간결재자</p>
-	                                                            <div class="signature-box"></div>
-	                                                            <p>${d.midAppName}</p>
-	                                                        </div>
-                                                    	</c:if>
-                                                        <div class="approver mt-4">
-                                                            <p>최종결재자</p>
-                                                            <div class="signature-box"></div>
-                                                            <p>${d.finalAppName}</p>
-                                                        </div>
-                                                    </div><br><br><br><br><br><br><br><br><br>
+                                                    <!-- 사인 위치 -->
+                                                    <jsp:include page="/WEB-INF/view/draft/commonApprovalHeader.jsp"/>
                                                     <div class="input-group mb-2 mt-4">
                                                         <div class="input-group">
                                                             <span class="input-group-text label-text">문서번호</span>
@@ -220,7 +208,7 @@
                                         </div>
                                        	<c:if test="${d.approvalState == '결재대기'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/update/vacation?draNo=${d.draNo}">수정</a>
+													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/${d.type}/update/${d.draNo}">수정</a>
 	                                        </div>
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>

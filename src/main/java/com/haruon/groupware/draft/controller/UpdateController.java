@@ -2,10 +2,10 @@ package com.haruon.groupware.draft.controller;
 
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.approval.service.ApprovalService;
-import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
@@ -46,114 +45,157 @@ public class UpdateController {
 		this.deptService = deptService;
 	}
 
-	@PostMapping("/update/vacationDraft")
-	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, HttpSession session) {
+	@GetMapping("/{type}/update/{draNo}")
+	public String updateDraft(@PathVariable String type, @PathVariable int draNo, Model model) {
 		// 유효성검사
-		if (!draftService.isAccess(vacationDraft.getDraNo())) {
+		if (!draftService.isAccess(draNo)) {
+			return "login";
+		}
+		Object draftDetail = null;
+		String url = null;
+
+		switch (type) {
+		case "C01": // 휴가
+			draftDetail = draftService.getBasicDraftDetail(draNo);
+			url = "draft/updateBasic";
+			break;
+		case "C02": // 출장
+			draftDetail = draftService.getBusinessDraftDetail(draNo);
+			url = "draft/updateBusiness";
+			break;
+		case "C03": // 매출
+			draftDetail = draftService.getSalesDraftDetail(draNo);
+			List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
+			model.addAttribute("franchiseList", franchiseList);
+			url = "draft/updateSales";
+			break;
+		case "C04": // 휴가
+			draftDetail = draftService.getVacationDraftDetail(draNo);
+			// 부서
+			List<Dept> deptList = deptService.findByAll();
+			// 휴가 코드
+			String vactionCode = "H00";
+			List<CommonCode> vactionList = approvalService.findByParentCode(vactionCode);
+
+			model.addAttribute("deptList", deptList);
+			model.addAttribute("vactionList", vactionList);
+			url = "draft/updateVacation";
+			break;
+		default:
+			throw new IllegalArgumentException("없는 유형의 타입입니다. ");
+		}
+		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+
+		model.addAttribute("d", draftDetail);
+		model.addAttribute("draftFiles", draftFiles);
+		return url;
+	}
+
+	// 공통 로직 묶기
+	private String isAccess(HttpSession session, Integer draNo) {
+		// 유효성검사
+		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
 		String path = session.getServletContext().getRealPath("/upload/draft/");
+		return path;
+	}
+
+	@PostMapping("/update/vacationDraft")
+	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, HttpSession session) {
+		Integer draNo = vacationDraft.getDraNo();
+		String path = isAccess(session, draNo);
 		updateService.getUpdateVacationDraft(vacationDraft, path);
 		return "redirect:/draft/detail/vacation/" + vacationDraft.getDraNo();
 	}
 
-	// 휴가보고서 수정
-	@GetMapping("/update/vacation")
-	public String updateVacationDraft(@RequestParam int draNo, Model model) {
-		// 유효성검사
-		if (!draftService.isAccess(draNo)) {
-			return "login";
-		}
-		ResponseVacationDraftDetail draftDetail = draftService.getVacationDraftDetail(draNo);
-		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
-		// 부서
-		List<Dept> deptList = deptService.findByAll();
-		// 휴가 코드
-		String vactionCode = "H00";
-		List<CommonCode> vactionList = approvalService.findByParentCode(vactionCode);
-
-		model.addAttribute("d", draftDetail);
-		model.addAttribute("draftFiles", draftFiles);
-		model.addAttribute("deptList", deptList);
-		model.addAttribute("vactionList", vactionList);
-		return "draft/updateVacation";
-	}
-
 	@PostMapping("/update/salesDraft")
 	public String updateSalesDraft(RequestUpdateSalesDraft salesDraft, HttpSession session) {
-		// 유효성검사
-		if (!draftService.isAccess(salesDraft.getDraNo())) {
-			return "login";
-		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		Integer draNo = salesDraft.getDraNo();
+		String path = isAccess(session, draNo);
 		updateService.getUpdateSalesDraft(salesDraft, path);
 		return "redirect:/draft/detail/sales/" + salesDraft.getDraNo();
 	}
 
-	// 매출보고서 수정
-	@GetMapping("/update/sales")
-	public String updateSalesDraft(@RequestParam int draNo, Model model) {
-		// 유효성검사
-		if (!draftService.isAccess(draNo)) {
-			return "login";
-		}
-		ResponseSalesDraftDetail draftDetail = draftService.getSalesDraftDetail(draNo);
-		List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
-		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
-		model.addAttribute("d", draftDetail);
-		model.addAttribute("franchiseList", franchiseList);
-		model.addAttribute("draftFiles", draftFiles);
-		return "draft/updateSales";
-	}
-
 	@PostMapping("/update/businessDraft")
 	public String updateBusinessDraft(RequestUpdateBusinessDraft businessDraft, HttpSession session) {
-		// 유효성검사
-		if (!draftService.isAccess(businessDraft.getDraNo())) {
-			return "login";
-		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		Integer draNo = businessDraft.getDraNo();
+		String path = isAccess(session, draNo);
 		updateService.getUpdateBusinessDraft(businessDraft, path);
 		return "redirect:/draft/detail/business/" + businessDraft.getDraNo();
 	}
 
-	// 출장 기안서 수정
-	@GetMapping("/update/business")
-	public String updateBusinessDraft(@RequestParam int draNo, Model model) {
-		// 유효성검사
-		if (!draftService.isAccess(draNo)) {
-			return "login";
-		}
-		ResponseBusinessDraftDetail draftDetail = draftService.getBusinessDraftDetail(draNo);
-		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
-		model.addAttribute("d", draftDetail);
-		model.addAttribute("draftFiles", draftFiles);
-		return "draft/updateBusiness";
-	}
-
 	@PostMapping("/update/basicDraft")
 	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, HttpSession session) {
-		// 유효성검사
-		if (!draftService.isAccess(basicDraft.getDraNo())) {
-			return "login";
-		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		Integer draNo = basicDraft.getDraNo();
+		String path = isAccess(session, draNo);
 		updateService.getUpdateBasicDraft(basicDraft, path);
 		return "redirect:/draft/detail/basic/" + basicDraft.getDraNo();
 	}
 
+	// 매출보고서 수정
+//	@GetMapping("/update/sales")
+//	public String updateSalesDraft(@RequestParam int draNo, Model model) {
+//		// 유효성검사
+//		if (!draftService.isAccess(draNo)) {
+//			return "login";
+//		}
+//		ResponseSalesDraftDetail draftDetail = draftService.getSalesDraftDetail(draNo);
+//		List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
+//		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+//		model.addAttribute("d", draftDetail);
+//		model.addAttribute("franchiseList", franchiseList);
+//		model.addAttribute("draftFiles", draftFiles);
+//		return "draft/updateSales";
+//	}
+
+	// 출장 기안서 수정
+//	@GetMapping("/update/business")
+//	public String updateBusinessDraft(@RequestParam int draNo, Model model) {
+//		// 유효성검사
+//		if (!draftService.isAccess(draNo)) {
+//			return "login";
+//		}
+//		ResponseBusinessDraftDetail draftDetail = draftService.getBusinessDraftDetail(draNo);
+//		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+//		model.addAttribute("d", draftDetail);
+//		model.addAttribute("draftFiles", draftFiles);
+//		return "draft/updateBusiness";
+//	}
+	// 휴가보고서 수정
+//	@GetMapping("/update/vacation")
+//	public String updateVacationDraft(@RequestParam int draNo, Model model) {
+//		// 유효성검사
+//		if (!draftService.isAccess(draNo)) {
+//			return "login";
+//		}
+//		ResponseVacationDraftDetail draftDetail = draftService.getVacationDraftDetail(draNo);
+//		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+//		// 부서
+//		List<Dept> deptList = deptService.findByAll();
+//		// 휴가 코드
+//		String vactionCode = "H00";
+//		List<CommonCode> vactionList = approvalService.findByParentCode(vactionCode);
+//
+//		model.addAttribute("deptList", deptList);
+//		model.addAttribute("vactionList", vactionList);
+//		model.addAttribute("d", draftDetail);
+//		model.addAttribute("draftFiles", draftFiles);
+//		return "draft/updateVacation";
+//	}
+
 	// 기본 기안서 수정
-	@GetMapping("/update/basic")
-	public String updateBasicDraft(@RequestParam int draNo, Model model) {
-		// 유효성검사
-		if (!draftService.isAccess(draNo)) {
-			return "login";
-		}
-		ResponseBasicDraftDetail draftDetail = draftService.getBasicDraftDetail(draNo);
-		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
-		model.addAttribute("d", draftDetail);
-		model.addAttribute("draftFiles", draftFiles);
-		return "draft/updateBasic";
-	}
+//	@GetMapping("/update/basic")
+//	public String updateBasicDraft(@RequestParam int draNo, Model model) {
+//		// 유효성검사
+//		if (!draftService.isAccess(draNo)) {
+//			return "login";
+//		}
+//		ResponseBasicDraftDetail draftDetail = draftService.getBasicDraftDetail(draNo);
+//		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+//		model.addAttribute("d", draftDetail);
+//		model.addAttribute("draftFiles", draftFiles);
+//		return "draft/updateBasic";
+//	}
 
 }

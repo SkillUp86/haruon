@@ -1,13 +1,9 @@
 package com.haruon.groupware.approval.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.haruon.groupware.approval.entity.ApprovalEntity;
 import com.haruon.groupware.approval.mapper.ApprovalActionMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
 
@@ -21,8 +17,8 @@ public class ApprovalActionService {
 		this.approvalActionMapper = approvalActionMapper;
 	}
 	// 반려사유 입력
-	public int getRejectDescription(ApprovalEntity approvalEntity) {
-		return approvalActionMapper.saveRejectDescript(approvalEntity);
+	public int getRejectDescription(int draNo, String reasonDenial) {
+		return approvalActionMapper.saveRejectDescript(draNo, reasonDenial);
 	}
 	
 	// 중간 유효성 검사

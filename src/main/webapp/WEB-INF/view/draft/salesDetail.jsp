@@ -113,20 +113,8 @@
                                                             ${d.draftType} 결재
                                                         </div>
                                                     </h1>
-                                                    <div class="approval-section">
-                                                    	<c:if test="${d.midApp != null}">
-	                                                        <div class="approver mt-4">
-	                                                            <p>중간결재자</p>
-	                                                            <div class="signature-box"></div>
-	                                                            <p>${d.midAppName}</p>
-	                                                        </div>
-                                                    	</c:if>
-                                                        <div class="approver mt-4">
-                                                            <p>최종결재자</p>
-                                                            <div class="signature-box"></div>
-                                                            <p>${d.finalAppName}</p>
-                                                        </div>
-                                                    </div><br><br><br><br><br><br><br><br><br>
+                                                    <!-- 사인 위치 -->
+                                                    <jsp:include page="/WEB-INF/view/draft/commonApprovalHeader.jsp"/>
                                                     <div class="input-group mb-2 mt-4">
                                                         <div class="input-group">
                                                             <span class="input-group-text label-text">문서번호</span>
@@ -194,39 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
-                                <div class="widget-content widget-content-area">
-                                    <div class="row">
-                                        <div class="col-xxl-12 mb-4">
-                                            <div class="form-bootstrap-basic">
-                                                <label class="switch-label">결재 상태</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-xxl-12 mb-4">
-                                                <label class="form-control text-center">${d.approvalState}</label>
-                                        </div>
-                                        <div class="col-xxl-12 col-md-12 mb-4">
-                                        </div>
-
-                                        <div class="col-xxl-12 col-md-12 mb-4">
-                                        </div>
-
-                                        <c:if test="${d.approvalState == '결재대기'}">
-	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/update/sales?draNo=${d.draNo}">수정</a>
-	                                        </div>
-	                                        <div class="col-xxl-12 col-md-12 mb-4">
-													<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>
-	                                        </div>
-                                       	</c:if>
-
-                                        <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
-                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                            <jsp:include page="/WEB-INF/view/draft/commonApproval.jsp"/>
                         </div>
                     </div>
                         <jsp:include page="/WEB-INF/view/inc/footer.jsp" />

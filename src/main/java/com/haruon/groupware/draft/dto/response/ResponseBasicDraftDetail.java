@@ -7,6 +7,7 @@ public class ResponseBasicDraftDetail {
 	private Integer draNo;
 	private Integer empNo;
 	private Integer appNo;
+	private String type;
 	private String draftType;
 	private String drafterNo;
 	private String drafterName;
