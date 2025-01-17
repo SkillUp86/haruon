@@ -4,10 +4,11 @@ import lombok.Data;
 
 @Data
 public class MeetingRoom {
-	private Integer schNo;
-	private String kind;
-	private String title;
-	private String content;
-	private String startTime;
-	private String endTime;
+	private Integer meeNo;
+	private String mname;
+	private Integer capacity;
+	private String info;
+	private String availYn;
+	private String createDate;
+	private String updateDate;
 }

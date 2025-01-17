@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 : adjustToDBTimezone(eventObj.start);
         }
         if (modalContentEl) {
-            modalContentEl.value = eventObj.extendedProps.description || '';
+            modalContentEl.value = eventObj.extendedProps.content || '';
         }
 
         var checkedRadioBtnEl = document.querySelector(`input[value="${eventObj.extendedProps.calendar}"]`);
@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var titleValue = modalTitleEl.value;
         var startDateValue = new Date(modalStartDateEl.value);
         var endDateValue = new Date(modalEndDateEl.value);
+		var contentValue = modalContentEl.value; // content 값 가져오기
 
         // 캘린더에 추가 시 시간대 보정 없이 그대로 DB 시간과 동일하게 추가
         calendar.addEvent({
@@ -136,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: titleValue,
             start: startDateValue.toISOString(),
             end: endDateValue.toISOString(),
+			content: contentValue,
             allDay: false,
             extendedProps: { calendar: checkedRadioBtnEl ? checkedRadioBtnEl.value : '' }
         });
@@ -145,8 +147,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Update event handler
     modalUpdateBtnEl.addEventListener('click', function () {
+		var getPublicID = this.dataset.fcEventPublicId;
+		var getTitleUpdatedValue = getModalTitleEl.value;
         var eventId = this.dataset.fcEventPublicId;
         var event = calendar.getEventById(eventId);
+		var getContentValue = contentValue.value; // content 값 가져오기
+
 
         if (event) {
             event.setProp('title', modalTitleEl.value);
@@ -194,6 +200,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modalEndDateEl) {
             modalEndDateEl.value = '';
         }
+		if(modalContentEl){
+			modalContentEl.value = '';
+		}
 
         var checkedRadioBtnEl = document.querySelector('input[name="event-level"]:checked');
         if (checkedRadioBtnEl) {

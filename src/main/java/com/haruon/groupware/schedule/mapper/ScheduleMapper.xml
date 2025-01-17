@@ -3,11 +3,12 @@
 <mapper
 	namespace="com.haruon.groupware.schedule.mapper.ScheduleMapper">
 	
-		<select id="schedulesList" 
+	<select id="schedulesList" 
 			resultType="com.haruon.groupware.schedule.entity.Schedules">
 	SELECT
 		 sch_no schNo
 		 ,c.descript
+		 ,kind
 		 ,title title
 		 ,content content
 		 ,start_time startTime
@@ -17,6 +18,21 @@
 		s.kind = c.common_code
 	</select>
 
+	<select id="scheduleOne" resultType="com.haruon.groupware.schedule.entity.Schedules" parameterType="Integer">
+		SELECT
+			 sch_no schNo
+			 ,c.descript
+			 ,kind
+			 ,title title
+			 ,content content
+			 ,start_time startTime
+			 ,end_time endTime
+		FROM schedules s
+			inner join common_code c on
+			s.kind = c.common_code
+		WHERE sch_no = #{schNo}
+	</select>
+	
    <insert id="addSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
     INSERT INTO schedules (
         title,
@@ -34,4 +50,15 @@
 DELETE FROM schedules
 WHERE sch_no = #{schNo}
 </delete>
+
+<update id="updateSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
+    UPDATE schedules
+    SET
+        title = #{title},
+        kind = (SELECT common_code FROM common_code WHERE common_code = #{kind}),
+        content = #{content},
+        start_time = #{startTime},
+        end_time = #{endTime}
+    WHERE sch_no = #{schNo}
+</update>
 </mapper>

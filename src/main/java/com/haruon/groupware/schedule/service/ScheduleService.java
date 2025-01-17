@@ -35,4 +35,12 @@ public class ScheduleService {
         return scheduleMapper.deleteSchedule(schNo);  
     }
 	
+	public Integer updateSchedule (Schedules schedules) {
+		return scheduleMapper.updateSchedule(schedules);
+	}
+	
+	public Schedules scheduleOne (Integer schNo) {
+		return scheduleMapper.scheduleOne(schNo);
+	}
+	
 }
