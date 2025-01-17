@@ -1,32 +1,28 @@
-package com.haruon.groupware.message.controller;
+package com.haruon.groupware.message.rest;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.message.dto.MsgReaderDto;
 import com.haruon.groupware.message.service.MsgService;
 
-import jakarta.servlet.http.HttpSession;
-
-@Controller
-public class MsgController {
+@RestController
+public class MsgRestController {
 	@Autowired MsgService msgService;
 	
-	// 받은 쪽지함
-	@GetMapping("/mail")
-	public String getMails(Authentication authentication, Model model) {
+	// 받은 편지함
+	@GetMapping("/MsgReaders/{empNo}")
+	public List<MsgReaderDto> getMsgReaders(@PathVariable Integer empNo, Authentication authentication, Model model) {
 		// 로그인정보
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		Integer empNo = userDetails.getEmpNo();
-		
-		List<MsgReaderDto> msgReaderList = msgService.getMsgReaders(empNo);
-		model.addAttribute("rl", msgReaderList);
-		return "mail/mail2";
+		model.addAttribute("empNo", userDetails.getEmpNo());
+		return msgService.getMsgReaders(empNo);
 	}
 }

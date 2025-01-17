@@ -5,13 +5,13 @@
 	
 	
 	<!-- 답변 등록 -->
-	<insert id="insertAnswer">
+	<insert id="insertAnswer" parameterType="com.haruon.groupware.question.dto.AnswerDto">
 		INSERT INTO franchise_ask_answer(
 			fra_ask_no
 			, emp_no
 			, content
 		) VALUES (
-			#{fraAskNo}, #{emp_no}, #{content}
+			#{fraAskNo}, #{empNo}, #{content}
 		)
 	</insert>
 	

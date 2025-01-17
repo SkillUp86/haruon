@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
+
+	<!-- 받은 쪽지함 -->
+	<select id="getReaderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
+		SELECT 
+			es.ename ename -- 보낸사람
+			, es.email email
+			, cc.descript -- 직급
+			, m.content -- 쪽지내용
+			, ms.send_date -- 발신(수신)일자
+			, mr.read_date -- 읽은 시간
+		FROM msg_reader mr -- 수신
+		JOIN msg m ON mr.msg_no = m.msg_no -- 쪽지내용
+		JOIN msg_sender ms ON mr.msg_no = ms.msg_no -- 발신
+		JOIN emp es ON ms.emp_no = es.emp_no -- 발신자
+		JOIN common_code cc ON es.location = cc.common_code
+		WHERE mr.emp_no = #{empNo}
+	</select>
+	
+	<!-- 보낸 쪽지함 -->
+	<select id="getSenderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
+		SELECT 
+			er.ename ename -- 받는사람
+			, ccr.descript descriptR -- 직급
+			, m.title title -- 쪽지제목
+			, ms.send_date sendDate -- 발신(수신)일자
+			, ccs.descript descript -- 발신상태
+		FROM msg_sender ms -- 발신
+		JOIN msg m ON ms.msg_no = m.msg_no -- 쪽지내용
+		JOIN msg_reader mr ON ms.msg_no = mr.msg_no -- 수신
+		JOIN emp er ON mr.emp_no = er.emp_no -- 수신자
+		JOIN common_code ccr ON er.location = ccr.common_code -- 수신자 직급
+		JOIN common_code ccs ON ms.state = ccs.common_code -- 발신자 상태
+		WHERE ms.emp_no = #{empNo};
+	</select>
 </mapper>

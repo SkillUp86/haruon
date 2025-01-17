@@ -17,8 +17,8 @@ public class QuestionService {
 	@Autowired QuestionMapper questionMapper;
 	
 	// 답변 등록
-	public Integer insertAnswer() {
-		return questionMapper.insertAnswer();
+	public Integer insertAnswer(AnswerDto answerDto) {
+		return questionMapper.insertAnswer(answerDto);
 	}
 	
 	// 문의 상세

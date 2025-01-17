@@ -26,7 +26,7 @@ public class CourseController {
 	// 교육 삭제
 	@GetMapping("/franchises/courses/delete")
 	public String deleteCourse(HttpSession session, @RequestParam Integer eduNo) {
-		String path = session.getServletContext().getRealPath("/uploadCourse/");
+		String path = session.getServletContext().getRealPath("/upload/course/");
 		courseService.deleteCourse(eduNo, path);
 		return "redirect:/franchises/courses";
 	}
@@ -53,7 +53,7 @@ public class CourseController {
 		courseDto.getEducationFile();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/uploadCourse/");
+		String path = session.getServletContext().getRealPath("/upload/course/");
 		log.debug("path =====> " + path);
 		log.debug("eduNo =====> " + courseDto.getEduNo());
 		
@@ -66,7 +66,7 @@ public class CourseController {
 	@GetMapping("/franchises/courses/deleteFile")
 	public String deleteFile(HttpSession session
 							, @RequestParam Integer eduNo, @RequestParam Integer edufNo) {
-		String path = session.getServletContext().getRealPath("/uploadCourse/");
+		String path = session.getServletContext().getRealPath("/upload/course/");
 		courseService.deleteCourseFile(edufNo, path);
 		return "redirect:/franchises/courses/modify?eduNo=" + eduNo;
 	}
@@ -100,7 +100,7 @@ public class CourseController {
 		courseDto.getEducationFile();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/uploadCourse/");
+		String path = session.getServletContext().getRealPath("/upload/course/");
 		log.debug("path =====> " + path);
 		
 		courseService.insertCourse(courseDto, path);

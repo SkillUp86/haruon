@@ -155,13 +155,15 @@
 			                                <h3 class="ms-1 mt-3 mb-4">답변</h3>
 			                                
 			                                <c:if test="${a.content == null}"><!-- 답변 등록 안했다면 -->
-			                                	<form method="post" action="${pageContext.request.contextPath}/franchises/questions/${q.fraAskNo}">
+			                                	<form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/questions/${q.fraAskNo}">
 					                                <div class="row">
 						                                <div class="col-md-11">
+						                                	<input type="hidden" name="fraAskNo" value="${q.fraAskNo}">
+						                                	<input type="hidden" name="empNo" value="${empNo}">
 						                                    <textarea class="form-control" id="contents" name="content" placeholder="답변" rows="5" cols="40"></textarea>
 						                                </div>
 						                                <div class="col-md-1 d-flex align-items-center">
-						                                	<button type="button" class="btn btn-gray btn-lg">등록</button>
+						                                	<button type="button" id="addBtn" class="btn btn-gray btn-lg">등록</button>
 						                                </div>
 					                                </div>
 			                                	</form>
@@ -219,15 +221,14 @@
 	
 	<script>
 		// !!!!!!!!!!!! 답변 등록 질문으로 변경 !!!!!!!!!!
-	    $('#btnDelete').click(function(event) {
+	    $('#addBtn').click(function(event) {
 	        // 삭제 확인 메시지
-	        var isConfirmed = confirm('해당 교육을 삭제하시겠습니까?');
+	        var isConfirmed = confirm('답변을 등록 하시겠습니까?');
 	        
 	        // 사용자가 '확인'을 클릭했을 경우
 	        if (isConfirmed) {
-	            // 기본 동작(페이지 이동)을 취소
-	            // 'href' 속성을 가져와서 실제 삭제 요청을 처리
-	            window.location.href = $(this).attr('href');
+	            // 기본 동작(페이지 이동)
+	        	$('#addForm').submit();
 	        } else {
 	            // 취소 시 아무 일도 하지 않음
 	            event.preventDefault();

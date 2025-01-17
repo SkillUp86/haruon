@@ -12,7 +12,7 @@ import com.haruon.groupware.question.entity.FranchiseAskFile;
 public interface QuestionMapper {
 
 	// 답변 등록
-	Integer insertAnswer();
+	Integer insertAnswer(AnswerDto answerDto);
 	
 	// 문의 상세
 	QuestionDto getQuestion(Integer fraAskNo); // 문의
