@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+<sec:authentication property="principal" var="principal"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +41,6 @@
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
-    
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>
@@ -101,6 +102,7 @@
                     <!--  END BREADCRUMBS  -->
                 
                 <!-- 메인컨텐츠 입력칸 -->
+                
 					<div class="row layout-top-spacing">
                         <div class="col-xl-12 col-lg-12 col-md-12">
     
@@ -140,8 +142,8 @@
                                             <div class="message-box">
                                                 
                                                 <div class="message-box-scroll" id="ct">
-                                                    <!-- 받은 쪽지함 시작 -->
-                                                    <div class="mail-item trashed">
+                                                    <!-- 보낸 쪽지함 시작 -->
+                                                    <div id="msgSenders" class="mail-item trashed">
                                                         <!-- 메일 리스트 HTML 동적처리할 부분-->
                                                         <div class="animated animatedFadeInUp fadeInUp" id="메일번호">
                                                             <div class="mb-0">
@@ -152,12 +154,12 @@
                                                                                 <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
                                                                             </div>
                                                                             <div class="f-head">
-                                                                                발신자 프로필 사진
+                                                                                수신자 프로필 사진
                                                                                 <img src="../src/assets/img/profile-16.jpeg" class="user-profile" alt="avatar">
                                                                             </div>
                                                                             <div class="f-body">
                                                                                 <div class="meta-mail-time">
-                                                                                    <p class="user-email">발신자 이름</p>
+                                                                                    <p class="user-email">수신자 이름</p>
                                                                                 </div>
                                                                                 <div class="meta-title-tag">
                                                                                     <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
@@ -181,53 +183,55 @@
                                                     <h2 class="mail-title" data-selectedMailTitle=""></h2>
                                                 </div>
 
+                                                <div id="msgSender">
                                                 <!-- 메일 상세보기 시작 - HTML 동적 처리할 부분 -->
-                                                <div id="메일Collapse이름" class="collapse" aria-labelledby="메일번호" data-bs-parent="#mailbox-inbox">
-                                                    <div class="mail-content-container sentmail">
-    
-                                                        <div class="d-flex justify-content-between mb-3">
-                                                            <div class="d-flex user-info">
-                                                                <div class="f-body">
-                                                                    <div class="meta-mail-time">
-                                                                        <div class="">
-                                                                            <p class="user-email"><span>To,</span> 수신자</p>
-                                                                        </div>
-                                                                        <p class="mail-content-meta-date current-recent-mail">발송일자 -</p>
-                                                                        <p class="meta-time align-self-center">발송시간</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-    
-                                                            <div class="action-btns">
-                                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Reply">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left reply"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
-                                                                </a>
-                                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Forward">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-right forward"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mail-content"> 
-                                                           첫번째 메일 상세 내용</p>
-                                                        <p>발신자 이름</p>
-    
-                                                        <div class="attachments">
-                                                            <h6 class="attachments-section-title">Attachments</h6>
-    
-                                                            <div class="attachment file-folder">
-                                                                <div class="media">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                                                    <div class="media-body">
-                                                                        <p class="file-name">첨부파일 이름</p>
-                                                                        <p class="file-size">첨부파일 크기</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-    
-                                                        </div>
-                                                    </div>
-                                                </div>
+	                                                <div id="메일Collapse이름" class="collapse" aria-labelledby="메일번호" data-bs-parent="#mailbox-inbox">
+	                                                    <div class="mail-content-container sentmail">
+	    
+	                                                        <div class="d-flex justify-content-between mb-3">
+	                                                            <div class="d-flex user-info">
+	                                                                <div class="f-body">
+	                                                                    <div class="meta-mail-time">
+	                                                                        <div class="">
+	                                                                            <p class="user-email"><span>To,</span> 수신자</p>
+	                                                                        </div>
+	                                                                        <p class="mail-content-meta-date current-recent-mail">발송일자 -</p>
+	                                                                        <p class="meta-time align-self-center">발송시간</p>
+	                                                                    </div>
+	                                                                </div>
+	                                                            </div>
+	    
+	                                                            <div class="action-btns">
+	                                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Reply">
+	                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left reply"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+	                                                                </a>
+	                                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Forward">
+	                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-right forward"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>
+	                                                                </a>
+	                                                            </div>
+	                                                        </div>
+	                                                        <p class="mail-content"> 
+	                                                           첫번째 메일 상세 내용</p>
+	                                                        <p>발신자 이름</p>
+	    
+	                                                        <div class="attachments">
+	                                                            <h6 class="attachments-section-title">Attachments</h6>
+	    
+	                                                            <div class="attachment file-folder">
+	                                                                <div class="media">
+	                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+	                                                                    <div class="media-body">
+	                                                                        <p class="file-name">첨부파일 이름</p>
+	                                                                        <p class="file-size">첨부파일 크기</p>
+	                                                                    </div>
+	                                                                </div>
+	                                                            </div>
+	    
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
                                                 <!-- 메일 상세보기 끝 -->
+                                                </div>
                                                  
                                             </div>
                                         </div>
@@ -356,34 +360,53 @@
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 		<script>
-			function show() {
-				$.ajax({
-					url: "/MsgReaders/"+"${empNo}",
-					method: 'GET',
-				}).done(function(result) {
-					destroyDataTable();
-					$("#html ID").empty(); // 이전 탭 내역 지움
-		            
-					let MsgReaders = "";
-		            
-		            $(result).each(function(index, item) {
-		         	  MsgReaders += `"<tr role="row" class="text-center">"`;
-		         	   						
-		         	  MsgReaders += `   <td>` + item.ename + `(` + item.descript + `)` + `</td>
-		         	   						   <td>` + item.descript + `</td>
-		         	   						   <td  class="sorting_01">` + item.content + `</td>
-				 		                       <td><a href=/draft/detail/business/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
-                      MsgReaders += "</tr>";
-		            
-		            });
-		            
-		            $("#deptBusinessTripReqList").append(BusinessTriphtml); // html 코드 이어줌
-					
-					initDataTable();
-				}).fail(function() {
-					console.log("showBusinessTripReqList ajax fail");
+			
+			$.ajax({
+				url: "/MsgSenders/" + "${principal.empNo}",
+				method: 'GET', 
+			}).done(function(result) {
+				let msgSendersHTML = "";
+				let msgSenderHTML = "";
+				let no = 0;
+				
+				$(result).each(function(index, item) {
+					msgSendersHTML += `<div class="animated animatedFadeInUp fadeInUp" id="`+ "outNo" + no +`">
+				                           <div class="mb-0">
+					                           <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false">
+					                               <div class="mail-item-inner">
+					                                   <div class="d-flex">
+					                                       <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
+					                                           <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
+					                                       </div>
+					                                       <div class="f-head">
+					                                           <img src="` + item.fileNameE + "." + item.extE + `" class="user-profile" alt="avatar">
+					                                       </div>
+					                                       <div class="f-body">
+					                                           <div class="meta-mail-time">
+					                                               <p class="user-email">` + item.enameR + ` </p>
+					                                           </div>
+					                                           <div class="meta-title-tag">
+					                                               <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
+					                                                   <span class="mail-title">` + item.title + `
+					                                               <p class="meta-time align-self-center">` + item.sendDate + `</p>
+					                                           </div>
+					                                       </div>
+					                                   </div>
+					                               </div>
+					                           </div>
+				                           </div>
+			                   		   </div>`
+									
+					no++;
 				});
-			} 
+				$('#msgSenders').append(msgSendersHTML);
+				
+			}).fail(function() {
+				console.log("showBusinessTripReqList ajax fail");
+			});
+			
+			// function show() {
+			// }
 		</script>
 	
 </body>

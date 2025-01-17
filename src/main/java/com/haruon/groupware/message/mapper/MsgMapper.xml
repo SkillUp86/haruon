@@ -5,34 +5,67 @@
 	<!-- 받은 쪽지함 -->
 	<select id="getReaderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
 		SELECT 
-			es.ename ename -- 보낸사람
+			es.ename ename
 			, es.email email
-			, cc.descript -- 직급
-			, m.content -- 쪽지내용
-			, ms.send_date -- 발신(수신)일자
-			, mr.read_date -- 읽은 시간
-		FROM msg_reader mr -- 수신
-		JOIN msg m ON mr.msg_no = m.msg_no -- 쪽지내용
-		JOIN msg_sender ms ON mr.msg_no = ms.msg_no -- 발신
-		JOIN emp es ON ms.emp_no = es.emp_no -- 발신자
+			, cc.descript descript
+			, m.title title
+			, ms.send_date sendDate
+			, mr.read_date readDate
+		FROM msg_reader mr
+		JOIN msg m ON mr.msg_no = m.msg_no
+		JOIN msg_sender ms ON mr.msg_no = ms.msg_no
+		JOIN emp es ON ms.emp_no = es.emp_no
 		JOIN common_code cc ON es.location = cc.common_code
 		WHERE mr.emp_no = #{empNo}
 	</select>
 	
-	<!-- 보낸 쪽지함 -->
+	<!-- 보낸 쪽지 -->
 	<select id="getSenderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
 		SELECT 
-			er.ename ename -- 받는사람
-			, ccr.descript descriptR -- 직급
-			, m.title title -- 쪽지제목
-			, ms.send_date sendDate -- 발신(수신)일자
-			, ccs.descript descript -- 발신상태
-		FROM msg_sender ms -- 발신
-		JOIN msg m ON ms.msg_no = m.msg_no -- 쪽지내용
-		JOIN msg_reader mr ON ms.msg_no = mr.msg_no -- 수신
-		JOIN emp er ON mr.emp_no = er.emp_no -- 수신자
-		JOIN common_code ccr ON er.location = ccr.common_code -- 수신자 직급
-		JOIN common_code ccs ON ms.state = ccs.common_code -- 발신자 상태
-		WHERE ms.emp_no = #{empNo};
+		       es.ename enameS
+		     , ccs.descript descriptS
+		     , es.email emailS
+		     , er.ename enameR
+		     , ccr.descript descriptR
+		     , er.email emailR
+		     , ms.send_date sendDate
+		     , m.title title
+		     , m.content content
+		     , erf.file_name fileNameE
+		     , erf.ext extE
+		     , mf.file_name fileNameM
+		     , mf.ext extM
+		  FROM msg_sender ms
+		  JOIN emp es ON ms.emp_no = es.emp_no
+		  JOIN msg m ON ms.msg_no = m.msg_no
+		  JOIN msg_reader mr ON ms.msg_no = mr.msg_no
+		  JOIN emp er ON mr.emp_no = er.emp_no
+		  LEFT OUTER JOIN emp_file erf ON er.emp_no = erf.emp_no
+		  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
+		  JOIN common_code ccr ON er.location = ccr.common_code
+		  JOIN common_code ccs ON es.location = ccs.common_code
+	     WHERE ms.emp_no = #{empNo} AND ms.state = (SELECT common_code
+									                  FROM common_code
+									                 WHERE descript = '발송' AND parent_code = (SELECT common_code 
+																						         FROM common_code 
+                                    					   	 							        WHERE descript='msg_sender_state'))
 	</select>
+	
+	<!-- 임시보관함 -->
+	<select id="getTemporaryMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
+		SELECT 
+			er.ename ename
+			, ccr.descript descriptR
+			, m.title title
+			, ms.send_date sendDate
+			, ccs.descript descript
+		FROM msg_sender ms
+		JOIN msg m ON ms.msg_no = m.msg_no
+		JOIN msg_reader mr ON ms.msg_no = mr.msg_no
+		JOIN emp er ON mr.emp_no = er.emp_no
+		JOIN common_code ccr ON er.location = ccr.common_code
+		JOIN common_code ccs ON ms.state = ccs.common_code
+		WHERE ms.emp_no = #{empNo} AND ms.state = #{state};
+	</select>
+	
 </mapper>
