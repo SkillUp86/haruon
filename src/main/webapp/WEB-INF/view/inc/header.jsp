@@ -97,6 +97,7 @@
 	
 	<!-- Ajax 관련 함수 부분-->
 	<script>
+	/*
 		showUnreadMsgCount();
 		function showUnreadMsgCount() {
 			$.ajax({
@@ -139,7 +140,7 @@
 			});
 
 		}
-
+*/
 	</script>
 </header>
 

@@ -316,6 +316,7 @@
 	
 	<!-- 현재 접속중인 URL에 따라 aria-expanded 속성 동적 처리 -->
 	<script>
+		let currentPath = "";
 		// 마이페이지
 		if(currentPath === "/myInfo") {
 			$("#myPageToggle").attr("aria-expanded", "true");
