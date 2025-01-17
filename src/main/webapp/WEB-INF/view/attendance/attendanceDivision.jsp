@@ -11,11 +11,13 @@
 	    <title>DataTables Basic | CORK - Multipurpose Bootstrap Dashboard Template </title>
 	    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
 	    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+	    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
 	    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
 	    <!-- BEGIN GLOBAL MANDATORY STYLES -->
 	    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 	    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+	    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
 	    <!-- END GLOBAL MANDATORY STYLES -->
 	
 	    <!-- BEGIN PAGE LEVEL STYLES -->

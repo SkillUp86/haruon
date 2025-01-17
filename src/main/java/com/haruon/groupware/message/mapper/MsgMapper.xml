@@ -1,38 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
-	<select id="findUnreadMsgSum" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderListDto">
-		SELECT mr.emp_no readerNo
-		     , e.ename senderName
-			 , ef.file_name senderProfileName
-			 , ef.ext senderProfileExt
-		  FROM msg_reader mr
-		 INNER JOIN msg_sender ms ON ms.msg_no = mr.msg_no
-		 INNER JOIN emp e ON ms.emp_no = e.emp_no
-		 INNER JOIN emp_file ef ON ef.emp_no = ms.emp_no
-		 WHERE mr.emp_no = #{empNo}
-		   AND mr.state = (SELECT common_code 
-								  FROM common_code 
-								  WHERE parent_code = (SELECT common_code FROM common_code
-															  WHERE descript = "msg_reader_state") 
-								  AND descript = "읽지않음");
-	</select>
-	
-	<select id="findUnreadMsgCnt" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) unreadMsgCnt
-		  FROM msg_reader mr
-		 INNER JOIN msg_sender ms ON ms.msg_no = mr.msg_no
-		 INNER JOIN emp e ON ms.emp_no = e.emp_no
-		 INNER JOIN emp_file ef ON ef.emp_no = ms.emp_no
-		 WHERE mr.emp_no = #{empNo}
-		   AND mr.state = (SELECT common_code 
-								  FROM common_code 
-								  WHERE parent_code = (SELECT common_code FROM common_code
-															  WHERE descript = "msg_reader_state") 
-								  AND descript = "읽지않음");
-	</select>
-	
-	
-	
-
 </mapper>
