@@ -192,8 +192,84 @@
 									<div class="modal-footer">
 										<button class="btn btn-primary btn-add-event">일정 추가</button>
 										<button class="btn" id="deleteEventBtn">삭제</button>
-										<button type="button" class="btn" data-bs-dismiss="modal" id="deleteEventBtn">닫기</button>
-										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update changes</button>
+										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
+										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="updatemodal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel"> 일정추가 </h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form id="addSchedule" method="post"
+									action="${pageContext.request.contextPath}/updateSchedule">
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 제목</label> 
+													<select id="event-title" name="title" class="form-control">
+													
+														<option value="연차">일정</option>
+														<option value="연차">연차</option>
+														<option value="출장">출장</option>
+														<option value="회의">회의</option>
+													</select>
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">시작 날짜</label> 
+												<input id="event-start-date" name="startTime"type="datetime-local" class="form-control" value="${scheduleOne.startTime}">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">종료 날짜</label> 
+												<input id="event-end-date" name="endTime" type="datetime-local" class="form-control" value="${scheduleOne.endTime}">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="n-chk">
+												<label class="form-label">일정 종류</label> 
+												<select id="kind" name="kind" class="form-control">
+													<c:forEach items="${kindList}" var="k">
+														<option value="${k.commonCode}">${k.descript}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 내용</label> 
+													<input id="text" name="content" type="text" class="form-control" value="${scheduleOne.content}">
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-primary btn-add-event">일정 추가</button>
+										<button class="btn" id="deleteEventBtn">삭제</button>
+										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
+										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
 									</div>
 								</form>
 							</div>

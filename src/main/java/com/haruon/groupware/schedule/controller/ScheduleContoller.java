@@ -21,14 +21,17 @@ public class ScheduleContoller {
 	@Autowired ScheduleService scheduleService;
 	
 	@GetMapping("/calendar")
-    public String calendar(Model model) {
+    public String calendar(Model model, Integer schNo ) {
         String parentCode = "G00"; // 부모 코드 설정
-        List<CommonCode> kindList = scheduleService.kind(parentCode); // 데이터 조회
+        List<CommonCode> kindList = scheduleService.kind(parentCode);// 데이터 조회
+        
+        Schedules scheduleOne = scheduleService.scheduleOne(schNo);
+        model.addAttribute("scheduleOne" , scheduleOne);
         model.addAttribute("kindList", kindList); // 뷰에 데이터 전달
         return "schedule/calendar"; // 일정 페이지 반환
     }
 
-
+	
 	
 	@PostMapping("/addSchedule")
 	public String addSchedule(Schedules schedules, Model model) {
@@ -44,5 +47,18 @@ public class ScheduleContoller {
 	    scheduleService.deleteSchedule(schNo);
 	    return "schedule/calendar";
 	}
-		
+
+	@PostMapping("/updateSchedule")
+	public String updateSchedule(Schedules schedules, Model model) {
+	    Integer updatedRows = scheduleService.updateSchedule(schedules);
+	    if (updatedRows > 0) {
+	        model.addAttribute("msg", "업데이트 성공");
+	    } else {
+	        model.addAttribute("msg", "업데이트 실패");
+	    }
+	    return "redirect:/calendar";
+	}
+	
+	
+
 }

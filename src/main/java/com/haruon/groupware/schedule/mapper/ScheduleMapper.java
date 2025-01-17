@@ -16,4 +16,8 @@ public interface ScheduleMapper {
 	
 	Integer deleteSchedule (Integer schNo);
 	
+	Integer updateSchedule (Schedules schedules);
+	
+	Schedules scheduleOne (Integer schNo);
+	
 }
