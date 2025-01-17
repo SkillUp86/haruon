@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.haruon.groupware.meetingroom.mapper.MeetingRoomMapper">
+	
+	<select id="meetingroomList" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
+SELECT
+    m.mee_no  meeNo,
+    m.mname  mname,
+    m.capacity  capacity,
+    m.info  info,
+    m.avail_yn  availYn,
+    mf.mee_no  mfMeeNo
+FROM 
+    meetingroom m
+LEFT JOIN 
+    meetingroom_file mf
+ON 
+    mf.mee_no = m.mee_no;
+		
+	</select>
 </mapper>
