@@ -338,6 +338,29 @@
 		  from draft_file
 		 where dra_no = #{draNo}
 	</select>
+	
+	<!-- 사원별 참조문서 리스트 -->
+	<select id="findDraftByReferences" parameterType="Integer" resultType="Map">
+		select 
+			   d.dra_no draNo
+			 , d.kind type
+			 , (select descript
+			   from common_code
+               where common_code = d.kind) draftType
+			 , d.title title
+			 , d.content content
+			 , d.create_date createDate
+			 , (select descript
+			   from common_code
+               where common_code = a.state) approvalState
+             , r.emp_no refNo  
+		  from draft d
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+		 inner join refer r
+			   on a.app_no = r.app_no
+		 where r.emp_no = #{empNo}
+	</select>
 	<!-- 사원별 결재문서 리스트 -->
 	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 

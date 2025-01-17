@@ -24,11 +24,11 @@
 		                                        </div>
 	                                       	</c:if>
 												<c:if test="${d.approvalState == '반려'}">
-													<div class="col-xxl-12 col-md-12 mb-4">
-														<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
-				                                          반려사유
-				                                        </button>
-													</div>
+												<div class="col-xxl-12 col-md-12 mb-4">
+													<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
+			                                          반려사유
+			                                        </button>
+												</div>
 												</c:if>
 	                                        <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
 	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>

@@ -28,17 +28,17 @@ public class DraftController {
 	public DraftController(DraftService draftService) {
 		this.draftService = draftService;
 	}
-	
+
 	@GetMapping("/{type}/detail/{draNo}")
-    public String draftDetail(@PathVariable String type, @PathVariable int draNo, Model model) {
-        // 유효성 검사
-        if (!draftService.isAccess(draNo)) {
-            log.debug("접근 실패: draNo={}", draNo);
-            return "redirect:/login";
-        }
-        Object draftDetail = null;
-        String url = null;
-        switch (type) {
+	public String draftDetail(@PathVariable String type, @PathVariable int draNo, Model model) {
+		// 유효성 검사
+		if (!draftService.isAccess(draNo)) {
+			log.debug("접근 실패: draNo={}", draNo);
+			return "redirect:/login";
+		}
+		Object draftDetail = null;
+		String url = null;
+		switch (type) {
 		case "C01": // 휴가 상세보기
 			draftDetail = draftService.getBasicDraftDetail(draNo);
 			url = "draft/basicDetail";
@@ -58,15 +58,27 @@ public class DraftController {
 		default:
 			throw new IllegalArgumentException("없는 유형의 타입입니다. ");
 		}
-        log.debug("draftDetail ={}",draftDetail.toString());
+		log.debug("draftDetail ={}", draftDetail.toString());
 		List<DraftFileEntity> draftFiles = draftService.getDraftFiles(draNo);
+
+		model.addAttribute("d", draftDetail);
+		model.addAttribute("draftFiles", draftFiles);
+
+		return url;
+	}
+
+	// 문서리스트
+	@GetMapping("/list")
+	public String draftList() {
+
+		return "draft/draftList";
+	}
+	// 문서리스트
+	@GetMapping("/refers/list")
+	public String referList() {
 		
-        model.addAttribute("d", draftDetail);
-        model.addAttribute("draftFiles", draftFiles);
-
-        return url; 
-    }
-
+		return "draft/referenceList";
+	}
 
 //	// 휴가 상세보기
 //	@GetMapping("/draft/detail/vacation/{draNo}")
@@ -126,12 +138,5 @@ public class DraftController {
 //		model.addAttribute("draftFiles", draftFiles);
 //		return "draft/basicDetail";
 //	}
-
-	// 문서리스트
-	@GetMapping("/list")
-	public String draftList() {
-
-		return "draft/draftList";
-	}
 
 }

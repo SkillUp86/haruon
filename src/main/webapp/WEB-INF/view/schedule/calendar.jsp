@@ -27,8 +27,6 @@
     <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="../src/plugins/css/dark/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL STYLE -->
     <!-- 페이지 제목 입력칸 -->
     <title>메인 페이지</title>
@@ -225,61 +223,6 @@
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
     <script src="../src/plugins/src/fullcalendar/custom-fullcalendar.js"></script>
     <!--  END CUSTOM SCRIPTS FILE  -->
-  <script>
-  $(document).ready(function() {
-	    // 일정 추가 버튼 클릭 시
-	    $(".btn-add-event").click(function(e) {
-	        e.preventDefault(); // 기본 폼 제출 방지
-
-	        // 폼에서 데이터 가져오기
-	        var title = $("#event-title").val(); // 선택된 일정 제목
-	        var startDate = $("#event-start-date").val(); // 시작 날짜
-	        var endDate = $("#event-end-date").val(); // 종료 날짜
-	        var content = $("#text").val(); // 일정 내용
-	        var kind = $("#kind").val(); // 일정 종류
-	        
-	        // 서버로 데이터를 전송하는 Ajax 요청
-	        $.ajax({
-	            url: "${pageContext.request.contextPath}/addSchedule", // 서버 URL
-	            type: "POST",
-	            data: {
-	                title: title,
-	                startTime: startDate,
-	                endTime: endDate,
-	                content: content,
-	                kind: kind
-	            },
-	            success: function(response) {
-	                // 서버에서 응답이 정상적으로 돌아오면
-	                if (response.success) {
-	                    alert("일정이 추가되었습니다.");
-
-	                    // 캘린더에 일정 추가
-	                    var newEvent = {
-	                        title: title,
-	                        start: startDate,
-	                        end: endDate,
-	                        description: content
-	                    };
-
-	                    // 예시로 FullCalendar 사용 시
-	                    $('#calendar').fullCalendar('renderEvent', newEvent, true);
-
-	                    // 모달 닫기
-	                    $('#exampleModal').modal('hide');
-	                } else {
-	                    alert("일정 추가에 실패했습니다.");
-	                }
-	            },
-	            error: function(xhr, status, error) {
-	                console.log("Ajax Error: " + error);
-	                alert("서버 오류가 발생했습니다.");
-	            }
-	        });
-	    });
-
-	  
-
-  </script>
+  
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.haruon.groupware.draft.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,10 +54,7 @@ public class DraftService {
 		return false;
 	}
 
-	// 결재 문서 리스트
-	public List<ResponseDraft> getDraftByApproval(int empNo) {
-		return draftMapper.findDraftByApproval(empNo);
-	}
+	
 
 	// 휴가 결재 상세보기
 	public ResponseVacationDraftDetail getVacationDraftDetail(int draNo) {
@@ -87,6 +85,14 @@ public class DraftService {
 	public List<ResponseDraft> getDraftByPage(int empNo) {
 		return draftMapper.findDraftByEmp(empNo);
 
+	}
+	// 결재 문서 리스트
+	public List<ResponseDraft> getDraftByApproval(int empNo) {
+		return draftMapper.findDraftByApproval(empNo);
+	}
+
+	public List<Map<String, Object>> getReferencesByEmp(int empNo) {
+		return draftMapper.findDraftByReferences(empNo);
 	}
 
 		

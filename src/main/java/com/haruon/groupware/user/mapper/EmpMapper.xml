@@ -4,30 +4,34 @@
 	<!-- 사원 상세정보 -->
 	<select id="findByEmpInfo" parameterType="Integer" resultType="com.haruon.groupware.user.dto.ResponseEmpInfo">
 		select
-				e.emp_no empNo
-			,	e.email
-			,	e.dep_no deptNo
-			,	e.ename
-			,	(select descript
-				 from common_code
-				 where common_code = location) location
-			,	e.ext_num extNum
-			,	e.phone
-			,	e.address
-			,	e.post_code postCode
-			,	e.gender
-			,	e.birth
-			, 	e.join_date joinDate
-			,	f.file_name fileName
-			,	f.ext ext
-			,	sf.file_name signfileName
-			,	sf.ext signExt
-		from emp e
-		left join emp_file f
-			on e.emp_no = f.emp_no
-		left join sign_file sf
-			on e.emp_no = sf.emp_no
-		where e.emp_no = #{empNo}
+			   e.emp_no empNo
+			 , e.email
+			 , e.dep_no deptNo
+			 , (select dname
+			   from dept
+			   where 
+			   )
+			 , e.ename
+			 , (select descript
+			   from common_code
+			   where common_code = location) location
+			 , e.ext_num extNum
+			 , e.phone
+			 , e.address
+			 , e.post_code postCode
+			 , e.gender
+			 , e.birth
+			 , e.join_date joinDate
+			 , f.file_name fileName
+			 , f.ext ext
+			 , sf.file_name signfileName
+			 , sf.ext signExt
+		  from emp e
+		  left join emp_file f
+			   on e.emp_no = f.emp_no
+		  left join sign_file sf
+			   on e.emp_no = sf.emp_no
+		 where e.emp_no = #{empNo}
 	</select>
 
 	<select id="findByEmp" parameterType="String" resultType="com.haruon.groupware.user.entity.EmpEntity" >

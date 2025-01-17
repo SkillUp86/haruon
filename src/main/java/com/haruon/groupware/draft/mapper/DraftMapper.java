@@ -1,6 +1,7 @@
 package com.haruon.groupware.draft.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -41,4 +42,6 @@ public interface DraftMapper {
 
 	// 기본결재 상세문서
 	ResponseBasicDraftDetail findByBasicDraftNo(int draNo);
+	// 참조자 결재문서
+	List<Map<String, Object>> findDraftByReferences(int empNo);
 }

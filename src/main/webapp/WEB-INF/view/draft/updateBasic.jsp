@@ -160,7 +160,7 @@ type="text/css">
                                                             <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
                                                                 ${f.originName}.${f.ext}
                                                             </a>
-                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/deleteFile/basic?drafNo=${f.drafNo}&draNo=${d.draNo}">삭제</a>
+                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">삭제</a>
                                                         </c:forEach>
                                                     </div>
                                                 </c:if>
