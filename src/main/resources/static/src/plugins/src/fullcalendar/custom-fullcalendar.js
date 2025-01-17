@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Date variable
     var newDate = new Date();
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var modalAddBtnEl = document.querySelector('.btn-add-event');
     var modalUpdateBtnEl = document.querySelector('.btn-update-event');
     var modalContentEl = document.querySelector('#event-content');
-    var modalDeleteBtnEl = document.querySelector('#deleteEventBtn');  // 삭제 버튼
+    var modalDeleteBtnEl = document.querySelector('#deleteEventBtn'); // 삭제 버튼
 
     // Calendar Elements and options
     var calendarEl = document.querySelector('.calendar');
@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
         Important: 'danger',
         Travel: 'warning',
     };
+
+    // 시간대 보정 함수
+    function adjustToDBTimezone(dateTime) {
+        let date = new Date(dateTime);
+        // DB와 시간대가 일치하도록 보정
+        date.setHours(date.getHours() - 3); // +3시간 되어 나오는 문제 해결
+        return date.toISOString().slice(0, 16);
+    }
 
     // Fetch calendar events from the API
     async function fetchCalendarEvents() {
@@ -43,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const calendarEventsList = data.map(event => ({
                 id: event.schNo,
                 title: event.title,
-                start: event.startTime,
-                end: event.endTime,
+                start: adjustToDBTimezone(event.startTime),
+                end: adjustToDBTimezone(event.endTime),
                 extendedProps: {
                     calendar: event.descript
                 }
@@ -90,10 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
             modalTitleEl.value = eventObj.title;
         }
         if (modalStartDateEl) {
-            modalStartDateEl.value = eventObj.start.toISOString().slice(0, 16);
+            modalStartDateEl.value = adjustToDBTimezone(eventObj.start);
         }
         if (modalEndDateEl) {
-            modalEndDateEl.value = eventObj.end ? eventObj.end.toISOString().slice(0, 16) : eventObj.start.toISOString().slice(0, 16);
+            modalEndDateEl.value = eventObj.end
+                ? adjustToDBTimezone(eventObj.end)
+                : adjustToDBTimezone(eventObj.start);
         }
         if (modalContentEl) {
             modalContentEl.value = eventObj.extendedProps.description || '';
@@ -114,26 +124,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add event handler
-    modalAddBtnEl.addEventListener('click', function() {
+    modalAddBtnEl.addEventListener('click', function () {
         var checkedRadioBtnEl = document.querySelector('input[name="event-level"]:checked');
         var titleValue = modalTitleEl.value;
-        var startDateValue = modalStartDateEl.value;
-        var endDateValue = modalEndDateEl.value;
-        var calendarType = checkedRadioBtnEl ? checkedRadioBtnEl.value : '';
+        var startDateValue = new Date(modalStartDateEl.value);
+        var endDateValue = new Date(modalEndDateEl.value);
 
+        // 캘린더에 추가 시 시간대 보정 없이 그대로 DB 시간과 동일하게 추가
         calendar.addEvent({
             id: uuidv4(),
             title: titleValue,
-            start: startDateValue,
-            end: endDateValue,
+            start: startDateValue.toISOString(),
+            end: endDateValue.toISOString(),
             allDay: false,
-            extendedProps: { calendar: calendarType }
+            extendedProps: { calendar: checkedRadioBtnEl ? checkedRadioBtnEl.value : '' }
         });
+
         myModal.hide();
     });
 
     // Update event handler
-    modalUpdateBtnEl.addEventListener('click', function() {
+    modalUpdateBtnEl.addEventListener('click', function () {
         var eventId = this.dataset.fcEventPublicId;
         var event = calendar.getEventById(eventId);
 
@@ -146,27 +157,23 @@ document.addEventListener('DOMContentLoaded', function() {
         myModal.hide();
     });
 
-    // Delete event handler (GET 방식)
-    modalDeleteBtnEl.addEventListener('click', function(e) {
-        e.preventDefault(); // 기본 동작 방지
+    // Delete event handler
+    modalDeleteBtnEl.addEventListener('click', function (e) {
+        e.preventDefault();
 
-        var eventId = this.getAttribute('data-fc-event-public-id');  // 삭제할 이벤트 ID
+        var eventId = this.getAttribute('data-fc-event-public-id');
 
         if (eventId) {
-            // GET 방식으로 삭제 요청 보내기
             $.ajax({
-                url: "/deleteSchedule", // 서버 URL (서버에서 이벤트 삭제를 처리하는 URL)
-                type: "GET", // GET 방식으로 요청
-                data: { schNo: eventId }, // 이벤트 ID를 쿼리 스트링으로 전달
-                success: function(response) {
-                    // 삭제 성공 시 캘린더에서 이벤트 제거
-                    calendar.getEventById(eventId).remove();  // FullCalendar의 이벤트 삭제
+                url: "/deleteSchedule",
+                type: "GET",
+                data: { schNo: eventId },
+                success: function (response) {
+                    calendar.getEventById(eventId).remove();
                     alert("일정이 삭제되었습니다.");
-
-                    // 모달 닫기
                     myModal.hide();
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Ajax Error:", error);
                     alert("일정 삭제에 실패했습니다.");
                 }
@@ -205,29 +212,20 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev next addEventButton',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
         events: [],
         select: calendarSelect,
         customButtons: {
             addEventButton: {
                 text: 'Add Event',
-                click: calendarAddEvent
-            }
+                click: calendarAddEvent,
+            },
         },
         eventClassNames: function ({ event: calendarEvent }) {
             return ['event-fc-color', `fc-bg-${calendarEventColors[calendarEvent._def.extendedProps.calendar]}`];
         },
         eventClick: calendarEventClick,
-        windowResize: function() {
-            if (window.innerWidth <= 1199) {
-                calendar.changeView('listWeek');
-                calendar.setOption('height', 900);
-            } else {
-                calendar.changeView('dayGridMonth');
-                calendar.setOption('height', 1052);
-            }
-        }
     });
 
     fetchCalendarEvents();
