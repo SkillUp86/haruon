@@ -37,7 +37,7 @@
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
-    <title>쪽지함</title>
+    <title>보낸 쪽지함</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -89,9 +89,9 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
+                                                <li class="breadcrumb-item"><a href="#">Mail</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Question List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Send</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -114,29 +114,30 @@
 
                                         <div class="mail-overlay"></div>
 
-                                        <div class="tab-title">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-12 text-center mail-btn-container">
-                                                    <a id="btn-compose-mail" class="btn btn-block" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></a>
+                                        <div id="mailbox-inbox" class="accordion mailbox-inbox">
+                                        	<!-- 쪽지 작성 버튼 시작 -->
+                                            <div class="row mt-3 ms-1">
+                                                <div class="col-md-12 col-sm-16 col-16 mail-btn-container">
+                                                    <a id="btn-compose-mail" class="btn btn-sm" href="javascript:void(0);">
+                                                    	작성
+                                                   	</a>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-12 mail-categories-container">
                                                     <div class="mail-sidebar-scroll"></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <div id="mailbox-inbox" class="accordion mailbox-inbox">
-    
-
-    
+                                            <!-- 쪽지 작성 버튼 끝 -->
+                                        	
                                             <div class="action-center">
                                                 <div class="">
-                                                    <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
+                                                    <div class="form-check form-check-primary form-check-inline mt-1 ms-1" data-bs-toggle="collapse" data-bs-target>
                                                         <input class="form-check-input inbox-chkbox" type="checkbox" id="inboxAll">
+														<a href="" class="">삭제</a>
+														<span style="margin-left: 65px;">수신인(직급)</span>
+														<span style="margin-left: 65px;">제목</span>
+														<span style="margin-left: 1020px;">발신일</span>
                                                     </div>
                                                 </div>
-    
-                                               
                                             </div>
                                     
                                             <div class="message-box">
@@ -144,35 +145,6 @@
                                                 <div class="message-box-scroll" id="ct">
                                                     <!-- 보낸 쪽지함 시작 -->
                                                     <div id="msgSenders" class="mail-item trashed">
-                                                        <!-- 메일 리스트 HTML 동적처리할 부분-->
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="메일번호">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#메일Collapse이름" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
-                                                                            </div>
-                                                                            <div class="f-head">
-                                                                                수신자 프로필 사진
-                                                                                <img src="../src/assets/img/profile-16.jpeg" class="user-profile" alt="avatar">
-                                                                            </div>
-                                                                            <div class="f-body">
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email">수신자 이름</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
-                                                                                        <span class="mail-title">메일 제목 - </span>메일 상세보기 내용</p>
-                                                                                    <p class="meta-time align-self-center">발신 일자</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 메일 리스트 HTML 동적처리할 부분-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -360,7 +332,6 @@
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 		<script>
-			
 			$.ajax({
 				url: "/MsgSenders/" + "${principal.empNo}",
 				method: 'GET', 
@@ -375,20 +346,20 @@
 					                           <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false">
 					                               <div class="mail-item-inner">
 					                                   <div class="d-flex">
-					                                       <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
+					                                       <div class="form-check form-check-primary form-check-inline mt-1 ms-1" data-bs-toggle="collapse" data-bs-target>
 					                                           <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
 					                                       </div>
-					                                       <div class="f-head">
+					                                       <div class="f-head ms-3">
 					                                           <img src="` + item.fileNameE + "." + item.extE + `" class="user-profile" alt="avatar">
 					                                       </div>
 					                                       <div class="f-body">
 					                                           <div class="meta-mail-time">
-					                                               <p class="user-email">` + item.enameR + ` </p>
+					                                               <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
 					                                           </div>
 					                                           <div class="meta-title-tag">
 					                                               <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
-					                                                   <span class="mail-title">` + item.title + `
-					                                               <p class="meta-time align-self-center">` + item.sendDate + `</p>
+					                                                   <span class="mail-title">\${item.title}
+					                                               <p class="meta-time align-self-center me-3">` + item.sendDate + `</p>
 					                                           </div>
 					                                       </div>
 					                                   </div>
@@ -396,13 +367,63 @@
 					                           </div>
 				                           </div>
 			                   		   </div>`
+			                   		   
+			     	msgSenderHTML += `<div id="inNo` + no + `" class="collapse" aria-labelledby="`+ "#outNo" + no +`" data-bs-parent="#mailbox-inbox">
+					                    <div class="mail-content-container sentmail">
+					            	    
+					                    <div class="d-flex justify-content-between mb-3">
+					                        <div class="d-flex user-info">
+					                            <div class="f-body">
+					                                <div class="meta-mail-time">
+					                                    <div class="">
+					                                        <p class="user-email"><span>To,</span>` + item.enameR + `</p>
+					                                    </div>
+					                                    <p class="mail-content-meta-date current-recent-mail">` + item.sendDate.substr(0, 10) + `</p>
+					                                    <p class="meta-time align-self-center">` + item.sendDate.substr(11) + `</p>
+					                                </div>
+					                            </div>
+					                        </div>
+					
+					                        <div class="action-btns">
+					                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Reply">
+					                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left reply"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+					                            </a>
+					                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Forward">
+					                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-right forward"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>
+					                            </a>
+					                        </div>
+					                    </div>
+					                    <p class="mail-content"> 
+					                       ` + item.content + ` </p>
+					                    <p> ` + item.enameS + ` </p>
+					
+					                    <div class="attachments">
+					                        <h6 class="attachments-section-title">Attachments</h6>
+					
+					                        <div class="attachment file-folder">
+					                            <div class="media">
+					                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+					                                <div class="media-body">
+						                                <p>
+						                                	` + ((item.fileNameM != null)? item.fileNameM + "." + item.extM : '첨부파일없음') + `
+						                                </p>
+					                                </div>
+					                            </div>
+					                        </div>
+					
+					                    </div>
+					                </div>
+					            </div>`
 									
 					no++;
 				});
+				
+				
 				$('#msgSenders').append(msgSendersHTML);
+				$('#msgSender').append(msgSenderHTML);
 				
 			}).fail(function() {
-				console.log("showBusinessTripReqList ajax fail");
+				console.log("SenderMsg fail");
 			});
 			
 			// function show() {
