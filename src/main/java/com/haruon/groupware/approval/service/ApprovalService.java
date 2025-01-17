@@ -64,7 +64,6 @@ public class ApprovalService {
 	// 결재 첨부파일 존재시 추가
 	private void existApprovalFile(RequestApproval approval, String path, int basicRow, Integer draNo) {
 		log.debug("getFormFile {}",approval.getFormFile().isEmpty());
-		log.debug("getFormFile {}",approval.getFormFile());
 		if(basicRow == 1) {
 			List<MultipartFile> file = approval.getFormFile();
 			for(MultipartFile f : file) {

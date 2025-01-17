@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ResponseVacationDraftDetail {
 	private Integer draNo;
+	private Integer empNo;
 	private Integer appNo;
 	private String draftType;
 	private String location;
@@ -32,4 +33,9 @@ public class ResponseVacationDraftDetail {
 	private String vacStartDate;
 	private String vacFinishDate;
 	private String emergPhone;
+	private String midFilename;
+	private String midFileExt;
+	private String finalFilename;
+	private String finalFileExt;
+	private String reasonDenial;
 }

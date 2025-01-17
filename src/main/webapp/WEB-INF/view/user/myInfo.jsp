@@ -180,7 +180,6 @@
                                                                     <input class="form-control mb-3" value="${e.gender}" id="gender" name="gender" readonly>
                                                                 </div>
                                                             </div>
-                                                            
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="address">주소</label>
@@ -281,6 +280,7 @@
                         <span class="input-group-text label-text">이름</span>
                         <input type="text" class="form-control" id="empName" name="empName" value="${e.ename}" readonly>
                     </div>
+                    
                     <c:if test="${e.signfileName !=null }">
 	                    <div class="input-group mb-4">
 	                        <img src="${pageContext.request.contextPath}/upload/sign/${e.signfileName}.${e.signExt}">
@@ -299,8 +299,7 @@
                 </div>	
             </div>
             <div class="modal-footer">
-                <button class="btn btn btn-light-dark" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i> 취소</button>
-                <button type="button" class="btn btn-primary">확인</button>
+                <button class="btn btn btn-light-dark" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i>닫기</button>
             </div>
         </div>
     </div>
