@@ -169,7 +169,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="country">부서</label>
-                                                                    <input class="form-control mb-3" value="${e.location}" id="depNo" name="depNo" readonly>
+                                                                    <input class="form-control mb-3" value="${e.dname}" id="depNo" name="depNo" readonly>
                                                                     
                                                                 </div>
                                                             </div>

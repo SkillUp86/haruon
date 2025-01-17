@@ -9,8 +9,7 @@
 			 , e.dep_no deptNo
 			 , (select dname
 			   from dept
-			   where 
-			   )
+			   where dep_no = e.dep_no) dname
 			 , e.ename
 			 , (select descript
 			   from common_code
