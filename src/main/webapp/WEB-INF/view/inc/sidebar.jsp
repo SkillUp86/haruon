@@ -114,7 +114,7 @@
 					<a href="${pageContext.request.contextPath}/draft/list"> 내문서함 </a>
 				</li>
 				<li>
-					<a href="#"> 참조문서함(수정필요)  </a>
+					<a href="${pageContext.request.contextPath}/draft/refers/list"> 참조문서함(수정필요)  </a>
 				</li>
 			</ul>
 		</li>

@@ -73,7 +73,7 @@ public class DraftController {
 
 		return "draft/draftList";
 	}
-	// 문서리스트
+	// 참조 문서리스트
 	@GetMapping("/refers/list")
 	public String referList() {
 		

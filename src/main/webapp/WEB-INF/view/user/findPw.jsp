@@ -7,11 +7,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>SignIn Boxed | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <title>Haruon | 비밀번호 찾기 </title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -42,7 +43,7 @@
                     <div class="card mt-3 mb-3">
                         <div class="card-body">
     
-    						<form action="${pageContext.request.contextPath}/findPw" method="post">
+    						<form id="formFindPw" action="${pageContext.request.contextPath}/findPw" method="post">
                             <div class="row">
                                 <div class="col-md-12 mb-3">
 
@@ -52,38 +53,44 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">사원번호</label>
-   										 <input type="text" id="empNo" name="empNo" class="form-control">
+   										 <input type="text" id="empNo" name="empNo" pattern="[0-9]*" class="form-control" required>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="mb-4">
                                         <label class="form-label">이메일</label>
-                                        <input type="email" id="email" name="email" class="form-control">
+                                        <input type="email" id="email" name="email" class="form-control" required>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="mb-4">
-                                        <button class="btn btn-secondary w-100" type="submit">RESET Password</button>
+                                        <button id="btnFindPw" class="btn btn-secondary w-100" type="button">비밀번호 발급</button>
                                     </div>
                                 </div>
                             </div>
                            </form>
-                            
                         </div>
                     </div>
                 </div>
-                
             </div>
-            
         </div>
-								
-
     </div>
-    
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 </body>
+<script>
+	$('#btnFindPw').click(function() {
+		if($('#empNo').val() == ''){
+			alert('사원번호를 입력하세요');
+			return;
+		} else if($('#email').val() == ''){
+			alert('이메일을 입력하세요');
+			return;
+		}
+		$('#formFindPw').submit();
+	})
+</script>
 </html>

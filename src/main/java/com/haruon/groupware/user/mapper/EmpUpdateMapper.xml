@@ -29,4 +29,17 @@
 		</set>
 		where emp_no = #{empNo}
 	</update>
+	<!-- 유저 정보 확인 -->
+	<select id="findByEmpAndEmail" parameterType="com.haruon.groupware.user.entity.EmpEntity">
+		select	count(*)
+		  from emp
+		 where emp_no = #{empNo}
+		   and email = #{email}
+	</select>
+	<!-- 비밀번호 업데이트 -->
+	<update id="updateEmpPw" parameterType="com.haruon.groupware.user.entity.EmpEntity">
+		update emp
+		set emp_pw = #{empPw}
+		where emp_no = #{empNo}
+	</update>
 </mapper>

@@ -111,14 +111,15 @@
 	<!-- 부서별 직원 리스트(본인제외) -->
 	<select id="findEmpByDept" parameterType="Integer" resultType="com.haruon.groupware.approval.dto.ResponseEmployee">
 		select
-				e.emp_no empNo
-			,   e.ename
-			,   c.descript descript
-		from 	emp e
-		inner join common_code c
-			on e.location = c.common_code
-		where e.dep_no = #{deptNo}
-	  	and e.emp_no not in(#{empNo})
+			   e.emp_no empNo
+			 , e.ename
+			 , c.descript descript
+		  from emp e
+		 inner join common_code c
+		  	   on e.location = c.common_code
+		 where e.dep_no = #{deptNo}
+	  	       and e.emp_no not in(#{empNo})
+	  	       and e.leave_date is null
 	</select>
 	
 	<select id="findByFranchise" resultType="com.haruon.groupware.approval.dto.ResponseFranchise">

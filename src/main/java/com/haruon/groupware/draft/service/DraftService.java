@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.draft.dto.response.ResponseAccessDraft;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.mapper.DraftMapper;
-import com.haruon.groupware.user.entity.EmpEntity;
 
 @Service
 @Transactional
@@ -35,20 +35,14 @@ public class DraftService {
 		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		int empNo = (int)details.getEmpNo();
 		int depNo = (int)details.getDepNo();
-		EmpEntity access = draftMapper.isAccess(draNo);
-		Integer draftByEmpNo = access.getEmpNo();
-		Integer draftByDepNo = access.getDepNo();
-		// 해당 팀 부서장 모든 결재 접근 가능
-		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (draftByDepNo == depNo))) {
+		ResponseAccessDraft access = draftMapper.isAccess(draNo);
+	
+		// 해당 기안자 팀 부서장 모든 결재 접근 가능
+		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (access.getDepNo() == depNo))) {
 			return true;
 		}
-		// 중간&최종 결재자 접근 가능
-		int approvalAccess = draftMapper.approvalAccess(empNo, draNo);
-		if(approvalAccess == 1) {
-			return true;
-		}
-		
-		if(empNo == draftByEmpNo) {
+		// 결재라인, 참조자 접근가능
+		if(access.getMidApp() == empNo || access.getFinalApp() == empNo || access.getRefNo() == empNo) {
 			return true;
 		}
 		return false;

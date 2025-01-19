@@ -5,21 +5,21 @@
 	<select id="findByEmpInfo" parameterType="Integer" resultType="com.haruon.groupware.user.dto.ResponseEmpInfo">
 		select
 			   e.emp_no empNo
-			 , e.email
+			 , e.email email
 			 , e.dep_no deptNo
 			 , (select dname
 			   from dept
 			   where dep_no = e.dep_no) dname
-			 , e.ename
+			 , e.ename ename
 			 , (select descript
 			   from common_code
 			   where common_code = location) location
 			 , e.ext_num extNum
-			 , e.phone
-			 , e.address
+			 , e.phone phone
+			 , e.address address
 			 , e.post_code postCode
-			 , e.gender
-			 , e.birth
+			 , e.gender gender
+			 , e.birth birth
 			 , e.join_date joinDate
 			 , f.file_name fileName
 			 , f.ext ext

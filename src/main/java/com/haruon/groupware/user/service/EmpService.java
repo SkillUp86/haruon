@@ -2,12 +2,16 @@ package com.haruon.groupware.user.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
@@ -25,46 +29,31 @@ public class EmpService {
 
 	public EmpService(EmpMapper empMapper, JavaMailSender javaMailSender, BCryptPasswordEncoder passwordEncoder) {
 		this.empMapper = empMapper;
-		this.javaMailSender = javaMailSender;
+		this.javaMailSender =javaMailSender;
 		this.passwordEncoder = passwordEncoder;
 	}
 	// 사원 마이페이지
-	public ResponseEmpInfo findByEmpInfo(int empNo) {
+	public ResponseEmpInfo findByEmpInfo() {
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = details.getEmpNo();
 		return empMapper.findByEmpInfo(empNo);
 	}
 	
 	public EmpEntity findByEmail(String email) {
+		
 		return empMapper.findByEmp(email);
 	}
 	public void addEmp(EmpDto emp) {
-		emp.setEmpPw(passwordEncoder.encode(emp.getEmpPw()));
-		// 데이터베이스에 삽입
+		String randomPassword = UUID.randomUUID().toString().substring(0, 6);
+		emp.setEmpPw(passwordEncoder.encode(randomPassword));
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(emp.getEmail()); // 회원가입한 사용자의 이메일
+		message.setSubject("회원가입 완료 및 임시 비밀번호 안내");
+		message.setText("안녕하세요, " + emp.getEname() + "님.\n\n" + "회원가입이 완료되었습니다.\n"
+				+ "임시 비밀번호는 아래와 같습니다. 로그인 후 반드시 비밀번호를 변경해주세요.\n\n" + "임시 비밀번호: " + randomPassword + "\n\n" + "감사합니다.");
+		javaMailSender.send(message);
 		empMapper.insertEmp(emp);
-
 	}
-
-//	public void findAndSendNewPw(Integer empNo, String email) {
-//		EmpDto empDto = new EmpDto();
-//		empDto.setEmpNo(empNo);
-//		empDto.setEmail(email);
-//
-//		EmpDto emp = empMapper.findEmpByEmail(empDto);
-//		if (emp == null) {
-//			throw new IllegalArgumentException("사원번호와 이메일이 일치하지 않습니다.");
-//		}
-//
-//		String newPw = UUID.randomUUID().toString().replace("-", "");
-//		String encodedPw = SHA256Util.encoding(newPw);
-//		emp.setEmpPw(encodedPw);
-//		empMapper.updateEmpPw(emp);
-//
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(emp.getEmail());
-//		message.setSubject("비밀번호 초기화 안내");
-//		message.setText("안녕하세요.\n\n" + "비밀번호 초기화 요청에 따라 임시 비밀번호가 발급되었습니다.\n" + "로그인 후 반드시 비밀번호를 변경해주세요.\n\n"
-//				+ "임시 비밀번호: " + newPw + "\n\n" + "감사합니다.");
-//		javaMailSender.send(message);
-//	}
 
 	// 매년 00시 00분 00초 기준으로 모든 직원의 총 연가 수와 사용한 연가 수가 리셋된다.
 	@Scheduled(cron = "00 00 00 1 1 *")

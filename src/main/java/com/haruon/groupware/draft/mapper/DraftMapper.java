@@ -5,22 +5,18 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.haruon.groupware.approval.entity.ApprovalEntity;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
+import com.haruon.groupware.draft.dto.response.ResponseAccessDraft;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
-import com.haruon.groupware.user.entity.EmpEntity;
 
 @Mapper
 public interface DraftMapper {
-	// 중간&최종 결재자 권한
-	int approvalAccess(int empNo, int draNo);
-	
 	// 유효성 검증
-	EmpEntity isAccess(int empNo);
+	ResponseAccessDraft isAccess(int empNo);
 
 	// 사원별 결재문서 리스트
 	List<ResponseDraft> findDraftByApproval(int empNo);

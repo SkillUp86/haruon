@@ -20,8 +20,6 @@ public interface EmpMapper {
 	
 	String mailCheck(String mailCheck);
 
-	int updateEmpPw(EmpDto emp);
-	
 	// 퇴사하지 않은 모든 사원의 사원번호를 가져오기 
 	List<EmpEntity> findAllEmp();
 	// 모든 직원의 연가 수 업데이트 (매년 또는 사원 등록시)
@@ -30,7 +28,5 @@ public interface EmpMapper {
 	Integer updateTotalLeaveByDivision(EmpEntity emp);
 	// 방금 addEmp한 직원 정보 가져오기
 	EmpEntity findNewEmp();
-
-	
 
 }

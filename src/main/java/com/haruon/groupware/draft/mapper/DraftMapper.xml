@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
-	<!-- 결재자 권한 -->
-	<select id="approvalAccess" parameterType="Integer">
-		select count(*)
-		  from approval
-		 where (mid_app = #{empNo} 
-		    or final_app = #{empNo})
-	       and dra_no = #{draNo}
-	</select>
+
 	<!-- 유효성 검증 -->
-	<select id="isAccess" parameterType="Integer" resultType="com.haruon.groupware.user.entity.EmpEntity">
+	<select id="isAccess" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseAccessDraft">
 		select d.emp_no empNo
 			 , (select dep_no
 			   from emp e
 			   where e.emp_no = d.emp_no) depNo
-		from draft d
-		where dra_no = #{draNo}
+			 , a.mid_app midApp
+		     , a.final_app finalApp
+		     , (select emp_no
+		       from refer
+		       where app_no = a.app_no) refNo
+		  from draft d
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+		where d.dra_no = #{draNo}
 	</select>
 	<!-- 휴가보고서 상세보기 -->
 	<select id="findByVacationDraftNo" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail">

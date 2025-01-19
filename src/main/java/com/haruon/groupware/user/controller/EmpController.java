@@ -61,18 +61,9 @@ public class EmpController {
 	// 회원가입 처리
 	@PostMapping("/addEmp")
 	public String addEmp(EmpDto emp) {
-		String randomPassword = UUID.randomUUID().toString().substring(0, 6);
-		emp.setEmpPw(randomPassword);
 		log.debug(emp.toString());
 		// 2. 회원가입 처리
 		empService.addEmp(emp);
-
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(emp.getEmail()); // 회원가입한 사용자의 이메일
-		message.setSubject("회원가입 완료 및 임시 비밀번호 안내");
-		message.setText("안녕하세요, " + emp.getEname() + "님.\n\n" + "회원가입이 완료되었습니다.\n"
-				+ "임시 비밀번호는 아래와 같습니다. 로그인 후 반드시 비밀번호를 변경해주세요.\n\n" + "임시 비밀번호: " + randomPassword + "\n\n" + "감사합니다.");
-		javaMailSender.send(message);
 
 		// 4. 홈 화면으로 리다이렉트
 		return "redirect:/login";
@@ -83,26 +74,11 @@ public class EmpController {
 		return "user/findPw";
 	}
 
-	// 비밀번호 찾기 처리
-	@PostMapping("/findPw")
-	public String findPw(@RequestParam Integer empNo, @RequestParam String email, Model model) {
-		try {
-			// empService.findAndSendNewPw(empNo, email);
-			model.addAttribute("message", "새로운 비밀번호가 이메일로 발송되었습니다.");
-			return "user/login";
-		} catch (IllegalArgumentException e) {
-			model.addAttribute("message", e.getMessage());
-		} catch (Exception e) {
-			model.addAttribute("message", "오류가 발생했습니다. 다시 시도해주세요.");
-		}
-		return "user/findPw";
-	}
 	// 내 정보
 	@GetMapping("/myInfo")
 	public String MyInfo(Authentication authentication, Model model) {
-		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
+		ResponseEmpInfo empInfo = empService.findByEmpInfo();
+		log.debug(empInfo.toString());
 		model.addAttribute("e",empInfo);
 		return "user/myInfo";
 	}
