@@ -1,6 +1,7 @@
 package com.haruon.groupware.department.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +11,8 @@ import com.haruon.groupware.department.entity.Dept;
 public interface DeptMapper {
 	
 	public List<Dept> findByAll();
+	
+	List<Map<String,Object>> selectDeptHead(Map<String,Object> map);
 	
 	List<Dept> selectDeptList(); 
 	

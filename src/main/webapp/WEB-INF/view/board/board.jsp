@@ -330,7 +330,7 @@
 	                            console.log(item);
 	                            let rowDate = [
 	                                item.boaNo,
-	                                `[\${item.catName}] <a href="/board/\${item.boaNo}">\${item.title}</a> \${item.countComment > 0 ? `(\${item.countComment})` : ''}`,
+	                                `[\${item.catName}] <a href="/board/\${item.boaNo}">\${item.title}</a> \${item.countComment > 0 ? `(\${item.countComment})` : ''}`, // 댓글수 1개 이상만
 	                                item.ename,
 	                                new Date(item.createDate).toLocaleString(), // 날짜 형식 변환
 	                                item.viewCnt,

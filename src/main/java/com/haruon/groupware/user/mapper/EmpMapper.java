@@ -1,6 +1,7 @@
 package com.haruon.groupware.user.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,5 +29,11 @@ public interface EmpMapper {
 	Integer updateTotalLeaveByDivision(EmpEntity emp);
 	// 방금 addEmp한 직원 정보 가져오기
 	EmpEntity findNewEmp();
+
+	// 직원 목록
+	List<EmpDto> selectEmpList();
+	
+	// 직원 정보 수정
+	Integer updateEmpInfo(Integer empNo);
 
 }

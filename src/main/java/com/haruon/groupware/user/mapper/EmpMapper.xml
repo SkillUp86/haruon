@@ -99,4 +99,24 @@
 	<select id="findNewEmp" resultType="com.haruon.groupware.user.entity.EmpEntity">
 		SELECT emp_no empNo, join_date joinDate FROM emp WHERE emp_no = (SELECT MAX(emp_no) FROM emp)
 	</select>
+	
+	<!-- 직원 목록 -->
+	<select id="selectEmpList" resultType="com.haruon.groupware.user.dto.EmpDto">
+		SELECT
+			e.emp_no empNo
+			, e.ename ename
+			, e.dep_no depNo
+			, d.dname dname
+			, e.location location
+			, c.descript descript
+			, e.email email
+			, e.phone phone
+			, e.ext_num extNum
+		FROM emp e
+		INNER JOIN dept d
+			ON e.dep_no = d.dep_no
+		INNER JOIN common_code c
+			ON e.location = c.common_code
+		WHERE e.leave_date IS NULL
+	</select>
 </mapper>

@@ -12,7 +12,11 @@ public class EmpDto {
 	private String address;
 	private Integer depNo;
 	private String phone;
+	private String extNum;
 	private String gender;
 	private String birth;
 	private String location;
+	private String dname;
+	private String descript;
+	
 }

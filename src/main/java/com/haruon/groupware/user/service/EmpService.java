@@ -33,7 +33,7 @@ public class EmpService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	// 사원 마이페이지
-	public ResponseEmpInfo findByEmpInfo() {
+	public ResponseEmpInfo findByEmpInfo(int empNo) {
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
 		return empMapper.findByEmpInfo(empNo);
@@ -84,6 +84,10 @@ public class EmpService {
 			log.debug("scheduleAnnualLeaveUpdate 스케쥴링 오류");
 		}
 	}
-
+	
+	// 직원 목록
+	public List<EmpDto> getEmpList(){
+		return empMapper.selectEmpList();
+	}
 	
 }
