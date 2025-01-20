@@ -112,10 +112,10 @@
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
                           <div class="row mb-3">
-                              <div class="col-md-12">
-                              <h2>부서 관리</h2>
+                              <div class="col-md-12" style="background-color: white;">
+                              <h2 style="margin-top: 20px;">부서 관리</h2>
                               	<div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
-                                  	<div class="widget-content widget-content-area br-8">
+                                  	<div class="widget-content widget-content-area br-8"  style="margin-bottom: 20px;">
 		            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 		            					
 		            						 <div style="text-align: right; margin-bottom: 10px;">
@@ -307,55 +307,64 @@
     });
 	 
 	 // 활성화/비활성화 버튼
-	 document.addEventListener('DOMContentLoaded', function() {
-		 document.querySelectorAll('.warning').forEach(button => {
+	document.addEventListener('DOMContentLoaded', function() {
+	    // 버튼 상태 업데이트 함수
+	    function updateButtonState(button, activeYn) {
+	        // 버튼 텍스트 업데이트
+	        button.textContent = activeYn === 'Y' ? '활성화' : '비활성화';
+	        
+	        // 버튼 색 업데이트
+	        if (activeYn === 'Y') {
+	            button.classList.remove('btn-light-dark');
+	            button.classList.add('btn-dark');
+	        } else {
+	            button.classList.remove('btn-dark');
+	            button.classList.add('btn-light-dark');
+	        }
+	        
+	        // data-activeYn 업데이트
+	        button.setAttribute('data-activeYn', activeYn);
+	    }
+	
+	    document.querySelectorAll('.warning button').forEach(button => {
 	        button.addEventListener('click', function(event) {
-	            event.preventDefault(); // 기본 링크 동작 방지
-	            const depNo = this.getAttribute('data-depNo'); // 데이터 속성에서 depNo 추출
-	            console.log('depNo:', depNo);
-	            const activeYn = button.getAttribute('data-activeYn') === 'Y' ? 'N' : 'Y'; 
+	            event.preventDefault();
+	            const depNo = this.getAttribute('data-depNo');
+	            const activeYn = this.getAttribute('data-activeYn') === 'Y' ? 'N' : 'Y';
 	            
-	         	// 버튼 색깔 변경
-	            if (activeYn === 'Y') {
-	                this.classList.remove('btn-light-dark');
-	                this.classList.add('btn-dark');
-	            } else {
-	                this.classList.remove('btn-dark');
-	                this.classList.add('btn-light-dark');
-	            }
-	            
-	            this.setAttribute('data-depNo', depNo);
-	            this.setAttribute('data-activeYn', activeYn); // data-activeYn 값 업데이트
-	            console.log("update activeYn: "+activeYn);
-	            console.log("전송 값:", { depNo: parseInt(depNo, 10), activeYn: activeYn });
-	            
-			    Swal.fire({ // sweet alert
-			        title: '부서를 활성화/비활성화 하시겠습니까?',
-			        icon: 'question',
-			        showCancelButton: true,
-			        confirmButtonColor: '#3085d6',
-			        cancelButtonColor: '#d33',
-			        confirmButtonText: 'Yes'
-			    }).then((result) => {
-			        if (result.isConfirmed) {
-			        	$.ajax({
-		                    url: "/depts/activeYN",
-		                    type: "POST",
-		                    data: { depNo:  parseInt(depNo, 10), activeYn: activeYn},
-		                    success: function(response) {
-		                    	Swal.fire('완료되었습니다','success')
-		                    	location.reload(); // 페이지 새로 고침
-		                    },
+	            Swal.fire({
+	                title: '부서를 활성화/비활성화 하시겠습니까?',
+	                icon: 'question',
+	                showCancelButton: true,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'Yes',
+	                didOpen: () => { // 모달이 열릴 때 타이틀 스타일
+	                    const title = Swal.getTitle()
+	                    title.style.fontSize = '20px'
+	                }
+	            }).then((result) => {
+	                if (result.isConfirmed) {
+	                    $.ajax({
+	                        url: "/depts/activeYN",
+	                        type: "POST",
+	                        data: { depNo: parseInt(depNo, 10), activeYn: activeYn},
+	                        success: function(response) {
+	                            if (response.success) {
+	                                Swal.fire('완료되었습니다', '', 'success');
+	                                updateButtonState(button, response.activeYn); // 버튼 업데이트
+	                            }
+	                        },
 	                        error: function(xhr, status, error) {
 	                            console.error("Error: ", error);
 	                            console.log("Response Text: ", xhr.responseText);
 	                            Swal.fire('오류 발생', '업데이트에 실패했습니다.', 'error');
 	                        }
-			        	});
-			        }
-			    });
-			});
-		});
+	                    });
+	                }
+	           	});
+	        });
+	    });
 	});
     </script>
 

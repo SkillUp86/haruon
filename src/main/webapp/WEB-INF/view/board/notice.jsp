@@ -99,7 +99,7 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12" style="background-color: white;">
-	                            <h2 style=" margin-top: 20px;">공지 게시판</h2>
+	                            <h2 style="margin-top: 20px;">공지 게시판</h2>
                					
                					<c:if test="${depNo == 1}"><!-- 인사과만 글쓰기 버튼 노출 (depNo=1) -->
 	               					<div style="text-align: right; margin-bottom: 5px;">

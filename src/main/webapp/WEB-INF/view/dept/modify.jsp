@@ -48,11 +48,11 @@
 	}
     
 	.author-img {
-    width: 200px; /* 원하는 너비 */
-    height: 200px; /* 원하는 높이 */
+    width: 200px;
+    height: 200px;
     background-size: cover; 
-    background-position: center; /* 이미지 중앙 정렬 */
-    border-radius: 50%; /* 원형으로 만들기 */
+    background-position: center;
+    border-radius: 50%;
      display: block;
     margin: 0 auto;
 	}
@@ -130,7 +130,7 @@
 							<div class="widget-content widget-content-area br-8">
 								<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
 									<div class="info">
-										<h4>[${e.ename}] 정보 수정</h4>
+										<h4><strong>${e.ename}</strong>님 정보 수정</h4>
 									</div>
 									
 									<form id="formUpdateEmp" action="${pageContext.request.contextPath}/employees/modify" method="post">

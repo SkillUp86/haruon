@@ -101,10 +101,10 @@
                 <div class="account-settings-container layout-top-spacing">
 	                <div class="account-content">
 	                    <div class="row mb-3">
-	                        <div class="col-md-12">
-	                            <h2>직원 목록</h2>
+	                        <div class="col-md-12" style="background-color: white;">
+	                            <h2 style="margin-top: 20px;">직원 목록</h2>
 	                            
-               					<div class="widget-content widget-content-area br-8">
+               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
 	               					<div style="text-align: right; margin-top: 20px;" class="me-4">
 		                                <a class="btn btn-secondary me-4" href="${pageContext.request.contextPath}/addEmp">
 		                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">

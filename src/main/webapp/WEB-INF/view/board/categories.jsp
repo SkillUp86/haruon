@@ -120,10 +120,10 @@
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
                           <div class="row mb-3">
-                              <div class="col-md-12">
-                              <h2>카테고리 관리</h2>
+                              <div class="col-md-12" style="background-color: white;">
+                              <h2 style=" margin-top: 20px;">카테고리 관리</h2>
                               	<div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
-                                  	<div class="widget-content widget-content-area br-8">
+                                  	<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
 		            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 		            					
 		            						 <div style="text-align: right; margin-bottom: 10px;">
