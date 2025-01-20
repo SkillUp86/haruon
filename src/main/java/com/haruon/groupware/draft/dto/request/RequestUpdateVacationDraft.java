@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 public class RequestUpdateVacationDraft {
-
 	private Integer draNo;
+	private String type;
 	private Integer subEmpNumber;
 	private String kind;
 	private String urgentPhone;

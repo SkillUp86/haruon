@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 public class RequestUpdateSalesDraft {
-
 	private Integer draNo;
+	private String type;
 	private Integer fraNo;
 	private String ym;
 	private Long revenue;

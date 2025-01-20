@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class RequestUpdateBusinessDraft {
     private Integer draNo;
+    private String type;
 	private String place;
 	private String startDate;
 	private String finishDate;

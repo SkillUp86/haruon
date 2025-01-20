@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class RequestUpdateBasicDraft {
     private Integer draNo; 
+    private String type;
 	private String title;
 	private String textContent;
 	private List<MultipartFile> formFile;

@@ -28,7 +28,9 @@ import com.haruon.groupware.draft.service.DraftService;
 import com.haruon.groupware.draft.service.UpdateService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/draft")
 public class UpdateController {
@@ -106,7 +108,7 @@ public class UpdateController {
 		Integer draNo = vacationDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateVacationDraft(vacationDraft, path);
-		return "redirect:/draft/detail/vacation/" + vacationDraft.getDraNo();
+		return "redirect:/draft/"+vacationDraft.getType()+"/detail/" + vacationDraft.getDraNo();
 	}
 
 	@PostMapping("/update/salesDraft")
@@ -114,7 +116,7 @@ public class UpdateController {
 		Integer draNo = salesDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateSalesDraft(salesDraft, path);
-		return "redirect:/draft/detail/sales/" + salesDraft.getDraNo();
+		return "redirect:/draft/"+salesDraft.getType()+"/detail/" + salesDraft.getDraNo();
 	}
 
 	@PostMapping("/update/businessDraft")
@@ -122,15 +124,16 @@ public class UpdateController {
 		Integer draNo = businessDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBusinessDraft(businessDraft, path);
-		return "redirect:/draft/detail/business/" + businessDraft.getDraNo();
+		return "redirect:/draft/"+businessDraft.getType()+"/detail/" + businessDraft.getDraNo();
 	}
 
 	@PostMapping("/update/basicDraft")
 	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, HttpSession session) {
+		log.debug(basicDraft.toString());
 		Integer draNo = basicDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBasicDraft(basicDraft, path);
-		return "redirect:/draft/detail/basic/" + basicDraft.getDraNo();
+		return "redirect:/draft/"+basicDraft.getType()+"/detail/" + basicDraft.getDraNo();
 	}
 
 	// 매출보고서 수정

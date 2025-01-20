@@ -16,6 +16,7 @@ import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
+import com.haruon.groupware.util.ApprovalFileUpload;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,33 +67,7 @@ public class ApprovalService {
 		log.debug("getFormFile {}",approval.getFormFile().isEmpty());
 		if(basicRow == 1) {
 			List<MultipartFile> file = approval.getFormFile();
-			for(MultipartFile f : file) {
-			if(f.getOriginalFilename().isEmpty()) {
-				continue;
-			}
-			log.debug("getOriginalFilename = {}",f.getOriginalFilename());
-			DraftFileEntity draftFile = new DraftFileEntity();
-			draftFile.setDraNo(draNo);
-			draftFile.setKind(f.getContentType());
-			draftFile.setSize(f.getSize());
-			int dotInx = f.getOriginalFilename().lastIndexOf(".");
-			String originName = f.getOriginalFilename().substring(0,dotInx);
-			String fileName = UUID.randomUUID().toString().replace("-", "");
-			String ext = f.getOriginalFilename().substring(dotInx+1);
-			draftFile.setFileName(fileName);
-			draftFile.setOriginName(originName);
-			draftFile.setExt(ext);
-			
-			int draftFileRow = approvalMapper.saveDraftFileByUser(draftFile);
-				if(draftFileRow == 1) {
-					try {
-						f.transferTo(new File(path + fileName +"."+ext));
-					} catch (IllegalStateException | IOException e) {
-						e.printStackTrace();
-						throw new IllegalArgumentException("파일이 없습니다");
-					}
-				}
-			}
+			ApprovalFileUpload.getApprovalFileupload(path, draNo, file, approvalMapper);
 		}
 	}
 
