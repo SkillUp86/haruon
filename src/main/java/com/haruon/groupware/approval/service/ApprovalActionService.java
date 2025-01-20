@@ -4,9 +4,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haruon.groupware.approval.entity.ApprovalEntity;
 import com.haruon.groupware.approval.mapper.ApprovalActionMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Transactional
 @Service
 public class ApprovalActionService {
@@ -25,12 +29,16 @@ public class ApprovalActionService {
 	public boolean isAccessBymidApproval(int draNo) {
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
-		Integer midApp = approvalActionMapper.findMidApprovalByEmpNo(empNo, draNo).getMidApp();
-		//Integer finalApp = approvalActionMapper.findFinalApprovalByEmpNo(empNo).getFinalApp(); 
-		// 중간결재자가 아닐시 접근제한
-		if(empNo == midApp) {
-			return true;
+		ApprovalEntity midApprovalByEmpNo = approvalActionMapper.findMidApprovalByEmpNo(empNo, draNo);
+		log.debug(midApprovalByEmpNo.toString());
+		if(midApprovalByEmpNo != null) {
+			Integer midApp = midApprovalByEmpNo.getMidApp();
+			// 중간결재자가 아닐시 접근제한
+			if(empNo == midApp) {
+				return true;
+			}
 		}
+		
 		return false;
 	}
 	// 최종 유효성 검사
