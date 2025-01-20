@@ -28,7 +28,11 @@ public interface BoardMapper {
 	Map<String,Object> selectBoardOne(Integer boaNo);
 	List<Map<String,Object>> selectCommentList(Integer boaNo); // 댓글 리스트
 	Integer countComment(Integer boaNo); // 댓글 수 
+	
 	Integer countLike(Integer boaNo); // 추천 수
+	Integer checkLike(Map<String,Object> map); // 추천 여부 확인
+	Integer cancelLike(Map<String,Object> map); // 추천 취소
+	
 	Integer updateViewCnt(Integer boaNo); // 조회수 업데이트
 	Integer insertBoardLike(BoardLike boardLike); // 글 추천
 	

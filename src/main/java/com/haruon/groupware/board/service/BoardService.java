@@ -71,12 +71,34 @@ public class BoardService {
         return (Integer) board.get("viewCnt");
     }
 	// 글 추천
-	public Integer insertBoardLike(Integer boaNo, Integer empNo) {
-        BoardLike boardLike = new BoardLike();
-        boardLike.setBoaNo(boaNo);
-        boardLike.setEmpNo(empNo);
-        
-		return boardMapper.insertBoardLike(boardLike);
+	public boolean switchLike(Integer boaNo, Integer empNo) {
+		// 추천 여부 확인
+		Map<String, Object> map = new HashMap<>();
+		map.put("boaNo", boaNo);
+		map.put("empNo", empNo);
+	    int likeCount = boardMapper.checkLike(map);
+	    if (likeCount > 0) {
+	    	// 이미 추천 -> 추천 취소
+	    	boardMapper.cancelLike(map);
+	        return false;
+	    } else {
+	    	// 추천 X -> 추천 +
+	    	BoardLike boardLike = new BoardLike();
+	        boardLike.setBoaNo(boaNo);
+	        boardLike.setEmpNo(empNo);
+	        boardMapper.insertBoardLike(boardLike);
+			return true;
+	    }
+	}
+	// 추천 여부 확인만
+	public boolean isLiked(Integer boaNo, Integer empNo) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("boaNo", boaNo);
+	    map.put("empNo", empNo);
+
+	    // 추천 여부 확인
+	    int likeCount = boardMapper.checkLike(map);
+	    return likeCount > 0;
 	}
 	
 	// 댓글 입력

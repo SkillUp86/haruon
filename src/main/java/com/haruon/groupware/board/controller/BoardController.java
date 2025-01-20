@@ -51,15 +51,20 @@ public class BoardController {
 	// 게시글 상세
 	@GetMapping("/board/{boaNo}")
     public String getBoardOne(Authentication authentication, HttpSession session, @PathVariable Integer boaNo, Model model) {
-        Map<String, Object> board = boardService.getBoardOne(boaNo);
+		Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int empNo = userDetails.getEmpNo();
+        
+        // 추천 여부 확인
+        boolean isLiked = boardService.isLiked(boaNo, empNo);
+        model.addAttribute("isLiked",isLiked);
+
         // 댓글 리스트
         List<Map<String,Object>> commentList = boardService.getCommentList(boaNo);
         model.addAttribute("commentList",commentList);
 	        // 댓글 입력 칸
-	        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-			int empNo = userDetails.getEmpNo();
 			model.addAttribute("empNo",empNo);
 			String ename = userDetails.getEname();
 			model.addAttribute("ename",ename);
@@ -75,10 +80,6 @@ public class BoardController {
         // 첨부파일 리스트
         List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);
 		model.addAttribute("boardFiles", boardFiles);
-		
-		// 조회수
-		Integer updatedViewCnt = boardService.getViewCnt(boaNo); // 최신 조회수 가져오기
-	    model.addAttribute("updatedViewCnt", updatedViewCnt);
 		
         return "board/boardOne";
     }
@@ -162,7 +163,11 @@ public class BoardController {
 /* 공지 */
 	// 공지 리스트
 	@GetMapping("/board/notice")
-	public String noticeList(Model model) {
+	public String noticeList(Authentication authentication, Model model) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		int depNo = userDetails.getDepNo();
+		model.addAttribute("depNo",depNo);
+		
 		List<Map<String,Object>> noticeList = boardService.getNoticeList();
 		model.addAttribute("noticeList",noticeList);
 		return "board/notice";

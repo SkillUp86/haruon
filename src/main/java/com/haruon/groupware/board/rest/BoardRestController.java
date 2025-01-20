@@ -28,32 +28,26 @@ public class BoardRestController {
 	
 	// 조회수 업데이트
 	@PostMapping("/board/updateView/{boaNo}")
-    public ResponseEntity<Map<String, Object>> updateViewCnt(@PathVariable Integer boaNo) {
-        // 조회수 증가
-        boardService.updateViewCnt(boaNo);
-
-        // 업데이트된 조회수 가져오기
-        Integer updatedViewCnt = boardService.getViewCnt(boaNo);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("viewCnt", updatedViewCnt);
-
-        return ResponseEntity.ok(response);
-    }
+	public ResponseEntity<Map<String, Object>> updateViewCnt(@PathVariable Integer boaNo) {
+	    boardService.updateViewCnt(boaNo);
+	    Integer updatedViewCnt = boardService.getViewCnt(boaNo);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("viewCount", updatedViewCnt);
+	    return ResponseEntity.ok(response);
+	}
 	
 	// 추천 +
 	@PostMapping("/board/like/{boaNo}")
-    public ResponseEntity<Map<String, Object>> insertLike(@PathVariable Integer boaNo, Authentication authentication) {
+    public ResponseEntity<Map<String, Object>> switchLike(@PathVariable Integer boaNo, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         int empNo = userDetails.getEmpNo();
 
-        boardService.insertBoardLike(boaNo, empNo); // 추천 +
+        boolean isLiked = boardService.switchLike(boaNo, empNo); // 추천 추가 or 취소
         
         Integer countLike = boardService.countLike(boaNo); // 추천 수 다시 가져오기
 
-        // 추천 성공 후, 상태를 반환
         Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
+        response.put("status", isLiked ? "liked" : "unliked"); // 추천 상태 반환
         response.put("boaNo", boaNo);
         response.put("empNo", empNo);
         response.put("countLike", countLike);

@@ -133,6 +133,7 @@
 		SET view_cnt = view_cnt + 1
 		WHERE boa_no = #{boaNo}
 	</update>
+	
 	<!-- 글 추천 -->
 	<insert id="insertBoardLike" parameterType="com.haruon.groupware.board.entity.BoardLike">
 	    INSERT INTO board_like (
@@ -143,6 +144,17 @@
 	    	, #{empNo}
 	    )
 	</insert>
+	<!-- 글 추천 여부 확인 -->
+	<select id="checkLike" parameterType="Map" resultType="Integer">
+	    SELECT COUNT(*) 
+	    FROM board_like
+	    WHERE boa_no = #{boaNo} AND emp_no = #{empNo}
+	</select>
+	<!-- 추천 취소 -->
+	<delete id="cancelLike" parameterType="map">
+	    DELETE FROM board_like
+	    WHERE boa_no = #{boaNo} AND emp_no = #{empNo}
+	</delete>
 	
 	<!-- 댓글 입력 -->
 	<insert id="insertComment" parameterType="com.haruon.groupware.board.entity.BoardComment">

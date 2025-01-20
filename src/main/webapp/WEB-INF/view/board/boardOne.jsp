@@ -101,7 +101,7 @@
 			                 
 			                 <div class="post-meta-info d-flex justify-content-between">
 								<h5>작성자: ${b.ename}</h5>
-								<p style="text-align: right;">조회수: ${b.viewCnt} | 작성시간: ${b.createDate}
+								<p style="text-align: right;">조회수: <span id="viewCount">${b.viewCnt}</span> | 작성시간: ${b.createDate}
 									<c:if test="${not empty b.updateDate}">
 								        | 수정시간: ${b.updateDate}
 								    </c:if>
@@ -127,8 +127,8 @@
                              	
                              	<!-- 추천 버튼 -->
                              	<div style="display: flex; justify-content: center; align-items: center; margin-top: 10vh;">
-                             		<button id="btnLike-${b.boaNo}" type="button" class="btn btn-secondary me-4 mb-2" onclick="insertLike(${b.boaNo})">
-                                        <svg  id="heartIcon-${b.boaNo}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                             		<button id="btnLike-${b.boaNo}" type="button" class="btn btn-secondary me-4 mb-2" onclick="switchLike(${b.boaNo})">
+                                        <svg id="heartIcon-${b.boaNo}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="${isLiked ? 'white' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
                                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                         <span id="countLike" class="btn-text-inner">${countLike}</span>
                                     </button>
@@ -253,12 +253,12 @@
 	<script>
 		// 조회수 업데이트
 		$(document).ready(function() {
-			var boaNo = ${b.boaNo}; // 현재 게시글 번호
+			var boaNo = ${b.boaNo};
 	        $.ajax({
 	            type: "POST",
 	            url: "/board/updateView/" + boaNo,
 	            success: function(response) {
-	                $("#viewCount").text(response.updatedViewCnt); // 페이지에 반영
+	                $("#viewCount").text(response.viewCount); // 페이지에 반영
 	            },
 	            error: function() {
 	                alert("조회수 업데이트 중 오류가 발생했습니다.");
@@ -267,22 +267,20 @@
 	    });
 		
 		// 추천 버튼 클릭
-	    function insertLike(boaNo) {
+	    function switchLike(boaNo) {
 	        var heartIcon = $("#heartIcon-" + boaNo);
 	        $.ajax({
 	            type: "POST",
 	            url: "/board/like/" + boaNo,
 	            success: function(response) {
-	            	var countLike = response.countLike; // 서버에서 반환한 추천수
-	            	$("#countLike").text(countLike); // 추천 수 갱신
-	            	
-	                // 색상 변경
-	                if (heartIcon.css("fill") === "rgb(255, 255, 255)") { // 흰색
-	                    heartIcon.css("fill", "none"); // 이미 색 채워져 있으면 색상 초기화
-	                } else {
-	                    heartIcon.css("fill", "white"); // 색 채우기
-	                }
-	                
+	                    var countLike = response.countLike; // 서버에서 반환한 추천 수
+	                    $("#countLike").text(countLike); // 추천 수 갱신
+
+	                    if (response.status === "liked") {
+	                        heartIcon.css("fill", "white"); // 추천 추가 시 색 채우기
+	                    } else if (response.status === "unliked") {
+	                        heartIcon.css("fill", "none"); // 추천 취소 시 색 제거
+	                    }
 	            },
 	            error: function() {
 	                alert("추천 처리 중 오류가 발생했습니다.");
