@@ -166,7 +166,7 @@
 	                             
                              </div>
                              
-                             <!-- 댓글 -->
+                             <!-- 댓글 리스트 -->
                              <hr class="my-1">
                              <h5 class="mb-5">댓글 <span class="comment-count">(${countCommnet})</span></h5>
                              <div class="post-comments">
@@ -189,7 +189,8 @@
 	                                     </div>
 	                                 </div>
 	                             </c:forEach>
-                             </div>
+                             </div><!-- END 댓글 리스트 -->
+                             
                              <!-- 댓글 입력 -->
                              <div class="post-form mt-5">
                                  <div class="section add-comment">
@@ -217,6 +218,10 @@
 	                                     </div>
 	                                 </form>   
                                  </div>
+                             </div><!-- END 댓글 입력 -->
+                             
+                             <div class="icon-container">
+                                 <a href="javascript:history.back()" data-feather="align-justify" class="btn btn-secondary me-4 mb-2">목록으로</a>
                              </div>
                              
                          </div>

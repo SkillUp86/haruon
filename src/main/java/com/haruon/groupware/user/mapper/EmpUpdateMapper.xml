@@ -43,3 +43,28 @@
 		where emp_no = #{empNo}
 	</update>
 </mapper>
+	
+	<!-- 직원 정보 업데이트 -->
+	<update id="updateEmpBySystem" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
+		UPDATE emp
+		<set>
+			<if test="depNo != null">
+				dep_no = #{depNo},
+			</if>
+			<if test="location != null">
+				location = #{location},
+			</if>
+			<if test="extNum != null">
+				ext_num = #{extNum}
+			</if>
+		</set>
+		WHERE emp_no = #{empNo}
+	</update>
+	
+	<!-- 직원 퇴사 -->
+	<update id="updateLeaveDate" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
+		UPDATE emp
+		SET leave_date = #{leaveDate}
+		WHERE emp_no = #{empNo}
+	</update>
+</mapper>

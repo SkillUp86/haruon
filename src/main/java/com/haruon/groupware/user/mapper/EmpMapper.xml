@@ -21,6 +21,7 @@
 			 , e.gender gender
 			 , e.birth birth
 			 , e.join_date joinDate
+			 , e.leave_date leaveDate
 			 , f.file_name fileName
 			 , f.ext ext
 			 , sf.file_name signfileName

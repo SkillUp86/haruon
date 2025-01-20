@@ -47,11 +47,6 @@
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/carousel.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
-    
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/carousel.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/tabs.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">    

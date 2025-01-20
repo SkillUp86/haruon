@@ -1,27 +1,26 @@
 package com.haruon.groupware.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.GetMapping;
->>>>>>> 57a3f040a3d2839a7966e769d74197dacdb2e1e4
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.haruon.groupware.department.entity.Dept;
+import com.haruon.groupware.department.service.DeptService;
 import com.haruon.groupware.user.dto.RequestEmpUpdateInfo;
-<<<<<<< HEAD
 import com.haruon.groupware.user.entity.EmpEntity;
-=======
 import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.service.EmpService;
->>>>>>> 57a3f040a3d2839a7966e769d74197dacdb2e1e4
 import com.haruon.groupware.user.service.EmpUpdateService;
 
 @Controller
 public class EmpUpdateController {
 	@Autowired EmpService empService;
+	@Autowired DeptService deptService;
 	private final EmpUpdateService empUpdateService;
 	
 	public EmpUpdateController(EmpUpdateService empUpdateService) {
@@ -57,9 +56,33 @@ public class EmpUpdateController {
 	// 직원 정보 수정
 	@GetMapping("/employees/modify")
 	public String modifyEmpInfo(@RequestParam Integer empNo, Model model) {
+		List<Dept> deptList = deptService.findByAll();
+		model.addAttribute("deptList",deptList);
 		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
 		model.addAttribute("e",empInfo);
 		
 		return "dept/modify";
+	}
+	@PostMapping("/employees/modify")
+	public String modifyEmpInfo(RequestEmpUpdateInfo updateInfo
+								, @RequestParam Integer empNo, @RequestParam Integer depNo
+								, @RequestParam String location, @RequestParam String extNum) {
+		updateInfo.setEmpNo(empNo);
+		updateInfo.setDepNo(depNo);
+		updateInfo.setLocation(location);
+		updateInfo.setExtNum(extNum);
+		empUpdateService.updateEmpBySystem(updateInfo);
+		
+		return "redirect:/employees/modify?empNo="+empNo;
+	}
+	
+	// 직원 퇴사
+	@PostMapping("/employees/leave")
+	public String leave(@RequestParam Integer empNo, @RequestParam String leaveDate) {
+		RequestEmpUpdateInfo updateInfo = new RequestEmpUpdateInfo();
+		updateInfo.setEmpNo(empNo);
+		updateInfo.setLeaveDate(leaveDate);
+		empUpdateService.updateLeaveDate(updateInfo);
+		return "redirect:/employees/modify?empNo="+empNo;
 	}
 }

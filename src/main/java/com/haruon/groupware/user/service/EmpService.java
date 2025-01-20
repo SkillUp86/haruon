@@ -34,8 +34,7 @@ public class EmpService {
 	}
 	// 사원 마이페이지
 	public ResponseEmpInfo findByEmpInfo(int empNo) {
-		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		int empNo = details.getEmpNo();
+		
 		return empMapper.findByEmpInfo(empNo);
 	}
 	

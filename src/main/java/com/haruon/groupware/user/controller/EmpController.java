@@ -88,7 +88,11 @@ public class EmpController {
 	
 	// 직원 목록
 	@GetMapping("/employees")
-	public String employees(Model model) {
+	public String employees(Authentication authentication, Model model) {
+		CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
+		int depNo = details.getDepNo();
+		model.addAttribute("depNo",depNo);
+		
 		List<EmpDto> employeeList = empService.getEmpList();
 		model.addAttribute("employeeList",employeeList);
 		
