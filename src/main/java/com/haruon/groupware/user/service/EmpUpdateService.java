@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.user.dto.RequestEmpUpdateInfo;
+import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
+import com.haruon.groupware.user.mapper.EmpMapper;
 import com.haruon.groupware.user.mapper.EmpUpdateMapper;
 
 @Transactional
@@ -19,12 +21,14 @@ import com.haruon.groupware.user.mapper.EmpUpdateMapper;
 public class EmpUpdateService {
 
 	private final EmpUpdateMapper empUpdateMapper;
+	private final EmpMapper empMapper;
 	private final JavaMailSender javaMailSender;
 	private final BCryptPasswordEncoder passwordEncoder;
 
-	public EmpUpdateService(EmpUpdateMapper empUpdateMapper, JavaMailSender javaMailSender, BCryptPasswordEncoder passwordEncoder) {
+	public EmpUpdateService(EmpUpdateMapper empUpdateMapper, JavaMailSender javaMailSender, EmpMapper empMapper, BCryptPasswordEncoder passwordEncoder) {
 		this.empUpdateMapper = empUpdateMapper;
 		this.javaMailSender = javaMailSender;
+		this.empMapper = empMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
 	public void findAndSendNewPw(EmpEntity empEntity) {
@@ -43,6 +47,11 @@ public class EmpUpdateService {
 		message.setText("안녕하세요.\n\n" + "비밀번호 초기화 요청에 따라 임시 비밀번호가 발급되었습니다.\n" + "로그인 후 반드시 비밀번호를 변경해주세요.\n\n"
 				+ "임시 비밀번호: " + randomPassword + "\n\n" + "감사합니다.");
 		javaMailSender.send(message);
+	}
+	
+	// 관리자 개인정보 수정
+	public ResponseEmpInfo findByEmpInfo(int empNo) {
+		return empMapper.findByEmpInfo(empNo);
 	}
 	
 	// 유효성 검증

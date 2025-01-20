@@ -1,29 +1,21 @@
 package com.haruon.groupware.user.controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
 import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.dto.ResponseEmpInfo;
-import com.haruon.groupware.user.entity.EmpEntity;
-import com.haruon.groupware.user.mapper.EmpMapper;
 import com.haruon.groupware.user.service.EmpService;
 
 import jakarta.servlet.http.HttpSession;
@@ -77,10 +69,9 @@ public class EmpController {
 
 	// 내 정보
 	@GetMapping("/myInfo")
-	public String MyInfo(Authentication authentication, Model model) {
-		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		int empNo = details.getEmpNo();
-		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
+	public String MyInfo(Model model) {
+		
+		ResponseEmpInfo empInfo = empService.findByEmpInfo();
 		log.debug(empInfo.toString());
 		model.addAttribute("e",empInfo);
 		return "user/myInfo";

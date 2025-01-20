@@ -33,8 +33,9 @@ public class EmpService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	// 사원 마이페이지
-	public ResponseEmpInfo findByEmpInfo(int empNo) {
-		
+	public ResponseEmpInfo findByEmpInfo() {
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = details.getEmpNo();
 		return empMapper.findByEmpInfo(empNo);
 	}
 	
@@ -46,6 +47,7 @@ public class EmpService {
 		String randomPassword = UUID.randomUUID().toString().substring(0, 6);
 		emp.setEmpPw(passwordEncoder.encode(randomPassword));
 		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("Haruon86@gmail.com");
 		message.setTo(emp.getEmail()); // 회원가입한 사용자의 이메일
 		message.setSubject("회원가입 완료 및 임시 비밀번호 안내");
 		message.setText("안녕하세요, " + emp.getEname() + "님.\n\n" + "회원가입이 완료되었습니다.\n"
