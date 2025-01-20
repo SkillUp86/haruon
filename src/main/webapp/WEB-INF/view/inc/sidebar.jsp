@@ -114,7 +114,7 @@
 					<a href="${pageContext.request.contextPath}/draft/list"> 내문서함 </a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath}/draft/refers/list"> 참조문서함(수정필요)  </a>
+					<a href="#"> 참조문서함(수정필요)  </a>
 				</li>
 			</ul>
 		</li>
@@ -316,7 +316,8 @@
 	
 	<!-- 현재 접속중인 URL에 따라 aria-expanded 속성 동적 처리 -->
 	<script>
-		let currentPath = "";
+		let currentPath = window.location.pathname;
+	
 		// 마이페이지
 		if(currentPath === "/myInfo") {
 			$("#myPageToggle").attr("aria-expanded", "true");

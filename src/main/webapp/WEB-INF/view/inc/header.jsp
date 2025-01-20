@@ -19,7 +19,10 @@
 	
 	<!-- 우측 회원 프로필 + 쪽지 수신 알림 -->
 	<ul class="navbar-item flex-row ms-lg-auto ms-0 action-area">
-	 
+	 			
+		<li class="nav-item me-5">
+	 		<button id="chatPopUpBtn" type="button" class="btn">메신저</button>
+	 	</li> 
 		<!-- 알림창 드롭다운 메뉴 -->
 		<li class="nav-item dropdown notification-dropdown me-2">
 		
@@ -43,13 +46,14 @@
 				</div>
 			</div>
 		</li>
-		<!-- 알림창 드롭다운 메뉴 끝 -->    
+		<!-- 알림창 드롭다운 메뉴 끝 -->   
 
 		<!-- 유저 프로필 드롭다운 -->
 		<li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
 			<a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<div class="avatar-container">
 					<div class="avatar avatar-sm avatar-indicators avatar-online">
+						<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" class="img-fluid me-2 rounded-circle" alt="avatar">
 					</div>
 				</div>
 			</a>
@@ -96,8 +100,8 @@
 	
 	<!-- Ajax 관련 함수 부분-->
 	<script>
-	/*
 		showUnreadMsgCount();
+		
 		function showUnreadMsgCount() {
 			$.ajax({
 				url: '/user/'+'${principal.empNo}'+'/messagies/unread',
@@ -113,33 +117,33 @@
 				console.log("showUnreadMsgCount - ajax 호출 실패");
 			});
 		}
-
+/*
 		function showUnreadMsgSumList() {
 			$.ajax({
 				url: '/user/+'${principal.empNo}'+/messageCount/unread',
 				method: 'GET',
 			}).done(function(rusult) {
 				let unreadMsgSumListHtml = "";
-				
-				$(result).each(function(index, item) {      
-					unreadMsgSumListHtml += `<img src="${pageContext.request.contextPath}/upload/profile/\${` + item.senderProfileName + `}.\${` + item.senderProfileExt + `}" class="img-fluid me-2" alt="avatar">
-											 <div class="media-body">
-											 	 <a href="#">
-											 	 	 <div class="data-info">
-											 	 	 	 <h6 class="">` + item.senderName + `</h6>
-											 	 	 </div>
-											 	 </a>
-											 </div>`;
-				});
-				
-				
-				$("#unreadMsgSumList").append(unreadMsgSumListHtml);
-			}).fail(result{
-				console.log("showUnreadMsgSumList");
-			});
-
+				unreadMsgSumListHtml = `<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" class="img-fluid me-2" alt="avatar">
+										<div class="media-body">
+											<a href="#">
+												<div class="data-info">
+													<h6 class="">보낸사람</h6>
+												</div>
+											</a>
+										</div>
+										`
+			})
 		}
+
 */
+	</script>
+	
+	<!-- 메신저 버튼 클릭시 메신저창 팝업 -->
+	<script>
+		$("#chatPopUpBtn").click(function() {
+			window.open('${pageContext.request.contextPath}/employies/chat', '_blank', 'width=410, height=600');
+		});
 	</script>
 </header>
 
