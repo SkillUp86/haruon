@@ -79,4 +79,9 @@ public class CustomUserDetails implements UserDetails {
     public String getDname() {
         return empEntity.getDname(); // 부서 이름
     }
+    
+    public String getConnectionStatus() {
+    	return empEntity.getConnectionStatus(); // 접속 상태
+    }
+    
 }

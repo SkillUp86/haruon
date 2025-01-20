@@ -18,5 +18,9 @@ public class EmpDto {
 	private String location;
 	private String dname;
 	private String descript;
+	private String fileName;
+	private String ext;
+	private String connectionStatus;
+	
 	
 }

@@ -141,7 +141,7 @@
 		                                                        </div>
 		                                                    </td>
 		                                                    <td>${el.dname}</td>
-		                                                    <td>${el.descript}</td>
+		                                                    <td>${el.location}</td>
 		                                                    <td>${el.email}</td>
 		                                                    <td>${el.extNum}</td>
 		                                                    <td>${el.phone}</td>

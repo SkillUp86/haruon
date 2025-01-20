@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+<sec:authentication property="principal" var="principal"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,25 +58,22 @@
                 	<!-- 내 프로필 시작 -->
        				<div class="item-content mb-2 ms-0 d-flex justify-content-between border rounded p-3" style="width:500px;background-color: #fff; border-color #e0e6ed;">
        					<div class="d-flex">
-	      					<div><img src="/upload/profile/noProfile.png" alt="avatar" style="width:96px; height:96px;"></div>
+	      					<div id="userProfile"></div>
 	      					<div class="ms-5">
-	             				<p>
-	             					Ellwood McEllen
-	             				</p>
-		               			<p>가맹점관리과(부서장)</p>
+	             				<p>${principal.ename}</p>
+		               			<p>${principal.dname}(${principal.location})</p>
 	      					</div>
       					</div>
       					<div>
 	    					<div class="btn-group" role="group">
-						    	<span class="badge badge-light-secondary ms-2" id="btndefault" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    	오프라인
+						    	<span id="connectionStatus" class="badge badge-success ms-2" id="btndefault" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
 						    	</span>
 							    <div class="dropdown-menu" aria-labelledby="btndefault">
-							        <a href="javascript:void(0);" class="dropdown-item"><span class="badge badge-light-success w-100">온라인</span></a>
-							        <a href="javascript:void(0);" class="dropdown-item"><span class="badge badge-light-secondary w-100">오프라인</span></a>
-							        <a href="javascript:void(0);" class="dropdown-item"><span class="badge badge-light-info w-100">자리비움</span></a>
-							        <a href="javascript:void(0);" class="dropdown-item"><span class="badge badge-light-warning w-100">방해금지</span></a>
+							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=온라인" class="dropdown-item"><span class="badge badge-light-success w-100">온라인</span></a>
+							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=오프라인" class="dropdown-item"><span class="badge badge-light-secondary w-100">오프라인</span></a>
+							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=자리비움" class="dropdown-item"><span class="badge badge-light-info w-100">자리비움</span></a>
+							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=회의중" class="dropdown-item"><span class="badge badge-light-warning w-100">회의중</span></a>
 							    </div>
 							</div>
       					</div>
@@ -179,24 +178,30 @@
 			let empListHTML = "";
 			
     	   $(result).each(function(index, item) {   
-    		  let conn = item.connectionStatus; 
+     		  let conn = item.connectionStatus; 
     		  let profile = item.fileName + "." + item.ext;
-    		   
+    		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+    		  
+    		  if(item.empNo === ${principal.empNo}) {
+    			  let userProfileHtml = `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:96px; height:96px;" alt="avatar" >`
+    			  $('#userProfile').append(userProfileHtml);
+    			  $("#connectionStatus").append(conn);
+    			  return true;
+    		  }
+    		  
     	      empListHTML += `<div class="items">
 			    	    	    <div class="item-content">
 			    	    	        <div class="user-profile align-items-center">
 			    	    	 `;
 			    	    	 
-              empListHTML += (profile.trim() === "null.null")? 
-            		 		 `<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" style="width:72px; height:72px;" alt="avatar" >`
-            		  		: `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:72px; height:72px;" alt="avatar" >`
+              empListHTML += `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:72px; height:72px;" alt="avatar" >`
 			    	    	            
          	  empListHTML += `<div class="user-meta-info ms-2">
 	                			<p class="user-name">` + item.ename;
    	    	 				 ;  	    	          
 			    	    	                
-			  empListHTML +=  (conn === "로그인")? `<span class="badge badge-light-success ms-2">Login</span>` 
-   		    	            : (conn === "로그아웃")? `<span class="badge badge-light-secondary ms-2">Logout</span>` 
+			  empListHTML +=  (conn === "온라인")? `<span class="badge badge-light-success ms-2">Login</span>` 
+   		    	            : (conn === "오프라인")? `<span class="badge badge-light-secondary ms-2">Logout</span>` 
    		    	            : (conn === "자리비움")? `<span class="badge badge-light-info ms-2">Away</span>` 
    		    	            : `<span class="badge badge-light-warning ms-2">Busy</span>`
    	    	               	+ `</p>`;

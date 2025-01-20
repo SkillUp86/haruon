@@ -1,9 +1,9 @@
-package com.haruon.groupware.chat.dto;
+package com.haruon.groupware.user.dto;
 
 import lombok.Data;
 
 @Data
-public class EmpDTO {
+public class EmpListDTO {
 	
 	private String dname;
 	private String connectionStatus;

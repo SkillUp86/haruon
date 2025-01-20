@@ -142,6 +142,11 @@
 						<a href="${pageContext.request.contextPath}/addEmp">사원등록</a>
 					</li>
 				</c:if>
+				<c:if test="${!role_it}">
+					<li>
+						<a href="${pageContext.request.contextPath}/company"> 회사 </a>
+					</li>
+				</c:if>
 			</ul>
 		</li>
 
@@ -317,6 +322,7 @@
 	<!-- 현재 접속중인 URL에 따라 aria-expanded 속성 동적 처리 -->
 	<script>
 		let currentPath = window.location.pathname;
+		let it = ${role_it};
 	
 		// 마이페이지
 		if(currentPath === "/myInfo") {
@@ -339,7 +345,11 @@
 			$("#draftToggle").attr("aria-expanded", "true");
 		}
 		// 조직도
-		if(currentPath === "/addEmp") $("#coworkerToggle").attr("aria-expanded", "true");
+		if(currentPath === "/addEmp") {
+			$("#coworkerToggle").attr("aria-expanded", "true");
+		}
+		
+		
 		// 게시판
 		if(currentPath.startsWith("/board") || currentPath === "categories" ) {
 			$("#boardToggle").attr("aria-expanded", "true");
@@ -353,9 +363,16 @@
 			$("#franchiseToggle").attr("aria-expanded", "true");
 		}
 		// 부서/회사
-		if(currentPath === "/company" || currentPath === "/depts") {
-			$("#companyToggle ").attr("aria-expanded", "true");
+		if(it && (currentPath === "/company" || currentPath === "/depts")) {
+			$("#companyToggle").attr("aria-expanded", "true");
+		} 
+		
+		if(!it && (currentPath === "/company")) {
+			$("#coworkerToggle").attr("aria-expanded", "true");
 		}
+		
+		
+		
 	</script>
 </nav>
 

@@ -35,18 +35,24 @@
 	</select>
 
 	<select id="findByEmp" parameterType="String" resultType="com.haruon.groupware.user.entity.EmpEntity" >
-		SELECT
-			 	e.emp_no empNo
-			,	e.email email
-			,	e.emp_pw empPw
-			,	e.ename ename
-			,	e.location location
-			,	e.dep_no depNo
-			,	d.dname dname
-		FROM emp e
-		INNER JOIN dept d
-			ON e.dep_no = d.dep_no
-		WHERE email = #{email}
+		SELECT 	e.emp_no empNo
+			  ,	e.email email
+			  ,	e.emp_pw empPw
+			  ,	e.ename ename
+			  ,	(SELECT descript from common_code
+				  WHERE parent_code = (SELECT common_code FROM common_code
+					   					WHERE descript = 'emp_location')
+			        AND common_code = e.location) location
+			  ,	e.dep_no depNo
+			  ,	d.dname dname
+			  , (SELECT descript from common_code
+				  WHERE parent_code = (SELECT common_code FROM common_code
+					   					WHERE descript = 'emp_connection_status')
+			        AND common_code = e.connection_status) connectionStatus
+		   FROM emp e
+	 INNER JOIN dept d
+			 ON e.dep_no = d.dep_no
+		  WHERE email = #{email}
 	</select>
 
 	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto" >
@@ -71,6 +77,25 @@
     WHERE emp_no = #{empNo} AND email = #{email};
 	</update>
 	
+	<!-- 직원 리스트 정보 -->
+	<select id="empList" resultType="com.haruon.groupware.user.dto.EmpListDTO">
+	 	SELECT d.dname dname
+	 		 , cc.descript connectionStatus
+	 		 , cl.descript location
+	 		 , e.ename ename
+	 		 , e.emp_no empNo
+	 		 , ef.file_name fileName
+	 		 , ef.ext ext
+	      FROM emp e
+	INNER JOIN dept d ON e.dep_no = d.dep_no
+	INNER JOIN common_code cl ON cl.common_code = e.location AND cl.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_location')
+	INNER JOIN common_code cc ON cc.common_code = e.connection_status AND cc.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_connection_status')
+	LEFT outer JOIN emp_file ef ON e.emp_no = ef.emp_no
+	     WHERE e.leave_date IS NULL 
+	     ORDER BY 1,2,(case when cl.descript = "부서장" then 1
+					   when cl.descript = "팀장" then 2
+					   ELSE 3 END),4
+	</select>
 	
 	<!-- EMP : 퇴사하지 않은 모든 사원의 사원번호를 가져오기 -->
 	<select id="findAllEmp" resultType="com.haruon.groupware.user.entity.EmpEntity">
@@ -82,19 +107,7 @@
 		 WHERE leave_date IS NULL
 	</select>
 	
-	<!-- EMP : 직원의 연가 수 업데이트(매년 + 사원 등록시)  -->
-	<update id="updateLeaveByAnnualorJoin" parameterType="com.haruon.groupware.user.entity.EmpEntity">
-		UPDATE emp
-	   	   SET total_leave = #{totalLeave}, used_leave=0
-	   	 WHERE emp_no = #{empNo}
-	</update>
 	
-	<!-- EMP : 기중 부서장이 한명의 연가 수 업데이트 -->
-	<update id="updateTotalLeaveByDivision" parameterType="com.haruon.groupware.user.entity.EmpEntity">
-		UPDATE emp
-	   	   SET total_leave = #{totalLeave}
-	   	 WHERE emp_no = #{empNo}
-	</update>
 	
 	<!-- EMP : 가장 최근에 등록한 사원 -->
 	<select id="findNewEmp" resultType="com.haruon.groupware.user.entity.EmpEntity">
@@ -103,21 +116,27 @@
 	
 	<!-- 직원 목록 -->
 	<select id="selectEmpList" resultType="com.haruon.groupware.user.dto.EmpDto">
-		SELECT
-			e.emp_no empNo
-			, e.ename ename
-			, e.dep_no depNo
-			, d.dname dname
-			, e.location location
-			, c.descript descript
-			, e.email email
-			, e.phone phone
-			, e.ext_num extNum
-		FROM emp e
-		INNER JOIN dept d
-			ON e.dep_no = d.dep_no
-		INNER JOIN common_code c
-			ON e.location = c.common_code
+		SELECT 	e.emp_no empNo
+			  ,	e.email email
+			  ,	e.emp_pw empPw
+			  ,	e.ename ename
+			  ,	(SELECT descript from common_code
+				  WHERE parent_code = (SELECT common_code FROM common_code
+					   					WHERE descript = 'emp_location')
+			        AND common_code = e.location) location
+			  ,	e.dep_no depNo
+			  ,	d.dname dname
+			  , (SELECT descript from common_code
+				  WHERE parent_code = (SELECT common_code FROM common_code
+					   					WHERE descript = 'emp_connection_status')
+			        AND common_code = e.connection_status) connectionStatus
+			  , e.ext_num extNum
+			  , e.phone phone
+		   FROM emp e
+	 INNER JOIN dept d
+			 ON e.dep_no = d.dep_no
 		WHERE e.leave_date IS NULL
 	</select>
+	
+
 </mapper>

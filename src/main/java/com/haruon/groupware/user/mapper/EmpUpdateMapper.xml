@@ -65,4 +65,25 @@
 		SET leave_date = #{leaveDate}
 		WHERE emp_no = #{empNo}
 	</update>
+	
+	<!-- EMP : 직원의 연가 수 업데이트(매년 + 사원 등록시)  -->
+	<update id="updateLeaveByAnnualorJoin" parameterType="com.haruon.groupware.user.entity.EmpEntity">
+		UPDATE emp
+	   	   SET total_leave = #{totalLeave}, used_leave=0
+	   	 WHERE emp_no = #{empNo}
+	</update>
+	
+	<!-- EMP : 기중 부서장이 한명의 연가 수 업데이트 -->
+	<update id="updateTotalLeaveByDivision" parameterType="com.haruon.groupware.user.entity.EmpEntity">
+		UPDATE emp
+	   	   SET total_leave = #{totalLeave}
+	   	 WHERE emp_no = #{empNo}
+	</update>
+	
+		<!-- 직원의 접속 정보 변경 -->
+	<update id="updateEmpConnection" parameterType="com.haruon.groupware.user.entity.EmpEntity">
+		UPDATE emp
+		   SET connection_status = #{connectionStatus}
+	   	 WHERE emp_no = #{empNo}  
+	</update>
 </mapper>
