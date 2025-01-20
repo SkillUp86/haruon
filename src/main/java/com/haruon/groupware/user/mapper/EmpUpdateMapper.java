@@ -12,8 +12,17 @@ public interface EmpUpdateMapper {
 	EmpEntity isAccess(int empNo);
 	// 유저 정보 업데이트
 	int updateEmpByEmpNo(RequestEmpUpdateInfo updateInfo);
+
 	// 비밀번호 업데이트
 	int updateEmpPw(EmpEntity empEntity);
 	// 유저 정보 확인
 	int findByEmpAndEmail(EmpEntity empEntity);
+
+	
+	// 직원 정보 업데이트
+	Integer updateEmpBySystem(RequestEmpUpdateInfo updateInfo);
+	
+	// 직원 퇴사
+	Integer updateLeaveDate(RequestEmpUpdateInfo updateInfo);
+
 }

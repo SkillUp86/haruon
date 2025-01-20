@@ -32,6 +32,15 @@
     <link href="${pageContext.request.contextPath}/src/assets/css/light/users/account-setting.css" rel="stylesheet" type="text/css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
+    
+    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/font-icons/fontawesome/css/regular.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/font-icons/fontawesome/css/fontawesome.css">
+    
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/font-icons.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
+    
     <style>
 	.form-control[readonly] {
 		background-color: #fff !important;
@@ -121,10 +130,10 @@
 							<div class="widget-content widget-content-area br-8">
 								<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
 									<div class="info">
-										<h4>정보</h4>
+										<h4>[${e.ename}] 정보 수정</h4>
 									</div>
 									
-									<form id="formUpdateUser" method="post">
+									<form id="formUpdateEmp" action="${pageContext.request.contextPath}/employees/modify" method="post">
 										<div class="row">
 											<div class="col-lg-11 mx-auto">
 												<div class="row">
@@ -142,12 +151,15 @@
 															</c:if>
 														</div>
 													</div>
+													
 													<div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
 														<div class="form">
 															<div class="row">
+																<input type="hidden" id="empNo" name="empNo" value="${e.empNo}">
 																<div class="col-md-6">
 																	<div class="form-group">
-																		<label for="fullName">이름</label> <input type="text" class="form-control mb-3" value="${e.ename}" id="ename" name="ename" readonly>
+																		<label for="fullName">이름</label> 
+																		<input type="text" class="form-control mb-3" value="${e.ename}" id="ename" name="ename" readonly>
 																	</div>
 																</div>
 																<div class="col-md-6">
@@ -160,7 +172,12 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<label for="country">부서</label> 
-																		<input class="form-control mb-3" value="${e.location}" id="depNo" name="depNo">
+																		<select class="form-select mb-3" id="depNo" name="depNo">
+																			<option value="" selected>${e.dname}</option>
+																			<c:forEach var="d" items="${deptList}">
+																				<option value="${d.depNo}">${d.dname}</option>
+																			</c:forEach>
+																		</select>
 
 																	</div>
 																</div>
@@ -184,7 +201,12 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<label for="location">직급</label> 
-																		<input class="form-control mb-3" value="${e.location}" id="location" name="location">
+																		<select class="form-select mb-3" value="${e.location}" id="location" name="location">
+																			<option value="${e.location}" selected>${e.location}</option>
+																			<option value="I03">부서장</option>
+																			<option value="I02">팀장</option>
+																			<option value="I01">사원</option>
+																		</select>
 																	</div>
 																</div>
 
@@ -217,28 +239,88 @@
 																</div>
 																
 																<!-- 비밀번호 변경 부분 삭제 -->
+																
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="sign">서명</label>
+																		<c:if test="${e.signfileName == null }">
+														                    <div class="input-group mb-4">
+														                        
+														                    </div>
+													                    </c:if>
+																		<c:if test="${e.signfileName != null }">
+																			 <div class="input-group mb-4">
+														                        <img src="${pageContext.request.contextPath}/upload/sign/${e.signfileName}.${e.signExt}">
+														                    </div>
+													                    </c:if>
+												                    </div>
+																</div>
+																
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#leaveFormModal" 
+												                            		data-empNo="${e.empNo}" onclick="setModalData(this)">퇴사</button> <!-- 모달창 -->
+																		<c:if test="${not empty e.leaveDate}">
+																			<label>퇴사일자: ${e.leaveDate}</label> 
+																		</c:if>
+												                    </div>
+												            	</div>
+																
 															</div>
 														</div>
 														
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="sign">서명</label>
-																<c:if test="${e.signfileName !=null }">
-											                        <img src="${pageContext.request.contextPath}/upload/sign/${e.signfileName}.${e.signExt}">
-											                    </c:if>
-										                    </div>
-														</div>
+														
 														
 														<div class="col-md-12 mt-2 ">
 															<div class="form-group text-end">
-																<button id="btnUpdateUser" type="button" class="btn btn-secondary">수정</button>
+																<button id="btnUpdateEmp" type="button" class="btn btn-secondary">수정</button>
 															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-12 mt-2 ">
+														<div class="form-group">
+															<a href="javascript:history.back()" type="button" class="btn btn-secondary">목록으로</a>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</form>
+									
+									<!-- Modal - 퇴사 -->
+									<div class="modal fade inputForm-modal" id="leaveFormModal" tabindex="-1" role="dialog" aria-labelledby="leaveFormModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered" role="document">
+											<div class="modal-content">
+												<div class="modal-header" id="inputFormModalLabel">
+													<h5 class="modal-title">퇴사 일자 등록</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+														<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+															<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+													</button>
+												</div>
+												
+												<form id="formLeave" action="${pageContext.request.contextPath}/employees/leave" method="post">
+													<div class="modal-body">
+														<div class="mb-3">
+															<label class="form-label">이름</label> 
+															<input type="hidden" class="form-control" id="leaveEmpNo" name="empNo" value="${e.empNo}">
+															<input type="text" class="form-control" id="leaveEname" name="ename" value="${e.ename}" readonly>
+														</div>
+														<div class="mb-3">
+															<label class="form-label">퇴사 일자</label> 
+															<input type="date" class="form-control" id="leaveDate" name="leaveDate" required>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+														<button id="btnLeave" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">퇴사일자 등록</button>
+													</div>
+												</form>
+
+											</div>
+										</div>
+									</div> <!-- END Modal -->
 									
 								</div>
 							</div>
@@ -263,18 +345,22 @@
 	<script src="${pageContext.request.contextPath}/src/plugins/src/notification/snackbar/snackbar.min.js"></script>
 	<script src="${pageContext.request.contextPath}/src/plugins/src/sweetalerts2/sweetalerts2.min.js"></script>
 	<!--  END CUSTOM SCRIPTS FILE  -->	
-	
+
 	<script>
-		$('#btnUploadProfile').click(function(){
-	        $('#FormUploadProfile').submit();
-	    })
-		
-	</script>
-	
-	<script>
-		$('#btnUpdateUser').click(function() {
-			$('#formUpdateUser').submit();
+		$('#btnUpdateEmp').click(function() {
+			$('#formUpdateEmp').submit();
 		})
+		
+ 	// 퇴사 버튼 -> 퇴사일자 등록
+   	$(document).on('click', '#btnLeave', function() {
+        if ($('#leaveDate').val() === '') {
+            alert('퇴사일자를 입력하세요');
+            return;
+        } else {
+        	console.log('퇴사일자 등록 폼 제출');
+            $('#formLeave').submit();
+        }
+    });
 	</script>
 </body>
 </html>

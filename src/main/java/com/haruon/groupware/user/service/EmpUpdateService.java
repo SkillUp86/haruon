@@ -62,4 +62,14 @@ public class EmpUpdateService {
 		updateInfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
 		return empUpdateMapper.updateEmpByEmpNo(updateInfo);
 	}
+	
+	// 직원 정보 업데이트
+	public Integer updateEmpBySystem(RequestEmpUpdateInfo updateInfo) {
+		return empUpdateMapper.updateEmpBySystem(updateInfo);
+	}
+	
+	// 직원 퇴사
+	public Integer updateLeaveDate(RequestEmpUpdateInfo updateInfo) {
+		return empUpdateMapper.updateLeaveDate(updateInfo);
+	}
 }

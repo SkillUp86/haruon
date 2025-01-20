@@ -9,36 +9,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.css">
     
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/forms/switches.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/editors/quill/quill.snow.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/tagify/custom-tagify.css">
-    <link href="${pageContext.request.contextPath}/src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
     
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/dark/forms/switches.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/dark/editors/quill/quill.snow.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/dark/tagify/custom-tagify.css">
-    <link href="${pageContext.request.contextPath}/src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/font-icons/fontawesome/css/regular.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/font-icons/fontawesome/css/fontawesome.css">
+    
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/font-icons.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/light/apps/ecommerce-create.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/dark/apps/ecommerce-create.css">
     <!--  END CUSTOM STYLE FILE  -->
        
+    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
+    
     <!-- 페이지 제목 입력칸 -->
     <title>공지게시판 글 작성</title>
     <!-- 페이지 제목 입력칸 -->
@@ -146,6 +143,9 @@
 	                                </div>
 								</form>
 								
+								<div class="icon-container">
+	                                <a href="javascript:history.back()" data-feather="align-justify" class="btn btn-secondary me-4 mb-2">목록으로</a>
+	                             </div>
 							</div>
                     	</div>
                

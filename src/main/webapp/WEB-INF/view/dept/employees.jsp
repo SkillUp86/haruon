@@ -122,7 +122,10 @@
 	                                                <th>이메일</th>
 	                                                <th>내선 번호</th>
 	                                                <th>개인 연락처</th>
-	                                                <th></th>
+	                                                <c:if test="${depNo == 1}"><!-- 인사과만 수정 버튼 노출 (depNo=1) -->
+	                                                	<th></th>
+	                                                </c:if>
+	                                                
 	                                            </tr>
 	                                        </thead>
 	                                        <tbody>
@@ -142,9 +145,11 @@
 		                                                    <td>${el.email}</td>
 		                                                    <td>${el.extNum}</td>
 		                                                    <td>${el.phone}</td>
-		                                                    <td style="text-align: center;">
-		                                                    	<a href="${pageContext.request.contextPath}/employees/modify?empNo=${el.empNo}" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</a>
-		                                                    </td>
+		                                                    <c:if test="${depNo == 1}"><!-- 인사과만 수정 버튼 노출 (depNo=1) -->
+			                                                    <td style="text-align: center;">
+			                                                    	<a href="${pageContext.request.contextPath}/employees/modify?empNo=${el.empNo}" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</a>
+			                                                    </td>
+			                                                </c:if>
 	                                                  </tr>
 	                                            </c:forEach>
 	                                        </tbody>
