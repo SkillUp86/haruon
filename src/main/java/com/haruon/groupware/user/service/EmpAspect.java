@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
+import com.haruon.groupware.user.mapper.EmpUpdateMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class EmpAspect {
+	@Autowired EmpUpdateMapper empUpdateMapper;
 	@Autowired EmpMapper empMapper;
 	
 	private final Integer DEFAULT_TOTAL_LEAVE = 15;
@@ -38,7 +40,7 @@ public class EmpAspect {
 		newEmp.setTotalLeave(setTotalLeave);
 		
 		try {
-			Integer result = empMapper.updateLeaveByAnnualorJoin(newEmp);
+			Integer result = empUpdateMapper.updateLeaveByAnnualorJoin(newEmp);
 			if(result != 1) {
 				throw new RuntimeException();
 			}
