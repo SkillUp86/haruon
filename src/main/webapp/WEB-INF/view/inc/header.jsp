@@ -142,7 +142,7 @@
 	<!-- 메신저 버튼 클릭시 메신저창 팝업 -->
 	<script>
 		$("#chatPopUpBtn").click(function() {
-			window.open('${pageContext.request.contextPath}/employies/chat', '_blank', 'width=410, height=600');
+			window.open('${pageContext.request.contextPath}/employies/chat', '_blank', 'width=430, height=600');
 		});
 	</script>
 </header>
