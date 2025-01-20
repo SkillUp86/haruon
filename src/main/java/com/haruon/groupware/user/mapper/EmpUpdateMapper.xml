@@ -42,8 +42,6 @@
 		set emp_pw = #{empPw}
 		where emp_no = #{empNo}
 	</update>
-</mapper>
-	
 	<!-- 직원 정보 업데이트 -->
 	<update id="updateEmpBySystem" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
 		UPDATE emp
