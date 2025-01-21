@@ -1,7 +1,6 @@
 package com.haruon.groupware.draft.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +9,7 @@ import com.haruon.groupware.draft.dto.response.ResponseAccessDraft;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
+import com.haruon.groupware.draft.dto.response.ResponseReferencesList;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 
@@ -38,6 +38,7 @@ public interface DraftMapper {
 
 	// 기본결재 상세문서
 	ResponseBasicDraftDetail findByBasicDraftNo(int draNo);
-	// 참조자 결재문서
-	List<Map<String, Object>> findDraftByReferences(int empNo);
+	
+	// 참조자 결재문서 리스트
+	List<ResponseReferencesList> findDraftByReferences(int empNo);
 }

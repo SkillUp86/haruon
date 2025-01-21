@@ -2,7 +2,6 @@ package com.haruon.groupware.draft.service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +14,7 @@ import com.haruon.groupware.draft.dto.response.ResponseAccessDraft;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
+import com.haruon.groupware.draft.dto.response.ResponseReferencesList;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.mapper.DraftMapper;
@@ -92,7 +92,7 @@ public class DraftService {
 		return draftMapper.findDraftByApproval(empNo);
 	}
 
-	public List<Map<String, Object>> getReferencesByEmp(int empNo) {
+	public List<ResponseReferencesList> getReferencesByEmp(int empNo) {
 		return draftMapper.findDraftByReferences(empNo);
 	}
 

@@ -1,4 +1,4 @@
-package com.haruon.groupware.draft.controller;
+	package com.haruon.groupware.draft.controller;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
@@ -20,10 +19,6 @@ import com.haruon.groupware.draft.dto.request.RequestUpdateBasicDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateBusinessDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateSalesDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateVacationDraft;
-import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 import com.haruon.groupware.draft.service.UpdateService;
 

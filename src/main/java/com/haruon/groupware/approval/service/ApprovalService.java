@@ -1,9 +1,6 @@
 package com.haruon.groupware.approval.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.haruon.groupware.approval.dto.RequestApproval;
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
-import com.haruon.groupware.approval.entity.DraftFileEntity;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
