@@ -126,7 +126,7 @@
                                            <c:forEach var="m" items="${meetingroomList}">
 											    <tr>
 											        <td>
-														<img src="${pageContext.request.contextPath}/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
+														<img src="${pageContext.request.contextPath}/upload/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
 											        </td>
 											        <td>
 											            <div class="d-flex justify-content-left align-items-center">
