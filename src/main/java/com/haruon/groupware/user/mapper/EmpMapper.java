@@ -32,5 +32,8 @@ public interface EmpMapper {
 	
 	// 직원 정보 수정
 	Integer updateEmpInfo(Integer empNo);
+	
+	// 웹소켓 세션의 URI 파싱된 id 유무 확인 ( 1 = true / 0 = false )
+	Integer checkEmpNo(String id);
 
 }
