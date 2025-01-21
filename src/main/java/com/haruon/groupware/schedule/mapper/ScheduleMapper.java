@@ -19,5 +19,7 @@ public interface ScheduleMapper {
 	Integer updateSchedule (Schedules schedules);
 	
 	Schedules scheduleOne (Integer schNo);
+
+	int addScheduleAttendance(int schNo, int empNo);
 	
 }

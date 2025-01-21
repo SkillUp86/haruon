@@ -125,21 +125,21 @@
 	                <div class="row mb-3">
 						<label for="inputEmail3" class="col-sm-2 col-form-label">시작날짜</label>
 						<div class="col-sm-10">
-							<input type="datetime-local" class="form-control" id="modStartDate" name="startDate" value="">
+							<input type="datetime-local" class="form-control" id="modStartDate" name="startDate" value="${s.startTime}">
 						</div>
 	                </div>
 	                
 					<div class="row mb-3">
 						<label for="inputEmail3" class="col-sm-2 col-form-label">종료날짜</label>
 						<div class="col-sm-10">
-							<input type="datetime-local" class="form-control" id="modEndDate" name="endDate" value="">
+							<input type="datetime-local" class="form-control" id="modEndDate" name="endDate" value="${s.endTime}">
 						</div>
 					</div>
 					
 					<div class="row mb-3">
 						<label for="inputPassword3" class="col-sm-2 col-form-label">일정제목</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="modTitle" name="title" value="">
+							<input type="text" class="form-control" id="modTitle" name="title" value="${s.title}">
 						</div>
 					</div>
 					
@@ -147,19 +147,16 @@
 						<label for="inputPassword3" class="col-sm-2 col-form-label">일정종류</label>
 						<div class="col-sm-10">
 							<label for="meetingRadio">
-								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio"> 회의
-							</label>
-							
-							&nbsp;&nbsp;&nbsp;
-							
+								<input class="form-check-input" type="radio" name="type" value="G01" id="meetingRadio" checked> 일정
+							</label>&nbsp;&nbsp;&nbsp;
 							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="2" id="festivalRadio"> 행사
-							</label>
-							
-							&nbsp;&nbsp;&nbsp;
-							
-							<label for="inspectionRadio">
-								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
+								<input class="form-check-input" type="radio" name="type" value="G02" id="festivalRadio"> 연차
+							</label>&nbsp;&nbsp;&nbsp;
+							<label for="festivalRadio">
+								<input class="form-check-input" type="radio" name="type" value="G05" id="festivalRadio"> 반차
+							</label>&nbsp;&nbsp;&nbsp;
+							<label for="festivalRadio">
+								<input class="form-check-input" type="radio" name="type" value="G03" id="festivalRadio"> 출장
 							</label>
 						</div>
 	                </div>
@@ -168,7 +165,7 @@
 	                	<label for="inputPassword3" class="col-sm-2 col-form-label">일정내용</label>
 	                	<div class="col-sm-10">
 	                		<textarea rows="3" maxlength="100" class="col-sm-12" 
-	                					id="modContent" name="content" style="height: 150px"></textarea>
+	                					id="modContent" name="content" style="height: 150px">${s.content}</textarea>
 							(<span id="chatHelper">0</span>/100)
 	                	</div>
 	                </div>

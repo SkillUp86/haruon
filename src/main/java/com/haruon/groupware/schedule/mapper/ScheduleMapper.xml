@@ -33,7 +33,9 @@
 		WHERE sch_no = #{schNo}
 	</select>
 	
-   <insert id="addSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
+   <insert id="addSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules"
+   		useGeneratedKeys="true"
+        keyProperty="schNo" keyColumn="sch_no">
     INSERT INTO schedules (
         title,
         kind,
@@ -44,7 +46,19 @@
     VALUES (
         #{title}, #{kind}, #{content}, #{startTime}, #{endTime}
     )
-</insert>
+	</insert>
+	<insert id="addScheduleAttendance" parameterType="Integer">
+		insert into schedule_attendance
+		(
+			 sch_no
+			,emp_no
+		) 
+			values 
+		(
+			 #{schNo}
+			,#{empNo}
+		)
+	</insert>
 	
 <delete id="deleteSchedule" parameterType="Integer">
 DELETE FROM schedules

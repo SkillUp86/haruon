@@ -3,6 +3,7 @@ package com.haruon.groupware.schedule.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.service.ScheduleService;
@@ -23,12 +25,7 @@ public class ScheduleContoller {
 	
 	@GetMapping("/calendar")
     public String calendar(Model model, Integer schNo ) {
-        String parentCode = "G00"; // 부모 코드 설정
-        List<CommonCode> kindList = scheduleService.kind(parentCode);// 데이터 조회
-        
-        Schedules scheduleOne = scheduleService.scheduleOne(schNo);
-        model.addAttribute("scheduleOne" , scheduleOne);
-        model.addAttribute("kindList", kindList); // 뷰에 데이터 전달
+       
         return "schedule/calendar"; // 일정 페이지 반환
     }
 
@@ -36,7 +33,11 @@ public class ScheduleContoller {
 	
 	@PostMapping("/addSchedule")
 	public String addSchedule(Schedules schedules, Model model) {
-	    scheduleService.addSchedule(schedules);
+	    boolean schedule = scheduleService.addSchedule(schedules);
+	    if(!schedule) {
+	    	return "login";
+	    }
+	    
 	    model.addAttribute("msg", "일정이 추가되었습니다.");
 	    return "redirect:/calendar"; 
 	}
@@ -61,9 +62,9 @@ public class ScheduleContoller {
 	}
 	
 	@GetMapping("/calendarDetail/{schNo}")
-	public String getMethodName(@PathVariable Integer schNo) {
-		// 상세보기 가져와야함
-		
+	public String getMethodName(@PathVariable Integer schNo ,Model model) {
+		Schedules schedule = scheduleService.scheduleOne(schNo);
+		model.addAttribute("s",schedule);
 		return "schedule/scheduleDetail";
 	}
 	

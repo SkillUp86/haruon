@@ -4,30 +4,30 @@
 	<!-- 참조자 추가 -->
 	<insert id="saveApprovalReference" parameterType="com.haruon.groupware.approval.entity.ReferEntity">
 		insert into refer(
-				app_no
-			,	emp_no
+			  app_no
+			, emp_no
 		) values (
-				#{appNo}
-			,	#{refNo}
+			  #{appNo}
+			, #{refNo}
 		)
 	</insert>
 	<!-- 결재 첨부파일 -->
 	<insert id="saveDraftFileByUser" parameterType="com.haruon.groupware.approval.entity.DraftFileEntity">
 		insert into draft_file(
-				dra_no
-			,	origin_name
-			,	file_name
-			,	ext
-			,	kind
-			,	size
+			  dra_no
+			, origin_name
+			, file_name
+			, ext
+			, kind
+			, size
 			
 		) values (
-				#{draNo}
-			,	#{originName}
-			,	#{fileName}
-			,	#{ext}
-			,	#{kind}
-			,	#{size}
+			  #{draNo}
+			, #{originName}
+			, #{fileName}
+			, #{ext}
+			, #{kind}
+			, #{size}
 			
 		)
 	</insert>
@@ -35,32 +35,32 @@
 	<insert id="saveApprovalByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval"
 			useGeneratedKeys="true" keyProperty="appNo">
 		insert into approval(
-				dra_no
-			,	mid_app
-			,	final_app
+			  dra_no
+			, mid_app
+			, final_app
 		) values (
-				#{draNo}
-			,	#{midAppNo}
-			,	#{finalAppNo}
+			  #{draNo}
+			, #{midAppNo}
+			, #{finalAppNo}
 		)
 	</insert>
 	 
 	<!-- 휴가 보고서 -->
 	<insert id="saveVacationByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval">
 		insert into vacation(
-				dra_no
-			,	emp_no <!-- 대체 업무자 사원번호 -->
-			,	start_date
-			,	finish_date
-			, 	kind
-			,	urgent_phone
+			  dra_no
+			, emp_no <!-- 대체 업무자 사원번호 -->
+			, start_date
+			, finish_date
+			, kind
+			, urgent_phone
 		) values (
-				#{draNo}
-			,	#{subEmpNumber}
-			,	#{vacStartDate}
-			,	#{vacFinishDate}
-			,	#{vactionType}
-			,	#{urgentPhone}
+			  #{draNo}
+			, #{subEmpNumber}
+			, #{vacStartDate}
+			, #{vacFinishDate}
+			, #{vactionType}
+			, #{urgentPhone}
 		)
 	</insert>
 	<!-- 매출 보고서 -->
@@ -71,39 +71,39 @@
 			,	ym
 			,	revenue
 		) values (
-				#{draNo}
-			,	#{fraNo}
-			,	#{ym}
-			,	#{revenue}
+			  #{draNo}
+			, #{fraNo}
+			, #{ym}
+			, #{revenue}
 		)
 	</insert>
 	<!-- 출장 보고서 -->
 	<insert id="saveBusinessTripByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval">
 		insert into business_trip(
-				dra_no
-			,	place
-			,	start_date
-			,	finish_date
+			  dra_no
+			, place
+			, start_date
+			, finish_date
 		) values (
-				#{draNo}
-			,	#{place}
-			,	#{placeStartDate}
-			,	#{placeEndDate}
+			  #{draNo}
+			, #{place}
+			, #{placeStartDate}
+			, #{placeEndDate}
 		)
 	</insert>
 	<!-- 기본 기안서 -->
 	<insert id="saveBasicDraftByUser" parameterType="com.haruon.groupware.approval.dto.RequestApproval" 
 			useGeneratedKeys="true" keyProperty="draNo">
 		insert into draft(
-				emp_no
-			,	kind
-			,	title
-			,	content
+			  emp_no
+			, kind
+			, title
+			, content
 		) values (
-				#{empNo}
-			,	#{kind}
-			,	#{title}
-			,	#{textContent}
+			  #{empNo}
+			, #{kind}
+			, #{title}
+			, #{textContent}
 		)
 	</insert>
 	
@@ -124,10 +124,10 @@
 	
 	<select id="findByFranchise" resultType="com.haruon.groupware.approval.dto.ResponseFranchise">
 		select
-				fra_no fraNo
-			 ,	fname
-		from franchise
-		where open_yn = 'Y'
+			   fra_no fraNo
+			 , fname
+		  from franchise
+		 where open_yn = 'Y'
 	</select>
 	
 </mapper>

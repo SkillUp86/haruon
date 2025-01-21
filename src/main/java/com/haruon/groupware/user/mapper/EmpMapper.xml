@@ -53,6 +53,7 @@
 	 INNER JOIN dept d
 			 ON e.dep_no = d.dep_no
 		  WHERE email = #{email}
+		    AND exit_date IS NULL
 	</select>
 
 	<insert id="insertEmp" parameterType="com.haruon.groupware.user.dto.EmpDto" >
