@@ -14,10 +14,11 @@ public interface MeetingRoomMapper {
 
 	Integer addMeetingroom (MeetingRoom meetingRoom);
 	
-	Integer deleteMeetingroom (Integer meeNo);
 	
 	Integer addMeetingroomFile(MeetingRoomFile meetingRoomFile);
 	
+	
+	Integer deleteMeetingroom (Integer meeNo);
 	
 	
 }
