@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,6 +58,13 @@ public class ScheduleContoller {
 	        model.addAttribute("msg", "업데이트 실패");
 	    }
 	    return "redirect:/calendar";
+	}
+	
+	@GetMapping("/calendarDetail/{schNo}")
+	public String getMethodName(@PathVariable Integer schNo) {
+		// 상세보기 가져와야함
+		
+		return "schedule/scheduleDetail";
 	}
 	
 	

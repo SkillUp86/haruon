@@ -11,7 +11,7 @@
         m.info  info,
         m.avail_yn  availYn,
         mf.file_name  fileName,
-        mf.ext AS fileExt
+        mf.ext  fileExt
     FROM 
         meetingroom m
     LEFT JOIN 
@@ -22,39 +22,33 @@
         m.mee_no ASC;
 		
 	</select>
-<insert id="addMeetingroom" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
-	INSERT INTO meetingroom (
-        mee_no,
+<insert id="addMeetingroom" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom" useGeneratedKeys="true" keyProperty="meeNo">
+    INSERT INTO meetingroom (
         mname, 
         capacity, 
         info
     ) VALUES (
-       #{meeNo},
-       #{mname}, 
-       #{capacity},  
-       #{info}
-    );
+        #{mname},
+        #{capacity},  
+        #{info}
+    )
 </insert>
-
 <insert id="addMeetingroomFile" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoomFile">
-INSERT INTO meetingroom_file (
-		meef_no
-	,	mee_no
-	,	original_name
-	,	file_name
-	,	kind
-	,	size
-	,	ext
-	
-) VALUES(
-	 #{meefNo}
-	,#{meeNo}
-	,#{originalName}
-	,#{fileName}
-	,#{kind}
-	,#{size}
-	,#{ext}
-)
+    INSERT INTO meetingroom_file (
+        mee_no,
+        original_name,
+        file_name,
+        kind,
+        size,
+        ext
+    ) VALUES (
+        #{meeNo},
+        #{originalName},
+        #{fileName},
+        #{kind},
+        #{size},
+        #{ext}
+    )
 </insert>
 
 <delete id="deleteMeetingroom" parameterType="Integer">
@@ -62,4 +56,7 @@ DELETE FROM meetingroom
 WHERE mee_no = #{meeNo}
 </delete>
 
+<delete id="deleteMeetingroomFile" parameterType="Integer">
+    DELETE FROM meetingroom_file WHERE mee_no = #{meeNo}
+</delete>
 </mapper>
