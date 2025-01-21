@@ -2,7 +2,6 @@ package com.haruon.groupware.draft.service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,10 +14,14 @@ import com.haruon.groupware.draft.dto.response.ResponseAccessDraft;
 import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
+import com.haruon.groupware.draft.dto.response.ResponseReferencesList;
 import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
 import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.mapper.DraftMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class DraftService {
@@ -36,13 +39,17 @@ public class DraftService {
 		int empNo = (int)details.getEmpNo();
 		int depNo = (int)details.getDepNo();
 		ResponseAccessDraft access = draftMapper.isAccess(draNo);
-	
+		log.debug(access.toString());
+		Integer midApp = access.getMidApp();
+	    Integer refNo = access.getRefNo();
+	    Integer finalApp = access.getFinalApp();
+	    Integer draftEmpNo = access.getEmpNo();
 		// 해당 기안자 팀 부서장 모든 결재 접근 가능
 		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (access.getDepNo() == depNo))) {
 			return true;
 		}
 		// 결재라인, 참조자 접근가능
-		if(access.getMidApp() == empNo || access.getFinalApp() == empNo || access.getRefNo() == empNo) {
+		if( (midApp != null && midApp == empNo) || finalApp == empNo || ( refNo != null && refNo == empNo ) || empNo == draftEmpNo ) {
 			return true;
 		}
 		return false;
@@ -85,7 +92,7 @@ public class DraftService {
 		return draftMapper.findDraftByApproval(empNo);
 	}
 
-	public List<Map<String, Object>> getReferencesByEmp(int empNo) {
+	public List<ResponseReferencesList> getReferencesByEmp(int empNo) {
 		return draftMapper.findDraftByReferences(empNo);
 	}
 

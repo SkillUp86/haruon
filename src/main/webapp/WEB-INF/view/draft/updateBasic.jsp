@@ -145,6 +145,7 @@ type="text/css">
                                             <div class="input-group">
                                                 <span class="input-group-text label-text">제목</span>
                                                 <input class="form-control" type="hidden" name="draNo" value="${d.draNo}" readonly>
+                                                <input class="form-control" type="hidden" name="type" value="${d.type}" readonly>
                                                 <input class="form-control" type="text" name="title" value="${d.title}">
                                             </div>
 

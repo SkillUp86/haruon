@@ -58,7 +58,7 @@ public class EmpUpdateController {
 	public String modifyEmpInfo(@RequestParam Integer empNo, Model model) {
 		List<Dept> deptList = deptService.findByAll();
 		model.addAttribute("deptList",deptList);
-		ResponseEmpInfo empInfo = empService.findByEmpInfo(empNo);
+		ResponseEmpInfo empInfo = empUpdateService.findByEmpInfo(empNo);
 		model.addAttribute("e",empInfo);
 		
 		return "dept/modify";

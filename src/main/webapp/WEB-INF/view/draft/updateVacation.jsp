@@ -131,6 +131,7 @@
                                                         <div class="input-group mb-2 mt-4">
                                                             <div class="input-group">
                                                                 <span class="input-group-text label-text">문서번호</span>
+                                                                <input class="form-control" type="hidden" name="type" value="${d.type}" readonly>
                                                                 <input class="form-control" name="draNo" value="${d.draNo}" readonly>
                                                             </div>
                                                             <div class="input-group">
@@ -206,7 +207,7 @@
                                                                                 class="btn btn-dark mt-1 file">
                                                                                 ${f.originName}.${f.ext}
                                                                             </a>
-                                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/deleteFile/vacation?drafNo=${f.drafNo}&draNo=${d.draNo}">삭제</a>
+                                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">삭제</a>
                                                                         </c:forEach>
                                                                     </div>
                                                                 </c:if>

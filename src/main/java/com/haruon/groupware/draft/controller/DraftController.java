@@ -7,13 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.approval.entity.DraftFileEntity;
-import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 
 import lombok.extern.slf4j.Slf4j;

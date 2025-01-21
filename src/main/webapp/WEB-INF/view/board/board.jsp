@@ -95,12 +95,12 @@
 					<div class="account-settings-container layout-top-spacing">
 						<div class="account-content">
 							<div class="row mb-3">
-								<div class="col-md-12">
-									<h2>자유 게시판</h2>
+								<div class="col-md-12" style="background-color: white;">
+									<h2 style=" margin-top: 20px;">자유 게시판</h2>
 
-									<div class="simple-tab">
+									<div class="simple-pill" style="margin-bottom: 20px;">
 										<!-- 탭 title -->
-										<ul class="nav nav-tabs d-flex justify-content-between" id="pills-tab" role="tablist">
+										<ul class="nav nav-pills d-flex justify-content-between" id="pills-tab" role="tablist">
 											<div class="d-flex">
 												<li class="nav-item" role="presentation">
 													<button class="nav-link active" id="tab-전체"
@@ -114,7 +114,7 @@
 													</li>
 												</c:forEach>
 											</div>
-											<span style="text-align: right;"> 
+											<span style="text-align: right; margin-bottom: 5px;"> 
 												<a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/board/insert">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 														stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">

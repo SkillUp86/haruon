@@ -8,6 +8,7 @@ import com.haruon.groupware.attendance.entity.Attendance;
 import com.haruon.groupware.attendance.mapper.AttendanceMapper;
 import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
+import com.haruon.groupware.user.mapper.EmpUpdateMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import static com.haruon.groupware.attendance.service.AttendanceServiceSupport.*;
@@ -24,7 +25,7 @@ import java.util.Map;
 @Transactional
 public class ManageAttendanceService {
 	@Autowired private AttendanceMapper attendanceMapper;
-	@Autowired private EmpMapper empMapper;
+	@Autowired private EmpUpdateMapper empUpdateMapper;
 	
 	// 메인페이지 오늘 출/퇴근 시간 등록
 	public String registerAttendance(Integer empNo) {
@@ -136,7 +137,7 @@ public class ManageAttendanceService {
 
 	// 총 연차 수정
 	public Integer updateTotalLeaveByDivision(EmpEntity emp) {
-		return empMapper.updateTotalLeaveByDivision(emp);
+		return empUpdateMapper.updateTotalLeaveByDivision(emp);
 	}
 
 }

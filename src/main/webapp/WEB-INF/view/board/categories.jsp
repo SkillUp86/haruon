@@ -47,11 +47,6 @@
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/carousel.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/filepond.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/src/plugins/src/filepond/FilePondPluginImagePreview.min.css">    
-    <link href="${pageContext.request.contextPath}/src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -125,10 +120,10 @@
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
                           <div class="row mb-3">
-                              <div class="col-md-12">
-                              <h2>카테고리 관리</h2>
+                              <div class="col-md-12" style="background-color: white;">
+                              <h2 style=" margin-top: 20px;">카테고리 관리</h2>
                               	<div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
-                                  	<div class="widget-content widget-content-area br-8">
+                                  	<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
 		            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 		            					
 		            						 <div style="text-align: right; margin-bottom: 10px;">

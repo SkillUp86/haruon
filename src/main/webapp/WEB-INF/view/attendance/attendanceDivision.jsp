@@ -594,7 +594,8 @@
 		                       <td class="sorting_01">` + item.startTime + `</td>
 		                       <td>` + item.endTime + `</td>
 		                       <td>` + item.approvalState + `</td>
-		                       <td><a href=/draft/detail/vacation/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
+		                       <td><a href=/draft/C04/detail/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
+
 		               html += "</tr>";
 		
 		           });
@@ -758,7 +759,7 @@
 				 		                       <td>` + item.endTime + `</td>
 				 		                       <td>` + item.place + `</td>
 				 		                       <td>` + item.approvalState + `</td>
-				 		                       <td><a href=/draft/detail/business/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
+				 		                       <td><a href=/draft/C02/detail/` + item.draNo + ` class="btn btn-hover btn-outline-primary btn-sm ms-4">상세보기</a>`;
 		               BusinessTriphtml += "</tr>";
 		            
 		            });

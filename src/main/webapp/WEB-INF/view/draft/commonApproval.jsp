@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <sec:authentication property="principal" var="user" />
- <!-- 기안자가 같을때 -->
+ 							<!-- 기안자가 같을때 -->
                             <c:if test="${(d.empNo == user.empNo || d.referEmpNo == user.empNo) && d.approvalState != '반려'}">
 	                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
@@ -24,12 +24,17 @@
 		                                        </div>
 	                                       	</c:if>
 												<c:if test="${d.approvalState == '반려'}">
-												<div class="col-xxl-12 col-md-12 mb-4">
-													<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
-			                                          반려사유
-			                                        </button>
-												</div>
+													<div class="col-xxl-12 col-md-12 mb-4">
+														<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
+				                                          반려사유
+				                                        </button>
+													</div>
 												</c:if>
+												<c:if test="${d.approvalState == '결재완료'}">
+													<div class="col-xxl-12 col-md-12 mb-4">
+														<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
+			                                        </div>
+		                                        </c:if>
 	                                        <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
 	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
 	                                        </div>
@@ -60,6 +65,11 @@
 				                                        <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
 				                                          반려
 				                                        </button>
+			                                        </div>
+		                                        </c:if>
+		                                        <c:if test="${d.approvalState == '결재완료'}">
+													<div class="col-xxl-12 col-md-12 mb-4">
+														<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
 			                                        </div>
 		                                        </c:if>
 	                                    	<div class="col-xxl-12 col-md-12 mb-4">
@@ -93,6 +103,11 @@
 		                                        </button>
 	                                    	</div>
 	                                    	</c:if>
+	                                    	<c:if test="${d.approvalState == '결재완료'}">
+												<div class="col-xxl-12 col-md-12 mb-4">
+													<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
+		                                        </div>
+	                                        </c:if>
 	                                    	<div class="col-xxl-12 col-md-12 mb-4">
 	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
 	                                        </div>
@@ -154,6 +169,32 @@
 	                </div>
 	            </div>
 	        </div>
+	        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+			<script>
+			let a = `${d.type}`+'-'+`${d.appNo}`+""+`${d.draNo}`;
+			function downloadPDF() {
+			    const element = document.querySelector('.container');
+
+			    html2canvas(element).then((canvas) => {
+			        const imgData = canvas.toDataURL('image/png');
+			        const pdf = new jspdf.jsPDF();
+
+			        // PDF 크기를 캔버스 이미지 크기와 동일하게 설정
+			        const imgWidth = canvas.width;
+			        const imgHeight = canvas.height;
+
+			        // A4 크기로 맞추고 싶으면 비율 유지
+			        const pageWidth = pdf.internal.pageSize.getWidth();
+			        const pageHeight = (imgHeight * pageWidth) / imgWidth;
+
+			        // PDF를 꽉 채움
+			        pdf.addImage(imgData, 'PNG', 0, 5, pageWidth, pageHeight);
+			        pdf.save(a+".pdf");
+			    });
+			}
+			
+			</script>
 	        <c:if test="${msg != null}">
 			    <script>
 			        let message = '${msg}';
@@ -178,3 +219,4 @@
                 });
 
             </script>
+           

@@ -24,11 +24,11 @@ public class DeleteService {
 		this.deleteMapper = deleteMapper;
 		this.draftMapper = draftMapper;
 	}
-	
+
 	public int getDeleteFile(int drafNo, String path) {
 		DraftFileEntity file = deleteMapper.findDraftFileByDrafNo(drafNo);
 		log.debug(file.toString());
-		String filname = path + file.getFileName()+"."+file.getExt();
+		String filname = path + file.getFileName() + "." + file.getExt();
 		File f = new File(filname);
 		f.delete();
 		int row = deleteMapper.removeDraftFile(drafNo);
@@ -38,15 +38,31 @@ public class DeleteService {
 	// 기안서 삭제
 	public void getDeleteDraft(String docType, int draNo, int appNo, String path) {
 		removeApprovalAndRefer(draNo, appNo, path);
-		if (docType.equals("출장")) { // 출장문서 삭제
+		switch (docType) {
+		case "출장": // 출장문서 삭제
 			deleteMapper.removeBusinessDraftByDraNo(draNo);
-		} else if (docType.equals("매출")) {// 매출 보고서 삭제
+			break;
+		case "매출":// 매출 보고서 삭제
+			deleteMapper.removeBusinessDraftByDraNo(draNo);
+			break;
+		case "휴가":// 휴가 보고서 삭제
 			deleteMapper.removeSalesDraftByDraNo(draNo);
-		} else if (docType.equals("휴가")) {// 휴가 보고서 삭제
-			deleteMapper.removeVacationDraftByDraNo(draNo);
+			break;
+		case "기본":// 기본 문서 삭제
+			deleteMapper.removeBasicDraftByDraNo(draNo);
+			break;
+		default:
+			throw new IllegalArgumentException("없는 유형입니다.");
 		}
-		deleteMapper.removeBasicDraftByDraNo(draNo); // 기본 문서 삭제
-		
+//		if (docType.equals("출장")) {
+//			deleteMapper.removeBusinessDraftByDraNo(draNo);
+//		} else if (docType.equals("매출")) {
+//			deleteMapper.removeSalesDraftByDraNo(draNo);
+//		} else if (docType.equals("휴가")) {
+//			deleteMapper.removeVacationDraftByDraNo(draNo);
+//		}
+//		deleteMapper.removeBasicDraftByDraNo(draNo); 
+
 	}
 
 	// 반복되는 메서드 하나로 묶기
@@ -63,7 +79,7 @@ public class DeleteService {
 			}
 		}
 		deleteMapper.removeDraftFileByDraNo(draNo);
-		
+
 	}
 
 }

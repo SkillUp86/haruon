@@ -20,15 +20,12 @@
 	<!-- 우측 회원 프로필 + 쪽지 수신 알림 -->
 	<ul class="navbar-item flex-row ms-lg-auto ms-0 action-area">
 	 			
-		<li class="nav-item me-5">
-	 		<button id="chatPopUpBtn" type="button" class="btn">메신저</button>
-	 	</li> 
 		<!-- 알림창 드롭다운 메뉴 -->
-		<li class="nav-item dropdown notification-dropdown me-2">
+		<li class="nav-item dropdown notification-dropdown">
 		
-			<a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="badge badge-success"></span>
-			</a>
+			<button href="javascript:void(0);" type="button" class="btn bg-transparent active nav-link dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+			</button>
 
 			<div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
 				<div class="drodpown-title message">
@@ -47,6 +44,11 @@
 			</div>
 		</li>
 		<!-- 알림창 드롭다운 메뉴 끝 -->   
+				<li class="nav-item">
+	 		<button id="chatPopUpBtn" type="button" class="btn bg-transparent">
+	 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+	 		</button>
+	 	</li> 
 
 		<!-- 유저 프로필 드롭다운 -->
 		<li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
@@ -142,7 +144,7 @@
 	<!-- 메신저 버튼 클릭시 메신저창 팝업 -->
 	<script>
 		$("#chatPopUpBtn").click(function() {
-			window.open('${pageContext.request.contextPath}/employies/chat', '_blank', 'width=410, height=600');
+			window.open('${pageContext.request.contextPath}/chat/main', '_blank', 'width=430, height=600');
 		});
 	</script>
 </header>

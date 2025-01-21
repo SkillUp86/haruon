@@ -26,11 +26,7 @@ public class DeptController {
 		// deptList를 JSON 문자열로 변환
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    try {
-	    	String deptListJson = objectMapper.writeValueAsString(deptList)
-				    		    .replaceAll("\"", "&quot;")
-				    		    .replaceAll("'", "&#39;")
-				    		    .replaceAll("<", "&lt;")
-				    		    .replaceAll(">", "&gt;");
+	    	String deptListJson = objectMapper.writeValueAsString(deptList);
 	        model.addAttribute("deptListJson", deptListJson);
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -64,17 +60,6 @@ public class DeptController {
 		Dept dept = new Dept();
 		dept.setDepNo(depNo);
 		dept.setDname(dname);
-		deptService.updateDept(dept);
-		
-		return "redirect:/depts";
-	}
-	
-	// 부서 활성화/비활성화
-	@PostMapping("/depts/activeYN")
-	public String activeYN(@RequestParam Integer depNo, @RequestParam String activeYn) {
-		Dept dept = new Dept();
-		dept.setDepNo(depNo);
-		dept.setActiveYn(activeYn);
 		deptService.updateDept(dept);
 		
 		return "redirect:/depts";

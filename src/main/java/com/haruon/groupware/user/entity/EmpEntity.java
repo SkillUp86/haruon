@@ -30,6 +30,7 @@ public class EmpEntity {
 	private String joinDate;
 	private String leaveDate;
 	private String dname;
+	private String connectionStatus;
 
 	public List<Role> getAuthorities() {
 		List<Role> authorities = new ArrayList<>();
@@ -46,11 +47,11 @@ public class EmpEntity {
 		}
 
 		// 직급에 따른 권한 설정
-		if ("I01".equalsIgnoreCase(location)) { // 사원
+		if ("사원".equalsIgnoreCase(location)) { // 사원
 			authorities.add(Role.ROLE_EMPLOYEE);
-		} else if ("I02".equalsIgnoreCase(location)) { // 팀장
+		} else if ("팀장".equalsIgnoreCase(location)) { // 팀장
 			authorities.add(Role.ROLE_MANAGER);
-		} else if ("I03".equalsIgnoreCase(location)) { // 부서장
+		} else if ("부서장".equalsIgnoreCase(location)) { // 부서장
 			authorities.add(Role.ROLE_HEAD);
 		}
 

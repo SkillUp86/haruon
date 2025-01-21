@@ -167,14 +167,11 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
             <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+            
         </body>
         </html>

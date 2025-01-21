@@ -1,7 +1,6 @@
 package com.haruon.groupware.draft.rest;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
+import com.haruon.groupware.draft.dto.response.ResponseReferencesList;
 import com.haruon.groupware.draft.service.DraftService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,8 @@ public class DocumentRestController {
 	
 	// 참조 문서
 	@GetMapping("/refers/{empNo}")
-	public ResponseEntity<List<Map<String,Object>>> referenceList(@PathVariable int empNo){
-		List<Map<String,Object>> referenceList = draftService.getReferencesByEmp(empNo);
+	public ResponseEntity<List<ResponseReferencesList>> referenceList(@PathVariable int empNo){
+		List<ResponseReferencesList> referenceList = draftService.getReferencesByEmp(empNo);
 		return ResponseEntity.ok(referenceList);
 	}
 }

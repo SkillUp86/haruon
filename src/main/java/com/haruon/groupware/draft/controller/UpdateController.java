@@ -1,4 +1,4 @@
-package com.haruon.groupware.draft.controller;
+	package com.haruon.groupware.draft.controller;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
@@ -20,15 +19,13 @@ import com.haruon.groupware.draft.dto.request.RequestUpdateBasicDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateBusinessDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateSalesDraft;
 import com.haruon.groupware.draft.dto.request.RequestUpdateVacationDraft;
-import com.haruon.groupware.draft.dto.response.ResponseBasicDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseSalesDraftDetail;
-import com.haruon.groupware.draft.dto.response.ResponseVacationDraftDetail;
 import com.haruon.groupware.draft.service.DraftService;
 import com.haruon.groupware.draft.service.UpdateService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/draft")
 public class UpdateController {
@@ -106,7 +103,7 @@ public class UpdateController {
 		Integer draNo = vacationDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateVacationDraft(vacationDraft, path);
-		return "redirect:/draft/detail/vacation/" + vacationDraft.getDraNo();
+		return "redirect:/draft/"+vacationDraft.getType()+"/detail/" + vacationDraft.getDraNo();
 	}
 
 	@PostMapping("/update/salesDraft")
@@ -114,7 +111,7 @@ public class UpdateController {
 		Integer draNo = salesDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateSalesDraft(salesDraft, path);
-		return "redirect:/draft/detail/sales/" + salesDraft.getDraNo();
+		return "redirect:/draft/"+salesDraft.getType()+"/detail/" + salesDraft.getDraNo();
 	}
 
 	@PostMapping("/update/businessDraft")
@@ -122,15 +119,16 @@ public class UpdateController {
 		Integer draNo = businessDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBusinessDraft(businessDraft, path);
-		return "redirect:/draft/detail/business/" + businessDraft.getDraNo();
+		return "redirect:/draft/"+businessDraft.getType()+"/detail/" + businessDraft.getDraNo();
 	}
 
 	@PostMapping("/update/basicDraft")
 	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, HttpSession session) {
+		log.debug(basicDraft.toString());
 		Integer draNo = basicDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBasicDraft(basicDraft, path);
-		return "redirect:/draft/detail/basic/" + basicDraft.getDraNo();
+		return "redirect:/draft/"+basicDraft.getType()+"/detail/" + basicDraft.getDraNo();
 	}
 
 	// 매출보고서 수정

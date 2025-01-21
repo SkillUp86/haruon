@@ -9,9 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -31,13 +28,22 @@ public class SecurityConfig {
 			            .usernameParameter("email")
 			            .passwordParameter("empPw")
 			            .loginProcessingUrl("/loginSuccess")
-			            .defaultSuccessUrl("/home", true)
+			            .successHandler(customLoginSuccessHandler())
 			            .permitAll()
 			            );
+        
         http
         .sessionManagement((session) -> session
                 		.sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
         				);
+        
+        http.logout(logout -> logout
+        		.logoutUrl("/logout")
+        		.logoutSuccessHandler(customLogoutSuccessHandler())
+        		.invalidateHttpSession(true)
+        		.deleteCookies("JSESSIONID")
+        		);
+        
 		return http.build();
 	}
 	
@@ -51,5 +57,14 @@ public class SecurityConfig {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+	@Bean
+	public CustomLoginSuccessHandler customLoginSuccessHandler() {
+		return new CustomLoginSuccessHandler();
+	}
+	
+	@Bean
+	public CustomLogoutSuccessHandler customLogoutSuccessHandler() {
+		return new CustomLogoutSuccessHandler();
+	}
 }
