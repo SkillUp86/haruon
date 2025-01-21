@@ -148,9 +148,9 @@
 											                </a>
 											                
 											                <!-- 삭제 버튼 -->
-											                <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-																<button  class="btn btn-danger btn-sm deleteMeetingroomBtn" data-meeNo="${m.meeNo}" onclick="deleteMeetingroom(event)"> 삭제하기</button>
-											                </form>
+															<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
+															<button class="btn btn-danger btn-sm" type="submit">삭제하기</button>
+															</form>
 											
 											                <!-- 예약 버튼 -->
 											             
@@ -213,31 +213,7 @@
             "pageLength": 10 
         });
     	
-        function deleteMeetingroom(event) {
-            event.preventDefault();  // 기본 이벤트 방지 (form 제출 방지)
-
-            // 삭제할 회의실 번호를 버튼의 data-meeNo 속성에서 가져옴
-            var meeNo = event.target.getAttribute('data-meeNo');
-            
-            // 삭제 확인 메시지
-            if (confirm("정말 삭제하시겠습니까?")) {
-                $.ajax({
-                    url: "/deleteMeetingroom",  // 서버의 삭제 URL
-                    type: "GET",  // GET 방식으로 요청
-                    data: { meeNO: meeNo },  // meeNo를 데이터로 전달
-                    success: function(response) {
-                        // 삭제가 성공하면 해당 행 삭제
-                        alert("회의실이 삭제되었습니다.");
-                        location.reload();  // 페이지를 새로 고쳐서 삭제된 항목 반영
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error:", error);
-                        alert("회의실 삭제에 실패했습니다.");
-                    }
-                });
-            }
-        }
-
+   
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
 

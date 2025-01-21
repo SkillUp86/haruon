@@ -29,12 +29,20 @@ public class MeetingRoomService {
 	}
 	
 	
-	public Integer deleteMeetingroom (Integer meeNo) {
-		return meetingRoomMapper.deleteMeetingroom(meeNo);
-	}
-	
-	public Integer deletereservation (Integer meeNo) {
-		return reservationMapper.deleteReservation(meeNo);
+	public Integer deleteMeetingroom(Integer meeNo) {
+	    // 1. 먼저 meetingroom_file 테이블에서 파일 정보 삭제
+	    Integer fileDeleteResult = meetingRoomMapper.deleteMeetingroomFile(meeNo);
+	    if (fileDeleteResult < 1) {
+	    }
+
+	    // 2. 예약 삭제
+	    Integer reservationResult = reservationMapper.deleteReservation(meeNo);
+	    if (reservationResult < 1) {
+	    }
+	    
+	    // 3. 회의실 삭제
+	    Integer meetingRoomResult = meetingRoomMapper.deleteMeetingroom(meeNo);
+	    return meetingRoomResult;
 	}
 	
 	public void addMeetingroom(MeetingRoom meetingRoom, MultipartFile file, String path) {

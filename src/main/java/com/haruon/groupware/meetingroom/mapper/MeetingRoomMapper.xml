@@ -56,4 +56,7 @@ DELETE FROM meetingroom
 WHERE mee_no = #{meeNo}
 </delete>
 
+<delete id="deleteMeetingroomFile" parameterType="Integer">
+    DELETE FROM meetingroom_file WHERE mee_no = #{meeNo}
+</delete>
 </mapper>
