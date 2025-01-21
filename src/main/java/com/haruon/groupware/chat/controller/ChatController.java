@@ -1,6 +1,5 @@
 package com.haruon.groupware.chat.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,11 @@ import com.haruon.groupware.chat.service.ChatService;
 import com.haruon.groupware.user.service.EmpUpdateService;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Controller
-public class ChatMessengerController {
-	@Autowired private ChatService chatService; 
-	@Autowired private EmpUpdateService empUpdateService;
+public class ChatController {
+	@Autowired ChatService chatService;
+	@Autowired EmpUpdateService empUpdateService;
 	
 	@GetMapping("/chat")
 	public String chat() {
@@ -37,4 +35,5 @@ public class ChatMessengerController {
 		log.debug("로그인상태 변경 - {}", status);
 		return "redirect:/chat/main";
 	}
+	
 }
