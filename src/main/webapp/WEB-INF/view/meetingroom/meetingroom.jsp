@@ -117,7 +117,7 @@
                                                 <th>회의실번호</th>
                                                 <th>수용인원</th>
                                                 <th>예약상태</th>
-                                                <th>버튼</th>
+                                                <th>삭제</th>
                                                 
 
                                             </tr>
@@ -132,7 +132,7 @@
 											            <div class="d-flex justify-content-left align-items-center">
 											                <div class="d-flex flex-column">
 											                    <span class="text-truncate fw-bold">
-											                        <a href="${pageContext.request.contextPath}/meetingroomList/${m.meeNo}">${m.mname}</a>
+											                        <a href="${pageContext.request.contextPath}/modifyMeetingroom/${m.meeNo}">${m.mname}</a>
 											                    </span>
 											                </div>
 											            </div>
@@ -142,11 +142,6 @@
 											        <td>${m.availYn}</td>
 											        <td>
 											            <div class="btn-group" role="group" aria-label="Action Buttons">
-											                <!-- 수정 버튼 -->
-											                <a href="${pageContext.request.contextPath}/editMeetingroom/${m.meeNo}" class="btn btn-primary btn-sm">
-											                    수정하기
-											                </a>
-											                
 											                <!-- 삭제 버튼 -->
 															<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
 															<button class="btn btn-danger btn-sm" type="submit">삭제하기</button>
@@ -209,7 +204,7 @@
                 "sLengthMenu": "Results :  _MENU_",
             },
             "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
+            "lengthMenu": [1, 3, 5, 10],
             "pageLength": 10 
         });
     	

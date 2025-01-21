@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.haruon.groupware.meetingroom.dto.MeetingRoomDto;
 import com.haruon.groupware.meetingroom.entity.MeetingRoom;
 import com.haruon.groupware.meetingroom.entity.MeetingRoomFile;
 
@@ -22,5 +23,9 @@ public interface MeetingRoomMapper {
 	
 	Integer deleteMeetingroomFile(Integer meeNo);
 	
+	Integer updateMeetingroom (MeetingRoom meeNo);
 	
+	MeetingRoomDto meetingroomOne(Integer meeNo);
+	
+	Integer updateMeetingroomFile(MeetingRoomFile meetingRoomFile);
 }

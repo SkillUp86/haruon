@@ -59,4 +59,62 @@ WHERE mee_no = #{meeNo}
 <delete id="deleteMeetingroomFile" parameterType="Integer">
     DELETE FROM meetingroom_file WHERE mee_no = #{meeNo}
 </delete>
+
+<update id="updateMeetingroom" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
+    UPDATE meetingroom
+    <set>
+        <if test="mname != null">
+            mname = #{mname},
+        </if>
+        <if test="capacity != null">
+            capacity = #{capacity},
+        </if>
+        <if test="info != null">
+            info = #{info},
+        </if>
+        update_date = NOW()
+    </set>
+    WHERE mee_no = #{meeNo}
+</update>
+
+<select id="meetingroomOne" resultType="com.haruon.groupware.meetingroom.dto.MeetingRoomDto">
+	SELECT
+	    m.mee_no  meeNo,
+	    m.mname  mname,
+	    m.capacity  capacity,
+	    m.info  info,
+	    m.avail_yn  availYn,
+	    mf.file_name  fileName,
+	    mf.ext  fileExt
+	FROM 
+	    meetingroom m
+	LEFT JOIN 
+	    meetingroom_file mf
+	ON 
+	    m.mee_no = mf.mee_no
+	WHERE 
+	    m.mee_no = #{meeNo} 
+</select>
+
+<update id="updateMeetingroomFile" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoomFile">
+    UPDATE meetingroom_file
+    <set>
+        <if test="originalName != null">
+            original_name = #{originalName},
+        </if>
+        <if test="fileName != null">
+            file_name = #{fileName},
+        </if>
+        <if test="kind != null">
+            kind = #{kind},
+        </if>
+        <if test="size != null">
+            size = #{size},
+        </if>
+        <if test="ext != null">
+            ext = #{ext},
+        </if>
+    </set>
+    WHERE mee_no = #{meeNo}
+</update>
 </mapper>
