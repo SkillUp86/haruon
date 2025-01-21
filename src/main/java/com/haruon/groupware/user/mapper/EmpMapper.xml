@@ -139,5 +139,15 @@
 		WHERE e.exit_date IS NULL
 	</select>
 	
+	<!-- 웹소켓 세션의 URI 파싱된 id 유무 확인 ( 1 = true / 0 = false ) --> 
+	<select id="checkEmpNo" parameterType="String" resultType="Integer">
+		SELECT (CASE WHEN COUNT(emp_no) = 0 
+					 THEN 0 ELSE 1 
+				END) checkId 
+		  FROM emp 
+		 WHERE emp_no = #{idInURI}
+		   AND exit_date is NULL
+	</select>
+	
 
 </mapper>
