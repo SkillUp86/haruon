@@ -8,15 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
+     
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLE -->
+    <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
+    <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL STYLE -->
     <!-- 페이지 제목 입력칸 -->
     <title>메인 페이지</title>
@@ -102,92 +112,170 @@
                     </div>
                     <!--  END BREADCRUMBS  -->
 					<div class="row layout-top-spacing layout-spacing" id="cancel-row">
-						<div class="widget-content widget-content-area mt-4">
-	                        <div class="col-xl-12 col-lg-12 col-md-12">
-							 	<div id="calendar-container">
-							    	<div id="calendar"></div>
-								</div>
-	                        </div>
-	                    </div>
-	                    </div>
-                   
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="calendar-container">
+                                <div class="calendar"></div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Modal -->
-					<!-- addSchedule 모달창 :: 일정 등록 -->
-		<div class="modal fade" id="addSchedule" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
-				<!-- 모달 제목 -->
-				<div class="modal-header">
-					<h5 class="modal-title">신규 사내일정 추가</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				
-				<!-- 모달 일정 등록폼 -->
-				<form id="addScheduleForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
-					<div class="modal-body">
-						<div class="row mb-5">
-							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
-							<div class="col-sm-8 scheduleModalDiv">
-								<input type="datetime-local" class="form-control" id="startDate" name="startDate">
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
-							<div class="col-sm-8 scheduleModalDiv">
-								<input type="datetime-local" class="form-control" id="endDate" name="endDate">
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
-							<div class="col-sm-8 scheduleModalDiv">
-								<input type="text" class="form-control" id="title" name="title">
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
-							<div class="col-sm-8 scheduleModalDiv">
-							<label for="meetingRadio">
-								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 개인
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="2" id="festivalRadio"> 팀
-							</label>&nbsp;&nbsp;&nbsp;
-							<div class="col-sm-8 scheduleModalDiv" id="teamMembersDiv" style="display: none;">
-							    <select class="form-control" id="teamMembers" name="teamMembers" multiple>
-							        <option value="member1">팀원 1</option>
-							        <option value="member2">팀원 2</option>
-							        <option value="member3">팀원 3</option>
-							        <option value="member4">팀원 4</option>
-							    </select>
-							    <small>Ctrl 또는 Shift 키를 사용하여 여러 명 선택 가능합니다.</small>
-							</div>
-							<!-- <label for="inspectionRadio">
-								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
-							</label>  -->
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
-							<div class="col-sm-8">
-								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
-								(<span id="chatHelper">0</span>/100)
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel"> 일정 </h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form id="addSchedule" method="post"
+									action="${pageContext.request.contextPath}/addSchedule">
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 제목</label> 
+													<select id="event-title" name="title" class="form-control">
+													
+														<option value="연차">일정</option>
+														<option value="연차">연차</option>
+														<option value="출장">출장</option>
+														<option value="회의">회의</option>
+													</select>
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">시작 날짜</label> 
+												<input id="event-start-date" name="startTime" type="datetime-local" class="form-control">
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">종료 날짜</label> 
+												<input id="event-end-date" name="endTime" type="datetime-local" class="form-control">
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="n-chk">
+												<label class="form-label">일정 종류</label> 
+												<select id="kind" name="kind" class="form-control">
+													<c:forEach items="${kindList}" var="k">
+														<option value="${k.commonCode}">${k.descript}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 내용</label> 
+													<input id="text" name="content" type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-primary btn-add-event">일정 추가</button>
+										<button class="btn" id="deleteEventBtn">삭제</button>
+										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
+										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
-					
-					<!-- 모달 일정 취소/등록버튼 -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button id="addScheduleBtn" type="submit" class="btn btn-primary">Save</button>
+					<div class="modal fade" id="updatemodal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel"> 일정추가 </h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form id="addSchedule" method="post"
+									action="${pageContext.request.contextPath}/updateSchedule">
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 제목</label> 
+													<select id="event-title" name="title" class="form-control">
+													
+														<option value="연차">일정</option>
+														<option value="연차">연차</option>
+														<option value="출장">출장</option>
+														<option value="회의">회의</option>
+													</select>
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">시작 날짜</label> 
+												<input id="event-start-date" name="startTime"type="datetime-local" class="form-control" value="${scheduleOne.startTime}">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
+
+										<div class="col-md-12 ">
+											<div class="n-chk">
+												<label class="form-label">종료 날짜</label> 
+												<input id="event-end-date" name="endTime" type="datetime-local" class="form-control" value="${scheduleOne.endTime}">
+												<!-- name 속성 추가 -->
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="n-chk">
+												<label class="form-label">일정 종류</label> 
+												<select id="kind" name="kind" class="form-control">
+													<c:forEach items="${kindList}" var="k">
+														<option value="${k.commonCode}">${k.descript}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="n-chk">
+													<label class="form-label">일정 내용</label> 
+													<input id="text" name="content" type="text" class="form-control" value="${scheduleOne.content}">
+													<!-- name 속성 추가 -->
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-primary btn-add-event">일정 추가</button>
+										<button class="btn" id="deleteEventBtn">삭제</button>
+										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
+										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-				</form>
-			</div></div>
-		</div>
-		<!-- End addSchedule Modal-->
+
+
 
 
 					<!--  BEGIN FOOTER  -->
-            <!--  END FOOTER  -->
-       	 </div>
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-       </div>
-       </div>
-       </div>	 
+            <!--  END FOOTER  -->
+       		 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -196,87 +284,16 @@
     <script src="../layouts/vertical-light-menu/app.js"></script>
     <script src="../src/assets/js/template.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
+    <script src="../src/assets/js/dashboard/dash_1.js"></script>
+    <script src="../src/plugins/src/fullcalendar/fullcalendar.min.js"></script>
+    <script src="../src/plugins/src/uuid/uuid4.min.js"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
     
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
-    <!-- 캘린더API  -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    let calendarEl = document.getElementById('calendar');
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-            left: 'prevYear,prev,next,nextYear today',
-            center: 'title',
-            right: 'dayGridMonth addEventButton',
-        },
-        customButtons: {
-            addEventButton: {
-                text: "신규일정추가",
-                click: function() {
-                    $("#addSchedule").modal("show");
-                }
-            }
-        },
-        locale: 'ko',
-        selectable: true,
-        dayMaxEvents: true,
-        events: function(response, successCallback, failureCallback) {
-            $.ajax({
-                url: "/scheduleCalList",
-                method: "GET"
-            })
-            .done((response) => {
-                let events = response.map(schedule => ({
-                    title: schedule.scheduleTitle,
-                    start: schedule.startDate,
-                    end: schedule.endDate,
-                    backgroundColor: getScheduleColor(schedule.typeNo),
-                    borderColor: getScheduleColor(schedule.typeNo),
-                    url: `/calendarDetail?scheduleNo=${schedule.scheduleNo}`,
-                    allDay: false
-                }));
-                successCallback(events);
-            })
-            .fail(() => {
-                failureCallback();
-            });
-        }
-    });
-
-    calendar.render();
-
-    // 강제로 리사이즈 이벤트 트리거
-    setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-    }, 500);
-
-    function getScheduleColor(typeNo) {
-        switch (typeNo) {
-            case 1: return '#81bbb2'; // 회의
-            case 2: return '#af92e2'; // 행사
-            case 3: return '#ffbb57'; // 점검
-            default: return '#ffffff';
-        }
-    }
-
-    // 라디오 버튼 변경 이벤트 감지
-    const teamRadio = document.getElementById('festivalRadio');
-    const personalRadio = document.getElementById('meetingRadio');
-    const teamMembersDiv = document.getElementById('teamMembersDiv');
-
-    document.querySelectorAll('input[name="type"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            if (teamRadio.checked) {
-                teamMembersDiv.style.display = 'block'; // 팀원 선택 표시
-            } else if (personalRadio.checked) {
-                teamMembersDiv.style.display = 'none'; // 팀원 선택 숨김
-            }
-
-            // 캘린더 크기 재계산
-            calendar.updateSize();
-        });
-    });
-});
-
-</script>
+    <script src="../src/plugins/src/fullcalendar/custom-fullcalendar.js"></script>
+    <!--  END CUSTOM SCRIPTS FILE  -->
+  
 </body>
 </html>

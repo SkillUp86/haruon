@@ -1,174 +1,245 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-     
-
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-     <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
- 	<link href="../src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
-
- <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
- <link href="../src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
     
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/dark/table/datatable/dt-global_style.css">
+    <!--  END CUSTOM STYLE FILE  -->
+
+    <style>
+        #blog-list img {
+            border-radius: 18px;
+        }
+    </style>    
     <!-- 페이지 제목 입력칸 -->
-    <title>메인 페이지</title>
+    <title>회의실</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
-<body>
-	               
-                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
-                    <div class="col-lg-12">
-                        <div class="widget-content searchable-container list">
+<body class="layout-boxed">
+    <!-- BEGIN LOADER -->
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+        <div class="spinner-grow align-self-center"></div>
+    </div></div></div>
+    <!--  END LOADER -->
 
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                    <form class="form-inline my-2 my-lg-0">
-                                        <div class="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                            <input type="text" class="form-control product-search" id="input-search" placeholder="Search Contacts...">
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container container-xxl">
+	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+    </div>
+    <!--  END NAVBAR  -->
+      
+    <!--  BEGIN MAIN CONTAINER 템플릿 직접 끌어와서 사용  -->
+    <div class="main-container" id="container">
+
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+
+        <!--  BEGIN SIDEBAR  -->
+        <div class="sidebar-wrapper sidebar-theme">
+
+            <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
+
+        </div>
+        <!--  END SIDEBAR  -->
+
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+                <div class="middle-content container-xxl p-0">
+                    <!--  BEGIN BREADCRUMBS  -->
+                    <div class="secondary-nav">
+                        <div class="breadcrumbs-container" data-page-heading="Analytics">
+                            <header class="header navbar navbar-expand-sm">
+                                <a href="javascript:void(0);" class="btn-toggle sidebarCollapse" data-placement="bottom">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                                    </svg>
+                                </a>
+                                <div class="d-flex breadcrumb-content">
+                                    <div class="page-header">
+                                        <div class="page-title">
                                         </div>
-                                    </form>
-                                </div>
-
-                                <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
-                                    <div class="d-flex justify-content-sm-end justify-content-center">
-                                        <svg id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                                    </div>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="addContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title add-title" id="addContactModalTitleLabel1">회의실 추가</h5>
-                                                    <h5 class="modal-title edit-title" id="addContactModalTitleLabel2" style="display: none;">Edit Contact</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                    </button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <div class="add-contact-box">
-                                                        <div class="add-contact-content">
-                                                            <form id="pa">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-name">
-                                                                            <input type="text" id="c-name" class="form-control" placeholder="">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-email">
-                                                                            <input type="text" id="c-email" class="form-control" placeholder="Email">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-occupation">
-                                                                            <input type="text" id="c-occupation" class="form-control" placeholder="Occupation">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <div class="contact-phone">
-                                                                            <input type="text" id="c-phone" class="form-control" placeholder="Phone">
-                                                                            <span class="validation-text"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div class="contact-location">
-                                                                            <input type="text" id="c-location" class="form-control" placeholder="Location">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button id="btn-edit" class="float-left btn btn-success">저장</button>
-
-                                                    <button id="btn-add" class="btn btn-primary">추가</button>
-                                                    
-                                                    <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> 삭제</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <nav class="breadcrumb-style-one" aria-label="breadcrumb">
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="#">회의실</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">예약</li>
+                                            </ol>
+                                        </nav>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="searchable-items list">
-                                <div class="items items-header-section">
-                                    <div class="item-content">
-                                        <div class="d-inline-flex">
-                                            <div class="n-chk align-self-center text-center">
-                                                <div class="form-check form-check-primary me-0 mb-0">
-                                                    <input class="form-check-input inbox-chkbox" id="contact-check-all" type="checkbox">
-                                                </div>
-                                            </div>
-                                            <h4>호실</h4>
-                                        </div>
-                                        <div class="user-email">
-                                            <h4>수용인원</h4>
-                                        </div>
-                                        <div class="user-location">
-                                            <h4 style="margin-left: 0;">예약상태</h4>
-                                        </div>
-                                       
-                                        <div class="action-btn">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2  delete-multiple"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </header>
                         </div>
                     </div>
+                    <!--  END BREADCRUMBS  -->
                 </div>
+                <!-- 메인컨텐츠 입력칸 -->
+                
+                <div class="account-settings-container layout-top-spacing">
+	                <div class="account-content">
+	                    <div class="row mb-3">
+	                        <div class="col-md-12">
+	                            <h2>회의실 예약</h2>
+               
+               					<div style="text-align: right;">
+	                                <a class="btn btn-secondary" id="meetingroomList" href="${pageContext.request.contextPath}/addMeetingroom">
+	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+	                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 회의실 추가
+	                                </a>
+                                 </div>
+                                 
+                                <div class="widget-content widget-content-area br-8">
+                                    <table id=noticeList class="zero-config table dt-table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                            	<th>회의실 이미지</th>
+                                                <th>회의실이름</th>
+                                                <th>회의실번호</th>
+                                                <th>수용인원</th>
+                                                <th>예약상태</th>
+                                                <th>버튼</th>
+                                                
 
-  
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <c:forEach var="m" items="${meetingroomList}">
+											    <tr>
+											        <td>
+											            <img src="${pageContext.request.contextPath}/meetingroomList/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
+											        </td>
+											        <td>
+											            <div class="d-flex justify-content-left align-items-center">
+											                <div class="d-flex flex-column">
+											                    <span class="text-truncate fw-bold">
+											                        <a href="${pageContext.request.contextPath}/meetingroomList/${m.meeNo}">${m.mname}</a>
+											                    </span>
+											                </div>
+											            </div>
+											        </td>
+											        <td>${m.meeNo}</td>
+											        <td>${m.capacity}</td>
+											        <td>${m.availYn}</td>
+											        <td>
+											            <div class="btn-group" role="group" aria-label="Action Buttons">
+											                <!-- 수정 버튼 -->
+											                <a href="${pageContext.request.contextPath}/editMeetingroom/${m.meeNo}" class="btn btn-primary btn-sm">
+											                    수정하기
+											                </a>
+											                
+											                <!-- 삭제 버튼 -->
+											                <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
+																<button  class="btn btn-danger btn-sm deleteMeetingroomBtn" data-meeNo="${m.meeNo}" onclick="deleteMeetingroom(event)"> 삭제하기</button>
+											                </form>
+											
+											                <!-- 예약 버튼 -->
+											             
+											            </div>
+											        </td>
+											    </tr>
+											</c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                			</div>
+                		</div>
+                	</div>
+                </div>
+                <!-- 메인컨텐츠 END -->
+            </div>
+            <!--  BEGIN FOOTER  -->
+            <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
+            <!--  END FOOTER  -->
+        </div>
+        <!--  END CONTENT AREA  -->
 
-	<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-	<script src="../src/plugins/src/global/vendors.min.js"></script>
-	<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-	<script src="../src/plugins/src/waves/waves.min.js"></script>
-	<script src="../layouts/vertical-light-menu/app.js"></script>
-	<script src="../src/assets/js/custom.js"></script>
-	<!-- END GLOBAL MANDATORY SCRIPTS -->
-	<script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
-	<script src="../src/assets/js/apps/contact.js"></script>
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="${pageContext.request.contextPath}/src/plugins/src/apex/apexcharts.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/dashboard/dash_1.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
+    <script>
+    	noticeList = $('#noticeList').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+        "<'table-responsive'tr>" +
+        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch":  '<div class="dataTables_filter"> <lable>' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>'
+                                +  '</lable> </div>', 
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 10 
+        });
+    	
+        function deleteMeetingroom(event) {
+            event.preventDefault();  // 기본 이벤트 방지 (form 제출 방지)
+
+            // 삭제할 회의실 번호를 버튼의 data-meeNo 속성에서 가져옴
+            var meeNo = event.target.getAttribute('data-meeNo');
+            
+            // 삭제 확인 메시지
+            if (confirm("정말 삭제하시겠습니까?")) {
+                $.ajax({
+                    url: "/deleteMeetingroom",  // 서버의 삭제 URL
+                    type: "GET",  // GET 방식으로 요청
+                    data: { meeNO: meeNo },  // meeNo를 데이터로 전달
+                    success: function(response) {
+                        // 삭제가 성공하면 해당 행 삭제
+                        alert("회의실이 삭제되었습니다.");
+                        location.reload();  // 페이지를 새로 고쳐서 삭제된 항목 반영
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error);
+                        alert("회의실 삭제에 실패했습니다.");
+                    }
+                });
+            }
+        }
+
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->  
+
 </body>
 </html>

@@ -4,6 +4,12 @@ import lombok.Data;
 
 @Data
 public class MeetingRoomFile {
-	private Integer schNo;
-	private Integer emoNo;
+	private Integer meefNo;
+	private Integer meeNo;
+	private String originalName;
+	private String fileName;
+	private String kind;
+	private Long size;
+	private String ext;
+	private String createDate;
 }

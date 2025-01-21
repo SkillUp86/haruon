@@ -3,20 +3,63 @@
 <mapper
 	namespace="com.haruon.groupware.meetingroom.mapper.MeetingRoomMapper">
 	
-	<select id="meetingroomList" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
-SELECT
-    m.mee_no  meeNo,
-    m.mname  mname,
-    m.capacity  capacity,
-    m.info  info,
-    m.avail_yn  availYn,
-    mf.mee_no  mfMeeNo
-FROM 
-    meetingroom m
-LEFT JOIN 
-    meetingroom_file mf
-ON 
-    mf.mee_no = m.mee_no;
+	<select id="meetingroomList" resultType="com.haruon.groupware.meetingroom.dto.MeetingRoomDto">
+  SELECT
+        m.mee_no  meeNo,
+        m.mname  mname,
+        m.capacity  capacity,
+        m.info  info,
+        m.avail_yn  availYn,
+        mf.file_name  fileName,
+        mf.ext AS fileExt
+    FROM 
+        meetingroom m
+    LEFT JOIN 
+        meetingroom_file mf
+    ON 
+        m.mee_no = mf.mee_no
+    ORDER BY 
+        m.mee_no ASC;
 		
 	</select>
+<insert id="addMeetingroom" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
+	INSERT INTO meetingroom (
+        mee_no,
+        mname, 
+        capacity, 
+        info
+    ) VALUES (
+       #{meeNo},
+       #{mname}, 
+       #{capacity},  
+       #{info}
+    );
+</insert>
+
+<insert id="addMeetingroomFile" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoomFile">
+INSERT INTO meetingroom_file (
+		meef_no
+	,	mee_no
+	,	original_name
+	,	file_name
+	,	kind
+	,	size
+	,	ext
+	
+) VALUES(
+	 #{meefNo}
+	,#{meeNo}
+	,#{originalName}
+	,#{fileName}
+	,#{kind}
+	,#{size}
+	,#{ext}
+)
+</insert>
+
+<delete id="deleteMeetingroom" parameterType="Integer">
+DELETE FROM meetingroom
+WHERE mee_no = #{meeNo}
+</delete>
+
 </mapper>
