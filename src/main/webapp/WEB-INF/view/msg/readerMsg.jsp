@@ -27,14 +27,19 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 조회</title>
+    <title>받은 쪽지</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    <div id="load_screen"> 
+	    <div class="loader"> 
+		    <div class="loader-content">
+		        <div class="spinner-grow align-self-center">
+		        </div>
+		    </div>
+	    </div>
+    </div>
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -60,7 +65,6 @@
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
                 <div class="middle-content container-xxl p-0">
-                    
                     <!--  BEGIN BREADCRUMBS  -->
                     <div class="secondary-nav">
                         <div class="breadcrumbs-container" data-page-heading="Analytics">
@@ -79,9 +83,9 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
+                                                <li class="breadcrumb-item"><a href="#">Message</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Franchise List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Read</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -90,38 +94,84 @@
                         </div>
                     </div>
                     <!--  END BREADCRUMBS  -->
+                </div>
                 
-	                <!-- 메인컨텐츠 입력칸 -->
-	                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
-	                    <div class="col-lg-12">
-	                        <div class="widget-content searchable-container list">
-	                    </div>
-	
-	                
-		                <!-- 페이징 -->
-		                <nav>
-		                    <ul class="pagination">
-		                        <c:forEach begin="1" end="${lastPage}" var="page">
-		                            <li class="page-item ${page == currentPage ? 'active' : ''}">
-		                                <a class="page-link" href="franchises?page=${page}">${page}</a>
-		                            </li>
-		                        </c:forEach>
-		                    </ul>
-		                </nav>
-	                                
-	                	</div>
-					</div>
-	                <!-- 메인컨텐츠 END -->
-				</div>
+                <!-- 메인컨텐츠 입력칸 -->
+                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+                    <div class="col-lg-12">
+                        <div class="widget-content searchable-container list">
+                            <div class="row">
+
+		                        <div id="flLoginForm" class="col-lg-12 layout-spacing">
+		                            <div class="statbox widget box box-shadow">
+		                                <div class="widget-header">
+	                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 ms-1">
+	                                            <a href="${pageContext.request.contextPath}/readersMsg"> ← </a>
+	                                        </div>                                                                        
+		                                </div>
+		                                <div class="widget-content widget-content-area">
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                    <label class="form-label"> 발신자 </label>
+				                                    <label class="form-control">${mr.enameS}</label>
+				                                </div>
+				                                <div class="col-md-6">
+				                                    <label class="form-label"> 수신자 </label>
+				                                    <label class="form-control">${mr.enameR}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 제목 </label>
+				                                    <label class="form-control">${mr.title}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 수신일 </label>
+				                                    <label class="form-control">${mr.sendDate}</label>
+				                                </div>
+			                                </div>
+			                                <div class="row">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 내용 </label>
+				                                    <textarea class="form-control" rows="5" cols="40" readonly>${mr.content}</textarea>
+				                                </div>
+			                                </div>
+			                                <div class="row mb-3">
+				                                <div class="col-md-12">
+				                                    <label class="form-label"> 첨부파일 </label>
+				                                    <c:if test="${empty mfl}">
+				                                    	<label class="form-control">첨부된 파일이 없습니다</label>
+				                                    </c:if>
+				                                    <c:forEach items="${mfl}" var="mfl">
+					                                    <a href="${pageContext.request.contextPath}/uploadCourse/${mfl.fileName}.${mfl.ext}" download="${mfl.originName}.${mfl.ext}"> 
+					                                    	<label class="form-control">${mfl.originName}.${mfl.ext}</label>
+					                                    </a>
+				                                    </c:forEach>
+				                                </div>
+			                                </div>
+			                                
+			                                
+		                                </div>
+		                            </div>
+		                        </div>
+
+                    		</div>
+                        </div>
+                  	</div>
+               	</div>
+                <!-- 메인컨텐츠 END -->
 			</div>
 		</div>
-	</div>
             
-		        <!--  BEGIN FOOTER  -->
-		        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-		        <!--  END FOOTER  -->
-        	<!--  END CONTENT AREA  -->
-
+        <!--  BEGIN FOOTER  -->
+        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
+        <!--  END FOOTER  -->
+        
+  		<!--  END CONTENT AREA  -->
+	
+	</div>
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
@@ -136,24 +186,7 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	
-	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
-    <script>
-      $('#board-list').DataTable({
-         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-           "<'table-responsive'tr>" +
-           "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-               "oLanguage": {
-                   "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                   "sInfo": "Showing page _PAGE_ of _PAGES_",
-                   "sSearchPlaceholder": "Search",
-                   "sLengthMenu": "Row : _MENU_",
-               },
-               "stripeClasses": [],
-               "lengthMenu": [5, 10, 20, 50],
-               "pageLength": 10 
-      });
-      
-    </script>
+
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>

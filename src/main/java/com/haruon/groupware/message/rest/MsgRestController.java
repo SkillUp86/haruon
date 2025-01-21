@@ -18,21 +18,28 @@ public class MsgRestController {
 	
 	// 받은 쪽지함
 	@GetMapping("/MsgReaders/{empNo}")
-	public List<MsgReaderDto> getMsgReaders(@PathVariable Integer empNo) {
-		return msgService.getMsgReaders(empNo);
+	public List<MsgReaderDto> getReadersMsg(@PathVariable Integer empNo) {
+		return msgService.getReadersMsg(empNo);
 	}
+	
+	// 받은 쪽지
+	@GetMapping("/MsgReader/{msgNo}")
+	public MsgReaderDto getReaderMsg(@PathVariable Integer msgNo) {
+		return msgService.getReaderMsg(msgNo);
+	}
+	
 	
 	// 보낸 쪽지함
 	@GetMapping("/MsgSenders/{empNo}")
 	public List<MsgSenderDto> getMsgSenders (@PathVariable Integer empNo) {
-		return msgService.getMsgSenders(empNo);
+		return msgService.getSendersMsg(empNo);
 	}
 	
-	// 임시보관함
-	@GetMapping("/MsgTemporarys/{empNo}")
-	public List<MsgSenderDto> getMsgTemporarys (@PathVariable Integer empNo) {
-		String stateT = "E01"; // 임시보관 코드
-		
-		return msgService.getTemporaryMsgList(empNo, stateT);
-	}
+//	// 임시보관함
+//	@GetMapping("/MsgTemporarys/{empNo}")
+//	public List<MsgSenderDto> getMsgTemporarys (@PathVariable Integer empNo) {
+//		String stateT = "E01"; // 임시보관 코드
+//		
+//		return msgService.getTemporaryMsgList(empNo, stateT);
+//	}
 }

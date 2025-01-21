@@ -2,27 +2,114 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
 
+	<!-- 쪽지 발송/임시저장 -->
+	<insert id="insertMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		INSERT INTO (
+			title, content
+		) VALUE (
+			#{title}, #{content}
+		)
+	</insert>
+
 	<!-- 받은 쪽지함 -->
-	<select id="getReaderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
-		SELECT 
-			es.ename ename
-			, es.email email
-			, cc.descript descript
-			, m.title title
-			, ms.send_date sendDate
-			, mr.read_date readDate
-		FROM msg_reader mr
-		JOIN msg m ON mr.msg_no = m.msg_no
-		JOIN msg_sender ms ON mr.msg_no = ms.msg_no
-		JOIN emp es ON ms.emp_no = es.emp_no
-		JOIN common_code cc ON es.location = cc.common_code
-		WHERE mr.emp_no = #{empNo}
+	<select id="getReadersMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
+	   SELECT 
+	          m.msg_no msgNo
+	        , es.ename enameS
+	        , es.email emailS
+	        , ccs.descript descriptS
+	        , m.title title
+	        , ms.send_date sendDate
+	        , mr.read_date readDate
+	        , ccr.descript state
+		 FROM msg_reader mr
+		 JOIN msg m ON mr.msg_no = m.msg_no
+		 JOIN msg_sender ms ON mr.msg_no = ms.msg_no
+		 JOIN emp es ON ms.emp_no = es.emp_no
+		 JOIN common_code ccs ON es.location = ccs.common_code
+		 JOIN common_code ccr ON mr.state = ccr.common_code
+		WHERE mr.emp_no = #{empNo} AND ms.state = (SELECT common_code
+											   FROM common_code
+											  WHERE descript = '발송' AND parent_code = (SELECT common_code 
+																					     FROM common_code 
+	                           					   	 								    WHERE descript='msg_sender_state'))
 	</select>
+	
+	<!-- 받은 쪽지 -->
+	<select id="getReaderMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
+	SELECT
+		   m.msg_no
+		 , mr.msgr_no msgrNo
+		 , es.ename enameS
+		 , ccs.descript descriptS
+		 , es.email emailS
+		 , er.ename enameR
+		 , ccr.descript descriptR 
+		 , er.email emailR
+		 , ms.send_date sendDate
+		 , m.title title
+		 , m.content content
+	     , erf.file_name fileNameE
+		 , erf.ext extE
+		 , mf.file_name fileNameM
+	     , mf.ext extM
+	  FROM msg_reader mr
+	  JOIN msg m ON mr.msg_no = m.msg_no
+	  JOIN msg_sender ms ON mr.msg_no = ms.msg_no
+	  JOIN emp es ON ms.emp_no = es.emp_no
+	  JOIN common_code ccs ON es.location = ccs.common_code
+	  JOIN emp er ON mr.emp_no = er.emp_no
+	  JOIN common_code ccr ON er.location = ccr.common_code
+	  LEFT OUTER JOIN emp_file erf ON er.emp_no = erf.emp_no
+	  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
+	 WHERE m.msg_no = #{msgNo} AND ms.state = (
+								   SELECT common_code
+							         FROM common_code
+							        WHERE descript = '발송' 
+								          AND parent_code = (
+								  		      SELECT common_code
+								  		        FROM common_code
+								  		       WHERE descript = 'msg_sender_state'
+								    	  )
+							   ) 
+							   AND mr.state IN (
+							   	   SELECT common_code
+							   	     FROM common_code
+							   	    WHERE (descript = '읽음' OR descript = '읽지않음') 
+							     		   AND parent_code = (
+								   			   SELECT common_code
+								   			     FROM common_code
+								   				WHERE descript = 'msg_reader_state'
+							   			   )
+							   )
+	</select>
+	
+	<!-- 쪽지 파일 -->
+	<select id="getMsgFileList" parameterType="Integer" resultType="com.haruon.groupware.message.entity.MsgFile">
+		SELECT
+			   msg_no
+			 , origin_name originName
+			 , file_name fileName 
+			 , ext 
+			 , kind
+			 , size
+			 , create_date createDate
+		  FROM msg_file
+		 WHERE msg_no = #{msgNo}
+	</select>
+	
+	<!-- 읽음 상태변경 -->
+	<update id="modifyReadState" parameterType="Integer">
+		UPDATE msg_reader
+		SET state = "D02", read_date = now()
+		WHERE msg_no = #{msgNo}
+	</update>
 	
 	<!-- 보낸 쪽지 -->
 	<select id="getSenderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
 		SELECT 
-		       es.ename enameS
+			   m.msg_no msgNo
+		     , es.ename enameS
 		     , ccs.descript descriptS
 		     , es.email emailS
 		     , er.ename enameR
@@ -33,6 +120,7 @@
 		     , m.content content
 		     , erf.file_name fileNameE
 		     , erf.ext extE
+		     , mf.origin_name originNameM
 		     , mf.file_name fileNameM
 		     , mf.ext extM
 		  FROM msg_sender ms
