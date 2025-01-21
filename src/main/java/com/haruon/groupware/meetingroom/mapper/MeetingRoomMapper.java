@@ -20,5 +20,7 @@ public interface MeetingRoomMapper {
 	
 	Integer deleteMeetingroom (Integer meeNo);
 	
+	Integer deleteMeetingroomFile(Integer meeNo);
+	
 	
 }
