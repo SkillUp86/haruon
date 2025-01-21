@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.chat.mapper.ChatMapper">
-
+	
+	<insert id="createRoom" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
+		INSERT INTO chat_room(
+			room_no, emp_no
+		) VALUES (
+			#{roomNo}, #{empNo}
+		)	
+	</insert>
+	
+	<select id="getChatRoomsInfoByEmp" parameterType="Integer" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
+		SELECT e.emp_no empNo 			    , e.ename ename
+			 , cc.descript connectionStatus , d.dname dname
+			 , ef.file_name fileName	    , ef.ext ext
+			 , V1.roomId roomId			    , V1.sendTime sendTime
+			 , V1.message message			, V1.senderNo senderNo
+	FROM emp e
+	INNER JOIN dept d ON d.dep_no = e.dep_no
+	INNER JOIN common_code cc ON cc.common_code = e.connection_status AND cc.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_connection_status')
+	INNER JOIN chat_room cr ON cr.emp_no = e.emp_no 
+	LEFT OUTER JOIN emp_file ef ON ef.emp_no = e.emp_no
+	INNER JOIN (SELECT V0.roomId roomId		, V0.sendTime sendTime
+					 , V0.message message	, V0.senderNo senderNo
+				  FROM (SELECT c.room_id roomId		, c.send_time sendTime
+						     , c.message message	, cr.emp_no empNo	, c.sender_no senderNo
+							 , ROW_NUMBER() OVER(PARTITION BY c.room_id ORDER BY c.send_time desc) AS recentNumber
+							FROM chat_room cr JOIN chat c ON c.room_id = cr.room_id
+							WHERE cr.room_id IN (SELECT room_id 
+											  		     FROM chat_room WHERE emp_no = #{empNo})) V0
+				 WHERE V0.recentNumber = #{empNo}) V1
+					ON V1.roomId = cr.room_id
+	     WHERE e.emp_no != #{empNo}
+	</select>
 </mapper>
