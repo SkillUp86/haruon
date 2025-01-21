@@ -111,171 +111,164 @@
                         </div>
                     </div>
                     <!--  END BREADCRUMBS  -->
-					<div class="row layout-top-spacing layout-spacing" id="cancel-row">
-                        <div class="col-xl-12 col-lg-12 col-md-12">
-                            <div class="calendar-container">
-                                <div class="calendar"></div>
-                            </div>
-                        </div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-4">
+	                                <div class="widget-content widget-content-area">
+					    	<div id="calendar"></div>
+						</div>
                     </div>
                     <!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel"> 일정 </h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<form id="addSchedule" method="post"
-									action="${pageContext.request.contextPath}/addSchedule">
-									<div class="modal-body">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="n-chk">
-													<label class="form-label">일정 제목</label> 
-													<select id="event-title" name="title" class="form-control">
-													
-														<option value="연차">일정</option>
-														<option value="연차">연차</option>
-														<option value="출장">출장</option>
-														<option value="회의">회의</option>
-													</select>
-													<!-- name 속성 추가 -->
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-12 ">
-											<div class="n-chk">
-												<label class="form-label">시작 날짜</label> 
-												<input id="event-start-date" name="startTime" type="datetime-local" class="form-control">
-											</div>
-										</div>
-
-										<div class="col-md-12 ">
-											<div class="n-chk">
-												<label class="form-label">종료 날짜</label> 
-												<input id="event-end-date" name="endTime" type="datetime-local" class="form-control">
-											</div>
-										</div>
-
-										<div class="col-md-12">
-											<div class="n-chk">
-												<label class="form-label">일정 종류</label> 
-												<select id="kind" name="kind" class="form-control">
-													<c:forEach items="${kindList}" var="k">
-														<option value="${k.commonCode}">${k.descript}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-12">
-												<div class="n-chk">
-													<label class="form-label">일정 내용</label> 
-													<input id="text" name="content" type="text" class="form-control">
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="modal-footer">
-										<button class="btn btn-primary btn-add-event">일정 추가</button>
-										<button class="btn" id="deleteEventBtn">삭제</button>
-										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
-										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
-									</div>
-								</form>
+					<!-- addSchedule 모달창 :: 일정 등록 -->
+		<div class="modal fade" id="addSchedule" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+				<!-- 모달 제목 -->
+				<div class="modal-header">
+					<h5 class="modal-title">신규 사내일정 추가</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+				<!-- 모달 일정 등록폼 -->
+				<form id="addScheduleForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
+					<div class="modal-body">
+						<div class="row mb-5">
+							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="datetime-local" class="form-control" id="startDate" name="startDate">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="datetime-local" class="form-control" id="endDate" name="endDate">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="text" class="form-control" id="title" name="title">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
+							<div class="col-sm-8 scheduleModalDiv">
+							<label for="meetingRadio">
+								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 개인
+							</label>&nbsp;&nbsp;&nbsp;
+							<label for="festivalRadio">
+								<input class="form-check-input" type="radio" name="type" value="2" id="festivalRadio"> 팀
+							</label>&nbsp;&nbsp;&nbsp;
+							<div class="col-sm-8 scheduleModalDiv" id="teamMembersDiv" style="display: none;">
+							    <select class="form-control" id="teamMembers" name="teamMembers" multiple>
+							        <option value="member1">팀원 1</option>
+							        <option value="member2">팀원 2</option>
+							        <option value="member3">팀원 3</option>
+							        <option value="member4">팀원 4</option>
+							    </select>
+							    <small>Ctrl 또는 Shift 키를 사용하여 여러 명 선택 가능합니다.</small>
+							</div>
+							<!-- <label for="inspectionRadio">
+								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
+							</label>  -->
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
+							<div class="col-sm-8">
+								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
+								(<span id="chatHelper">0</span>/100)
 							</div>
 						</div>
 					</div>
-					<div class="modal fade" id="updatemodal" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel"> 일정추가 </h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<form id="addSchedule" method="post"
-									action="${pageContext.request.contextPath}/updateSchedule">
-									<div class="modal-body">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="n-chk">
-													<label class="form-label">일정 제목</label> 
-													<select id="event-title" name="title" class="form-control">
-													
-														<option value="연차">일정</option>
-														<option value="연차">연차</option>
-														<option value="출장">출장</option>
-														<option value="회의">회의</option>
-													</select>
-													<!-- name 속성 추가 -->
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-12 ">
-											<div class="n-chk">
-												<label class="form-label">시작 날짜</label> 
-												<input id="event-start-date" name="startTime"type="datetime-local" class="form-control" value="${scheduleOne.startTime}">
-												<!-- name 속성 추가 -->
-											</div>
-										</div>
-
-										<div class="col-md-12 ">
-											<div class="n-chk">
-												<label class="form-label">종료 날짜</label> 
-												<input id="event-end-date" name="endTime" type="datetime-local" class="form-control" value="${scheduleOne.endTime}">
-												<!-- name 속성 추가 -->
-											</div>
-										</div>
-
-										<div class="col-md-12">
-											<div class="n-chk">
-												<label class="form-label">일정 종류</label> 
-												<select id="kind" name="kind" class="form-control">
-													<c:forEach items="${kindList}" var="k">
-														<option value="${k.commonCode}">${k.descript}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-12">
-												<div class="n-chk">
-													<label class="form-label">일정 내용</label> 
-													<input id="text" name="content" type="text" class="form-control" value="${scheduleOne.content}">
-													<!-- name 속성 추가 -->
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="modal-footer">
-										<button class="btn btn-primary btn-add-event">일정 추가</button>
-										<button class="btn" id="deleteEventBtn">삭제</button>
-										<button type="button" class="btn" data-bs-dismiss="modal" id="closeModalBtn">닫기</button>
-										<button class="btn btn-success btn-update-event" data-fc-event-public-id="">Update</button>
-									</div>
-								</form>
-							</div>
-						</div>
+					
+					<!-- 모달 일정 취소/등록버튼 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button id="addScheduleBtn" type="submit" class="btn btn-primary">Save</button>
 					</div>
-
-
+				</form>
+			</div></div>
+		</div>
+				<!-- End addSchedule Modal-->
 
 
 					<!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
             <!--  END FOOTER  -->
-       		 
+       		<!-- 캘린더API  -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let calendarEl = document.getElementById('calendar');
+
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+            left: 'prevYear,prev,next,nextYear today',
+            center: 'title',
+            right: 'dayGridMonth addEventButton',
+        },
+        customButtons: {
+            addEventButton: {
+                text: "신규일정추가",
+                click: function() {
+                    $("#addSchedule").modal("show");
+                }
+            }
+        },
+        locale: 'ko',
+        selectable: true,
+        dayMaxEvents: true,
+        events: function(response, successCallback, failureCallback) { // 콜백 함수 사용
+            $.ajax({
+                url: "/schedule/calendarList",
+                method: "GET"
+            })
+            .done((response) => {
+                console.log(response);
+                let events = response.map(schedule => ({
+                    title: schedule.title,
+                    start: schedule.startTime,
+                    end: schedule.endTime,
+                    backgroundColor: getScheduleColor(schedule.kind),
+                    borderColor: getScheduleColor(schedule.kind),
+                    url: `/calendarDetail/\${schedule.schNo}`,
+                    allDay: false
+                }));
+                successCallback(events);
+            })
+            .fail(() => {
+                failureCallback();
+            });
+        }
+    });
+
+    calendar.render();
+
+    function getScheduleColor(kind) {
+        switch (kind) {
+            case 'G01': return '#81bbb2'; // 일정
+            case 'G02': return '#af92e2'; // 연차
+            case 'G03': return '#ffbb57'; // 출장
+            case 'G04': return '#82f029'; // 회의
+            case 'G05': return '#9aff47'; // 반차
+            default: return '#ffffff';
+        }
+    }
+    
+    
+    
+    const teamRadio = document.getElementById('festivalRadio');
+    const personalRadio = document.getElementById('meetingRadio');
+    const teamMembersDiv = document.getElementById('teamMembersDiv');
+
+    // 라디오 버튼 변경 이벤트 감지
+    document.querySelectorAll('input[name="type"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (teamRadio.checked) {
+                teamMembersDiv.style.display = 'block'; // 팀원 선택 표시
+            } else if (personalRadio.checked) {
+                teamMembersDiv.style.display = 'none'; // 팀원 선택 숨김
+            }
+        });
+    });
+    
+});
+
+
+</script> 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
