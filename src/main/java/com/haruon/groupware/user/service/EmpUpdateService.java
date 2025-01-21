@@ -78,8 +78,8 @@ public class EmpUpdateService {
 	}
 	
 	// 직원 퇴사
-	public Integer updateLeaveDate(RequestEmpUpdateInfo updateInfo) {
-		return empUpdateMapper.updateLeaveDate(updateInfo);
+	public Integer updateExitDate(RequestEmpUpdateInfo updateInfo) {
+		return empUpdateMapper.updateExitDate(updateInfo);
 	}
 	
 	// 메신저 접속/상태변경 시 사원의 접속정보 변경
@@ -90,7 +90,7 @@ public class EmpUpdateService {
 			case "온라인" -> "J01";
 			case "오프라인" -> "J02";
 			case "자리비움" -> "J03";
-			case "방해금지" -> "J04";
+			case "회의중" -> "J04";
 			default -> "J02";	// 잘못된 값 입력시 상태를 로그아웃 처리
 		};
 		

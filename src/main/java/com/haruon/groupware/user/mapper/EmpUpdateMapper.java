@@ -23,7 +23,7 @@ public interface EmpUpdateMapper {
 	Integer updateEmpBySystem(RequestEmpUpdateInfo updateInfo);
 	
 	// 직원 퇴사
-	Integer updateLeaveDate(RequestEmpUpdateInfo updateInfo);
+	Integer updateExitDate(RequestEmpUpdateInfo updateInfo);
 
 	// 모든 직원의 연가 수 업데이트 (매년 또는 사원 등록시)
 	Integer updateLeaveByAnnualorJoin(EmpEntity emp);

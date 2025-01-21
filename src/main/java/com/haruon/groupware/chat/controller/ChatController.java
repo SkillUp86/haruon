@@ -24,14 +24,15 @@ public class ChatController {
 	
 	@GetMapping("/chat/main")
 	public String chatMain() {
-		return "chat/empList";
+		return "chat/chatMain";
 	}
 	
+	// 사원이 직접 상태 변경
 	@GetMapping("/chat/connection/update")
 	public String connectionUpdate(Authentication auth, @RequestParam String status) {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		empUpdateService.changeConnectionInfo(userDetails.getEmpNo(), status);
-		log.debug("로그인상태 변경 - online");
+		log.debug("로그인상태 변경 - {}", status);
 		return "redirect:/chat/main";
 	}
 	

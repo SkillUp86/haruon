@@ -12,5 +12,5 @@ public class RequestEmpUpdateInfo {
 	private String phone;
 	private String extNum;
 	private String password;
-	private String leaveDate;
+	private String exitDate;
 }

@@ -28,7 +28,7 @@ public class EmpEntity {
 	private Integer usedLeave;
 	private String pwUpdate;
 	private String joinDate;
-	private String leaveDate;
+	private String exitDate;
 	private String dname;
 	private String connectionStatus;
 

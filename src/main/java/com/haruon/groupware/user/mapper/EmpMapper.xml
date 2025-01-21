@@ -21,7 +21,7 @@
 			 , e.gender gender
 			 , e.birth birth
 			 , e.join_date joinDate
-			 , e.leave_date leaveDate
+			 , e.exit_date exitDate
 			 , f.file_name fileName
 			 , f.ext ext
 			 , sf.file_name signfileName
@@ -91,7 +91,7 @@
 	INNER JOIN common_code cl ON cl.common_code = e.location AND cl.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_location')
 	INNER JOIN common_code cc ON cc.common_code = e.connection_status AND cc.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_connection_status')
 	LEFT outer JOIN emp_file ef ON e.emp_no = ef.emp_no
-	     WHERE e.leave_date IS NULL 
+	     WHERE e.exit_date IS NULL 
 	     ORDER BY 1,2,(case when cl.descript = "부서장" then 1
 					   when cl.descript = "팀장" then 2
 					   ELSE 3 END),4
@@ -104,7 +104,7 @@
 			 , location     , join_date
 			 , total_leave  , used_leave
 		  FROM emp 
-		 WHERE leave_date IS NULL
+		 WHERE exit_date IS NULL
 	</select>
 	
 	
@@ -135,7 +135,7 @@
 		   FROM emp e
 	 INNER JOIN dept d
 			 ON e.dep_no = d.dep_no
-		WHERE e.leave_date IS NULL
+		WHERE e.exit_date IS NULL
 	</select>
 	
 

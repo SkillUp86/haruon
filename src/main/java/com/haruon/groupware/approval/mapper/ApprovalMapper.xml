@@ -119,7 +119,7 @@
 		  	   on e.location = c.common_code
 		 where e.dep_no = #{deptNo}
 	  	       and e.emp_no not in(#{empNo})
-	  	       and e.leave_date is null
+	  	       and e.exit_date is null
 	</select>
 	
 	<select id="findByFranchise" resultType="com.haruon.groupware.approval.dto.ResponseFranchise">

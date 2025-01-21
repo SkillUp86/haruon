@@ -81,8 +81,8 @@ public class EmpUpdateController {
 	public String leave(@RequestParam Integer empNo, @RequestParam String leaveDate) {
 		RequestEmpUpdateInfo updateInfo = new RequestEmpUpdateInfo();
 		updateInfo.setEmpNo(empNo);
-		updateInfo.setLeaveDate(leaveDate);
-		empUpdateService.updateLeaveDate(updateInfo);
+		updateInfo.setExitDate(leaveDate);
+		empUpdateService.updateExitDate(updateInfo);
 		return "redirect:/employees/modify?empNo="+empNo;
 	}
 }

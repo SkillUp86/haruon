@@ -60,9 +60,9 @@
 	</update>
 	
 	<!-- 직원 퇴사 -->
-	<update id="updateLeaveDate" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
+	<update id="updateExitDate" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
 		UPDATE emp
-		SET leave_date = #{leaveDate}
+		SET exit_date = #{exitDate}
 		WHERE emp_no = #{empNo}
 	</update>
 	
