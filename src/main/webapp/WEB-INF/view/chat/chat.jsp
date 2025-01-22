@@ -7,21 +7,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Chat Application | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <title>HARUON 메신저</title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="../src/assets/css/light/apps/chat.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/apps/chat.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->
     <style>
 	    #content-sub {
@@ -56,22 +53,28 @@
                             <div class="chat-box-inner">
                                 <div class="chat-meta-user">
                                     <div class="current-chat-user-name">
-                                        <span>
-                                            <img src="../src/assets/img/90x90.jpg" alt="dynamic-image">
-                                            <span>Sean Freeman</span>
+                                    	<!-- 상대방 정보 -->
+                                        <span id="particiant">
+
                                         </span>
                                     </div>
 
-                                    <div class="chat-action-btn align-self-center me-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone  phone-call-screen"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video video-call-screen"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                                    </div>
                                 </div>
                                 <div class="chat-conversation-box">
                                     <div id="chat-conversation-box-scroll" class="chat-conversation-box-scroll">
-                                        <div class="chat active-chat" data-chat="person">
+                                        <div id="conversation" class="chat active-chat person">
+                                        <!--  대화 동적 처리 시작 -->
                                             <div class="conversation-start">
-                                                <span>Today, 6:48 AM</span>
+                                                <span>어제</span>
+                                            </div>
+                                            <div class="bubble you">
+                                                Hello,
+                                            </div>
+                                            <div class="bubble me">
+                                                It's me.
+                                            </div>
+                                            <div class="conversation-start">
+                                                <span>오늘</span>
                                             </div>
                                             <div class="bubble you">
                                                 Hello,
@@ -79,6 +82,7 @@
                                             <div class="bubble you">
                                                 It's me.
                                             </div>
+                                            <!--  대화 동적 처리 끝 -->
                                         </div>
                                         
                                     </div>
@@ -118,6 +122,49 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../src/assets/js/apps/chat.js"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- ajax 호출 채팅 상대방 정보 / 이전 대화내역 -->
+    <script>
+   		showParticiant();
+    	
+    	function showParticiant() {
+    		$.ajax({
+    			url: '/chat/room/' + ${roomId} + '/particiant',
+    			method: 'GET',
+    		}).done(function(result) {
+    			let conn = result.connectionStatus;
+    			conn = (conn === "J01")? `<span class="badge badge-light-success ms-2">온라인</span>`
+   	            	   : (conn === "J02")? `<span class="badge badge-light-secondary ms-2">오프라인</span>` 
+  		    	       : (conn === "J03")? `<span class="badge badge-light-info ms-2">자리비움</span>`
+  		    	       : (conn === "J04")? `<span class="badge badge-light-warning ms-2">회의중</span>`
+  		    	   							: '';
+    			
+    			let profile = result.fileName + "." + result.ext;
+    		  	profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+    		  	
+    		  	let particiantHTML = ''
+    		  	particiantHTML += ` <img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" alt="dynamic-image">
+					                <span>` + result.ename + conn + `</span>
+					            	`;
+    		  	$("#particiant").append(particiantHTML);
+    		}).fail(function() {
+    			console.log('showParticiant ajax 호출 실패');
+    		});
+    	}
+    	
+    	function showConversation() {
+    		$.ajax({
+    			url: '/chat/room/' + ${roomId} + '/conversation',
+    			method: 'GET',
+    		}).done(function(result) {
+    			
+    		}).fail(function() {
+    			console.log('showParticiant ajax 호출 실패');
+    		});
+    	}
+    	
+    
+    
+    </script>
     
 </body>
 </html>

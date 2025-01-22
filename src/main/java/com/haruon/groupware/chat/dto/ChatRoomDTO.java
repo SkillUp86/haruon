@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ChatRoomDTO {
 	private Integer empNo;	
-	private Integer ename;	
+	private String ename;	
 	private String connectionStatus;
 	private String dname;
 	private String fileName;

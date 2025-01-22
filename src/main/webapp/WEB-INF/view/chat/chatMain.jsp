@@ -66,15 +66,16 @@
       					</div>
       					<div>
 	    					<div class="btn-group" role="group">
-						    	<span class="badge badge-success ms-2" id="btndefault" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    	<span id="currentStatusColor" id="btndefault" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    		<span id="connectionStatus"></span>
 							    	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
 						    	</span>
 							    <div class="dropdown-menu" aria-labelledby="btndefault">
-							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=온라인" class="dropdown-item"><span class="badge badge-light-success w-100">온라인</span></a>
-							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=오프라인" class="dropdown-item"><span class="badge badge-light-secondary w-100">오프라인</span></a>
-							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=자리비움" class="dropdown-item"><span class="badge badge-light-info w-100">자리비움</span></a>
-							        <a href="${pageContext.request.contextPath}/chat/connection/update?status=회의중" class="dropdown-item"><span class="badge badge-light-warning w-100">회의중</span></a>
+							    	<!-- J01(온라인) J02(오프라인) J03(자리비움) J04(방해금지)  -->
+							        <button id="switchConnectionJ01" type="button" class="dropdown-item mb-1"><span class="badge badge-light-success w-100">온라인</span></button>
+							        <button id="switchConnectionJ02" type="button" class="dropdown-item mb-1"><span class="badge badge-light-secondary w-100">오프라인</span></button>
+							        <button id="switchConnectionJ03" type="button" class="dropdown-item mb-1"><span class="badge badge-light-info w-100">자리비움</span></button>
+							        <button id="switchConnectionJ04" type="button" class="dropdown-item mb-1"><span class="badge badge-light-warning w-100">회의중</span></button>
 							    </div>
 							</div>
       					</div>
@@ -104,26 +105,11 @@
 				        <div class="tab-content" id="pills-tabContent">
 				        	<!-- 채팅방 리스트 시작 -->
 	                        <div class="tab-pane fade show active" id="pills-chat-icon" role="tabpanel" aria-labelledby="pills-contact-icon-tab" tabindex="0">
-	                           	<div id="chatList" class="scrollbar item-content mb-2 ms-0 d-flex justify-content-between align-items-center rounded p-3 bg-white" style="width:500px; max-height: 550px; overflow-y: auto;">
-	                           		<div class="user-meta-info ms-2">
-	                           			<div class="d-flex">
-		                           			<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" style="width:72px; height:72px;" alt="avatar" >
-		                           			<div class="ms-2">
-			                           			<p>
-			                           				이름(부서)
-			                           				<span class="badge badge-light-success ms-2">Login</span>
-			                           			</p>
-	                           					<div>(시간)내용</div>
-	                           				</div>
-	            						</div>  
-			    	    	        </div>
-			    	    	        <div class="action-btn">
-			    	    	            <a onclick="window.open('${pageContext.request.contextPath}/chat?id=1', '_blank', 'width=410, height=500', 'left=410')" 
-			    	    	             type="button" class="btn btn-outline-primary btn-hover mb-1">채팅</a>
-			    	    	             <br>
-			    	    	             <a onclick="window.open('${pageContext.request.contextPath}/chat?id=1', '_blank', 'width=410, height=500', 'left=410')" 
-			    	    	             type="button" class="btn btn-outline-danger btn-hover">삭제</a>
-			    	    	        </div>
+	                           	<div id="chatRoomList" class="scrollbar" style="width:500px; max-height: 550px; overflow-y: auto;">
+	                           		<!-- 동적처리 부분 시작 -->
+	                           		
+	                           		
+									<!-- 동적처리 부분 종료 -->
 	                           	</div>
 	                        </div>
 	                        <!-- 채팅방 리스트 종료 -->
@@ -173,59 +159,244 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="../src/assets/js/apps/contact.js"></script>
-    <!-- ajax 호출 -->
-    <script>
-   		$.ajax({
-    	   url: '/chat/employees',
-    	   method: 'GET',
-    	}).done(function(result) {
-			let empListHTML = "";
+	<!-- document 초기화시 로드 -->
+	<script>
+		$(document).ready(function() {
+			showEmployeesList();
+			showChatRoomList();
+		});
+	</script>    
+	
+	<script>
+		var switchBtn = {
+			switchConnectionJ01 : '/chat/connection/update/J01',
+			switchConnectionJ02 : '/chat/connection/update/J02',
+			switchConnectionJ03 : '/chat/connection/update/J03',
+			switchConnectionJ04 : '/chat/connection/update/J04',
+		}	
 			
-    	   $(result).each(function(index, item) {   
-     		  let conn = item.connectionStatus; 
-    		  let profile = item.fileName + "." + item.ext;
-    		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
-    		  
-    		  if(item.empNo === ${principal.empNo}) {
-    			  let userProfileHtml = `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:96px; height:96px;" alt="avatar" >`
-    			  $('#userProfile').append(userProfileHtml);
-    			  $("#connectionStatus").append(conn);
-    			  return true;
-    		  }
-    		  
-    	      empListHTML += `<div class="items">
-			    	    	    <div class="item-content">
-			    	    	        <div class="user-profile align-items-center">
-			    	    	 `;
-			    	    	 
-              empListHTML += `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:72px; height:72px;" alt="avatar" >`
-			    	    	            
-         	  empListHTML += `<div class="user-meta-info ms-2">
-	                			<p class="user-name">` + item.ename;
-   	    	 				 ;  	    	          
-			    	    	                
-			  empListHTML +=  (conn === "온라인")? `<span class="badge badge-light-success ms-2">Login</span>` 
-   		    	            : (conn === "오프라인")? `<span class="badge badge-light-secondary ms-2">Logout</span>` 
-   		    	            : (conn === "자리비움")? `<span class="badge badge-light-info ms-2">Away</span>` 
-   		    	            : `<span class="badge badge-light-warning ms-2">Busy</span>`
-   	    	               	+ `</p>`;
-			  empListHTML += ` 			<p class="user-dept">` + item.dname + '(' + item.location + ')' + `</p>
-	            					</div>  
-			 					</div>
-			    	    	        <div class="action-btn">
-			    	    	            <a onclick="window.open('${pageContext.request.contextPath}/chat?id=` + item.empNo + `', '_blank', 'width=410, height=500', 'left=410')" 
-			    	    	             type="button" class="btn btn-outline-primary btn-hover">채팅</a>
-			    	    	        </div>
-			    	    	    </div>
-			    	    	</div>
-          					`;
-    	   });
-
-    	   $("#empList").append(empListHTML);
-    	}).fail(function() {
-    	   console.log("ajax 호출 실패");
-    	});
-
+		for(let i in switchBtn) {
+			$("#" + i).click(function() {
+				$.ajax({
+					url: switchBtn[i],
+					method: 'GET',
+				}).done(function() {
+					showSwitchStatusResult();	
+				}).fail(function() {
+					console.log("switchConnectionStatus - 실패");
+				});
+				
+			});
+		}
+		
+		// 상태 변경 시 내 상태 변경 
+    	function showSwitchStatusResult() {
+    		$.ajax({
+ 	    	   url: '/chat/employees',
+ 	    	   method: 'GET',
+ 	    	}).done(function(result) {
+ 	    		$("#connectionStatus").empty();
+ 	    		$("#currentStatusColor").removeClass();
+				let conn = '';
+ 	    		$(result).each(function(index, item) {   
+ 		    		  if(item.empNo === ${principal.empNo}) {
+ 		    			  conn = item.connectionStatus; 
+ 		    			  return false;
+ 		    		  }
+				 });
+ 	    		
+ 	    		let connStatus = {
+ 	    			"J01" : '온라인',
+ 	    			"J02" : '오프라인',
+ 	    			"J03" : '자리비움',
+ 	    			"J04" : '회의중',
+ 	 	    	}
+ 	    		
+ 	    		let currentStatusColor = {
+ 	    			"J01" : 'badge ms-2 badge-light-success',
+ 	    			"J02" : 'badge ms-2 badge-light-secondary',
+ 	    			"J03" : 'badge ms-2 badge-light-info',
+ 	    			"J04" : 'badge ms-2 badge-light-warning',
+ 	    		}
+ 	    		
+ 	    		let currentStatusColorClass ='';
+ 	    		
+ 	    		for(var i in currentStatusColor) {
+ 	    			if(conn === i) {
+ 	    				currentStatusColorClass = currentStatusColor[i];
+ 	    				break;
+ 	    			}
+ 	    		}
+ 	    		
+ 	    		for(var i in connStatus) {
+ 	    			if(conn === i) {
+ 	    				conn = connStatus[i];
+ 	    				break;
+ 	    			}
+ 	    		}
+ 	    		
+ 	    		$("#currentStatusColor").addClass(currentStatusColorClass);
+ 	    		$("#connectionStatus").append(conn);
+ 	    	}).fail(function() {
+ 	    		console.log("showSwitchStatusResult 호출 실패");
+ 	    	})
+    	}
+	</script>
+    
+    <!-- ajax 호출 : 채팅방 리스트, 사원검색 리스트 -->
+    <script>
+    	// 로그인한 사원을 포함한 전직원의 리스트 출력
+    	function showEmployeesList() {
+	   		$.ajax({
+	    	   url: '/chat/employees',
+	    	   method: 'GET',
+	    	}).done(function(result) {
+				let empListHTML = "";
+				
+	    	   $(result).each(function(index, item) {   
+	     		  let conn = item.connectionStatus; 
+	    		  let profile = item.fileName + "." + item.ext;
+	    		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+	    		  
+	    		  if(item.empNo === ${principal.empNo}) {
+	    			  let userProfileHtml = `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:96px; height:96px;" alt="avatar" >`
+	    			  $('#userProfile').append(userProfileHtml);
+	    			  
+		   	    		let currentStatusColor = {
+		   	 	    			"J01" : 'badge ms-2 badge-light-success',
+		   	 	    			"J02" : 'badge ms-2 badge-light-secondary',
+		   	 	    			"J03" : 'badge ms-2 badge-light-info',
+		   	 	    			"J04" : 'badge ms-2 badge-light-warning',
+		   	 	    	}
+		   	    		
+		 	    		let connStatus = {
+		   	 	    			"J01" : '온라인',
+		   	 	    			"J02" : '오프라인',
+		   	 	    			"J03" : '자리비움',
+		   	 	    			"J04" : '회의중',
+	   	 	 	    	}
+		   	    		
+		   	    		let currentStatusColorClass ='';
+		 	    		
+		 	    		for(var i in currentStatusColor) {
+		 	    			if(conn === i) {
+		 	    				currentStatusColorClass = currentStatusColor[i];
+		 	    				break;
+		 	    			}
+		 	    		}
+		 	    		
+		 	    		for(var i in connStatus) {
+		 	    			if(conn === i) {
+		 	    				conn = connStatus[i];
+		 	    				break;
+		 	    			}
+		 	    		}
+		 	    		
+		 	    		$("#currentStatusColor").addClass(currentStatusColorClass);
+		 	    		$("#connectionStatus").append(conn);
+	    			  
+	    			  return true;
+	    		  }
+	    		  
+	    	      empListHTML += `<div class="items">
+				    	    	    <div class="item-content">
+				    	    	        <div class="user-profile align-items-center">
+				    	    	 `;
+				    	    	 
+	              empListHTML += `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:72px; height:72px;" alt="avatar" >`
+				    	    	            
+	         	  empListHTML += `<div class="user-meta-info ms-2">
+		                			<p class="user-name">` + item.ename;
+	   	    	 				 ;  	    	          
+				    	    	                
+				  empListHTML +=  (conn === "J01")? `<span class="badge badge-light-success ms-2">온라인</span>` 
+	   		    	            : (conn === "J02")? `<span class="badge badge-light-secondary ms-2">오프라인</span>` 
+	   		    	            : (conn === "J03")? `<span class="badge badge-light-info ms-2">자리비움</span>` 
+	   		    	            : (conn === "J04")? `<span class="badge badge-light-warning ms-2">회의중</span>`
+	   		    	            : ` `
+	   	    	               	+ `</p>`;
+				  empListHTML += ` 			<p class="user-dept">` + item.dname + '(' + item.location + ')' + `</p>
+		            					</div>  
+				 					</div>
+				    	    	        <div class="action-btn">
+				    	    	            <a onclick="window.open('${pageContext.request.contextPath}/chat?id=` + item.empNo + `', '_blank', 'width=410, height=500', 'left=410')" 
+				    	    	             type="button" class="btn btn-outline-primary btn-hover">채팅</a>
+				    	    	        </div>
+				    	    	    </div>
+				    	    	</div>
+	          					`;
+	    	   });
+	
+	    	   $("#empList").append(empListHTML);
+	    	}).fail(function() {
+	    	   console.log("ajax 호출 실패");
+	    	});
+    	}
+		
+    	// 로그인한 사원이 참가하고있는 채팅방 리스트 출력
+    	function showChatRoomList() {
+	   		$.ajax({
+	     	   url: '/chat/rooms/' + ${principal.empNo},
+	     	   method: 'GET',
+	     	}).done(function(result) {
+	     		
+	 			let roomListHTML = "";
+	 			
+	     	   $(result).each(function(index, item) {   
+	      		  let conn = item.connectionStatus; 
+	     		  let profile = item.fileName + "." + item.ext;
+	     		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+	     		  
+	     		  let now = new Date();
+	     		  now.setHours(0,0,0,0);
+	     		  let sendTime = item.sendTime;
+	     		  let sendDate = new Date(sendTime.substr(0,4), sendTime.substr(5,2) - 1, sendTime.substr(8,2));
+	     		  // 오늘 날짜라면 시간만 나오게 하고, 올해대화가 아니라면 년월일로표시
+	     		  sendTime = (now.toDateString() === sendDate.toDateString())? 
+	     				  			((sendTime.substr(11,2) <= 12) ? 'AM' + sendTime.substr(11,5) : 'PM' + sendTime.substr(11,5))
+	     				  				: (sendDate.getFullYear() === now.getFullYear()? sendTime.substr(5,2)+'월'+sendTime.substr(8,2)+'일' : sendTime.substr(0,10));
+	     		  
+	     		  
+	 			    	    	                
+	     		  roomListHTML +=
+	     			  ` <div class="item-content mb-2 ms-0 d-flex justify-content-between align-items-center rounded p-3 bg-white card">
+		             		<div class="user-meta-info ms-2">
+			         			<div class="d-flex">
+			             			<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:96px; height:96px;" alt="avatar" >
+			             			<div class="ms-2" style="width:250px;">
+			                 			<span>` + item.ename;
+			                 				
+	              roomListHTML +=  (conn === "J01")? `<span class="badge badge-light-success ms-2">온라인</span>`
+		    	            	 : (conn === "J02")? `<span class="badge badge-light-secondary ms-2">오프라인</span>` 
+		   		    	         : (conn === "J03")? `<span class="badge badge-light-info ms-2">자리비움</span>`
+		   		    	         : (conn === "J04")? `<span class="badge badge-light-warning ms-2">회의중</span>`
+		   		    	         : ` `;
+		   		    	         
+	           	  roomListHTML +=		`</span>
+	           							<div class="d-flex justify-content-between">
+	           								<p style="font-color: #515365">(` + item.dname + `)</p>
+			         						<p>` + sendTime + `</p>
+			         					</div>	
+			         					<span>` + item.message + `</span>
+			         				</div>
+						  	        <div class="action-btn ms-3 mt-2">
+						  	            <a onclick="window.open('${pageContext.request.contextPath}/chat/room?id=` + item.roomId + `', '_blank', 'width=410, height=500', 'left=410')" 
+						  	             type="button" class="btn btn-outline-primary btn-hover mb-1">채팅</a>
+						  	             <br>
+						  	             <a onclick="window.open('${pageContext.request.contextPath}/chat?id=1', '_blank', 'width=410, height=500', 'left=410')" 
+						  	             type="button" class="btn btn-outline-danger btn-hover">삭제</a>
+						  	        </div>
+								</div>  
+				  	        </div>
+						</div> `;
+	     			  
+	     	   });
+	
+	     	   $("#chatRoomList").append(roomListHTML);
+	     	}).fail(function() {
+	     	   console.log("chatList - ajax 호출 실패");
+	     	});
+    	}
     </script>
 </body>
 </html>

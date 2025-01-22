@@ -127,10 +127,7 @@
 			        AND common_code = e.location) location
 			  ,	e.dep_no depNo
 			  ,	d.dname dname
-			  , (SELECT descript from common_code
-				  WHERE parent_code = (SELECT common_code FROM common_code
-					   					WHERE descript = 'emp_connection_status')
-			        AND common_code = e.connection_status) connectionStatus
+			  , e.connection_status connectionStatus
 			  , e.ext_num extNum
 			  , e.phone phone
 		   FROM emp e
