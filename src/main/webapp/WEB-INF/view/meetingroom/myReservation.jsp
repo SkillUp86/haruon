@@ -83,7 +83,7 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">회의실</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">예약</li>
+                                                <li class="breadcrumb-item active" aria-current="page">내 예약 리스트</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -99,7 +99,7 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12">
-	                            <h2>회의실 예약</h2>
+	                            <h2>내 예약 리스트</h2>
                
                					<div style="text-align: right;">
 	                                <a class="btn btn-secondary" id="meetingroomList" href="${pageContext.request.contextPath}/addMeetingroom">
@@ -112,16 +112,18 @@
                                     <table id=noticeList class="zero-config table dt-table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                            	<th>회의실 이미지</th>
-                                                <th>회의실이름</th>
-                                                <th>회의실번호</th>
-                                                <th>수용인원</th>
-                                                <th>예약상태</th>
-                                                <th></th>
+                                            	<th>호실</th>
+                                                <th>예약사용일</th>
+                                                <th>예약등록일</th>
+                                                <th>예약유형</th>
+                                                <th>참가자</th>
+                                                <th>삭제</th>
+                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <c:forEach var="m" items="${meetingroomList}">
+                                           <c:forEach var="m" items="${myReservationList}">
 											    <tr>
 											        <td>
 														<img src="${pageContext.request.contextPath}/upload/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
@@ -140,15 +142,12 @@
 											        <td>${m.availYn}</td>
 											        <td>
 											            <div class="btn-group" role="group" aria-label="Action Buttons">
-											                 <!-- 예약 버튼 -->
-											                <form action="${pageContext.request.contextPath}/addReservation/${m.meeNo}" method="get" style="display: inline;">
-															<button class="btn btn-primary btn-sm" type="submit">예약하기</button>
-															</form>
-															<!-- 삭제 버튼 -->
+											                <!-- 삭제 버튼 -->
 															<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-															<button class="btn btn-danger btn-sm" type="submit">삭제하기</button>
+															<button class="btn btn-danger btn-sm" type="submit">예약취소</button>
 															</form>
-															
+											
+											                <!-- 예약 버튼 -->
 											             
 											            </div>
 											        </td>
@@ -208,7 +207,10 @@
             "lengthMenu": [1, 3, 5, 10],
             "pageLength": 10 
         });
+    	
+   
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
+
 </body>
 </html>

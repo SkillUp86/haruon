@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
+import com.haruon.groupware.meetingroom.mapper.ReservationMapper;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.mapper.ScheduleMapper;
 
@@ -19,6 +20,7 @@ public class ScheduleService {
 	
 	@Autowired ScheduleMapper scheduleMapper;
 	@Autowired CommonMapper commonMapper;
+	@Autowired ReservationMapper reservationMapper;
 	
 	public List<Schedules> schedulesList(){
 		CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
