@@ -19,7 +19,6 @@
         type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css"
         rel="stylesheet" type="text/css" />
-        <
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
@@ -162,12 +161,16 @@
 
 
     <script>
+    
+   	let table;
+   	function initializeDataTable(apiUrl) {
         $('#zero-config').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
                 "<'table-responsive'tr>" +
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
             "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>'
+                			 , "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 "sInfo": "문서함",
                 "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
                 "sSearchPlaceholder": "Search...",
@@ -182,62 +185,60 @@
             "stripeClasses": [],
             "lengthMenu": [7, 10, 20],
             "pageLength": 10,
-            "order": [[0, 'desc']]
-            
-        });
-        function tabData(tabType) {
-            let empNo =  ${user.empNo}; // 로그인한 사용자 번호
-
-            $.ajax({
-                method: 'GET',
-                url: (tabType === 'draft') ? `/drafts/` + empNo : `/approvals/` + empNo,
-                success: function (data) {
-                    let table = $('#zero-config').DataTable();
-                    table.clear();
-                    data.forEach(item => {
-                        let rowData = [
-                            item.draNo,
-                            item.draftType,
-                            item.title,
-                            item.createDate,
-                            item.approvalState,
-                            (function () {
-                                let url = "";
-                                if (item.type === "C01") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`
-                                } else if (item.type === "C02") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else if (item.type === "C03") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else if (item.type === "C04") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else {
-                                    url = "/error/404";
-                                }
-                                return `<a class="btn btn-primary" href="\${url}">확인</a>`;
-                            })()
-                        ];
-                        table.row.add(rowData);
-                    });
-                    table.draw();
-                },
-                error: function (xhr, status, error) {
+            "order": [[0, 'desc']],
+            "ajax": {
+                "url": apiUrl,
+                "type": "GET", // REST API를 위한 GET 요청
+                "dataSrc": "data", // API의 응답 데이터 경로
+                "error": function (xhr, status, error) {
                     console.error(`Error: ${status}, ${error}`);
                 }
-            });
+            },
+            "columns": [
+                { "data": "draNo" },
+                { "data": "draftType" },
+                { "data": "title" },
+                { "data": "createDate" },
+                { "data": "approvalState" },
+                { "data": "action" }
+            ],
+            
+        });
+   	}
+   	function loadTabData(tabType) {
+        let apiUrl;
+
+        // 탭 타입에 따라 API 엔드포인트 설정
+        if (tabType === 'draft') {
+            apiUrl = `/api/drafts/\${user.empNo}`; 
+        } else if (tabType === 'approval') {
+            apiUrl = `/api/approvals/\empNo=${user.empNo}`; 
+        } else {
+            console.error('Invalid tabType');
+            return;
         }
 
-        $('#approval-tab').click(function () {
-            tabData('approval')
-        });
+        // 기존 테이블 삭제 후 다시 초기화
+        if (table) {
+            table.destroy(); // 기존 DataTable 인스턴스 제거
+            $('#zero-config').empty(); // 테이블 HTML 초기화
+        }
+        initializeDataTable(apiUrl);
+    }
 
-        $('#draft-tab').click(function () {
-            tabData('draft')
-        });
+    // 탭 이벤트 바인딩
+    $('#draft-tab').click(function () {
+        loadTabData('draft');
+    });
 
-        $(document).ready(function () {
-            tabData('draft');
-        });
+    $('#approval-tab').click(function () {
+        loadTabData('approval');
+    });
+
+    // 초기 탭 데이터 로드
+    $(document).ready(function () {
+        loadTabData('draft'); // 기본값: 내가 작성한 문서
+    });
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->
 </body>

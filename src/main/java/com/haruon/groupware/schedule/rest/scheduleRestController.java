@@ -12,11 +12,11 @@ import com.haruon.groupware.schedule.service.ScheduleService;
 @RestController
 public class scheduleRestController {
 
-	 @Autowired
-	    private ScheduleService scheduleService;
+	@Autowired
+	private ScheduleService scheduleService;
 
-	    @GetMapping("/schedule/calendarList")
-	    public List<Schedules> getCalendarList() {
-	        return scheduleService.schedulesList();
-	    }
+	@GetMapping("/schedule/calendarList")
+	public List<Schedules> getCalendarList() {
+		return scheduleService.schedulesList();
+	}
 }

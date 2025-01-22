@@ -3,9 +3,11 @@ package com.haruon.groupware.schedule.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
 import com.haruon.groupware.schedule.entity.Schedules;
@@ -19,11 +21,14 @@ public class ScheduleService {
 	@Autowired CommonMapper commonMapper;
 	
 	public List<Schedules> schedulesList(){
+		CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = userDetails.getEmpNo();
 		return scheduleMapper.schedulesList();	
 	}
 	
-
+	
 	public int addSchedule(Schedules schedule) {
+		// attendance 도 함께 인설트
         return scheduleMapper.addSchedule(schedule);
     }
 		
@@ -32,6 +37,7 @@ public class ScheduleService {
 		
 	}
 	public Integer deleteSchedule(Integer schNo) {
+		// attendance 도 함께 삭제
         return scheduleMapper.deleteSchedule(schNo);  
     }
 	

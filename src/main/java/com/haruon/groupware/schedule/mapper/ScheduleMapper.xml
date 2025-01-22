@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.haruon.groupware.schedule.mapper.ScheduleMapper">
-	
+<mapper namespace="com.haruon.groupware.schedule.mapper.ScheduleMapper">
 	<select id="schedulesList" 
 			resultType="com.haruon.groupware.schedule.entity.Schedules">
 	SELECT
@@ -17,7 +15,8 @@
 		inner join common_code c on
 		s.kind = c.common_code
 	</select>
-
+	
+	<!-- schedule attendance랑 조인해서 emp 작성자 이름가져오기 -->
 	<select id="scheduleOne" resultType="com.haruon.groupware.schedule.entity.Schedules" parameterType="Integer">
 		SELECT
 			 sch_no schNo
