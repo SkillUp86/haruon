@@ -28,7 +28,7 @@ public class AttendanceSchedule {
 	@Autowired private EmpMapper empMapper;
 	
 	// 전날 전 직원 attendance 데이터 업데이트
-	@Scheduled(cron = "05 02 13 * * *")
+	@Scheduled(cron = "00 00 00 * * *")
 	public void schedulePreviousDayAttState() {
 		String yesterday = (LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1)).toString();
 		
