@@ -504,7 +504,7 @@
 
 		// 결재 라인 추가
 		function applyOn(type) {
-			let selectedEmp = $('input[name="employeeRadio"]:checked');  // 선택된 사원 찾기
+			let selectedEmp = $('input[name="employeecheckbox"]:checked');  // 선택된 사원 찾기
 			if (selectedEmp.length === 0) {
 				alert('사원을 선택해주세요.');
 				return;

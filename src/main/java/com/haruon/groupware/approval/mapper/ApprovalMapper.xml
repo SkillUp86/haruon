@@ -121,7 +121,7 @@
 	  	       and e.emp_no not in(#{empNo})
 	  	       and e.exit_date is null
 	</select>
-	
+		
 	<select id="findByFranchise" resultType="com.haruon.groupware.approval.dto.ResponseFranchise">
 		select
 			   fra_no fraNo

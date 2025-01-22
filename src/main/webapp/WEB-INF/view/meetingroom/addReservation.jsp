@@ -34,9 +34,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/light/apps/ecommerce-create.css">
     <!--  END CUSTOM STYLE FILE  -->
        
-    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>x
+    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
     
-    <!-- 페이지 제목 입력칸 -->
     <title>회의실 추가</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
@@ -148,12 +147,23 @@
                         <input type="datetime-local" class="form-control" id="endTime" name="endTime" required>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="reference" class="col-sm-2 col-form-label">참조</label>
-                    <div class="col-sm-10">
-                        <!-- 참조 입력 -->
-                        <input type="text" class="form-control" id="reference" name="reference" style="background: #fff;">
+
+                <div class="input-group mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text label-text">참조자</span>
+                        <input type="hidden" class="form-control" id="refNo" name="refNo" value="" required readonly="readonly">
+                        <input type="text" class="form-control" id="refName" name="refName" value="" placeholder="참조자 입력" required readonly>
                     </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
+                        참조자 선택
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
                 </div>
 
                 <div class="text-center mt-4">
@@ -165,6 +175,45 @@
     </div>
 </div>
 
+<!-- 참조자 선택 모달 -->
+<div class="modal fade " id="approvalModal" tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title">결재자 선택</h5>
+	            </div>
+	            <div class="modal-body container">
+	                <div class="row">
+					    <div class="col-3 border-end">
+					        <h6>부서 목록</h6>
+					        <div class="list-group">
+					            <c:forEach var="d" items="${deptList}">
+					                <button class="btn mb-1 dept" type="button" value="${d.depNo}">${d.dname}</button>
+					            </c:forEach>
+					        </div>
+					    </div>
+					    
+					    <div class="col-4 d-flex border-end">
+					        <div class="flex-grow-1">
+					            <h6>직원 목록</h6>
+					            <div class="list-group" id="employeeList">
+					            
+					            </div>
+					        </div>
+					    </div>
+					    </div>
+					</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-primary" id="btnInsertApprover" >선택</button>
+	                <button type="button" class="btn btn-light-dark" data-bs-dismiss="modal">
+	                    <i class="flaticon-cancel-12"></i> 취소
+	                </button>
+	            </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+    <!-- 결재자 모달END -->
 
                 <!-- 메인컨텐츠 END -->
             </div>
@@ -174,7 +223,6 @@
         </div>
         <!--  END CONTENT AREA  -->
 
-    </div>
     <!-- END MAIN CONTAINER -->
 
    <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -202,6 +250,72 @@
 
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
+<script>
+// 참조자 선택 후 선택된 사람들을 입력창에 표시
+$('.dept').click(function() {
+			let deptNo = $(this).val();
+			$.ajax({
+				url: '/reservation/depts/' + deptNo + '/employees',
+				method: "GET"
+			}).done(function(response) {
+				emp = response;
+				employeeList(emp);  // 직원 목록 표시
+			}).fail(function() {
+				alert('실패');
+			})
+		});
+		
+function employeeList(emp) {
+	let empList = $('#employeeList');
+	let empSubList = $('#employeeSubList');
+	empList.empty();
+	empSubList.empty();
 
+	if (emp && emp.length > 0) {
+		emp.forEach(function(item) {
+			//console.log(item)
+	
+			let selectEmpList = $(`
+						<li class="form-check">
+							<input type="checkbox" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+							<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
+						</li>
+						`);
+			
+			empSubList.append(selectEmpList.clone());
+			empList.append(selectEmpList.clone());
+		});
+	} 
+}
+
+$('#btnInsertApprover').on('click', function () {
+    let selectedRefs = [];
+    let selectedRefIds = [];
+
+    // 선택된 체크박스 값 가져오기
+    $('.form-check-input:checked').each(function () {
+        let refName = $(this).next('label').text().trim();
+        let refId = $(this).val();
+
+        selectedRefs.push(refName); // 이름 추가
+        selectedRefIds.push(refId); // ID 추가
+    });
+
+    if (selectedRefs.length === 0) {
+        alert('참조자를 선택해주세요.');
+        return; // 선택되지 않은 경우 종료
+    }
+
+    // 선택된 참조자 정보를 입력 필드에 설정
+    $('#refName').val(selectedRefs.join(', '));
+    $('#refNo').val(selectedRefIds.join(', '));
+
+    // 모달 닫기	
+    $('#approvalModal').modal('hide');
+});
+
+
+
+</script>
 </body>
 </html>

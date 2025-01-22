@@ -12,8 +12,6 @@ import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.auth.CustomUserDetails;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 public class ApprovalRestController {
 	

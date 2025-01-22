@@ -101,7 +101,7 @@ public class MeetingRoomController {
 	     } catch (Exception e) {
 	         log.error("회의실 수정 중 오류 발생", e);
 	         redirectAttributes.addFlashAttribute("error", "회의실 수정 중 오류가 발생했습니다.");
-	         return "redirect:/meetingroom/modifyMeetingroom/" + meetingRoom.getMeeNo();
+	         return "redirect:/meetingroom/updateMeetingroom/" + meetingRoom.getMeeNo();
 	     }
 	 }
 	}
