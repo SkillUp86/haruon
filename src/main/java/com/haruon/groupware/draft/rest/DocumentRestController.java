@@ -1,14 +1,19 @@
 package com.haruon.groupware.draft.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.draft.dto.response.ResponseDraft;
 import com.haruon.groupware.draft.dto.response.ResponseReferencesList;
 import com.haruon.groupware.draft.service.DeleteService;
@@ -40,17 +45,36 @@ public class DocumentRestController {
 	}
 	
 	// 기안한 문서
-	@GetMapping("/drafts/{empNo}")
-	public ResponseEntity<List<ResponseDraft>> draftList(@PathVariable int empNo) {
-		List<ResponseDraft> draftByPage = draftService.getDraftByPage(empNo);
-		return ResponseEntity.ok(draftByPage);
+	@GetMapping("/drafts")
+	public ResponseEntity<Map<String, Object>> draftList(@RequestParam int start, @RequestParam int length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw) {
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = details.getEmpNo();
+		int totalRecords = draftService.getDraftCount(empNo);
+		List<ResponseDraft> draftByPage = draftService.getDraftByPage(empNo, search, start, length);
+		int recordsFiltered = draftService.getSearchDraftCount(empNo, search);
+		Map<String, Object> response = new HashMap<>();
+	    response.put("draw", draw);
+	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsFiltered", recordsFiltered); 
+	    response.put("data", draftByPage);
+	    log.debug(response.toString());
+		return ResponseEntity.ok(response);
 	}
 	// 결재할 문서
-	@GetMapping("/approvals/{empNo}")
-	public ResponseEntity<List<ResponseDraft>> approvalList(@PathVariable int empNo) {
-		List<ResponseDraft> draftByApproval = draftService.getDraftByApproval(empNo);
+	@GetMapping("/approvals")
+	public ResponseEntity<Map<String,Object>> approvalList(@RequestParam(defaultValue = "0") Integer start, @RequestParam Integer length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw) {
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = details.getEmpNo();
+		Integer totalRecords = draftService.getApprovalCount(empNo);
+		List<ResponseDraft> draftByApproval = draftService.getDraftByApproval(empNo, search, start, length);
+		Integer recordsFiltered = draftService.getSearchApprovalCount(empNo, search);
 		log.debug("draftByApproval = {}",draftByApproval.toString());
-		return ResponseEntity.ok(draftByApproval);
+		Map<String, Object> response = new HashMap<>();
+	    response.put("draw", draw);
+	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsFiltered", recordsFiltered); 
+	    response.put("data", draftByApproval);
+		return ResponseEntity.ok(response);
 	}
 	
 	// 참조 문서

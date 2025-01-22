@@ -19,13 +19,19 @@ public interface DraftMapper {
 	ResponseAccessDraft isAccess(int empNo);
 
 	// 사원별 결재문서 리스트
-	List<ResponseDraft> findDraftByApproval(int empNo);
+	List<ResponseDraft> findDraftByApproval(int empNo, String search, int start, int length);
 
 	// 문서별 파일 리스트
 	List<DraftFileEntity> findDraftByFile(int draNo);
 
 	// 사원별 기안문서 리스트
-	List<ResponseDraft> findDraftByEmp(int empNo);
+	List<ResponseDraft> findDraftByEmp(int empNo, String search, int start, int length);
+
+	// 기안문서 갯수
+	Integer findTotalDraftByEmp(int empNo);
+
+	// 검색된 기안문서
+	Integer findSearchTotalDraftByEmp(int empNo, String search);
 
 	// 매출결재 상세문서
 	ResponseVacationDraftDetail findByVacationDraftNo(int draNo);
@@ -38,7 +44,14 @@ public interface DraftMapper {
 
 	// 기본결재 상세문서
 	ResponseBasicDraftDetail findByBasicDraftNo(int draNo);
-	
+
 	// 참조자 결재문서 리스트
 	List<ResponseReferencesList> findDraftByReferences(int empNo);
+
+	// 결재문서 갯수
+	Integer findTotalApprovalByEmp(int empNo);
+	
+	// 결재문서 검색 리스트
+	Integer findSearchTotalApprovalByEmp(int empNo, String search);
+
 }

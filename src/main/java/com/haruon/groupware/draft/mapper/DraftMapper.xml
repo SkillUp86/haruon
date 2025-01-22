@@ -366,7 +366,7 @@
 		 where r.emp_no = #{empNo}
 	</select>
 	<!-- 사원별 결재문서 리스트 -->
-	<select id="findDraftByApproval" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
+	<select id="findDraftByApproval" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 			   d.dra_no draNo
 			 , d.kind type
@@ -384,10 +384,37 @@
 			   on a.state = sc.common_code
 		 where a.mid_app = #{empNo}
 			or a.final_app = #{empNo}
+		  <if test="search != null and search != ''">
+		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+		 </if>
+		 order by d.dra_no desc
+		 limit #{start} , #{length}
 	</select>
-	
+	<!-- 사원별 검색된 결재문서 갯수 -->
+	<select id="findSearchTotalApprovalByEmp" resultType="Integer">
+		select count(*)
+		  from draft d
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+		 where a.mid_app = #{empNo}
+			or a.final_app = #{empNo}
+		  <if test="search != null and search != ''">
+		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+		 </if>
+		 order by d.dra_no desc
+	</select>
+	<!-- 사원별  결재문서 갯수 -->
+	<select id="findTotalApprovalByEmp" resultType="Integer">
+		select count(*)
+		  from draft d
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+		 where a.mid_app = #{empNo}
+			or a.final_app = #{empNo}
+		 order by d.dra_no desc
+	</select>
 	<!-- 사원별 기안문서 리스트 -->
-	<select id="findDraftByEmp" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
+	<select id="findDraftByEmp" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
 			   d.dra_no draNo
 			 , d.kind type
@@ -404,6 +431,26 @@
 		 inner join common_code sc
 			   on a.state = sc.common_code
 		 where d.emp_no = #{empNo}
+		 <if test="search != null and search != ''">
+		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+		 </if>
+		 order by draNo desc
+		 limit #{start} , #{length}
 	</select>
 	
+	<!-- 기안문서 갯수 -->
+	<select id="findTotalDraftByEmp" resultType="Integer">
+		select count(*)
+		  from draft
+		 where emp_no = #{empNo}
+	</select>
+	<!-- 검색된 기안문서 갯수 -->
+	<select id="findSearchTotalDraftByEmp" resultType="Integer">
+		select count(*)
+		  from draft
+		 where emp_no = #{empNo}
+		 <if test="search != null and search != ''">
+		 	and (title like concat ('%', #{search}, '%')) or (content like concat ('%', #{search}, '%'))
+		 </if>
+	</select>
 </mapper>

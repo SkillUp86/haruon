@@ -48,12 +48,12 @@ public class DeleteService {
 		case "휴가":// 휴가 보고서 삭제
 			deleteMapper.removeSalesDraftByDraNo(draNo);
 			break;
-		case "기본":// 기본 문서 삭제
-			deleteMapper.removeBasicDraftByDraNo(draNo);
+		case "기본":
 			break;
 		default:
 			throw new IllegalArgumentException("없는 유형입니다.");
 		}
+		deleteMapper.removeBasicDraftByDraNo(draNo); // 기본 문서 삭제
 //		if (docType.equals("출장")) {
 //			deleteMapper.removeBusinessDraftByDraNo(draNo);
 //		} else if (docType.equals("매출")) {

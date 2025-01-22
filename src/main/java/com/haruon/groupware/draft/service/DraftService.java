@@ -34,28 +34,30 @@ public class DraftService {
 
 	// 유효성 검증
 	public Boolean isAccess(int draNo) {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		int empNo = (int)details.getEmpNo();
-		int depNo = (int)details.getDepNo();
+		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
+		int empNo = (int) details.getEmpNo();
+		int depNo = (int) details.getDepNo();
 		ResponseAccessDraft access = draftMapper.isAccess(draNo);
 		log.debug(access.toString());
 		Integer midApp = access.getMidApp();
-	    Integer refNo = access.getRefNo();
-	    Integer finalApp = access.getFinalApp();
-	    Integer draftEmpNo = access.getEmpNo();
+		Integer refNo = access.getRefNo();
+		Integer finalApp = access.getFinalApp();
+		Integer draftEmpNo = access.getEmpNo();
 		// 해당 기안자 팀 부서장 모든 결재 접근 가능
-		if(authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (access.getDepNo() == depNo))) {
+		if (authorities.stream()
+				.anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (access.getDepNo() == depNo))) {
 			return true;
 		}
 		// 결재라인, 참조자 접근가능
-		if( (midApp != null && midApp == empNo) || finalApp == empNo || ( refNo != null && refNo == empNo ) || empNo == draftEmpNo ) {
+		if ((midApp != null && midApp == empNo) || finalApp == empNo || (refNo != null && refNo == empNo)
+				|| empNo == draftEmpNo) {
 			return true;
 		}
 		return false;
 	}
-
-	
 
 	// 휴가 결재 상세보기
 	public ResponseVacationDraftDetail getVacationDraftDetail(int draNo) {
@@ -83,19 +85,37 @@ public class DraftService {
 	}
 
 	// 기안문서 리스트
-	public List<ResponseDraft> getDraftByPage(int empNo) {
-		return draftMapper.findDraftByEmp(empNo);
+	public List<ResponseDraft> getDraftByPage(int empNo, String search, int start, int length) {
+		return draftMapper.findDraftByEmp(empNo, search, start, length);
 
 	}
+
+	// 기안문서 갯수
+	public Integer getDraftCount(int empNo) {
+		return draftMapper.findTotalDraftByEmp(empNo);
+	}
+	// 검색한 기안문서 갯수
+	public Integer getSearchDraftCount(int empNo, String search) {
+		return draftMapper.findSearchTotalDraftByEmp(empNo, search);
+	}
+
 	// 결재 문서 리스트
-	public List<ResponseDraft> getDraftByApproval(int empNo) {
-		return draftMapper.findDraftByApproval(empNo);
+	public List<ResponseDraft> getDraftByApproval(int empNo, String search, int start, int length) {
+		return draftMapper.findDraftByApproval(empNo, search, start, length);
 	}
-
+	// 참조문서 리스트
 	public List<ResponseReferencesList> getReferencesByEmp(int empNo) {
 		return draftMapper.findDraftByReferences(empNo);
 	}
 
-		
-		
+	// 결재문서 갯수
+	public Integer getApprovalCount(int empNo) {
+		return draftMapper.findTotalApprovalByEmp(empNo);
+	}
+	// 결재문서 검색 갯수
+	public Integer getSearchApprovalCount(int empNo, String search) {
+		return draftMapper.findSearchTotalApprovalByEmp(empNo, search);
+	}
+
+
 }
