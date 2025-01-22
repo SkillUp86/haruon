@@ -35,18 +35,18 @@ public class DeleteController {
 		return "redirect:/draft/list";
 
 	}
-	// 기안서 파일 삭제
-	@GetMapping("{type}/delete/{drafNo}/file/{draNo}")
-	public String deleteFile(@PathVariable String type, @PathVariable int draNo ,@PathVariable int drafNo, HttpSession session) {
-		// 유효성검사
-		if (!draftService.isAccess(draNo)) {
-			return "login";
-		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
-		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
-			deleteService.getDeleteFile(drafNo, path);
-		return "redirect:/draft/"+type+"/update/"+draNo;
-	}
+//	// 기안서 파일 삭제 -> restController 로 이동
+//	@GetMapping("{type}/delete/{drafNo}/file/{draNo}")
+//	public String deleteFile(@PathVariable String type, @PathVariable int draNo ,@PathVariable int drafNo, HttpSession session) {
+//		// 유효성검사
+//		if (!draftService.isAccess(draNo)) {
+//			return "login";
+//		}
+//		String path = session.getServletContext().getRealPath("/upload/draft/");
+//		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
+//			deleteService.getDeleteFile(drafNo, path);
+//		return "redirect:/draft/"+type+"/update/"+draNo;
+//	}
 
 //	// 휴가 기안서 파일 삭제
 //	@GetMapping("/deleteFile/vacation")

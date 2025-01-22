@@ -59,6 +59,7 @@
 			 , d.create_date createDate
 			 , a.mid_app_date midDate
 			 , a.final_app_date finalDate
+			 , a.state
 			 , (select descript
 			   from common_code
 			   where common_code = a.state) approvalState
@@ -137,6 +138,7 @@
 			 , d.create_date createDate
 			 , a.mid_app_date midDate
 			 , a.final_app_date finalDate
+			 , a.state
 			 , (select descript
 			   from common_code
 			   where common_code = a.state) approvalState
@@ -213,6 +215,7 @@
 			 , d.create_date createDate
 		 	 , a.mid_app_date midDate
 			 , a.final_app_date finalDate
+			 , a.state
 			 , (select descript
 			   from common_code
 			   where common_code = a.state) approvalState
@@ -284,6 +287,7 @@
 			, d.create_date createDate
 			, a.mid_app_date midDate
 			, a.final_app_date finalDate
+			, a.state
 			, (select descript
 			  from common_code
 			  where common_code = a.state) approvalState

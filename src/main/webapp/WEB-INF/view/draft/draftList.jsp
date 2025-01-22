@@ -185,8 +185,6 @@
             "order": [[0, 'desc']]
             
         });
-    </script>
-    <script>
         function tabData(tabType) {
             let empNo =  ${user.empNo}; // 로그인한 사용자 번호
 

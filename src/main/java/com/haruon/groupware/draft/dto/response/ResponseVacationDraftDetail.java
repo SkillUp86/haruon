@@ -25,6 +25,7 @@ public class ResponseVacationDraftDetail {
 	private String createDate;
 	private String midDate;
 	private String finalDate;
+	private String state;
 	private String approvalState;
 	private Integer subEmpNo; // 대체업무자 사원번호
 	private String subEmpName; // 대체업무자

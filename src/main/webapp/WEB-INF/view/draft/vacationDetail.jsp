@@ -110,7 +110,7 @@
                                                 <div class="bold-box">
                                                     <h1>
                                                         <div class="mt-4 mb-4">
-                                                            ${d.draftType} 결재
+                                                            ${d.draftType} 문서
                                                         </div>
                                                     </h1>
                                                     <!-- 사인 위치 -->

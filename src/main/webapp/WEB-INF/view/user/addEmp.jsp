@@ -157,10 +157,10 @@
 		} else if ($('input[name="gender"]:checked').length === 0) {
 	      alert('성별을 선택하세요');
 	      return;
-	    } else if($('#phone').val().length < 13){
-			alert('전화번호를 입력하세요 010-0000-0000');
-			return;
-		} 
+	    } else if(!/^010-\d{4}-\d{4}$/.test($('#phone').val())) {
+	        alert('전화번호 형식이 올바르지 않습니다. 예: 010-0000-0000');
+	        return;
+	    }
 		$('#addEmp').submit();
 	})
 </script>

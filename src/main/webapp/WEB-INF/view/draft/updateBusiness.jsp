@@ -117,7 +117,7 @@
                                                 <div class="bold-box">
                                                     <h1>
                                                         <div class="mt-4 mb-4">
-                                                            ${d.draftType} 결재
+                                                            ${d.draftType} 문서
                                                         </div>
                                                     </h1>
                                                     <br><br><br><br><br><br><br><br><br>
@@ -172,11 +172,14 @@
                                                                     <div class="d-flex flex-wrap">
                                                                         <c:forEach var="f" items="${draftFiles}">
                                                                             &nbsp;
-                                                                            <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}"
-                                                                                class="btn btn-dark mt-1 file">
-                                                                                ${f.originName}.${f.ext}
-                                                                            </a>
-                                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">삭제</a>
+                                                                            <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
+																		        ${f.originName}.${f.ext}
+																		    </a>
+                                                                            <button
+																				type="button" class="btn btn-danger mt-1 file delete-btn" 
+																		        data-url="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">
+																		        삭제
+																		    </button>
                                                                         </c:forEach>
                                                                     </div>
                                                                 </c:if>
@@ -226,27 +229,49 @@
             <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
             <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
             <script>
-				
-			    $('#btnUpdateBusiness').click(function() {
-					if($('#title').val() == '') {
-						alert('제목을 입력하세요')
-						return;
-					} else if(!$('#textContent').val()) {
-						alert('내용을 입력하세요')
-						return;
-					} else if(!$('#place').val() == '') {
-						alert('장소를 입력하세요')
-						return;
-					} else if(!$('#startDate').val() == '') {
-						alert('시작날짜 입력하세요')
-						return;
-					} else if(!$('#finishDate').val() == '') {
-						alert('종료날짜 입력하세요')
-						return;
-					}
-					$('#formUpdateBusiness').submit();
-				});
-			    
+	            $(document).ready(function () {
+	                // 삭제 버튼 클릭 이벤트 핸들러
+	                $(".delete-btn").click(function () {
+	                    const $button = $(this);
+	                    const deleteUrl = $button.data("url");
+	
+	                    // AJAX 요청 보내기
+	                    $.ajax({
+	                        url: deleteUrl,
+	                        type: "delete",
+	                        success: function () {
+	                            alert("삭제되었습니다.");
+	                            // 해당 파일 링크와 삭제 버튼을 제거
+	                            $button.prev("a").remove(); 
+	                            $button.remove(); 
+	                        },
+	                        error: function (xhr, status, error) {
+	                            console.error("Error:", error);
+	                            alert("삭제 실패");
+	                        }
+	                    });
+	                });
+	          
+				    $('#btnUpdateBusiness').click(function() {
+						if($('#title').val() == '') {
+							alert('제목을 입력하세요')
+							return;
+						} else if(!$('#textContent').val()) {
+							alert('내용을 입력하세요')
+							return;
+						} else if($('#place').val() == '') {
+							alert('장소를 입력하세요')
+							return;
+						} else if($('#startDate').val() == '') {
+							alert('시작날짜 입력하세요')
+							return;
+						} else if($('#finishDate').val() == '') {
+							alert('종료날짜 입력하세요')
+							return;
+						}
+						$('#formUpdateBusiness').submit();
+					});
+	            }); 
 			</script>
         </body>
         </html>

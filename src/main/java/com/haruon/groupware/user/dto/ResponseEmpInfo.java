@@ -6,7 +6,7 @@ import lombok.Data;
 public class ResponseEmpInfo {
 	private Integer empNo;
 	private String email;
-	private Integer deptNo;
+	private Integer depNo;
 	private String dname;
 	private String ename;
 	private String location;

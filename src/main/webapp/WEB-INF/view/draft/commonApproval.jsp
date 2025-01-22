@@ -3,7 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <sec:authentication property="principal" var="user" />
  							<!-- 기안자가 같을때 -->
-                            <c:if test="${(d.empNo == user.empNo || d.referEmpNo == user.empNo) && d.approvalState != '반려'}">
+                            <c:if test="${(d.empNo == user.empNo || d.referEmpNo == user.empNo) && d.state != 'A04'}">
 	                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
@@ -15,7 +15,7 @@
 	                                        <div class="col-xxl-12 mb-4">
 	                                                <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
-	                                       <c:if test="${d.empNo == user.empNo && d.approvalState == '결재대기'}">
+	                                       <c:if test="${d.empNo == user.empNo && d.state == 'A01'}">
 		                                        <div class="col-xxl-12 col-md-12 mb-4">
 														<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/draft/${d.type}/update/${d.draNo}">수정</a>
 		                                        </div>
@@ -23,20 +23,20 @@
 														<a class="btn btn-danger w-100" href="${pageContext.request.contextPath}/draft/delete?docType=${d.draftType}&appNo=${d.appNo}&draNo=${d.draNo}">삭제</a>
 		                                        </div>
 	                                       	</c:if>
-												<c:if test="${d.approvalState == '반려'}">
+												<c:if test="${d.state == 'A04'}">
 													<div class="col-xxl-12 col-md-12 mb-4">
 														<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
 				                                          반려사유
 				                                        </button>
 													</div>
 												</c:if>
-												<c:if test="${d.approvalState == '결재완료'}">
+												<c:if test="${d.state == 'A03'}">
 													<div class="col-xxl-12 col-md-12 mb-4">
 														<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
 			                                        </div>
 		                                        </c:if>
 	                                        <div class="col-xxl-12 col-sm-4 col-12 mx-auto">
-	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
+	                                            <a class="btn btn-gray w-100" href="javascript:history.back();">돌아가기</a>
 	                                        </div>
 	
 	                                    </div>
@@ -44,7 +44,7 @@
 	                            </div>
                             </c:if>
                             <!-- 중간 결재자 -->
-                            <c:if test="${d.midApp != null && d.midApp == user.empNo && d.approvalState != '반려' }">
+                            <c:if test="${d.midApp == user.empNo && d.state != 'A04' }">
 	                           <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
@@ -56,7 +56,7 @@
 	                                        <div class="col-xxl-12 mb-4">
 	                                                <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
-	                                       		<c:if test="${ d.approvalState == '결재대기'}">
+	                                       		<c:if test="${ d.state == 'A01'}">
 			                                        <div class="col-xxl-12 col-md-12 mb-4">
 			                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/mid/${d.draNo}">결재</a>
 			                                        </div>
@@ -67,20 +67,20 @@
 				                                        </button>
 			                                        </div>
 		                                        </c:if>
-		                                        <c:if test="${d.approvalState == '결재완료'}">
+		                                        <c:if test="${d.state == 'A03'}">
 													<div class="col-xxl-12 col-md-12 mb-4">
 														<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
 			                                        </div>
 		                                        </c:if>
 	                                    	<div class="col-xxl-12 col-md-12 mb-4">
-	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
+	                                            <a class="btn btn-gray w-100" href="javascript:history.back();">돌아가기</a>
 	                                        </div>
 		                                </div>
 		                            </div>
 		                        </div>
                              </c:if>
                              <!-- 최종 결재자 -->
-                             <c:if test="${d.finApp == user.empNo && d.approvalState != '반려'}">
+                             <c:if test="${d.finApp == user.empNo && d.state != 'A04'}">
 	                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
@@ -92,7 +92,7 @@
 	                                        <div class="col-xxl-12 mb-4">
 	                                                <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
-	                                        <c:if test="${ d.approvalState == '결재중'}">
+	                                        <c:if test="${ d.state == 'A02' || d.midApp == null && d.state == 'A01'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
 	                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/final/${d.draNo}">결재</a>
 	                                        </div>
@@ -103,37 +103,33 @@
 		                                        </button>
 	                                    	</div>
 	                                    	</c:if>
-	                                    	<c:if test="${d.approvalState == '결재완료'}">
+	                                    	<c:if test="${d.state == 'A03'}">
 												<div class="col-xxl-12 col-md-12 mb-4">
 													<button class="btn btn-primary w-100" onclick="downloadPDF()">PDF로 다운로드</button>
 		                                        </div>
 	                                        </c:if>
 	                                    	<div class="col-xxl-12 col-md-12 mb-4">
-	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
+	                                            <a class="btn btn-gray w-100" href="javascript:history.back();">돌아가기</a>
 	                                        </div>
 	                                        
 			                                </div>
 			                            </div>
 			                        </div>
 	                           </c:if>
-                            	<c:if test="${d.approvalState == '반려'}">
+                            	<c:if test="${d.state == 'A04'}">
                             		<div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
 	                                        <div class="col-xxl-12 mb-4">
-	                                            <div class="form-bootstrap-basic">
-	                                                <label class="switch-label">결재 상태</label>
-	                                            </div>
+	                                            <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
-                                        	<c:if test="${ d.approvalState == '반려' }">
                                         		<div class="col-xxl-12 col-md-12 mb-4">
 	                                        	<button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
 		                                          반려사유
 		                                        </button>
 	                                    		</div>
-                                        	</c:if>
 	                                    	<div class="col-xxl-12 col-md-12 mb-4">
-	                                            <a class="btn btn-gray w-100" href="${pageContext.request.contextPath}/draft/list">돌아가기</a>
+	                                            <a class="btn btn-gray w-100" href="javascript:history.back();">돌아가기</a>
 	                                        </div>
 	                                        
 			                                </div>

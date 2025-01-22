@@ -7,7 +7,7 @@
     <div class="approver mt-4">
         <p>중간결재자</p>
         <div class="signature-box">
-        	<c:if test="${d.midFilename != null || (d.approvalState == '결재중' || d.approvalState == '결재완료')}">
+        	<c:if test="${d.midFilename != null || (d.state == 'A02' || d.state == 'A03')}">
         		<img src="${pageContext.request.contextPath}/upload/sign/${d.midFilename}.${d.midFileExt}">
         	</c:if>
         </div>
@@ -17,7 +17,7 @@
    <div class="approver mt-4">
        <p>최종결재자</p>
        <div class="signature-box">
-       	<c:if test="${d.finalFilename != null || d.approvalState == '결재완료'}">
+       	<c:if test="${d.finalFilename != null || d.state == 'A03'}">
        		<img src="${pageContext.request.contextPath}/upload/sign/${d.finalFilename}.${d.finalFileExt}">
        	</c:if>
       	</div>

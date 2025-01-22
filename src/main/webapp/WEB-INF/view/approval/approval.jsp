@@ -659,6 +659,9 @@
 					} else if($('#placeEndDate').val() === '') {
 						alert('출장 종료날짜를 입력하세요')
 						return;
+					} else if(new Date($('#placeStartDate').val()) > new Date($('#placeEndDate').val())){
+						alert('출장 시작날짜가 종료날짜보다 늦을 수 없습니다.');
+				        return;
 					}
 					$('#formInsertApproval').submit();
 				}
@@ -682,7 +685,7 @@
 						alert('대체 업무자를 입력하세요')
 						return;
 					} else if($('#vacStartDate').val() === '') {
-						alert('휴가 시작날짜를	 입력하세요')
+						alert('휴가 시작날짜를 입력하세요')
 						return;
 					} else if($('#vacFinishDate').val() === '') {
 						alert('휴가가 종료날짜를 입력하세요')
@@ -690,10 +693,13 @@
 					}  else if($('#vactionType').val() === '') {
 						alert('휴가 종류를 선택하세요')
 						return;
-					} else if($('#urgentPhone').val() === '') {
-						alert('비상 연락처를 입력하세요')
-						return;
-					} 
+					} else if(!/^010-\d{4}-\d{4}$/.test($('#phone').val())) {
+				        alert('전화번호 형식이 올바르지 않습니다. 예: 010-0000-0000');
+				        return;
+					} else if (new Date($('#vacStartDate').val()) > new Date($('#vacFinishDate').val())) {
+			            alert('휴가 시작날짜가 종료날짜보다 늦을 수 없습니다.');
+			            return;
+			        }
 					$('#formInsertApproval').submit();
 				}
 			}

@@ -6,7 +6,7 @@
 		select
 			   e.emp_no empNo
 			 , e.email email
-			 , e.dep_no deptNo
+			 , e.dep_no depNo
 			 , (select dname
 			   from dept
 			   where dep_no = e.dep_no) dname

@@ -28,6 +28,7 @@ public class ResponseBusinessDraftDetail {
 	private String createDate;
 	private String midDate;
 	private String finalDate;
+	private String state;
 	private String approvalState;
 	private String midFilename;
 	private String midFileExt;

@@ -102,7 +102,7 @@
                                                     <ol class="breadcrumb">
                                                         <li class="breadcrumb-item"><a href="#">내문서함</a></li>
                                                         <li class="breadcrumb-item active" aria-current="page">
-                                                            ${d.draftType} 결재</li>
+                                                            ${d.draftType} 문서</li>
                                                     </ol>
                                                 </nav>
                                             </div>
@@ -203,11 +203,14 @@
                                                                     <div class="d-flex flex-wrap">
                                                                         <c:forEach var="f" items="${draftFiles}">
                                                                             &nbsp;
-                                                                            <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}"
-                                                                                class="btn btn-dark mt-1 file">
-                                                                                ${f.originName}.${f.ext}
-                                                                            </a>
-                                                                            <a class="btn btn-danger mt-1 file" href="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">삭제</a>
+                                                                           <a href="${pageContext.request.contextPath}/upload/draft/${f.fileName}.${f.ext}" class="btn btn-dark mt-1 file">
+																		        ${f.originName}.${f.ext}
+																		    </a>
+				                                                            <button
+																				type="button" class="btn btn-danger mt-1 file delete-btn" 
+																		        data-url="${pageContext.request.contextPath}/${d.type}/delete/${f.drafNo}/file/${d.draNo}">
+																		        삭제
+																		    </button>
                                                                         </c:forEach>
                                                                     </div>
                                                                 </c:if>
@@ -318,140 +321,162 @@
             <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
             <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
             <script>
-    	   $('.dept').click(function() {
-    		   //debugger;
-    		   let deptNo = $(this).val();
-    		   $.ajax({
-    			   url: '/depts/'+deptNo+'/employees'
-    			 , method: "GET"
-    			}).done(function(response) {
-    				//console.log(response);
-    				employeeList(response);
-    			}).fail(function() {
-    				alert('실패');
-    			})
-    		})
+            $(document).ready(function () {
+                // 삭제 버튼 클릭 이벤트 핸들러
+                $(".delete-btn").click(function () {
+                    const $button = $(this);
+                    const deleteUrl = $button.data("url");
 
-    		// 중복체크
-    		let emp = [];
-
-    		// 대체업무자, 결재자 if문 분기
-    		let existEmployee = true;
-    		$('#subWorkerModal').on('show.bs.modal', function() {
-    			existEmployee = false;  
-    		});
-    		// 모달 닫힐 때
-    		$('#subWorkerModal').on('hide.bs.modal', function() {
-    			existEmployee = true; 
-    		});
-
-    		$('.dept').click(function() {
-    			let deptNo = $(this).val();
-    			$.ajax({
-    				url: '/depts/' + deptNo + '/employees',
-    				method: "GET"
-    			}).done(function(response) {
-    				console.log('응답 데이터:', response);
-    				emp = response;
-    				employeeList(emp);  // 직원 목록 표시
-    			}).fail(function() {
-    				alert('실패');
-    			})
-    		});
-
-    		function employeeList(emp) {
-    			let empSubList = $('#employeeSubList');
-    			empSubList.empty();
-
-    			if (emp && emp.length > 0) {
-    				emp.forEach(function(item) {
-    					//console.log(item)
-
-    					let selectEmpList = $(`
-    								<li class="form-check">
-    									<input type="radio" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
-    									<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
-    								</li>
-    								`);
-    					
-    					empSubList.append(selectEmpList);
-    				});
-    			} 
-    		}
-
-    		// 결재 라인 추가
-    		function applyOn(type) {
-    			let selectedEmp = $('input[name="employeeRadio"]:checked');  // 선택된 사원 찾기
-    			if (selectedEmp.length === 0) {
-    				alert('사원을 선택해주세요.');
-    				return;
-    			}
-
-    			let empNo = selectedEmp.val();  // 사원 번호
-    			let empInfo = selectedEmp.next().text();
-    			let dept = empInfo.substring(empInfo.indexOf('(')+1,empInfo.indexOf(')'))
-    			//console.log(dept)
-    			let empName = empInfo.substring(empInfo.indexOf(')') + 2);  // 사원 이름만 가져오기
-
-    			//  중복 체크크
-
-    			if (type === 'subEmp') {
-    					$('#subEmpNo').val(empNo);
-    					$('#subDept').val(dept);
-    					$('#subEname').val(empName);
-    				}
-    			
-    			selectedEmp.prop('checked', false);
-
-    		}
-
-    		// 삭제버튼
-    		function clearInput(type) {
-    			if (type === 'subEmp'){
-    				$('#subEmpNo').val('');
-    				$('#subEname').val('');
-    				$('#subDept').val('');
-    			}
-    		}
-
-    		// 대체 업무자 입력값 추가
-    		$('#BtnInsertSubEmp').click(function(){
-    			
-    			$('#subEmpNumber').val($('#subEmpNo').val())
-    			$('#subEmpName').val($('#subEname').val())
-    			$('#subEmpName').val($('#subEname').val())
-    			let modal = bootstrap.Modal.getInstance($('#subWorkerModal')[0]); 
-    			modal.hide(); 
-    		}) 
-    		
-    		$('#btnUpdateVacation').click(function(){
-    			
-    			if($('#subEmpNumber').val() == '') {
-    				alert('대체업무자 입력은 필수입니다.')
-    				return;
-    			} else if($('#kind').val() == '') {
-    				alert('유형을 선택해주세요.')
-    				return;
-    			} else if($('#urgentPhone').val() == '') {
-    				alert('비상연락처를 입력해주세요.')
-    				return;
-    			} else if($('#startDate').val() == '') {
-    				alert('시작날짜를 선택해주세요.')
-    				return;
-    			} else if($('#finishDate').val() == '') {
-    				alert('종료날짜를 선택해주세요.')
-    				return;
-    			} else if($('#title').val() == '') {
-    				alert('제목을 입력해주세요.')
-    				return;
-    			} else if(!$('#textContent').val()) {
-    				alert('내용을 입력해주세요.')
-    				return;
-    			} 
-    			
-    			$('#formUpdateVacation').submit();
-    		})
-    		
+                    // AJAX 요청 보내기
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "delete",
+                        success: function () {
+                            alert("삭제되었습니다.");
+                            // 해당 파일 링크와 삭제 버튼을 제거
+                            $button.prev("a").remove(); 
+                            $button.remove(); 
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error:", error);
+                            alert("삭제 실패");
+                        }
+                    });
+                });
+	    	   $('.dept').click(function() {
+	    		   //debugger;
+	    		   let deptNo = $(this).val();
+	    		   $.ajax({
+	    			   url: '/depts/'+deptNo+'/employees'
+	    			 , method: "GET"
+	    			}).done(function(response) {
+	    				//console.log(response);
+	    				employeeList(response);
+	    			}).fail(function() {
+	    				alert('실패');
+	    			})
+	    		})
+	
+	    		// 중복체크
+	    		let emp = [];
+	
+	    		// 대체업무자, 결재자 if문 분기
+	    		let existEmployee = true;
+	    		$('#subWorkerModal').on('show.bs.modal', function() {
+	    			existEmployee = false;  
+	    		});
+	    		// 모달 닫힐 때
+	    		$('#subWorkerModal').on('hide.bs.modal', function() {
+	    			existEmployee = true; 
+	    		});
+	
+	    		$('.dept').click(function() {
+	    			let deptNo = $(this).val();
+	    			$.ajax({
+	    				url: '/depts/' + deptNo + '/employees',
+	    				method: "GET"
+	    			}).done(function(response) {
+	    				console.log('응답 데이터:', response);
+	    				emp = response;
+	    				employeeList(emp);  // 직원 목록 표시
+	    			}).fail(function() {
+	    				alert('실패');
+	    			})
+	    		});
+	
+	    		function employeeList(emp) {
+	    			let empSubList = $('#employeeSubList');
+	    			empSubList.empty();
+	
+	    			if (emp && emp.length > 0) {
+	    				emp.forEach(function(item) {
+	    					//console.log(item)
+	
+	    					let selectEmpList = $(`
+	    								<li class="form-check">
+	    									<input type="radio" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+	    									<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
+	    								</li>
+	    								`);
+	    					
+	    					empSubList.append(selectEmpList);
+	    				});
+	    			} 
+	    		}
+	
+	    		// 결재 라인 추가
+	    		function applyOn(type) {
+	    			let selectedEmp = $('input[name="employeeRadio"]:checked');  // 선택된 사원 찾기
+	    			if (selectedEmp.length === 0) {
+	    				alert('사원을 선택해주세요.');
+	    				return;
+	    			}
+	
+	    			let empNo = selectedEmp.val();  // 사원 번호
+	    			let empInfo = selectedEmp.next().text();
+	    			let dept = empInfo.substring(empInfo.indexOf('(')+1,empInfo.indexOf(')'))
+	    			//console.log(dept)
+	    			let empName = empInfo.substring(empInfo.indexOf(')') + 2);  // 사원 이름만 가져오기
+	
+	    			//  중복 체크크
+	
+	    			if (type === 'subEmp') {
+	    					$('#subEmpNo').val(empNo);
+	    					$('#subDept').val(dept);
+	    					$('#subEname').val(empName);
+	    				}
+	    			
+	    			selectedEmp.prop('checked', false);
+	
+	    		}
+	
+	    		// 삭제버튼
+	    		function clearInput(type) {
+	    			if (type === 'subEmp'){
+	    				$('#subEmpNo').val('');
+	    				$('#subEname').val('');
+	    				$('#subDept').val('');
+	    			}
+	    		}
+	
+	    		// 대체 업무자 입력값 추가
+	    		$('#BtnInsertSubEmp').click(function(){
+	    			
+	    			$('#subEmpNumber').val($('#subEmpNo').val())
+	    			$('#subEmpName').val($('#subEname').val())
+	    			$('#subEmpName').val($('#subEname').val())
+	    			let modal = bootstrap.Modal.getInstance($('#subWorkerModal')[0]); 
+	    			modal.hide(); 
+	    		}) 
+	    		
+	    		$('#btnUpdateVacation').click(function(){
+	    			
+	    			if($('#subEmpNumber').val() == '') {
+	    				alert('대체업무자 입력은 필수입니다.')
+	    				return;
+	    			} else if($('#kind').val() == '') {
+	    				alert('유형을 선택해주세요.')
+	    				return;
+	    			} else if($('#urgentPhone').val() == '') {
+	    				alert('비상연락처를 입력해주세요.')
+	    				return;
+	    			} else if($('#startDate').val() == '') {
+	    				alert('시작날짜를 선택해주세요.')
+	    				return;
+	    			} else if($('#finishDate').val() == '') {
+	    				alert('종료날짜를 선택해주세요.')
+	    				return;
+	    			} else if($('#title').val() == '') {
+	    				alert('제목을 입력해주세요.')
+	    				return;
+	    			} else if(!$('#textContent').val()) {
+	    				alert('내용을 입력해주세요.')
+	    				return;
+	    			} 
+	    			
+	    			$('#formUpdateVacation').submit();
+	    		})
+            });
     		</script>
         </body>
         </html>
