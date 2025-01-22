@@ -1,12 +1,11 @@
 package com.haruon.groupware.user.service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,6 +58,11 @@ public class EmpService {
 	// 직원 목록
 	public List<EmpDto> getEmpList(){
 		return empMapper.selectEmpList();
+	}
+	
+	// 부서별 직원 정보
+	public List<Map<String,Object>> getEmpBydept(Integer depNo){
+		return empMapper.selectEmpBydept(depNo);
 	}
 	
 }

@@ -330,10 +330,15 @@
 	        button.addEventListener('click', function(event) {
 	            event.preventDefault();
 	            const depNo = this.getAttribute('data-depNo');
-	            const activeYn = this.getAttribute('data-activeYn') === 'Y' ? 'N' : 'Y';
+	            const currentActiveYn = this.getAttribute('data-activeYn');
+	            const activeYn = currentActiveYn === 'Y' ? 'N' : 'Y';
+	            
+	            const titleText = currentActiveYn === 'Y' 
+	                ? '부서를 비활성화 하시겠습니까?' 
+	                : '부서를 활성화 하시겠습니까?';
 	            
 	            Swal.fire({
-	                title: '부서를 활성화/비활성화 하시겠습니까?',
+	                title: titleText,
 	                icon: 'question',
 	                showCancelButton: true,
 	                confirmButtonColor: '#3085d6',

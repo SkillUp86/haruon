@@ -12,17 +12,20 @@
 		where   active_yn = 'Y'
 	</select>
 	
-	<!-- 활성화 된 부서 + 부서장 -->
+	<!-- 활성화 된 부서 + 부서장 (퇴사자 제외) -->
 	<select id="selectDeptHead" parameterType="Map" resultType="Map">
 	  	SELECT
 	        d.dep_no depNo
 	        , d.dname dname
 	        , e.emp_no headEmpNo
 	        , e.ename headName
+	        , e.ext_num extNum
+	        , e.email email
+	        , e.location location
 	    FROM dept d
-	    INNER JOIN emp e 
-		 	ON d.dep_no = e.dep_no AND e.location = 'I03'
-	    WHERE d.active_yn = 'Y'
+	    LEFT JOIN emp e 
+		 	ON d.dep_no = e.dep_no AND e.location = 'I03' AND e.exit_date IS NULL 
+	    WHERE d.active_yn = 'Y' 
 	</select>
 	
 	<!-- 모든 부서 리스트 -->

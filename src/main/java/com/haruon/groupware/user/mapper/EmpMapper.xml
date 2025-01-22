@@ -139,6 +139,23 @@
 		WHERE e.exit_date IS NULL
 	</select>
 	
+	<!-- 부서별 직원 정보 -->
+	<select id="selectEmpBydept" parameterType="Integer" resultType="Map">
+		SELECT
+			e.emp_no empNo
+			, e.dep_no depNo
+			, d.dname dname
+			, e.ename ename
+			, e.location location
+			, e.email email
+			, e.ext_num extNum
+		FROM emp e
+		INNER JOIN dept d
+			ON e.dep_no = d.dep_no
+		WHERE e.dep_no = #{depNo} AND e.exit_date IS NULL
+		ORDER BY e.location DESC, e.ename
+	</select>
+	
 	<!-- 웹소켓 세션의 URI 파싱된 id 유무 확인 ( 1 = true / 0 = false ) --> 
 	<select id="checkEmpNo" parameterType="String" resultType="Integer">
 		SELECT (CASE WHEN COUNT(emp_no) = 0 

@@ -132,10 +132,10 @@
 			</a>
 			<ul class="collapse submenu list-unstyled" id="elements" data-bs-parent="#sideBarAccordion">
 				<li>
-					<a href="#"> 조직도(수정필요) </a>
+					<a href="${pageContext.request.contextPath}/depts/chart"> 조직도 </a>
 				</li>
 				<li>
-					<a href="#"> 사원 조회(수정필요) </a>
+					<a href="${pageContext.request.contextPath}/employees"> 사원 조회 </a>
 				</li>
 				<c:if test="${role_hr}">
 					<li>

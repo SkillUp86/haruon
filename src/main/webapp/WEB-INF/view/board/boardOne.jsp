@@ -9,21 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link href="${pageContext.request.contextPath}/src/assets/css/light/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/light/apps/blog-post.css">
-
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/assets/css/dark/apps/blog-post.css">
     <!--  END CUSTOM STYLE FILE  -->
         
     <!-- 페이지 제목 입력칸 -->
@@ -212,7 +207,6 @@
 	                                             </div>
 	                                         </div>
 	                                         <div class="text-end mt-4">
-	                                             <button class="btn me-3" style="background-color: darkgray; color: #fff !important;">지우기</button>
 	                                             <button id="btnComment" class="btn btn-success" type="button">입력</button>
 	                                         </div>
 	                                     </div>
@@ -290,7 +284,7 @@
 		
 		// 댓글 입력
 		$('#btnComment').click(function(){
-    		if($('#content').val() == ''){
+    		if($('#contents').val() == ''){
     			alert('댓글 내용을 입력하세요');
     			return;
     		} else {

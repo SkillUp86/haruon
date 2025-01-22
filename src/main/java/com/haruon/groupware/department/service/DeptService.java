@@ -24,7 +24,7 @@ public class DeptService {
 		return deptMapper.findByAll();
 	}
 	
-	// 부서 + 부서장 + 부서직원
+	// 부서 + 부서장
 	public List<Map<String,Object>> getDeptHead(){
 		Map<String,Object> map = new HashMap<>();
 		List<Map<String,Object>> deptList = deptMapper.selectDeptHead(map);

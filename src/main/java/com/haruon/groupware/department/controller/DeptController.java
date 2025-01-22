@@ -11,28 +11,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.haruon.groupware.company.entity.Company;
+import com.haruon.groupware.company.service.CompanyService;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
+import com.haruon.groupware.user.service.EmpService;
 
 @Controller
 public class DeptController {
 	@Autowired DeptService deptService;
+	@Autowired EmpService empService;
+	@Autowired CompanyService companyService;
 	
 	// 조직도
 	@GetMapping("/depts/chart")
 	public String deptChart(Model model) {
 		List<Map<String,Object>> deptList = deptService.getDeptHead();
-		
-		// deptList를 JSON 문자열로 변환
-	    ObjectMapper objectMapper = new ObjectMapper();
+
+		Company company = companyService.getCompanyInfo();
+        model.addAttribute("c", company);
+        
+		// JSON 문자열로 변환
+		ObjectMapper objectMapper = new ObjectMapper();
 	    try {
 	    	String deptListJson = objectMapper.writeValueAsString(deptList);
+	        // System.out.println("deptListJson: " + deptListJson);
 	        model.addAttribute("deptListJson", deptListJson);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-		
 		return "dept/chart";
+	}
+	
+	@GetMapping("/depts/employees")
+	public List<Map<String, Object>> EmployeesByDept(@RequestParam Integer depNo) {
+	    return empService.getEmpBydept(depNo);
 	}
 	
 	// 부서 리스트

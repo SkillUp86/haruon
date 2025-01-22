@@ -30,6 +30,9 @@ public interface EmpMapper {
 	// 직원 목록
 	List<EmpDto> selectEmpList();
 	
+	// 부서별 직원 정보
+	List<Map<String, Object>> selectEmpBydept(Integer depNo);
+	
 	// 직원 정보 수정
 	Integer updateEmpInfo(Integer empNo);
 	
