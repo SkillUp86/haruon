@@ -1,18 +1,15 @@
 package com.haruon.groupware.schedule.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.haruon.groupware.auth.CustomUserDetails;
-import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.service.ScheduleService;
 
@@ -31,17 +28,22 @@ public class ScheduleContoller {
 
 	
 	
-	@PostMapping("/addSchedule")
-	public String addSchedule(Schedules schedules, Model model) {
-	    boolean schedule = scheduleService.addSchedule(schedules);
-	    if(!schedule) {
-	    	return "login";
+	
+	
+	@PostMapping("/scheduleList")
+	public String addSchedule(@ModelAttribute Schedules schedule, RedirectAttributes redirectAttributes) {
+	    // 서비스 호출
+	    int result = scheduleService.addSchedule(schedule);
+
+	    // 성공 여부 확인
+	    if (result > 0) {
+	        redirectAttributes.addFlashAttribute("message", "일정이 성공적으로 추가되었습니다.");
+	    } else {
+	        redirectAttributes.addFlashAttribute("error", "일정 추가 중 오류가 발생했습니다.");
 	    }
-	    
-	    model.addAttribute("msg", "일정이 추가되었습니다.");
+
 	    return "redirect:/calendar"; 
 	}
-
 	
 
 	@GetMapping("/deleteSchedule")

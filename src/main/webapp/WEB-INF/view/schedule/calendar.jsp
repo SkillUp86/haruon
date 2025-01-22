@@ -118,70 +118,65 @@
                     </div>
                     <!-- Modal -->
 					<!-- addSchedule 모달창 :: 일정 등록 -->
-		<div class="modal fade" id="addSchedule" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
-				<!-- 모달 제목 -->
-				<div class="modal-header">
-					<h5 class="modal-title">신규 사내일정 추가</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
+						<div class="modal fade" id="addSchedule" tabindex="-1">
+							<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+								<!-- 모달 제목 -->
+								<div class="modal-header">
+									<h5 class="modal-title">신규 사내일정 추가</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								
+								<!-- 모달 일정 등록폼 -->
+								<form id="addScheduleForm" action="${pageContext.request.contextPath}/scheduleList" method="post">
+				    <div class="modal-body">
+				        <div class="row mb-5">
+				            <label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
+				            <div class="col-sm-8 scheduleModalDiv mb-2">
+				                <input type="text" class="form-control" id="title" name="title">
+				            </div>
 				
-				<!-- 모달 일정 등록폼 -->
-				<form id="addScheduleForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
-					<div class="modal-body">
-						<div class="row mb-5">
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
-							<div class="col-sm-8 scheduleModalDiv  mb-2"">
-								<input type="text" class="form-control" id="title" name="title">
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
-							<div class="col-sm-8 scheduleModalDiv mb-2">
-								<input type="datetime-local" class="form-control" id="startDate" name="startDate">
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
-							<div class="col-sm-8 scheduleModalDiv  mb-2"">
-								<input type="datetime-local" class="form-control" id="endDate" name="endDate">
-							</div>
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
-							<div class="col-sm-8 scheduleModalDiv  mb-2"">
-							<label for="meetingRadio">
-								<input class="form-check-input" type="radio" name="type" value="G01" id="meetingRadio" checked> 일정
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="G02" id="festivalRadio"> 연차
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="G05" id="festivalRadio"> 반차
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="G03" id="festivalRadio"> 출장
-							</label>&nbsp;&nbsp;&nbsp;
-							<!-- <label for="inspectionRadio">
-								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
-							</label>  -->
-							</div>
-							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
-							<div class="col-sm-8">
-								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
-								(<span id="chatHelper">0</span>/100)
-							</div>
-						</div>
-					</div>
-					
-					<!-- 모달 일정 취소/등록버튼 -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button id="addScheduleBtn" type="submit" class="btn btn-primary">Save</button>
-					</div>
+				            <label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
+				            <div class="col-sm-8 scheduleModalDiv mb-2">
+				                <input type="datetime-local" class="form-control" id="startTime" name="startTime">
+				            </div>
+				
+				            <label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
+				            <div class="col-sm-8 scheduleModalDiv mb-2">
+				                <input type="datetime-local" class="form-control" id="endTime" name="endTime">
+				            </div>
+				
+				            <label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
+				            <div class="col-sm-8 scheduleModalDiv mb-2">
+				                <label for="meetingRadio">
+				                    <input class="form-check-input" type="radio" name="kind" value="G01" id="meetingRadio" checked> 일정
+				                </label>&nbsp;&nbsp;&nbsp;
+				                <label for="festivalRadio">
+				                    <input class="form-check-input" type="radio" name="kind" value="G02" id="festivalRadio1"> 연차
+				                </label>&nbsp;&nbsp;&nbsp;
+				                <label for="halfDayRadio">
+				                    <input class="form-check-input" type="radio" name="kind" value="G05" id="festivalRadio2"> 반차
+				                </label>&nbsp;&nbsp;&nbsp;
+				                <label for="businessTripRadio">
+				                    <input class="form-check-input" type="radio" name="kind" value="G03" id="festivalRadio3"> 출장
+				                </label>&nbsp;&nbsp;&nbsp;
+				            </div>
+				
+				            <label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
+				            <div class="col-sm-8">
+				                <textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
+				                (<span id="chatHelper">0</span>/100)
+				            </div>
+				        </div>
+				    </div>
+				
+				    <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button id="addScheduleBtn" type="submit" class="btn btn-primary">저장</button>
+				    </div>
 				</form>
+
 			</div></div>
 		</div>
-				<!-- End addSchedule Modal-->
-
-
 					<!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
             <!--  END FOOTER  -->
@@ -243,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             default: return '#ffffff';
         }
     }
-    
+    	
     
 });
 

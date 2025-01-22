@@ -65,6 +65,16 @@ DELETE FROM schedules
 WHERE sch_no = #{schNo}
 </delete>
 
+<delete id="deleteReservation" parameterType="Integer">
+DELETE FROM reservation
+WHERE sch_no = #{schNo}
+</delete>
+
+<delete id="deleteScheduleAttendance" parameterType="Integer">
+DELETE FROM schedule_attendance
+WHERE sch_no = #{schNo}
+</delete>
+
 <update id="updateSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
     UPDATE schedules
     SET
