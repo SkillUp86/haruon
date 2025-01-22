@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.attendance.service.AttendanceService;
@@ -18,13 +20,14 @@ import com.haruon.groupware.user.entity.EmpEntity;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 public class ManageAttendanceContoller {
 	@Autowired private ManageAttendanceService editAttendanceService;
 	
 	// 출퇴근 등록
-	@GetMapping("/employee/registerAttendance")
-	public String registerAttendance(Authentication authentication, RedirectAttributes ra) {
+	@GetMapping("/employee/registerAttendance/result")
+	@ResponseBody
+	public String registerAttendance(Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		String result = editAttendanceService.registerAttendance(userDetails.getEmpNo());
 		
@@ -36,11 +39,9 @@ public class ManageAttendanceContoller {
 			default -> null;
 		};
 		
-		ra.addFlashAttribute("registerAttendanceResult", registerAttendanceResult);
-		  
 		log.debug(result);
 		log.debug(registerAttendanceResult);
-		return "redirect:/home";
+		return registerAttendanceResult;
 	}
 	
 	// (부서장) 근태 승인 (approvalYN 변경)

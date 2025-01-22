@@ -139,12 +139,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${not empty registerAttendanceResult}">
-	                            <div class="alert alert-light-primary alert-dismissible fade show border-0" role="alert">
-    								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-								    <strong>${registerAttendanceResult}</strong>
-								</div> 
-							</c:if>
+                            <div id="registerAttendanceResult"></div>
                         </div>
 
 
@@ -276,43 +271,81 @@
     <script src="../src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     
-    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 -->
+    <script>
+    	// 페이지가 준비되면 호출
+    	$(document).ready(function() {
+    		showTodayAttendance();
+    	});
+    </script>
+    
+    <!-- 출 퇴근 버튼 HTML구성 및 출퇴근시간 표시 Ajax 호출 / 출퇴근 등록 결과 / 등록버튼 동적 바인딩 -->
     <script>    
-		$.ajax({
-			url: "/attendance/employee/"+"${empNo}",
-			method: 'GET',
+		function showTodayAttendance() {
+	    	$.ajax({
+				url: "/attendance/employee/"+"${empNo}",
+				method: 'GET',
 			}).done(function(result) {
+				// Html 초기화
+				$("#attendanceBtnSpace").empty();
+				
 				$(result).each(function(index, item) {
 				   $('#workStartTime').val(item.startTime).addClass('text-secondary-emphasis');
 				   if(item.endTime !== '-1') {
 				       $('#workLeaveTime').val(item.endTime).addClass('text-secondary-emphasis');
 				   }
 				});
-
+						 
 				if($('#workStartTime').val() == '') {
-				     $("#attendanceBtnSpace").html(`<a id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" href="/employee/registerAttendance">
-				                                       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-right"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="16" cy="12" r="3"></circle></svg>
-				                                       <span class="btn-text-inner">출근하기</span>
-				                                      </a>`); 
+				     $("#attendanceBtnSpace").html(`  <button id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" type="button">
+					                                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-right"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="16" cy="12" r="3"></circle></svg>
+					                                      <span class="btn-text-inner">출근하기</span>
+				                                      </button>`); 
 				 }
 				 
 				 if(($('#workStartTime').val() != '') && ($('#workLeaveTime').val() == '') ) {
-				      $("#attendanceBtnSpace").html(`<a id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" href="/employee/registerAttendance">
+				      $("#attendanceBtnSpace").html(`   <button id="registerAttendanceBtn" class="btn btn-outline-primary btn-lg" style="width:100%" type="button">
 				                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-left"><rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect><circle cx="8" cy="12" r="3"></circle></svg>
 				                                            <span class="btn-text-inner">퇴근하기</span>
-				                                        </a>`);
+				                                        </button>`);
 				 }
 				 
 				 if($('#workLeaveTime').val() != '') {
-				      $("#attendanceBtnSpace").html(`<button class="btn btn-outline-primary btn-lg disabled" style="width:100%" >
-				                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-				                                         <span class="btn-text-inner">일과종료</span>
-				                                     </button>`);
+				      $("#attendanceBtnSpace").html(`  <button class="btn btn-outline-primary btn-lg disabled" style="width:100%" >
+				                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+				                                           <span class="btn-text-inner">일과종료</span>
+				                                       </button>`);
 				 }
 			}).fail(function() {
-				 console.log("로그인 정보 없음");
+				 console.log("showTodayAttendance ajax 호출 실패");
 				 //location.replace("login");
 			});
+		}
+		
+		function showRegisterAttendanceResult() {
+			$.ajax({
+				url: "/employee/registerAttendance/result",
+				method: "GET",
+			}).done(function(result){
+				// 출퇴근 버튼 클릭 결과
+				$("#registerAttendanceResult").empty();
+				let resultHTML = ""
+				resultHTML += ` <div class="alert alert-light-primary alert-dismissible fade show border-0" role="alert">
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								    <strong>` + result + `</strong>
+								</div>`
+				$("#registerAttendanceResult").append(resultHTML);
+				
+				// 출퇴근 기록 반영
+				showTodayAttendance();
+			}).fail(function() {
+				console.log("showRegisterAttendanceResult ajax 호출 실패");
+			});
+		}
+		
+    	// 출퇴근 등록 버튼 클릭시 출퇴근 결과 호출
+    	$(document).on("click", "#registerAttendanceBtn", function() {
+    		showRegisterAttendanceResult();
+    	});
     </script>
 
 </body>
