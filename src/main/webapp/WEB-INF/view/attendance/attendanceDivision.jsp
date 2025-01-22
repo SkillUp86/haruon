@@ -540,12 +540,13 @@
 		                   html += `<div class="btn-group  mb-2 me-4" role="group">
 									    <button id="selectState" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">수정<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
 									    <div class="dropdown-menu" aria-labelledby="selectState">
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=정상근무" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">정상근무</a>
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=연차" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">연차</a>
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=결근" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">결근</a>
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=반차" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">반차</a>
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=병가" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">병가</a>
-									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=조퇴및지각" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">조퇴및지각</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B01" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">정상근무</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B02" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">연차</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B03" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">반차</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B04" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">결근</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B05" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">병가</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B06" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">조퇴및지각</a>
+									        <a href="/attendance/modify/state?modifyTarget=` + item.empNo + " " + item.startTime + `&state=B07" class="modifyStateBtn dropdown-item btn btn-hover btn-outline-primary btn-sm">공가</a>
 									    </div>
 									</div>
 		                   		</td>

@@ -14,7 +14,7 @@
 	<select id="findDaySchByEmpAndDay" parameterType="com.haruon.groupware.attendance.entity.Attendance" 
 			resultType="Map">
 		 SELECT s.sch_no schNo
-		      , cc.descript schType
+		      , cc.common_code schType
 			  , s.start_time startTime
 			  , s.end_time endTime
 		   FROM schedules s
@@ -23,10 +23,8 @@
 		  WHERE sa.emp_no = #{empNo}
 		 	AND s.start_time LIKE CONCAT('%', #{startTime},'%')
 		    AND s.kind IN (SELECT common_code from common_code
-							WHERE parent_code 
-							   IN (SELECT common_code FROM common_code
-								    WHERE descript = 'schedule_kind')
-							  AND (descript = '연차' OR descript = '출장' OR descript = '반차'))
+							WHERE parent_code = 'G00'
+							  AND (common_code = 'G02' OR common_code = 'G03' OR common_code = 'G05'))
 	</select>
 	
 	<!-- 근태 업데이트 : 스케쥴링 -->
@@ -37,10 +35,7 @@
 				end_time = #{endTime},
 			</if>
 			<if test = "state != null">
-				state = (SELECT common_code FROM common_code 
-					  	  WHERE descript = #{state}
-					  	    AND parent_code = (SELECT common_code FROM common_code 
-												WHERE descript='attendance_state')),
+				state = #{state},
 			</if>
 			<if test = "approvalYN != null">
 				approvalYN = #{approvalYN},
@@ -73,11 +68,7 @@
 	            , #{endTime}
 	        </if>
 	        <if test="state != ''">
-	            , (SELECT common_code from common_code
-	                WHERE parent_code 
-	                   IN (SELECT common_code FROM common_code
-	                        WHERE descript = 'attendance_state')
-	                  AND descript = #{state})
+	            , #{state}
 	        </if>
 	    )
 	</insert>

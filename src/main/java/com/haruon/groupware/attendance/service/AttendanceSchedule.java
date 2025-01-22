@@ -28,7 +28,7 @@ public class AttendanceSchedule {
 	@Autowired private EmpMapper empMapper;
 	
 	// 전날 전 직원 attendance 데이터 업데이트
-	@Scheduled(cron = "00 00 00 * * *")
+	@Scheduled(cron = "05 02 13 * * *")
 	public void schedulePreviousDayAttState() {
 		String yesterday = (LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1)).toString();
 		
@@ -62,29 +62,29 @@ public class AttendanceSchedule {
 	        	log.debug("{} 의 스케쥴 객체 = {}", emp.getEmpNo(), sch.toString()); 
 	        	
 	        	// 어제가 연차라면 행등록하고 다음 직원 근태 스케쥴링으로 넘어간다.
-	        	if(sch.get("schType").equals("연차")) {
+	        	if(sch.get("schType").equals("G02")) {
 	        		log.debug("어제 연차기록이 있어 연차 등록함.");
 	        		newAtt.setStartTime(yesterday + " 00:00:00");
 	        		newAtt.setEndTime(yesterday + " 23:59:59");
-	        		newAtt.setState("연차");
+	        		newAtt.setState("B02");
 	        		attendanceMapper.createAttendance(newAtt);
 	        		log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 연차 등록 insert");
 	        		continue loopOut;
 	        	} 
 	        	
 	        	// 어제가 반차라면 근태시간 체크시 반차 시간 산입 및 반차에 대한 행 추가
-	        	if(sch.get("schType").equals("반차")) {
+	        	if(sch.get("schType").equals("G05")) {
 	        		log.debug("어제 반차기록이 있어 반차기록을 추가함");
 	        		halfDayOffTime = calculateHours(sch.get("startTime").toString(), sch.get("endTime").toString());
 	        		newAtt.setStartTime(sch.get("startTime").toString());
 	        		newAtt.setEndTime(sch.get("endTime").toString());
-	        		newAtt.setState("반차");
+	        		newAtt.setState("B03");
 	        		attendanceMapper.createAttendance(newAtt);
 	        		log.debug("empNo = " + emp.getEmpNo() + "schedulePreviousDayAttState - 반차 등록 insert");
 	        	}
 	        	
 	        	// 어제 중 출장을 다녀왔으면 출장기록을 변수에 담는데, 출장이 여러번이라면 start는 더 이른시간으로 end는 더 늦은 시간을 기록한다.
-	        	if(sch.get("schType").equals("출장")) {
+	        	if(sch.get("schType").equals("G03")) {
 	        		log.debug("어제 출장 기록 있음");
 	        		if(businessTripStart != null || businessTripEnd != null) {
 	        			log.debug("어제 출장 기록이 2번 이상 있음");
@@ -122,7 +122,7 @@ public class AttendanceSchedule {
 		        } else {
 		        	// 어제자 근태기록에 퇴근 시간과 출장 기록 둘 다 없는 경우 : 결근으로 처리 후 다음 멤버 근태 관리 스케쥴링
 	        		newAtt.setEndTime(yesterday + " 23:59:59");
-		        	newAtt.setState("결근");
+		        	newAtt.setState("B04");
 		        	
 	        		attendanceMapper.updateAttendance(newAtt);
 	        		log.debug("empNo = " + emp.getEmpNo() + "출근기록있음 + 어제자 퇴근/출장 기록 없음 - 결근 등록 update");
@@ -135,15 +135,15 @@ public class AttendanceSchedule {
 		        if(attHour < 5) {
 		        	// 결근으로 등록
 	        		newAtt.setEndTime(yesterDayAtt.getEndTime());
-	        		newAtt.setState("결근");
+	        		newAtt.setState("B04");
 		        } else if (attHour < 9) {
 		        	// 조퇴 및 지각으로 등록
 	        		newAtt.setEndTime(yesterDayAtt.getEndTime());
-	        		newAtt.setState("조퇴및지각");
+	        		newAtt.setState("B06");
 		        } else {
 		        	// 정상근무 등록
 	        		newAtt.setEndTime(yesterDayAtt.getEndTime());
-	        		newAtt.setState("정상근무");
+	        		newAtt.setState("B01");
 		        }
 	        	log.debug("newAtt 객체 = " + newAtt.toString());
 		        attendanceMapper.updateAttendance(newAtt);
@@ -155,7 +155,10 @@ public class AttendanceSchedule {
 				
 				
 				if(businessTripStart != null && businessTripEnd != null) {	// 출장기록이 있는 경우
-					workHour = calculateHours(businessTripStart, businessTripEnd);										
+					workHour = calculateHours(businessTripStart, businessTripEnd);	
+					log.debug("businessTripStart = {}", businessTripStart);
+					log.debug("businessTripEnd = {}", businessTripEnd);
+					log.debug("workHour = {}", workHour);
 					attHour = workHour + halfDayOffTime;
 					newAtt.setStartTime(businessTripStart);
 	        		newAtt.setEndTime(businessTripEnd);
@@ -164,18 +167,18 @@ public class AttendanceSchedule {
 	        		
 					if(attHour < 5) {
 			        	// 결근으로 등록
-		        		newAtt.setState("결근");
+		        		newAtt.setState("B04");
 			        } else if (attHour < 9) {
 			        	// 조퇴 및 지각으로 등록
-		        		newAtt.setState("조퇴및지각");
+		        		newAtt.setState("B06");
 			        } else {
 			        	// 정상근무 등록
-		        		newAtt.setState("정상근무");
+		        		newAtt.setState("B01");
 			        }
 				} else {
 					newAtt.setStartTime(yesterday + " 23:59:59");
 	        		newAtt.setEndTime(yesterday + " 23:59:59");
-		        	newAtt.setState("결근");
+		        	newAtt.setState("B04");
 				}
 				log.debug("전날 인스턴스가 없는 경우, insert 객체 = " + newAtt.toString());
 				attendanceMapper.createAttendance(newAtt);

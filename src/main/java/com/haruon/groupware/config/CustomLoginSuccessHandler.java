@@ -33,7 +33,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	// 로그인시 사원의 접속상태를 온라인으로 변경
 	private void updateEmpConnectionStatus(Integer empNo) {
 		
-		int result = empUpdateService.changeConnectionInfo(empNo, "온라인");
+		int result = empUpdateService.changeConnectionInfo(empNo, "J01");
 		
 		if(result == 1) {
 			log.debug("회원 로그인 성공 - updateEmpConnectionStatus 성공");

@@ -14,20 +14,25 @@ public class AttendanceServiceSupport {
 		// 시간 비교 및 연산을 위한 DateTime 포맷팅 형식
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		SimpleDateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat dateFormat4 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		
 		try {
-			return dateFormat1.parse(paramDate).getTime();
+			return dateFormat4.parse(paramDate).getTime();
 		} catch(ParseException e1) {
 			try {
-				return dateFormat2.parse(paramDate).getTime();
+				return dateFormat3.parse(paramDate).getTime();
 			} catch(Exception e2) {
 				try {
-	                return dateFormat3.parse(paramDate).getTime();
+	                return dateFormat2.parse(paramDate).getTime();
 	            } catch(ParseException e3) {
-	            	log.debug("DateFormat으로 지정하지 않는 형식, Parsing 오류(AttendanceService - parsingDate 오류)");
-	                e3.printStackTrace();
-	                return null;
+	            	try {
+	            		return dateFormat1.parse(paramDate).getTime();
+	            	} catch(ParseException e4) {
+		            	log.debug("DateFormat으로 지정하지 않는 형식, Parsing 오류(AttendanceService - parsingDate 오류)");
+		                e3.printStackTrace();
+		                return null;
+	            	}
 	            }
 			}
 		}
@@ -50,7 +55,9 @@ public class AttendanceServiceSupport {
 		end = parsingDate(endTime);
 		start = parsingDate(startTime);
 		
-		return (int) ( (end - start) / 1000 / 60 / 60);
+		log.debug("end = {}, start = {}", end, start);
+		
+		return (int) ( (end - start) / (1000 * 60 * 60));
 	}
 
 	// 연차 및 출장 리스트 조회조건(To)에 사용 : 조회를 원하는 달의 말일 계산

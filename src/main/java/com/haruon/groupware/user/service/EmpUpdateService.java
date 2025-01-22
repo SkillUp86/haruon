@@ -85,17 +85,8 @@ public class EmpUpdateService {
 	// 메신저 접속/상태변경 시 사원의 접속정보 변경
 	public Integer changeConnectionInfo(Integer empNo, String connStatus) {
 		EmpEntity emp = new EmpEntity();
-		
-		String setConnStatus = switch(connStatus) {
-			case "온라인" -> "J01";
-			case "오프라인" -> "J02";
-			case "자리비움" -> "J03";
-			case "회의중" -> "J04";
-			default -> "J02";	// 잘못된 값 입력시 상태를 로그아웃 처리
-		};
-		
 		emp.setEmpNo(empNo);
-		emp.setConnectionStatus(setConnStatus);
+		emp.setConnectionStatus(connStatus);
 		return empUpdateMapper.updateEmpConnection(emp);
 	}
 }

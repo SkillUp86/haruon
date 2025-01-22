@@ -32,7 +32,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 	// 로그아웃시 사원의 접속상태를 오프라인으로 변경
 	private void updateEmpConnectionStatus(Integer empNo) {
 		
-		int result = empUpdateService.changeConnectionInfo(empNo, "오프라인");
+		int result = empUpdateService.changeConnectionInfo(empNo, "J02");
 		
 		if(result == 1) {
 			log.debug("회원 로그아웃 성공 - updateEmpConnectionStatus 성공");
