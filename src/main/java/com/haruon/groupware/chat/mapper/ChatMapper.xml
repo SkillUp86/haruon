@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.chat.mapper.ChatMapper">
-	
-	<insert id="createRoom" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
+	<!-- 채팅방 생성 -->
+	<insert id="insertRoomJoin" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
 		INSERT INTO chat_room(
 			room_no, emp_no
 		) VALUES (
 			#{roomNo}, #{empNo}
 		)	
 	</insert>
-	
+	<!-- 로그인한 사원이 참여하고 있는 채팅방 정보 호출 -->
 	<select id="getChatRoomsInfoByEmp" parameterType="Integer" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
 		SELECT e.emp_no empNo 			    , e.ename ename
-			 , cc.descript connectionStatus , d.dname dname
+			 , d.dname dname				, cc.common_code connectionStatus
 			 , ef.file_name fileName	    , ef.ext ext
 			 , V1.roomId roomId			    , V1.sendTime sendTime
 			 , V1.message message			, V1.senderNo senderNo
@@ -29,8 +29,39 @@
 							FROM chat_room cr JOIN chat c ON c.room_id = cr.room_id
 							WHERE cr.room_id IN (SELECT room_id 
 											  		     FROM chat_room WHERE emp_no = #{empNo})) V0
-				 WHERE V0.recentNumber = #{empNo}) V1
+				 WHERE V0.recentNumber = 1) V1
 					ON V1.roomId = cr.room_id
 	     WHERE e.emp_no != #{empNo}
 	</select>
+	<!-- 채팅방 찾기  -->
+	<select id="findChatRoom" resultType="String" parameterType="String">
+		select room_id roomId
+		  from chat_room
+		 where room_id = #{chatRoom}
+	</select>
+	
+	<!-- 특정 Room의 채팅 상대방의 이름, 사진(확장자), 연결상태 -->
+	<select id="getOtherParticipant" parameterType="com.haruon.groupware.chat.entity.ChatRoom" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
+		   	 SELECT e.ename ename
+		          , e.connection_status connectionStatus
+		          , ef.file_name fileName
+		          , ef.ext ext
+		   	   FROM emp e
+		 INNER JOIN chat_room cr ON cr.emp_no = e.emp_no
+	LEFT OUTER JOIN emp_file ef ON e.emp_no = ef.emp_no
+			  WHERE cr.room_id = #{roomId} AND e.emp_no != #{empNo};
+	</select>
+	
+	<!-- 특정 room의 이전 대화 내역 -->
+	<select id="getChatConversation" parameterType="String" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
+		SELECT DISTINCT c.sender_no senderNo
+		     , c.send_time sendTime
+			 , c.message message
+	 	  FROM chat_room cr 
+	INNER JOIN chat c ON c.room_id = cr.room_id
+	 	 WHERE cr.room_id = #{roomId}
+	 	 ORDER BY sendTime;
+	</select>
+	
+	
 </mapper>
