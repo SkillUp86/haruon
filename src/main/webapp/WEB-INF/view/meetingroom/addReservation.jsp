@@ -200,7 +200,7 @@
 					            
 					            </div>
 					        </div>
-					    </div>
+s					    </div>
 					    </div>
 					</div>
 	            <div class="modal-footer">
@@ -277,7 +277,7 @@ function employeeList(emp) {
 	
 			let selectEmpList = $(`
 						<li class="form-check">
-							<input type="checkbox" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+							<input type="checkbox" class="form-check-input" namxe="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
 							<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
 						</li>
 						`);
