@@ -96,9 +96,9 @@
 			                 
 			                 <div class="post-meta-info d-flex justify-content-between">
 								<h5>작성자: ${b.ename}</h5>
-								<p style="text-align: right;">조회수: <span id="viewCount">${b.viewCnt}</span> | 작성시간: ${b.createDate}
+								<p style="text-align: right;">조회수: <span id="viewCount">${b.viewCnt}</span> | 작성시간: <span id="formattedCreateDate">${b.createDate}</span>
 									<c:if test="${not empty b.updateDate}">
-								        | 수정시간: ${b.updateDate}
+								        | 수정시간: <span id="formattedUpdateDate">${b.updateDate}</span>
 								    </c:if>
 								</p>
                              </div>
@@ -291,6 +291,33 @@
     			$('#formComment').submit();
     		}
     	})
+	</script>
+	
+	<script>
+	/* 날짜 포맷 */
+		const createDateString = "${b.createDate}";
+	    const updateDateString = "${b.updateDate}";
+	    
+	    // Date 객체로 변환
+	    const bCreateDate = new Date(createDateString);
+	    const bUpdateDate = new Date(updateDateString);
+	    
+	    // 날짜 형식 변환 함수 (yyyy-MM-dd HH:mm)
+	    function formatDate(dateString) {
+	        const date = new Date(dateString);
+	        return date.toLocaleString('ko-KR', {
+	            year: 'numeric',
+	            month: '2-digit',
+	            day: '2-digit',
+	            hour: '2-digit',
+	            minute: '2-digit',
+	            hour12: false
+	        }).replace(',', '');  // "," 제거
+	    }
+	    
+	    // 변환된 날짜를 화면에 출력
+	    document.getElementById('formattedCreateDate').textContent = formatDate(bCreateDate);
+	    document.getElementById('formattedUpdateDate').textContent = formatDate(bUpdateDate);
 	</script>
 </body>
 </html>
