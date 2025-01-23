@@ -286,7 +286,7 @@
 								
 								<!-- Modal - 부서 정보-->
 								<div class="modal fade" id="deptModal" tabindex="-1" role="dialog" aria-labelledby="deptModal" aria-hidden="true">
-									<div class="modal-dialog" role="document">
+									<div class="modal-dialog" role="document" style="max-width: 900px; width: 85%;">
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title">부서 정보</h5>
@@ -456,15 +456,17 @@
 		    }
 		}
 		
+		// 직급 코드 -> 직급명
+		const position = {
+    		'I01': '사원',
+   	        'I02': '팀장',
+   	        'I03': '부서장'		
+	    }
+		
+		
 		// 부서장 정보 모달 데이터 설정 함수
 		function setEmpModalData(nodeData) {
 		    // nodeData는 선택된 부서장 또는 부서의 데이터
-		    const position = {
-	    		'I01': '사원',
-    	        'I02': '팀장',
-    	        'I03': '부서장'		
-		    }
-		    
 		    document.querySelector('.modal-body .form-control[name="ename"]').value = nodeData.name || '';
 		    document.querySelector('.modal-body .form-control[name="dname"]').value = nodeData.dname || '';
 		    document.querySelector('.modal-body .form-control[name="location"]').value =  position[nodeData.location] || '-';
@@ -479,14 +481,14 @@
 		    // 직원 정보 출력
 		    const employeeList = department.employees.map(emp => `
 		        <tr>
-		            <td>${emp.ename}</td>
-		            <td>${emp.location || '-'}</td>
-		            <td>${emp.email || '-'}</td>
-		            <td>${emp.extNum || '-'}</td>
+		            <td>\${emp.ename}</td>
+		            <td>\${position[emp.location] || '-'}</td>
+		            <td>\${emp.email || '-'}</td>
+		            <td>\${emp.extNum || '-'}</td>
 		        </tr>
 		    `).join('');
 			
-		    console.log('Employee List HTML:', employeeList);
+		    // console.log('Employee List:', employeeList);
 		    document.querySelector('#deptModal .modal-body .table tbody').innerHTML = employeeList;
 		}
 		
@@ -502,10 +504,10 @@
 		            return response.json(); // JSON 형태로 응답을 파싱
 		        })
 		       .then(data => {
+		    	   // console.log('Employees Data:',data);
 		            return data; // 가져온 데이터를 반환
 		        })
 		        .catch(error => {
-		            console.error('There was a problem with the fetch operation:', error);
 		            return []; // 오류가 발생하면 빈 배열 반환
 		        });
 		}

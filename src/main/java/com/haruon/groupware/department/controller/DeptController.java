@@ -15,12 +15,10 @@ import com.haruon.groupware.company.entity.Company;
 import com.haruon.groupware.company.service.CompanyService;
 import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
-import com.haruon.groupware.user.service.EmpService;
 
 @Controller
 public class DeptController {
 	@Autowired DeptService deptService;
-	@Autowired EmpService empService;
 	@Autowired CompanyService companyService;
 	
 	// 조직도
@@ -41,11 +39,6 @@ public class DeptController {
 	        e.printStackTrace();
 	    }
 		return "dept/chart";
-	}
-	
-	@GetMapping("/depts/employees")
-	public List<Map<String, Object>> EmployeesByDept(@RequestParam Integer depNo) {
-	    return empService.getEmpBydept(depNo);
 	}
 	
 	// 부서 리스트
