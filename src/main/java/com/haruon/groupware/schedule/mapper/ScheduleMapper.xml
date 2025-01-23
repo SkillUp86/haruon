@@ -71,12 +71,12 @@ WHERE sch_no = #{schNo}
 
 <update id="updateSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules">
     UPDATE schedules
-    SET
-        title = #{title},
-        kind = (SELECT common_code FROM common_code WHERE common_code = #{kind}),
-        content = #{content},
-        start_time = #{startTime},
-        end_time = #{endTime}
-    WHERE sch_no = #{schNo}
+	SET
+    title = #{title},
+    kind = #{kind},
+    content = #{content},
+    start_time = #{startTime},
+    end_time = #{endTime}
+	WHERE sch_no = #{schNo}
 </update>
 </mapper>
