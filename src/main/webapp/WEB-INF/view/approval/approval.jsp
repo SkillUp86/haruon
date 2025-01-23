@@ -265,7 +265,7 @@
 					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
-					            <div class="list-group" id="employeeList">
+					            <div class="list-group employeeList">
 					            
 					            </div>
 					        </div>
@@ -370,7 +370,7 @@
 					<div class="col-4 d-flex border-end">
 						<div class="flex-grow-1">
 							<h6>직원 목록</h6>
-							<div class="list-group" id="employeeSubList">
+							<div class="list-group employeeList">
 							
 							</div>
 						</div>
@@ -480,10 +480,10 @@
 		});
 
 		function employeeList(emp) {
-			let empList = $('#employeeList');
-			let empSubList = $('#employeeSubList');
+			let empList = $('.employeeList');
+
 			empList.empty();
-			empSubList.empty();
+
 
 			if (emp && emp.length > 0) {
 				emp.forEach(function(item) {
@@ -496,8 +496,7 @@
 								</li>
 								`);
 					
-					empSubList.append(selectEmpList.clone());
-					empList.append(selectEmpList.clone());
+					empList.append(selectEmpList);
 				});
 			} 
 		}

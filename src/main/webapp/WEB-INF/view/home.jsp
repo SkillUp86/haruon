@@ -144,7 +144,7 @@
 
 
                         <!-- 캘린더 컨텐츠 시작  -->
-                        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12 layout-spacing">
                             (담당자 : 정우)<br>
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
@@ -157,15 +157,43 @@
                         </div>
                         <!-- 캘린더 컨텐츠 끝 -->
 
-                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
                             <!-- 결재함 컨텐츠 시작-->
-                            (담당자 : 동윤)<br>
                             <div class="layout-spacing ">
                                 <div class="widget widget-six">
-                                    <div class="widget-heading">
-                                        <h2 class="">결재함</h2>
-                                        줄바꿈 테스트 지워도 됩니다. -> <br><br><br><br><br><br>
-                                    </div>
+                                    <p class="text-end"><a href="${pageContext.request.contextPath}/draft/list"><strong>더보기</strong></a></p>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="table-primary">문서번호</th>
+                                                    <th scope="col">날짜</th>
+                                                    <th scope="col">문서양식</th>
+                                                    <th class="text-center" scope="col">제목</th>
+                                                    <th class="text-center" scope="col">결재상태</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${draftList}" var="d">
+                                                    <tr>
+                                                        <td>
+                                                            <span class="table-inner-text">${d.draNo}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="table-inner-text">${d.createDate}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="table-inner-text">${d.draftType}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="table-inner-text">${d.title}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="table-inner-text">${d.approvalState}</span>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                 </div>
                             </div>
                              <!-- 결재함 컨텐츠 끝-->

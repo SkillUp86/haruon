@@ -66,7 +66,6 @@ public class ApprovalController {
 		
 		String empName = userDetails.getEname();
 		int empNo = userDetails.getEmpNo();
-		String location = userDetails.getLocation();
 		String dname = userDetails.getDname();
 
 		// 전자결재 코드
@@ -77,8 +76,8 @@ public class ApprovalController {
 		// 가맹점 리스트
 		List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
 		// 휴가 코드
-		String vactionCode = "H00";
-		List<CommonCode> vacationList = approvalService.findByParentCode(vactionCode);
+		String vacationCode = "H00";
+		List<CommonCode> vacationList = approvalService.findByParentCode(vacationCode);
 
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("vacationList", vacationList);

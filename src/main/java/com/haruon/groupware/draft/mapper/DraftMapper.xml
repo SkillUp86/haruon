@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.draft.mapper.DraftMapper">
-
+	<!-- 메인페이지에 보여줄 5개  -->
+	<select id="findDraftListByMainPage" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
+		select
+			   d.dra_no draNo
+			 , d.kind type
+			 , kc.descript draftType
+			 , d.title title
+			 , date_format(d.create_date, '%y/%c/%e/ %H/%i') createDate
+			 , sc.descript approvalState
+		  from draft d
+			   inner join approval a
+						on d.dra_no = a.dra_no
+			   inner join common_code kc
+						on d.kind = kc.common_code
+			   inner join common_code sc
+						on a.state = sc.common_code
+		 where d.emp_no = #{empNo}
+		 order by d.dra_no desc
+		 limit 5
+	</select>
 	<!-- 유효성 검증 -->
 	<select id="isAccess" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseAccessDraft">
 		select d.emp_no empNo

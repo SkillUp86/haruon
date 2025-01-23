@@ -60,4 +60,6 @@ public interface DraftMapper {
 	// 검색된 참조문서 갯수
 	Integer findSearchTotalReferences(int empNo, String search);
 
+	// 메인페이지에 보여줄 5개
+    List<ResponseDraft> findDraftListByMainPage(int empNo);
 }
