@@ -10,7 +10,7 @@ import com.haruon.groupware.schedule.entity.Schedules;
 
 @Mapper
 public interface ScheduleMapper {
-	List<Schedules> schedulesList();
+	List<Schedules> schedulesList(int empNo);
 	
 	int addSchedule (Schedules schedules);
 	
@@ -22,6 +22,7 @@ public interface ScheduleMapper {
 	Integer updateSchedule (Schedules schedules);
 	
 	Schedules scheduleOne (Integer schNo);
+
 
 	int addScheduleAttendance(int schNo, int empNo);
 	

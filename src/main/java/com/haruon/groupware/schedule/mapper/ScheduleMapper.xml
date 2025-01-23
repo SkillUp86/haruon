@@ -4,32 +4,35 @@
 	<select id="schedulesList" 
 			resultType="com.haruon.groupware.schedule.entity.Schedules">
 	SELECT
-		 sch_no schNo
+		 s.sch_no schNo
 		 ,c.descript
-		 ,kind
-		 ,title title
-		 ,content content
-		 ,start_time startTime
-		 ,end_time endTime
+		 ,s.kind
+		 ,s.title title
+		 ,s.content content
+		 ,s.start_time startTime
+		 ,s.end_time endTime
 	FROM schedules s
-		inner join common_code c on
-		s.kind = c.common_code
+		inner join common_code c on s.kind = c.common_code
+		inner join schedule_attendance sa ON sa.sch_no = s.sch_no
+		where sa.emp_no = #{empNo}
 	</select>
 	
 	<!-- schedule attendance랑 조인해서 emp 작성자 이름가져오기 -->
 	<select id="scheduleOne" resultType="com.haruon.groupware.schedule.entity.Schedules" parameterType="Integer">
-		SELECT
-			 sch_no schNo
-			 ,c.descript
-			 ,kind
-			 ,title title
-			 ,content content
-			 ,start_time startTime
-			 ,end_time endTime
-		FROM schedules s
-			inner join common_code c on
-			s.kind = c.common_code
-		WHERE sch_no = #{schNo}
+	SELECT
+        s.sch_no schNo,
+        c.descript,
+        s.kind,
+        s.title title,
+        s.content content,
+    	s.start_time startTime,
+    	s.end_time endTime,
+    	e.ename 
+    FROM schedules s
+   	INNER JOIN common_code c ON s.kind = c.common_code
+    left JOIN schedule_attendance sa ON s.sch_no = sa.sch_no
+    left JOIN emp e ON sa.emp_no = e.emp_no	
+    WHERE s.sch_no = #{schNo}
 	</select>
 	
    <insert id="addSchedule" parameterType="com.haruon.groupware.schedule.entity.Schedules"
@@ -77,6 +80,6 @@ WHERE sch_no = #{schNo}
     content = #{content},
     start_time = #{startTime},
     end_time = #{endTime}
-	WHERE sch_no = #{schNo}
+WHERE sch_no = #{schNo}
 </update>
 </mapper>

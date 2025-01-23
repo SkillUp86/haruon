@@ -450,9 +450,6 @@
 	$('#btnUploadProfile').click(function(){
         $('#FormUploadProfile').submit();
     })
-
-	
-</script>
 </script>
 </body>
 </html>

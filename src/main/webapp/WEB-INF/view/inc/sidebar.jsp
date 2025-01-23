@@ -195,11 +195,11 @@
 				</c:if>
 				<c:if test="${role_it == false}">
 					<li>
-						<a href="#">회의실 리스트(수정필요)</a>
+						<a href="${pageContext.request.contextPath}/meetingroom">회의실 리스트</a>
 					</li>
 				</c:if>
 				<li>
-					<a href="#">내 예약 리스트(수정필요)</a>
+					<a href="${pageContext.request.contextPath}/myReservation">내 예약 리스트(수정필요)</a>
 				</li>
 			</ul>
 		</li>

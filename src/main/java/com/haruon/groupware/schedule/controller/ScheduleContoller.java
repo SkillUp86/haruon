@@ -47,20 +47,15 @@ public class ScheduleContoller {
 	}
 
 	@PostMapping("/updateSchedule")
-	public String updateSchedule(@ModelAttribute Schedules schedules, RedirectAttributes redirectAttributes) {
+	public String updateSchedule(@ModelAttribute Schedules schedules) {
 	    log.debug("Received schedules for update: {}", schedules);
 
 	    if (schedules == null || schedules.getSchNo() == null) {
-	        redirectAttributes.addFlashAttribute("error", "schNo 값이 없습니다.");
 	        return "redirect:/calendar";
 	    }
-
 	    int updatedRows = scheduleService.updateSchedule(schedules);
 
 	    if (updatedRows > 0) {
-	        redirectAttributes.addFlashAttribute("message", "업데이트 성공");
-	    } else {
-	        redirectAttributes.addFlashAttribute("error", "업데이트 실패");
 	    }
 
 	    return "redirect:/calendar";

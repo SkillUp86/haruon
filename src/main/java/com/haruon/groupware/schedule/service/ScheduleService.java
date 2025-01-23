@@ -27,14 +27,11 @@ public class ScheduleService {
 	public List<Schedules> schedulesList(){
 		CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = userDetails.getEmpNo();
-		return scheduleMapper.schedulesList();	
+		return scheduleMapper.schedulesList(empNo);	
 	}
 	
 	
-	public int addSchedule(Schedules schedule) {
-        return scheduleMapper.addSchedule(schedule);
-    }
-		
+	
 	public List<CommonCode> kind(String parentCode){
 		return commonMapper.findByParentCode(parentCode);
 		
@@ -65,11 +62,23 @@ public class ScheduleService {
 		return scheduleMapper.updateSchedule(schedules);
 	}
 	
-	public Schedules scheduleOne (Integer schNo) {
-		return scheduleMapper.scheduleOne(schNo);
+	public Schedules scheduleOne(Integer schNo) {
+	    return scheduleMapper.scheduleOne(schNo);
 	}
 
+	public int addSchedule(Schedules schedule) {
+		
+	    scheduleMapper.addSchedule(schedule);
+	    int schNo = schedule.getSchNo();  // 삽입된 일정의 schNo를 가져옵니다.
+	  
+	    
+		CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-	
-	
+	    int empNo = userDetails.getEmpNo();  // empNo를 가져옴
+
+	    int scheduleAttendance = scheduleMapper.addScheduleAttendance(schNo, empNo);
+
+	    return scheduleAttendance;  // 성공적으로 추가되면 schNo를 반환
+		
+	}
 }

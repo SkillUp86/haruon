@@ -192,7 +192,6 @@
     </section><!-- section 종료 -->
 
 					<!--  BEGIN FOOTER  -->
-            <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
             <!--  END FOOTER  -->
        		<!-- 캘린더API  -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
