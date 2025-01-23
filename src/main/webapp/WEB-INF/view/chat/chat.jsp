@@ -110,7 +110,7 @@
 	<script>
 		$(document).ready(function() {
 			showParticiant();
-	    	showConversation();
+
 		})
 	</script>
 
@@ -145,6 +145,7 @@
     		$.ajax({
     			url: '/chat/room/' + ${roomId} + '/conversation',
     			method: 'GET',
+    			async: false,
     		}).done(function(result) {
     			// HTML 요소 초기화
     			let conversationHTML = '';
@@ -236,6 +237,13 @@
 	    // 소켓 연결 디버깅	
 	    socket.onopen = () => {
 	        console.log("연결됨");
+			
+	        startCurrentConversationHTML = `<div class="conversation-start">
+						                		<span>대화시작</span>
+						                	</div>`;
+						                	
+	        showConversation();
+	        $("#conversation").append(startCurrentConversationHTML);
 	    };
 	
 	    socket.onerror = (error) => {
@@ -248,6 +256,11 @@
 	    };
 	    
 	    socket.onmessage = (msg) => {
+	    	if(msg.data === 'error') {
+	    		alert("유효하지 않은 채팅방입니다, 채팅을 시작하려면 ChatMain에서 진행해주세요.");
+	    		return false;
+	    	}
+	    	
 	        console.log("메시지 수신:", msg.data); // 메시지 내용 확인
 	        let str = msg.data.split('~');
 	        

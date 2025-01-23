@@ -35,6 +35,7 @@ public class WebSocketMessageHandler extends TextWebSocketHandler {
 	// 룸ID 별 접속 핸들링을 위한 Map
 	Map<String, WebSocketSession> roomSessionMap = new HashMap<>();
 	
+	
 
 	// 웹 소켓 연결 설정된 후 실행
 	@Override
@@ -56,7 +57,7 @@ public class WebSocketMessageHandler extends TextWebSocketHandler {
 		if (chatMapper.findChatRoom(roomId) != null) {
 			// 읽지않은 메세지 호출(cahtMapper.countChatUnread) : 시간 될때ㅐ 반영, roomId에 매칭되는 '안읽음' 메세지 건수 출력
 		} else {
-			session.sendMessage(new TextMessage("유효하지 않은 채팅방입니다, 채팅을 시작하려면 ChatMain에서 진행해주세요."));
+			session.sendMessage(new TextMessage("error"));
 		}
 
 	}
@@ -90,7 +91,7 @@ public class WebSocketMessageHandler extends TextWebSocketHandler {
 		}
 		String payload = messageBox[2] + "~" + messageBox[3];
 		log.info(" 서버 => 클라이언트 메세지 - {}", payload);
-		log.debug("보내는 값 사이즈 = {}", sessionList.size());
+		log.debug("페이로드를 담을 세션 유무 확인", sessionList.size());
 		for(WebSocketSession sess : sessionList) {
 			sess.sendMessage(new TextMessage(message.getPayload().toString()));
 			log.debug("클라이언트로 보내는 값 = {}", new TextMessage(message.getPayload().toString()));
