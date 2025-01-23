@@ -26,17 +26,5 @@ $(document).ready(function() {
 	}
 });
 
-// 채팅입력
-$('.mail-write-box').on('keydown', function(event) {
-    if(event.key === 'Enter') {
-        var chatInput = $(this);
-        var chatMessageValue = chatInput.val();
-        if (chatMessageValue === '') { return; }
-        $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
-        var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
-        const getScrollContainer = document.querySelector('.chat-conversation-box');
-        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
-        var clearChatInput = chatInput.val('');
-    }
-})
+
 

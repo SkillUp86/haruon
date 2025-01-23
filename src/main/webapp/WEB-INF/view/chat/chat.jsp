@@ -73,7 +73,7 @@
                                     <div class="chat-input">
                                         <form class="chat-form" action="javascript:void(0);">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                            <input type="text" class="mail-write-box form-control" placeholder="Message"/>
+                                            <input name="message" type="text" class="mail-write-box form-control" placeholder="Message"/>
                                         </form>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
 	</script>
 
     <script>
-    	
+    	// 채팅 상대방 정보
     	function showParticiant() {
     		$.ajax({
     			url: '/chat/room/' + ${roomId} + '/particiant',
@@ -139,7 +139,7 @@
     			console.log('showParticiant ajax 호출 실패');
     		});
     	}
-
+		// 이전 대화내용
     	function showConversation() {
     		$.ajax({
     			url: '/chat/room/' + ${roomId} + '/conversation',
@@ -158,7 +158,7 @@
     			let startTimesArr = {}; // 날짜 그룹으로 가장 이른시간 저장 [{date : time}]
     			let conversationStartTimes = [];	// 비교가능한 형태로 뭉치기 [date+time]
 
-    			$(result).each(function(index, item) {	
+    			$(result).each(function(index, item) {
     				let [date, time] = item.sendTime.split(" ");
     				sendTimes.push({date, time});
     				 
@@ -214,7 +214,7 @@
     					time = `<div>` + item.sendTime.substr(11,5) + `</div>`;
     				}
     				
-    				console.log(item.senderNo, ${principal.empNo});
+    				//console.log(item.senderNo, ${principal.empNo});
     				
     				content = `<span>` + item.message + `</span></div>`;
     				
@@ -227,6 +227,35 @@
     			console.log('showParticiant ajax 호출 실패');
     		});
     	}
+    </script>
+    
+    <!-- 입력한 채팅을 서버로 보내는 스크립트 -->
+    <script>
+    	let today = new Date();
+					    
+    	// 서버로 보낼 데이터(발송인, 채팅방ID, 발송시간, 메시지)
+
+    	// 채팅입력
+		$('.mail-write-box').on('keydown', function(event) {
+		    if(event.key === 'Enter') {
+		    	// 발화자, 방ID, 발송시간 서버로 전달 
+		        var senderNo = `${principal.empNo}`;
+		        var roomId = ${roomId};
+		        var sendTime = today.getFullYear() + '-' + (today.getMonth()+1 +'').padStart(2, 0) + '-' + (today.getDate() +'').padStart(2, 0) + ' '
+		                        + (today.getHours() +'').padStart(2, 0) + ':' + (today.getMinutes() +'').padStart(2, 0) + ':'+ (today.getSeconds() +'').padStart(2, 0);
+		        
+		        var message = $(this);
+		        var chatMessageValue = message.val();
+		        if (chatMessageValue === '') { return; }
+		        $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
+		        var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
+		        const getScrollContainer = document.querySelector('.chat-conversation-box');
+		        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
+		        var clearmessage = message.val('');
+		        
+		    }
+		})
+    	
     </script>
     
 </body>
