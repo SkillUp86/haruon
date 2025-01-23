@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.chat.dto.ChatRoomDTO;
+import com.haruon.groupware.chat.entity.Chat;
 import com.haruon.groupware.chat.entity.ChatRoom;
 import com.haruon.groupware.user.dto.EmpListDTO;
 
@@ -19,14 +20,18 @@ public interface ChatMapper {
 	// 로그인한 사원이 참여하고 있는 채팅방 정보 호출 
 	List<ChatRoomDTO> getChatRoomsInfoByEmp(Integer empNo);
 	
-	// 채팅방 찾기 
-	String findChatRoom(String roomId);
-	
 	// 특정 Room의 채팅 상대방의 이름, 사진(확장자), 연결상태 
 	ChatRoomDTO getOtherParticipant(ChatRoom chatRoom);
 	
 	// 특정 room의 이전 대화 내역 
 	List<ChatRoomDTO> getChatConversation(String roomId);
 	
+	// 채팅방 찾기 
+	String findChatRoom(String roomId);
 	
+	// 해당 채팅방에 입장하려고 하는 사원이 참가하고 있는지 확인 
+	Integer checkParticipation(Integer empNo);
+	
+	// 채팅 내역 추가 
+	Integer insertChat(Chat chat);
 }

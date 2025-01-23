@@ -13,6 +13,7 @@
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -40,7 +41,6 @@
 
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
-
         <div class="overlay"></div>
         <div class="cs-overlay"></div>
         <div class="search-overlay"></div>
@@ -87,6 +87,7 @@
             <div class="text-end m-2">
         		<a class="btn btn-warning" onclick="window.close()">창닫기</a>
         	</div>
+        	
         </div>
         <!--  END CONTENT AREA  -->
     </div>
@@ -229,33 +230,81 @@
     	}
     </script>
     
-    <!-- 입력한 채팅을 서버로 보내는 스크립트 -->
     <script>
-    	let today = new Date();
-					    
-    	// 서버로 보낼 데이터(발송인, 채팅방ID, 발송시간, 메시지)
+	    const socket = new WebSocket(`ws://localhost:80/ws/chat/room?id=${roomId}`);
+	    
+	    // 소켓 연결 디버깅	
+	    socket.onopen = () => {
+	        console.log("연결됨");
+	    };
+	
+	    socket.onerror = (error) => {
+	        console.error("에러 {}", error);
+	    };
+		
+	    
+	    socket.onclose = () => {
+	        console.log("연결 해제");
+	    };
+	    
+	    socket.onmessage = (msg) => {
+	        console.log("메시지 수신:", msg.data); // 메시지 내용 확인
+	        let str = msg.data.split('~');
+	        
+			// 서버로 부터 받은 메시지 HTML 적용
+	        let getMessageHTML = '';
+	        
+	        var roomId = str[0];
+	        var senderNo = str[1];
+	        var sendTime = str[2];
+	        var message = str[3];
+	        
+	        // 발화자에 따라 다른 형식의 HTML 적용
+	        let senderHTML = '';
+	        let timeHTML = '';
+	        let messageHTML = '';
 
-    	// 채팅입력
+	        if((senderNo.trim() === `${principal.empNo}`.trim())) {
+				senderHTML += `<div class="bubble me">`;
+				timeHTML += `<div class="text-end">` + sendTime.substr(11,5) + `</div>`;
+			} else {
+				senderHTML = `<div class="bubble you">`;
+				timeHTML = `<div>` + sendTime.substr(11,5) + `</div>`;
+			}
+			messageHTML = `<span>` + message + `</span></div>`;
+			
+			// HTML 하나로 합치기 
+			getMessageHTML = senderHTML + messageHTML + timeHTML;
+	        	
+			// 스크롤바 조절
+			const getScrollContainer = document.querySelector('.chat-conversation-box');
+	        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
+	       
+	        $("#conversation").append(getMessageHTML);
+	    };
+		
+		    
+	 	// 채팅입력 - 입력한 채팅을 서버로 보내는 스크립트 
 		$('.mail-write-box').on('keydown', function(event) {
 		    if(event.key === 'Enter') {
-		    	// 발화자, 방ID, 발송시간 서버로 전달 
+		        // 메세지
+		    	var message = $(this);
+		        var chatMessageValue = message.val();
+		        if (chatMessageValue === '') { return; }
+				// 발송인, 채팅방ID, 발송시간(현재)
+		        let today = new Date();
 		        var senderNo = `${principal.empNo}`;
 		        var roomId = ${roomId};
 		        var sendTime = today.getFullYear() + '-' + (today.getMonth()+1 +'').padStart(2, 0) + '-' + (today.getDate() +'').padStart(2, 0) + ' '
 		                        + (today.getHours() +'').padStart(2, 0) + ':' + (today.getMinutes() +'').padStart(2, 0) + ':'+ (today.getSeconds() +'').padStart(2, 0);
 		        
-		        var message = $(this);
-		        var chatMessageValue = message.val();
-		        if (chatMessageValue === '') { return; }
-		        $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
-		        var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
-		        const getScrollContainer = document.querySelector('.chat-conversation-box');
-		        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
+		    	// 서버로 보낼 데이터(발송인, 채팅방ID, 발송시간, 메시지)
+                socket.send(roomId + '~' + senderNo + '~' + sendTime + '~' + chatMessageValue);
+                
 		        var clearmessage = message.val('');
-		        
 		    }
 		})
-    	
+
     </script>
     
 </body>

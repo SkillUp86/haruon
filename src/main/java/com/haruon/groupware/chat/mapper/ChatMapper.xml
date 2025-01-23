@@ -33,12 +33,6 @@
 					ON V1.roomId = cr.room_id
 	     WHERE e.emp_no != #{empNo}
 	</select>
-	<!-- 채팅방 찾기  -->
-	<select id="findChatRoom" resultType="String" parameterType="String">
-		select room_id roomId
-		  from chat_room
-		 where room_id = #{chatRoom}
-	</select>
 	
 	<!-- 특정 Room의 채팅 상대방의 이름, 사진(확장자), 연결상태 -->
 	<select id="getOtherParticipant" parameterType="com.haruon.groupware.chat.entity.ChatRoom" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
@@ -62,6 +56,27 @@
 	 	 WHERE cr.room_id = #{roomId}
 	 	 ORDER BY sendTime;
 	</select>
+
+	<!-- 채팅방 찾기  -->
+	<select id="findChatRoom" resultType="String" parameterType="String">
+		SELECT DISTINCT room_id roomId
+				   FROM chat_room
+				  WHERE room_id = #{roomId}
+	</select>
 	
+	<!-- 채팅방에 입장하고자 하는 사원이 있는지 확인  -->
+	<select id="checkParticipation" resultType="Integer" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
+		SELECT COUNT(emp_no) roomId
+		  from chat_room
+		 where room_id = #{roomId} AND emp_no= #{empNo}
+	</select>
 	
+	<!-- 채팅 내역 추가 -->
+	<select id="insertChat" parameterType="com.haruon.groupware.chat.entity.Chat">
+		INSERT INTO chat(
+			room_id, sender_no, send_time, message
+		) VALUES (
+			#{roomId}, #{senderNo}, #{sendTime}, #{message}
+		)
+	</select>
 </mapper>

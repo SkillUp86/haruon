@@ -1,4 +1,4 @@
-package com.haruon.groupware.config;
+package com.haruon.groupware.config.socket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
