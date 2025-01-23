@@ -59,7 +59,7 @@
 			, #{subEmpNumber}
 			, #{vacStartDate}
 			, #{vacFinishDate}
-			, #{vactionType}
+			, #{vacationType}
 			, #{urgentPhone}
 		)
 	</insert>

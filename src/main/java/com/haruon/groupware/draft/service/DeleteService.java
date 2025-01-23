@@ -43,10 +43,10 @@ public class DeleteService {
 			deleteMapper.removeBusinessDraftByDraNo(draNo);
 			break;
 		case "매출":// 매출 보고서 삭제
-			deleteMapper.removeBusinessDraftByDraNo(draNo);
+			deleteMapper.removeSalesDraftByDraNo(draNo);
 			break;
 		case "휴가":// 휴가 보고서 삭제
-			deleteMapper.removeSalesDraftByDraNo(draNo);
+			deleteMapper.removeVacationDraftByDraNo(draNo);
 			break;
 		case "기본":
 			break;

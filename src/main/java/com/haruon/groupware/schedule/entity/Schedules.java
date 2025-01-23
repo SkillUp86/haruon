@@ -10,5 +10,6 @@ public class Schedules {
 	private String content;
 	private String startTime;
 	private String endTime;
+	private String ename;
 	
 }

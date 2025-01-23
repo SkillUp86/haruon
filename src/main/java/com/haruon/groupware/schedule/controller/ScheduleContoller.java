@@ -25,7 +25,7 @@ public class ScheduleContoller {
         return "schedule/calendar"; // 일정 페이지 반환
     }
 
-	@PostMapping("/scheduleList")
+	@PostMapping("/addSchedule")
 	public String addSchedule(@ModelAttribute Schedules schedule, RedirectAttributes redirectAttributes) {
 	    // 서비스 호출
 	    int result = scheduleService.addSchedule(schedule);
@@ -47,15 +47,25 @@ public class ScheduleContoller {
 	}
 
 	@PostMapping("/updateSchedule")
-	public String updateSchedule(Schedules schedules, Model model) {
-	    Integer updatedRows = scheduleService.updateSchedule(schedules);
-	    if (updatedRows > 0) {
-	        model.addAttribute("msg", "업데이트 성공");
-	    } else {
-	        model.addAttribute("msg", "업데이트 실패");
+	public String updateSchedule(@ModelAttribute Schedules schedules, RedirectAttributes redirectAttributes) {
+	    log.debug("Received schedules for update: {}", schedules);
+
+	    if (schedules == null || schedules.getSchNo() == null) {
+	        redirectAttributes.addFlashAttribute("error", "schNo 값이 없습니다.");
+	        return "redirect:/calendar";
 	    }
+
+	    int updatedRows = scheduleService.updateSchedule(schedules);
+
+	    if (updatedRows > 0) {
+	        redirectAttributes.addFlashAttribute("message", "업데이트 성공");
+	    } else {
+	        redirectAttributes.addFlashAttribute("error", "업데이트 실패");
+	    }
+
 	    return "redirect:/calendar";
 	}
+
 	
 	@GetMapping("/calendarDetail/{schNo}")
 	public String getMethodName(@PathVariable Integer schNo ,Model model) {
@@ -64,10 +74,5 @@ public class ScheduleContoller {
 		return "schedule/scheduleDetail";
 	}
 	
-	@PostMapping("/addSchedule")
-	public String addSchedule(Schedules schedules) {
-		scheduleService.addSchedule(schedules);
-		return"calendar";
-	}
-
+	
 }

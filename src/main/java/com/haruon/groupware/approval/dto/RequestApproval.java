@@ -26,7 +26,7 @@ public class RequestApproval {
 	private String subEmpNumber; //대체업무자 사원번호
 	private String vacStartDate;
 	private String vacFinishDate;
-	private String vactionType;
+	private String vacationType;
 	private String urgentPhone;
 	private String title;
 	private String textContent;
