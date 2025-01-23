@@ -181,11 +181,11 @@
 	                	<!-- 수정 버튼 -->
 	                	<button type="submit" class="btn btn-primary" id="modScheduleBtn">Edit</button>
 	                	<!-- 삭제 버튼 -->
-	                	<a class="btn btn-primary" id="DelScheduleBtn" href="/scheduleRemove">
-	                		Delete
-	                	</a>
+	                	<a class="btn btn-primary" id="DelScheduleBtn" href="/deleteSchedule/${s.schNo}">
+   							 삭제
+						</a>
 	                	<!-- 전페이지로 이동 버튼 -->
-	                	<button type="button" onclick="history.back()" class="btn btn-secondary">Close</button>
+	                	<button type="button" onclick="history.back()" class="btn btn-secondary">닫기</button>
 	                </div>
 				</form>
 			</div></div>

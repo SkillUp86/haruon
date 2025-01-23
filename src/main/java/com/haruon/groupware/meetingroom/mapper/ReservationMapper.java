@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ReservationMapper {
 	
-	Integer deleteReservation (Integer meeNo);
+    Integer findReservationByScheduleNo(Integer schNo);
+
+	Integer deleteReservation(Integer resNo);
+
 
 }

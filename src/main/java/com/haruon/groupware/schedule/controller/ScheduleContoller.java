@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.schedule.entity.Schedules;
@@ -26,10 +25,6 @@ public class ScheduleContoller {
         return "schedule/calendar"; // 일정 페이지 반환
     }
 
-	
-	
-	
-	
 	@PostMapping("/scheduleList")
 	public String addSchedule(@ModelAttribute Schedules schedule, RedirectAttributes redirectAttributes) {
 	    // 서비스 호출
@@ -45,11 +40,10 @@ public class ScheduleContoller {
 	    return "redirect:/calendar"; 
 	}
 	
-
-	@GetMapping("/deleteSchedule")
-	public String deleteSchedule(@RequestParam("schNo") Integer schNo) {
+	@GetMapping("/deleteSchedule/{schNo}")
+	public String deleteSchedule(@PathVariable("schNo") Integer schNo) {
 	    scheduleService.deleteSchedule(schNo);
-	    return "schedule/calendar";
+	    return "redirect:/calendar"; 
 	}
 
 	@PostMapping("/updateSchedule")
@@ -70,6 +64,10 @@ public class ScheduleContoller {
 		return "schedule/scheduleDetail";
 	}
 	
-	
+	@PostMapping("/addSchedule")
+	public String addSchedule(Schedules schedules) {
+		scheduleService.addSchedule(schedules);
+		return"calendar";
+	}
 
 }

@@ -3,6 +3,11 @@
 <mapper namespace="com.haruon.groupware.meetingroom.mapper.ReservationMapper">
 <delete id="deleteReservation" parameterType="Integer">
 	DELETE FROM reservation
-	WHERE mee_no = #{meeNo}
+	WHERE res_no = #{resNo}
 </delete>
+ <select id="findReservationByScheduleNo" parameterType="Integer" resultType="Integer">
+    SELECT res_no
+    FROM reservation
+    WHERE sch_no = #{schNo}
+</select>
 </mapper>
