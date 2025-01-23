@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+<sec:authentication property="principal" var="principal"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,26 +65,6 @@
                                 <div class="chat-conversation-box">
                                     <div id="chat-conversation-box-scroll" class="chat-conversation-box-scroll">
                                         <div id="conversation" class="chat active-chat person">
-                                        <!--  대화 동적 처리 시작 -->
-                                            <div class="conversation-start">
-                                                <span>어제</span>
-                                            </div>
-                                            <div class="bubble you">
-                                                Hello,
-                                            </div>
-                                            <div class="bubble me">
-                                                It's me.
-                                            </div>
-                                            <div class="conversation-start">
-                                                <span>오늘</span>
-                                            </div>
-                                            <div class="bubble you">
-                                                Hello,
-                                            </div>
-                                            <div class="bubble you">
-                                                It's me.
-                                            </div>
-                                            <!--  대화 동적 처리 끝 -->
                                         </div>
                                         
                                     </div>
@@ -122,9 +104,16 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../src/assets/js/apps/chat.js"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
+    
     <!-- ajax 호출 채팅 상대방 정보 / 이전 대화내역 -->
+	<script>
+		$(document).ready(function() {
+			showParticiant();
+	    	showConversation();
+		})
+	</script>
+
     <script>
-   		showParticiant();
     	
     	function showParticiant() {
     		$.ajax({
@@ -150,20 +139,94 @@
     			console.log('showParticiant ajax 호출 실패');
     		});
     	}
-    	
+
     	function showConversation() {
     		$.ajax({
     			url: '/chat/room/' + ${roomId} + '/conversation',
     			method: 'GET',
     		}).done(function(result) {
+    			// HTML 요소 초기화
+    			let conversationHTML = '';
+    			
+    			let sender = '';
+    			let alertNewDay = '';
+    			let time = '';
+    			let content = '';
+    			
+    			// 날짜별로 가장 첫번째로 올라온 메세지 위에 conversation-start 붙이기
+    			let sendTimes = [];		// 모든 sendTime 배열[date:time]
+    			let startTimesArr = {}; // 날짜 그룹으로 가장 이른시간 저장 [{date : time}]
+    			let conversationStartTimes = [];	// 비교가능한 형태로 뭉치기 [date+time]
+
+    			$(result).each(function(index, item) {	
+    				let [date, time] = item.sendTime.split(" ");
+    				sendTimes.push({date, time});
+    				 
+    			});
+    		
+    			
+				// 해당 날짜가 없거나, 해당 날짜의 키값보다 현 비교하는 time이 이르다면
+				sendTimes.forEach( (item) => {
+					let date = item.date.trim();
+					//console.log(item.date);
+				    // 해당 날짜가 이미 있으면
+				    if (startTimesArr[date]) {
+				    	//console.log("시간이 더 이른지 검사");
+				        // 만약 현재 시간(time)이 더 이르다면
+				        if (item.time < startTimesArr[date]) {
+				            startTimesArr[date] = item.time;  // 시간 교체
+				        }
+				    } else {
+				    	//console.log("해당날짜 없음");
+				        // 해당 날짜가 없으면
+				        startTimesArr[date] = item.time;  // 시간 추가
+				    }
+				});
+				
+    			// 더 이른시간끼리 합쳐진 키 : 값을 하나의 값으로 변환
+    			for(let i in startTimesArr) {
+    				let conversationStartTime = i + " " + startTimesArr[i];
+    				conversationStartTimes.push(conversationStartTime);
+    			}
+    			//console.log(conversationStartTimes);
+    			
+  			
+    			let oneChatHTML = '';
+    			$(result).each(function(index, item) {
+    				let earliestStart = false;
+    				// 해당 날짜 중 가장 이른 시간 채팅이라면 conversation-start
+					for(let i in conversationStartTimes) {
+	    				if(conversationStartTimes[i] === item.sendTime) {
+	    					earliestStart = true;
+	    				}
+	    			}
+    				alertNewDay = (earliestStart)? `<div class="conversation-start">
+								                    	<span>` + item.sendTime.substr(0,10) + `</span>
+									                </div>` : '';
+																               
+             		
+    				// 발화자가 나라면 우측에 아니라면 좌측에 말풍선 띄우기
+    				if((item.senderNo.trim() === `${principal.empNo}`.trim())) {
+    					sender = `<div class="bubble me">`;
+    					time = `<div class="text-end">` + item.sendTime.substr(11,5) + `</div>`;
+    				} else {
+    					sender = `<div class="bubble you">`;
+    					time = `<div>` + item.sendTime.substr(11,5) + `</div>`;
+    				}
+    				
+    				console.log(item.senderNo, ${principal.empNo});
+    				
+    				content = `<span>` + item.message + `</span></div>`;
+    				
+    				oneChatHTML += alertNewDay + sender + content + time;
+    			});
+    			
+    			$("#conversation").append(oneChatHTML);
     			
     		}).fail(function() {
     			console.log('showParticiant ajax 호출 실패');
     		});
     	}
-    	
-    
-    
     </script>
     
 </body>

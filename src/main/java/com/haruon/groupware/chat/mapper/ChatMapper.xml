@@ -59,7 +59,8 @@
 			 , c.message message
 	 	  FROM chat_room cr 
 	INNER JOIN chat c ON c.room_id = cr.room_id
-	 	 WHERE cr.room_id = #{roomId};
+	 	 WHERE cr.room_id = #{roomId}
+	 	 ORDER BY sendTime;
 	</select>
 	
 	
