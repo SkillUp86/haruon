@@ -20,8 +20,8 @@ private final ApprovalService approvalService;
 		this.approvalService = approvalService;
 	}
 	
-	// 참조 결재문서
-	@GetMapping("depts/{deptNo}/employees")
+	// 대체 업무자 부서 직원목록
+	@GetMapping("/depts/{deptNo}/employees")
 	public ResponseEntity<List<ResponseEmployee>> empList(@PathVariable int deptNo,Authentication authentication) {
 		CustomUserDetails details = (CustomUserDetails)authentication.getPrincipal();
 		

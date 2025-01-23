@@ -346,24 +346,54 @@
 	<!-- 사원별 참조문서 리스트 -->
 	<select id="findDraftByReferences" parameterType="Integer" resultType="com.haruon.groupware.draft.dto.response.ResponseReferencesList">
 		select 
-			   d.dra_no draNo
+  			   d.dra_no draNo
 			 , d.kind type
-			 , (select descript
-			   from common_code
-               where common_code = d.kind) draftType
+			 , kc.descript draftType
 			 , d.title title
-			 , d.content content
-			 , d.create_date createDate
-			 , (select descript
-			   from common_code
-               where common_code = a.state) approvalState
-             , r.emp_no refNo  
-		  from draft d
+			 , date_format(d.create_date, '%y년%c월%e일 %H시%i분') createDate
+			 , sc.descript approvalState
+		  from draft d	
 		 inner join approval a
 			   on d.dra_no = a.dra_no
 		 inner join refer r
 			   on a.app_no = r.app_no
+	     inner join common_code kc
+			   on d.kind = kc.common_code
+		 inner join common_code sc
+			   on a.state = sc.common_code
 		 where r.emp_no = #{empNo}
+		 <if test="search != null and search != ''">
+		 	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 </if>
+		 order by d.dra_no desc
+		 limit #{start} , #{length}
+	</select>
+	<!-- 참조자 결재문서 갯수 -->
+	<select id="findTotalReferences" resultType="Integer">
+		select count(*)
+		  from refer
+		 where emp_no = #{empNo}
+	</select>
+	<!-- 검색된 참조자 결재문서 갯수 -->
+	<select id="findSearchTotalReferences" resultType="Integer">
+		select count(*)
+		  from draft d	
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+		 inner join refer r
+			   on a.app_no = r.app_no
+	     inner join common_code kc
+			   on d.kind = kc.common_code
+		 inner join common_code sc
+			   on a.state = sc.common_code
+	     where r.emp_no = #{empNo}
+	     <if test="search != null and search != ''">
+		 	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 </if>
 	</select>
 	<!-- 사원별 결재문서 리스트 -->
 	<select id="findDraftByApproval" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
@@ -372,8 +402,7 @@
 			 , d.kind type
 			 , kc.descript draftType
 			 , d.title title
-			 , d.content content
-			 , d.create_date createDate
+			 , date_format(d.create_date, '%y년%c월%e일 %H시%i분') createDate
 			 , sc.descript approvalState
 		  from draft d
 		 inner join approval a
@@ -383,9 +412,11 @@
 		 inner join common_code sc
 			   on a.state = sc.common_code
 		 where a.mid_app = #{empNo}
-			or a.final_app = #{empNo}
-		  <if test="search != null and search != ''">
-		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+			   or a.final_app = #{empNo}
+		 <if test="search != null and search != ''">
+		 	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
 		 </if>
 		 order by d.dra_no desc
 		 limit #{start} , #{length}
@@ -396,22 +427,24 @@
 		  from draft d
 		 inner join approval a
 			   on d.dra_no = a.dra_no
+	     inner join common_code kc
+			   on d.kind = kc.common_code
+	     inner join common_code sc
+			   on a.state = sc.common_code
 		 where a.mid_app = #{empNo}
 			or a.final_app = #{empNo}
 		  <if test="search != null and search != ''">
-		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+		 	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
 		 </if>
-		 order by d.dra_no desc
 	</select>
 	<!-- 사원별  결재문서 갯수 -->
 	<select id="findTotalApprovalByEmp" resultType="Integer">
 		select count(*)
-		  from draft d
-		 inner join approval a
-			   on d.dra_no = a.dra_no
-		 where a.mid_app = #{empNo}
-			or a.final_app = #{empNo}
-		 order by d.dra_no desc
+		  from approval
+		 where mid_app = #{empNo}
+			or final_app = #{empNo}
 	</select>
 	<!-- 사원별 기안문서 리스트 -->
 	<select id="findDraftByEmp" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
@@ -419,20 +452,21 @@
 			   d.dra_no draNo
 			 , d.kind type
 			 , kc.descript draftType
-		     , d.title title
-		     , d.content content
-		     , d.create_date createDate
-		     , sc.descript approvalState
+			 , d.title title
+			 , date_format(d.create_date, '%y년%c월%e일 %H시%i분') createDate
+			 , sc.descript approvalState
 		  from draft d
 		 inner join approval a
 			   on d.dra_no = a.dra_no
-		 inner join common_code kc
+	     inner join common_code kc
 			   on d.kind = kc.common_code
-		 inner join common_code sc
+	     inner join common_code sc
 			   on a.state = sc.common_code
 		 where d.emp_no = #{empNo}
 		 <if test="search != null and search != ''">
-		 	and (d.title like concat ('%', #{search}, '%')) or (d.content like concat ('%', #{search}, '%'))
+		  	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
 		 </if>
 		 order by draNo desc
 		 limit #{start} , #{length}
@@ -447,10 +481,18 @@
 	<!-- 검색된 기안문서 갯수 -->
 	<select id="findSearchTotalDraftByEmp" resultType="Integer">
 		select count(*)
-		  from draft
+		  from draft d
+		 inner join approval a
+			   on d.dra_no = a.dra_no
+	     inner join common_code kc
+			   on d.kind = kc.common_code
+	     inner join common_code sc
+			   on a.state = sc.common_code
 		 where emp_no = #{empNo}
 		 <if test="search != null and search != ''">
-		 	and (title like concat ('%', #{search}, '%')) or (content like concat ('%', #{search}, '%'))
+		  	   and (d.title like concat ('%', #{search}, '%') 
+		 	   or kc.descript like concat ('%', #{search}, '%') 
+		 	   or sc.descript like concat ('%', #{search}, '%'))
 		 </if>
 	</select>
 </mapper>

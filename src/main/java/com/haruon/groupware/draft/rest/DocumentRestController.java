@@ -58,6 +58,7 @@ public class DocumentRestController {
 	    response.put("recordsFiltered", recordsFiltered); 
 	    response.put("data", draftByPage);
 	    log.debug(response.toString());
+	    
 		return ResponseEntity.ok(response);
 	}
 	// 결재할 문서
@@ -74,13 +75,24 @@ public class DocumentRestController {
 	    response.put("recordsTotal", totalRecords);
 	    response.put("recordsFiltered", recordsFiltered); 
 	    response.put("data", draftByApproval);
+	    
 		return ResponseEntity.ok(response);
 	}
 	
 	// 참조 문서
-	@GetMapping("/refers/{empNo}")
-	public ResponseEntity<List<ResponseReferencesList>> referenceList(@PathVariable int empNo){
-		List<ResponseReferencesList> referenceList = draftService.getReferencesByEmp(empNo);
-		return ResponseEntity.ok(referenceList);
+	@GetMapping("/refers")
+	public ResponseEntity<Map<String,Object>> referenceList(@RequestParam int start, @RequestParam int length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw){
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int empNo = details.getEmpNo();
+		Integer totalRecords = draftService.getReferencesCount(empNo);
+		List<ResponseReferencesList> referenceList = draftService.getReferencesByEmp(empNo, search, start, length);
+		Integer recordsFiltered = draftService.getSearchReferencesCount(empNo, search);
+		Map<String, Object> response = new HashMap<>();
+	    response.put("draw", draw);
+	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsFiltered", recordsFiltered); 
+	    response.put("data", referenceList);
+	    
+		return ResponseEntity.ok(response);
 	}
 }

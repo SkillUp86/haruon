@@ -343,7 +343,7 @@
                         }
                     });
                 });
-	    	   $('.dept').click(function() {
+	    	    $('.dept').click(function() {
 	    		   //debugger;
 	    		   let deptNo = $(this).val();
 	    		   $.ajax({
@@ -356,11 +356,11 @@
 	    				alert('실패');
 	    			})
 	    		})
-	
+            });
 	    		// 중복체크
 	    		let emp = [];
 	
-	    		// 대체업무자, 결재자 if문 분기
+	    		// 대체업무자
 	    		let existEmployee = true;
 	    		$('#subWorkerModal').on('show.bs.modal', function() {
 	    			existEmployee = false;  
@@ -376,7 +376,7 @@
 	    				url: '/depts/' + deptNo + '/employees',
 	    				method: "GET"
 	    			}).done(function(response) {
-	    				console.log('응답 데이터:', response);
+	    				//console.log('응답 데이터:', response);
 	    				emp = response;
 	    				employeeList(emp);  // 직원 목록 표시
 	    			}).fail(function() {
@@ -476,7 +476,7 @@
 	    			
 	    			$('#formUpdateVacation').submit();
 	    		})
-            });
+           
     		</script>
         </body>
         </html>

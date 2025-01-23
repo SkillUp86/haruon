@@ -109,9 +109,9 @@
                                     <thead>
                                         <tr>
                                             <th>문서번호</th>
+                                            <th class=" dt-no-sorting">기안날짜</th>
                                             <th class=" dt-no-sorting">문서양식</th>
                                             <th class=" dt-no-sorting">제목</th>
-                                            <th class=" dt-no-sorting">기안날짜</th>
                                             <th class=" dt-no-sorting">결재상태</th>
                                             <th class="text-center dt-no-sorting">확인</th>
                                         </tr>
@@ -150,71 +150,55 @@
 
 
     <script>
-        $('#zero-config').DataTable({
-            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-                "<'table-responsive'tr>" +
-                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "참조문서",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-                "sLengthMenu": "Results :  _MENU_",
-            },
-            "columnDefs": [
-                {
-                    "targets": -1, // 마지막 열
-                    "className": 'text-center'
-                }
-            ],
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20],
-            "pageLength": 10,
-            "order": [[0, 'desc']]
-            
-        });
+    $('#zero-config').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section text-center'<'dt--pagination'p>>",
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "info": false,
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "columnDefs": [
+            {
+                "targets": -1, // 마지막 열
+                "className": 'text-center'
+            }
+        ],
+        "stripeClasses": [],
+        "lengthMenu": [2, 10, 20],
+        "pageLength": 10,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "/refers",
+            "type": "get",       // GET 요청
+            "dataSrc": "data",
+            "data": function (d) {
+                console.log(d); // 요청 데이터 로깅
+            }
+        }	,
+        "columns": [
+            { "data": "draNo", "orderable": false},
+            { "data": "createDate", "orderable": false },
+            { "data": "draftType", "orderable": false },
+            { "data": "title", "orderable": false },
+            { "data": "approvalState", "orderable": false },
+            {
+                "data": "draNo",          
+                "render": function (data, type, row) {
+                    return `<a class="btn btn-primary" href="/draft/\${row.type}/detail/\${data}">확인</a>`;
+                },
+                 "orderable": false
+            }
+        ],
+        
+    });
     </script>
     <script>
-            let empNo =  ${user.empNo}; // 로그인한 사용자 번호
-
-            $.ajax({
-                method: 'GET',
-                url: '/refers/'+empNo,
-                success: function (data) {
-                    let table = $('#zero-config').DataTable();
-                    table.clear();
-                    data.forEach(item => {
-                        let rowData = [
-                            item.draNo,
-                            item.draftType,
-                            item.title,
-                            item.createDate,
-                            item.approvalState,
-                            (function () {
-                                let url = "";
-                                if (item.type === "C01") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`
-                                } else if (item.type === "C02") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else if (item.type === "C03") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else if (item.type === "C04") {
-                                    url = `/draft/\${item.type}/detail/\${item.draNo}`;
-                                } else {
-                                    url = "/error/404";
-                                }
-                                return `<a class="btn btn-primary" href="\${url}">확인</a>`;
-                            })()
-                        ];
-                        table.row.add(rowData);
-                    });
-                    table.draw();
-                },
-                error: function (xhr, status, error) {
-                    console.error(`Error: ${status}, ${error}`);
-                }
-            });
-
+            
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->
 </body>

@@ -10,7 +10,6 @@ public class ResponseDraft {
 	private String type;
 	private String draftType; // 양식타입
 	private String title;
-	private String content;
 	private String createDate;
 	private String approvalState; // 결재상태
 }
