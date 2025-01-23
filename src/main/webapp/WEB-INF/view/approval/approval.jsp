@@ -208,9 +208,9 @@
 											<input class="form-control" type="datetime-local" id="vacFinishDate" name="vacFinishDate">
 									
 											<span class="input-group-text label-text">유형</span>
-											<select class="form-select" id="vactionType" name="vactionType">
+											<select class="form-select" id="vacationType" name="vacationType">
 												<option value="">:::선택:::</option>
-												<c:forEach items="${vactionList}" var="v">
+												<c:forEach items="${vacationList}" var="v">
 													<option value="${v.commonCode}">${v.descript}</option>
 												</c:forEach>
 											</select>
@@ -693,10 +693,10 @@
 					}  else if($('#vactionType').val() === '') {
 						alert('휴가 종류를 선택하세요')
 						return;
-					} else if(!/^010-\d{4}-\d{4}$/.test($('#phone').val())) {
+					} else if(!/^010-\d{4}-\d{4}$/.test($('#urgentPhone').val())) {
 				        alert('전화번호 형식이 올바르지 않습니다. 예: 010-0000-0000');
 				        return;
-					} else if (new Date($('#vacStartDate').val()) > new Date($('#vacFinishDate').val())) {
+					} else if (new Date($('#vacStartDate').val().trim()) > new Date($('#vacFinishDate').val())) {
 			            alert('휴가 시작날짜가 종료날짜보다 늦을 수 없습니다.');
 			            return;
 			        }

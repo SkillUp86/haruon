@@ -78,10 +78,10 @@ public class ApprovalController {
 		List<ResponseFranchise> franchiseList = approvalService.findByFranchise();
 		// 휴가 코드
 		String vactionCode = "H00";
-		List<CommonCode> vactionList = approvalService.findByParentCode(vactionCode);
+		List<CommonCode> vacationList = approvalService.findByParentCode(vactionCode);
 
 		model.addAttribute("codeList", codeList);
-		model.addAttribute("vactionList", vactionList);
+		model.addAttribute("vacationList", vacationList);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("franchiseList", franchiseList);
 		model.addAttribute("empNo", empNo);
