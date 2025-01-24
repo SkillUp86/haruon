@@ -157,14 +157,21 @@
 	/*Time for some hover effects*/
 	/*We will apply the hover effect the the lineage of the element also*/
 	.tree li a:hover, .tree li a:hover+ul li a {
-		background: #c8e4f8; color: #000; border: 2px solid #6d7885;
+		background: #ffffff !important; border: 2px solid #d6e1ff; font-weight: bold;
 	}
 	/*Connector styles on hover*/
 	.tree li a:hover+ul li::after, 
 	.tree li a:hover+ul li::before, 
 	.tree li a:hover+ul::before,
 	.tree li a:hover+ul ul::before{
-		border-color:  #c8e4f8;
+		border-color:  #90aeff;
+	}
+	.btn.dept {
+		background-color: #d6e1ff !important;
+	}
+	.btn.head {
+		background-color: #d6e1ff !important;
+		font-size: larger; font-style: italic;
 	}
 	</style>
 </head>

@@ -45,17 +45,9 @@
 	<!-- 직원 정보 업데이트 -->
 	<update id="updateEmpBySystem" parameterType="com.haruon.groupware.user.dto.RequestEmpUpdateInfo">
 		UPDATE emp
-		<set>
-			<if test="depNo != null">
-				dep_no = #{depNo},
-			</if>
-			<if test="location != null">
-				location = #{location},
-			</if>
-			<if test="extNum != null">
-				ext_num = #{extNum}
-			</if>
-		</set>
+		SET dep_no = #{depNo}
+		    , location = #{location}
+		    , ext_num = #{extNum}
 		WHERE emp_no = #{empNo}
 	</update>
 	

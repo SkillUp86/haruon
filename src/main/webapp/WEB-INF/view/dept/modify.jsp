@@ -43,7 +43,7 @@
     
     <style>
 	.form-control[readonly] {
-		background-color: #fff !important;
+		background-color: #e7e7e7 !important;
 		color: #000 !important;
 	}
     
@@ -201,11 +201,11 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<label for="location">직급</label> 
-																		<select class="form-select mb-3" value="${e.location}" id="location" name="location">
+																		<select class="form-select mb-3" value="${e.location}" id="location" name="location" required>
 																			<option value="${e.location}" selected>${e.location}</option>
-																			<option value="I03">부서장</option>
-																			<option value="I02">팀장</option>
-																			<option value="I01">사원</option>
+																			<option value="I03" ${e.location == '부서장' ? 'selected' : ''}>부서장</option>
+																			<option value="I02" ${e.location == '팀장' ? 'selected' : ''}>팀장</option>
+																			<option value="I01" ${e.location == '사원' ? 'selected' : ''}>사원</option>
 																		</select>
 																	</div>
 																</div>
@@ -258,10 +258,10 @@
 																
 																<div class="col-md-6">
 																	<div class="form-group">
-																		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#leaveFormModal" 
+																		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#exitFormModal" 
 												                            		data-empNo="${e.empNo}" onclick="setModalData(this)">퇴사</button> <!-- 모달창 -->
-																		<c:if test="${not empty e.leaveDate}">
-																			<label>퇴사일자: ${e.leaveDate}</label> 
+																		<c:if test="${not empty e.exitDate}">
+																			<label>퇴사일자: ${e.exitDate}</label> 
 																		</c:if>
 												                    </div>
 												            	</div>
@@ -269,11 +269,9 @@
 															</div>
 														</div>
 														
-														
-														
 														<div class="col-md-12 mt-2 ">
 															<div class="form-group text-end">
-																<button id="btnUpdateEmp" type="button" class="btn btn-secondary">수정</button>
+																<button id="btnUpdateEmp" type="button" class="btn btn-success">수정</button>
 															</div>
 														</div>
 													</div>
@@ -289,7 +287,7 @@
 									</form>
 									
 									<!-- Modal - 퇴사 -->
-									<div class="modal fade inputForm-modal" id="leaveFormModal" tabindex="-1" role="dialog" aria-labelledby="leaveFormModalLabel" aria-hidden="true">
+									<div class="modal fade inputForm-modal" id="exitFormModal" tabindex="-1" role="dialog" aria-labelledby="exitFormModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-dialog-centered" role="document">
 											<div class="modal-content">
 												<div class="modal-header" id="inputFormModalLabel">
@@ -300,21 +298,21 @@
 													</button>
 												</div>
 												
-												<form id="formLeave" action="${pageContext.request.contextPath}/employees/leave" method="post">
+												<form id="formExit" action="${pageContext.request.contextPath}/employees/exit" method="post">
 													<div class="modal-body">
 														<div class="mb-3">
 															<label class="form-label">이름</label> 
-															<input type="hidden" class="form-control" id="leaveEmpNo" name="empNo" value="${e.empNo}">
-															<input type="text" class="form-control" id="leaveEname" name="ename" value="${e.ename}" readonly>
+															<input type="hidden" class="form-control" id="exitEmpNo" name="empNo" value="${e.empNo}">
+															<input type="text" class="form-control" id="exitEname" name="ename" value="${e.ename}" readonly>
 														</div>
 														<div class="mb-3">
 															<label class="form-label">퇴사 일자</label> 
-															<input type="date" class="form-control" id="leaveDate" name="leaveDate" required>
+															<input type="date" class="form-control" id="exitDate" name="exitDate" required>
 														</div>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-														<button id="btnLeave" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">퇴사일자 등록</button>
+														<button id="btnExit" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">퇴사일자 등록</button>
 													</div>
 												</form>
 
@@ -348,17 +346,22 @@
 
 	<script>
 		$('#btnUpdateEmp').click(function() {
-			$('#formUpdateEmp').submit();
+			if($('#depNo').val() == null || $('#depNo').val() === ''){
+    			$('#depNo').val('${e.depNo}'); // 부서 입력하지 않았으면 원래 부서번호 값 입력
+    			return;
+    		} else {
+				$('#formUpdateEmp').submit();
+			}
 		})
 		
  	// 퇴사 버튼 -> 퇴사일자 등록
-   	$(document).on('click', '#btnLeave', function() {
-        if ($('#leaveDate').val() === '') {
+   	$(document).on('click', '#btnExit', function() {
+        if ($('#exitDate').val() === '') {
             alert('퇴사일자를 입력하세요');
             return;
         } else {
         	console.log('퇴사일자 등록 폼 제출');
-            $('#formLeave').submit();
+            $('#formExit').submit();
         }
     });
 	</script>

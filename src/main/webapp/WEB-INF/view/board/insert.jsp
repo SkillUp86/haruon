@@ -112,7 +112,7 @@
 	                                    <div class="col-sm-10">
 	                                    	<label>작성자</label>
 	                                    	<input type="hidden" id="empNo" name="empNo" value="${empNo}">
-                                            <input type="text" class="form-control" id="ename" name="ename" value="${ename}" style="width: 150px;" readonly>
+                                            <input type="text" class="form-control" id="ename" name="ename" value="${ename}" style="width: 150px; background-color: #e7e7e7;" readonly>
 	                                    </div>
 	                                </div>
 	                                

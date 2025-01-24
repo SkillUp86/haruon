@@ -187,7 +187,7 @@
 																					<div class="modal-body">
 																						<div class="mb-3">
 																							<label for="depNo" class="form-label">번호</label> 
-																							<input type="text" class="form-control" id="depNo" name="depNo" value="${d.depNo}" readonly>
+																							<input type="text" class="form-control" id="depNo" name="depNo" value="${d.depNo}" style="background-color: #e7e7e7 !important;" readonly>
 																						</div>
 																						<div class="mb-3">
 																							<label for="dname" class="form-label">이름</label> 

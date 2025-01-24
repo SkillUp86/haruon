@@ -187,7 +187,7 @@
 																					<div class="modal-body">
 																						<div class="mb-3">
 																							<label for="catNo" class="form-label">번호</label> 
-																							<input type="text" class="form-control" id="catNo" name="catNo" value="${c.catNo}" readonly>
+																							<input type="text" class="form-control" id="catNo" name="catNo" value="${c.catNo}" style="background-color: #e7e7e7 !important;" readonly>
 																						</div>
 																						<div class="mb-3">
 																							<label for="catName" class="form-label">이름</label> 

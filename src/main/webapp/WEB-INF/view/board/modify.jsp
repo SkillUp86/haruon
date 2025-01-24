@@ -96,7 +96,7 @@
                 <div class="row mb-4 layout-spacing layout-top-spacing">
 
                         <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-
+							<h2 style="margin-top: 20px; padding-bottom: 10px;">게시글 수정</h2>
                             <div class="widget-content widget-content-area ecommerce-create-section">
 
                                 <form id="formUpdate" action="${pageContext.request.contextPath}/board/modify" method="post" enctype="multipart/form-data">

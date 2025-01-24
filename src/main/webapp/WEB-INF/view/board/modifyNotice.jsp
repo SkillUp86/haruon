@@ -96,9 +96,9 @@
                 <div class="row mb-4 layout-spacing layout-top-spacing">
 
                         <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-
+							<h2 style="margin-top: 20px; padding-bottom: 10px;">공지 수정</h2>
                             <div class="widget-content widget-content-area ecommerce-create-section">
-
+								
                                 <form id="formUpdate" action="${pageContext.request.contextPath}/board/modifyNotice" method="post" enctype="multipart/form-data">
 	                                <input type="hidden" name="boaNo" value="${b.boaNo}">
 	                               
@@ -170,28 +170,6 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 
     <script>
-	    // boardFiles를 JSON으로 변환
-	    var boardFiles = [
-	        <c:forEach var="file" items="${boardFiles}">
-	            {
-	                "boafNo": "${file.boafNo}",
-	                "originalName": "${file.originalName}",
-	                "fileName": "${file.fileName}",
-	                "ext": "${file.ext}",
-	                "kind": "${file.kind}",
-	                "size": "${file.size}"
-	            }
-	        </c:forEach>
-	    ];
-	
-	    // 파일 경로 배열 생성
-	    var filePaths = boardFiles.map(function(file) {
-	        return '${pageContext.request.contextPath}/upload/' + file.fileName; // 웹 애플리케이션의 컨텍스트 경로와 upload 폴더를 결합
-	    });
-	
-	    // ecommerce.addFiles 호출
-	    ecommerce.addFiles(...filePaths); // 스프레드 연산자를 사용하여 배열 전개
-    
     	$('#btnUpdate').click(function(){
     		if($('#title').val() == ''){
     			alert('제목을 입력하세요');

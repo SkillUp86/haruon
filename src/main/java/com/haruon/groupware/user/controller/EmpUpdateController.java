@@ -77,11 +77,11 @@ public class EmpUpdateController {
 	}
 	
 	// 직원 퇴사
-	@PostMapping("/employees/leave")
-	public String leave(@RequestParam Integer empNo, @RequestParam String leaveDate) {
+	@PostMapping("/employees/exit")
+	public String leave(@RequestParam Integer empNo, @RequestParam String exitDate) {
 		RequestEmpUpdateInfo updateInfo = new RequestEmpUpdateInfo();
 		updateInfo.setEmpNo(empNo);
-		updateInfo.setExitDate(leaveDate);
+		updateInfo.setExitDate(exitDate);
 		empUpdateService.updateExitDate(updateInfo);
 		return "redirect:/employees/modify?empNo="+empNo;
 	}

@@ -202,8 +202,31 @@
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
                                     <div class="widget-heading">
-                                        <h2 class="">쪽지함</h2>
-                                        줄바꿈 테스트 지워도 됩니다. -> <br><br><br><br><br><br>
+                                        <h5 style="display: inline-block;">쪽지함</h5>
+                                        <p style="display: inline-block; float: right; margin-right: 15px;">
+                                        	<a href="${pageContext.request.contextPath}/"><strong>더보기</strong></a>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="widget-content">
+                                        <div class="table-responsive">
+                                            <table id="board-list" class="table dt-table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>번호</th>
+                                                        <th>제목</th>
+                                                        <th>발신자</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                	<tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
