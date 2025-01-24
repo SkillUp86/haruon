@@ -212,25 +212,41 @@
 
                         <!-- 공지 게시판 컨텐츠 시작-->
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                            (담당자 : 아림)<br>
+                            <br>
                             <div class="widget-heading">
-                                <div class="widget widget-table-two">
-                                    <div class="widget-heading">
-                                        <h5 class="">공지게시판 컬럼</h5>
+                                <div class="widget widget-table-two" style="padding: 20px;">
+                                    <div class="widget-heading" style="margin-left:10px">
+                                        <h5 style="display: inline-block;">공지게시판</h5>
+                                        <p style="display: inline-block; float: right; margin-right: 15px;">
+                                        	<a href="${pageContext.request.contextPath}/board/notice"><strong>더보기</strong></a>
+                                        </p>
                                     </div>
 
                                     <div class="widget-content">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table id="board-list" class="table dt-table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>공지게시판 컬럼</th>
+                                                        <th>번호</th>
+                                                        <th>제목</th>
+                                                        <th>작성자</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>공지게시판 데이터</td>
-                                                    </tr>
+                                                	<c:forEach var="n" items="${noticeList}" varStatus="status">
+	                                                    <tr>
+	                                                        <td>${n.boaNo}</td>
+	                                                        <td>
+	                                                        	<a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title} &nbsp;
+	                                                        		<!-- 최근 2개 항목에만 'new' 배지 추가 -->
+													                <c:if test="${status.index < 2}">
+													                    <span class="badge badge-light-info mb-2 me-4">new</span>
+													                </c:if>
+	                                                        	</a>
+	                                                        </td>
+	                                                        <td>${n.ename}</td>
+	                                                    </tr>
+	                                                 </c:forEach>   
                                                 </tbody>
                                             </table>
                                         </div>
@@ -242,11 +258,14 @@
 
                         <!-- 자유 게시판 컨텐츠 시작-->
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                            (담당자 : 아림)<br>
+                            <br>
                             <div class="widget-heading">
-                                <div class="widget widget-table-two">
-                                    <div class="widget-heading">
-                                        <h5 class="">자유게시판 컬럼</h5>
+                                <div class="widget widget-table-two" style="padding: 20px;">
+                                    <div class="widget-heading" style="margin-left:10px">
+                                        <h5 style="display: inline-block;">자유게시판</h5>
+                                        <p style="display: inline-block; float: right; margin-right: 15px;">
+                                        	<a href="${pageContext.request.contextPath}/board"><strong>더보기</strong></a>
+                                        </p>
                                     </div>
 
                                     <div class="widget-content">
@@ -254,16 +273,19 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>자유게시판판 컬럼</th>
+                                                        <th>번호</th>
+                                                        <th>제목</th>
+                                                        <th>작성자</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>자유게시판 데이터
-                                                            줄바꿈 테스트 지워도 됩니다.
-                                                            -> <br><br><br><br><br><br>
-                                                        </td>
-                                                    </tr>
+                                                	<c:forEach var="b" items="${boardList}">
+	                                                    <tr>
+	                                                        <td>${b.boaNo}</td>
+	                                                        <td><a href="${pageContext.request.contextPath}/board/${b.boaNo}">[${b.catName}] ${b.title}</a></td>
+	                                                        <td>${b.ename}</td>
+	                                                    </tr>
+	                                                 </c:forEach>   
                                                 </tbody>
                                             </table>
                                         </div>

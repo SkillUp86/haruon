@@ -7,7 +7,7 @@
 			b.boa_no boaNo
 			, e.ename ename
 			, b.title
-			, b.create_date createDate
+			, DATE_FORMAT(b.create_date,'%Y/%c/%e %H:%i') createDate
 			, b.view_cnt viewCnt
 			, c.cat_name catName
 			, COUNT(bl.like_no) countLike
@@ -32,7 +32,7 @@
 			b.boa_no boaNo
 			, e.ename ename
 			, b.title
-			, b.create_date createDate
+			, DATE_FORMAT(b.create_date,'%Y/%c/%e %H:%i') createDate
 			, b.view_cnt viewCnt
 			, c.cat_name catName
 			, b.cat_no catNo
@@ -89,8 +89,8 @@
 			, c.cat_name catName
 			, b.title
 			, b.content
-			, b.create_date createDate
-			, b.update_date updateDate
+			, DATE_FORMAT(b.create_date,'%Y/%c/%e %H:%i') createDate
+			, DATE_FORMAT(b.update_date,'%Y/%c/%e %H:%i') updateDate
 			, b.view_cnt viewCnt
 		FROM board b
 		INNER JOIN emp e
@@ -108,7 +108,7 @@
 			, bc.emp_no empNo
 			, e.ename ename
 			, bc.content content
-			, bc.create_date createDate
+			, DATE_FORMAT(bc.create_date,'%Y/%c/%e %H:%i') createDate
 		FROM board_comment bc
 		INNER JOIN emp e
 			ON bc.emp_no = e.emp_no
@@ -194,25 +194,7 @@
 		FROM board_file
 		WHERE boa_no = #{boaNo}
 	</select>
-	
-	<!-- 홈 -->
-	<select id="selectBoardHome" parameterType="Map" resultType="Map">
-		SELECT 
-			b.boa_no boaNo
-			, e.ename ename
-			, b.title
-			, c.cat_name catName
-		FROM board b
-		INNER JOIN emp e
-			ON b.emp_no = e.emp_no
-		INNER JOIN category c
-			ON b.cat_no = c.cat_no
-		WHERE b.cat_no != 1
-		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
-		ORDER BY b.boa_no DESC
-		LIMIT 5
-	</select>
-	
+
 	<!-- 	
 공지
 	-->
@@ -222,13 +204,17 @@
 			b.boa_no boaNo
 			, e.ename ename
 			, b.title
-			, b.create_date createDate
+			, DATE_FORMAT(b.create_date,'%Y/%c/%e %H:%i') createDate
 			, b.view_cnt viewCnt
 			, b.cat_no catNo
+			, COUNT(bc.com_no) countComment
 		FROM board b
 		INNER JOIN emp e
 			ON b.emp_no = e.emp_no
+		LEFT JOIN board_comment bc
+			ON b.boa_no = bc.boa_no
 		WHERE b.cat_no = 1
+		GROUP BY b.boa_no
 		ORDER BY b.boa_no DESC
 	</select>
 	
@@ -262,20 +248,6 @@
 		WHERE cat_no = #{catNo}
 	</update>
 	
-	<!-- 홈 -->
-	<select id="selectNoticeHome" parameterType="Map" resultType="Map">
-		SELECT 
-			b.boa_no boaNo
-			, e.ename ename
-			, b.title
-		FROM board b
-		INNER JOIN emp e
-			ON b.emp_no = e.emp_no
-		WHERE b.cat_no = 1
-		ORDER BY b.boa_no DESC
-		LIMIT 5
-	</select>
-	
 	<!-- 글 삭제 -->
 	<delete id="deleteBoard" parameterType="Integer">
 		DELETE FROM board
@@ -297,4 +269,35 @@
 		WHERE boa_no = #{boaNo}
 	</delete>
 	
+		
+	<!-- 홈 -->
+	<select id="selectBoardHome" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+			, c.cat_name catName
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		INNER JOIN category c
+			ON b.cat_no = c.cat_no
+		WHERE b.cat_no != 1
+		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
+		ORDER BY b.boa_no DESC
+		LIMIT 5
+	</select>
+	
+	<select id="selectNoticeHome" parameterType="Map" resultType="Map">
+		SELECT 
+			b.boa_no boaNo
+			, e.ename ename
+			, b.title
+		FROM board b
+		INNER JOIN emp e
+			ON b.emp_no = e.emp_no
+		WHERE b.cat_no = 1
+		ORDER BY b.boa_no DESC
+		LIMIT 5
+	</select>
 </mapper>

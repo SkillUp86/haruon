@@ -119,14 +119,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="n" items="${noticeList}">
+                                            <c:forEach var="n" items="${noticeList}" varStatus="status">
                                                    <tr>
                                                     <td>${n.boaNo}</td>
                                                     <td>
                                                         <div class="d-flex justify-content-left align-items-center">
                                                             <div class="d-flex flex-column">
                                                                 <span class="text-truncate fw-bold">
-                                                                    <a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title}</a>
+                                                                    <a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title} (${n.countComment})
+                                                                    <!-- 최근 2개 항목에만 'new' 배지 추가 -->
+													                <c:if test="${status.index < 3}">
+													                    <span class="badge badge-light-info mb-2 me-4">new</span>
+													                </c:if>
+                                                                    </a>
                                                                 </span>
                                                             </div>
                                                         </div>
