@@ -80,25 +80,33 @@ public class MsgService {
 	
 	// 받은 쪽지함
 	public List<MsgReaderDto> getReadersMsg(Integer empNo) {
-		return msgMapper.getReadersMsgList(empNo);
+		return msgMapper.getReadersMsg(empNo);
 	}
-	
-	// 받은 쪽지
-	public MsgReaderDto getReaderMsg(Integer msgNo) {
-		msgMapper.modifyReadState(msgNo); // 읽음
-		return msgMapper.getReaderMsg(msgNo);
+	// 쪽지 읽음
+	public Integer modifyReadState(Integer msgNo) {
+		return msgMapper.modifyReadState(msgNo);
+	}
+	// 휴지통 이동
+	public Integer modifyTrashMsg(Integer msgNo) {
+		return msgMapper.modifyTrashMsg(msgNo);
 	}
 
 	// 보낸 쪽지함
 	public List<MsgSenderDto> getSendersMsg(Integer empNo) {
-		return msgMapper.getSenderMsgList(empNo);
+		return msgMapper.getSendersMsg(empNo);
 	}
 	
 	// 임시 보관함
 	public List<MsgSenderDto> getTemporaryMsgList(Integer empNo) {
 		return msgMapper.getTemporaryMsgList(empNo);
+	}	
+	
+	// 휴지통(받은쪽지)
+	public List<MsgReaderDto> getTrashsMsg(Integer empNo) {
+		return msgMapper.getTrashsMsg(empNo);
 	}
 	
+
 	// Header에 표시할 읽지 않은 상태인 수신쪽지관련 정보요약
 	public List<MsgReaderListDto> findUnreadMsgSum(Integer empNo) {
 		return msgMapper.findUnreadMsgSum(empNo);

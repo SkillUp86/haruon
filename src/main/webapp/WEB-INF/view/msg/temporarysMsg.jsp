@@ -198,97 +198,90 @@
                                         </div>
                                     <!-- 메세지 박스 끝 -->
 
-                                        <!-- 메세지 보내는 Modal 창 시작 -->
-                                        <div class="modal fade" id="composeMailModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">Compose</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                        </button>
-                                                    </div>
+                                    <!-- 메세지 발송 Modal 창 시작 -->
+                                    <div class="modal fade" id="composeMailModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">발송</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                    </button>
+                                                </div>
 
-                                                    <div class="modal-body">
-                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
-                                                        <div class="compose-box">
-                                                            <div class="compose-content">
-                                                                <form>
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="mb-4 mail-to">
-	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
-                                                                                <select class="form-control" id="m-to">
-	                                                                                <option value="">직원 선택</option>
-	                                                                                <c:forEach items="${empList}" var="el">
-		                                                                                <option value="${el.email}">${el.ename} &lt;${el.email}&gt;</option>
-	                                                                                </c:forEach>
-                                                                            	</select>
-                                                                        	</div>
-                                                                        </div>
+                                                <div class="modal-body">
+                                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
+                                                    <div class="compose-box">
+                                                        <div class="compose-content">
+                                                            <form id="m-form" method="post" action="${pageContext.request.contextPath}/insertMsg" enctype="multipart/form-data">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="mb-4 mail-to">
+                                                                         <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
+                                                                            <select class="form-control" id="m-to" name="empNoR">
+                                                                             <option value="">직원 선택</option>
+                                                                             <c:forEach items="${empList}" var="el">
+                                                                              <option value="${el.empNo}">${el.ename} &lt;${el.email}&gt;</option>
+                                                                             </c:forEach>
+                                                                        	</select>
+                                                                    	</div>
                                                                     </div>
-                                                                    
-                                                                    <div class="row">
-                                                                    <div class="col-md-6">
-                                                                    	<div class="mb-4 mail-form">
-                                                                            <p>From: ${ename}</p>
-                                                                            <input type="email" id="m-from" class="form-control" name="emailS" value="${email}" readonly> 
-                                                                        </div>
-                                                                    </div>
-
-																	<!-- ??? 참조자 어떻게 할건지 ??? -->
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-cc">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
-                                                                            <div>
-                                                                                <input type="text" id="m-cc" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- ??? 참조자 ??? -->
                                                                 </div>
                                                                 
-                                                                    <div class="mb-4">
-                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
-                                                                        <div class="w-100">
-                                                                            <input type="text" id="m-title" class="form-control">
+                                                                <div class="row">
+                                                                <div class="col-md-6">
+                                                                	<div class="mb-4 mail-form">
+                                                                        <p>From:${ename}</p>
+                                                                        <input type="email" id="m-from" class="form-control" name="emailS" value="${email}" readonly> 
+                                                                        <input type="hidden" name="empNoS" value="${empNo}">
+                                                                        <input type="hidden" id="stateS" name="stateS" value="E01">
+                                                                    </div>
+                                                                </div>
+
+													<!-- ??? 참조자 어떻게 할건지 ??? -->
+                                                                <div class="col-md-6">
+                                                                    <div class="mb-4 mail-cc">
+                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
+                                                                        <div>
+                                                                            <input type="text" id="m-cc" class="form-control">
                                                                             <span class="validation-text"></span>
                                                                         </div>
                                                                     </div>
-                                                                    
-                                                                    <div class="">
-                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
-                                                                        <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-                                                                        <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple">
-                                                                    </div>
-
-																	<div id="editor-container" class="ql-container ql-snow">
-																		<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true" data-placeholder="내용">
-																			<p><br></p>
-																		</div>
-																		<div class="ql-clipboard" contenteditable="true" tabindex="-1">
-																		</div>
-																		<div class="ql-tooltip ql-hidden">
-																			<a class="ql-preview" target="_blank" href="about:blank"></a>
-																			<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">
-																			<a class="ql-action"></a><a class="ql-remove"></a>
-																		</div>
-																	</div>
-
-                                                                </form>
+                                                                </div>
+                                                                <!-- ??? 참조자 ??? -->
                                                             </div>
+                                                            
+                                                                <div class="mb-4">
+                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
+                                                                    <div class="w-100">
+                                                                        <input type="text" id="m-title" name="title" class="form-control">
+                                                                        <span class="validation-text"></span>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="">
+                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
+                                                                    <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
+                                                                    <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+                                                                </div>
+                                                                
+													<div id="editor-container">
+                                                            	</div>
+                                                                <input type="hidden" id="m-content" name="content">
+
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button id="btn-send" class="btn btn-primary"> 발송</button>
-                                                        <button id="btn-save" class="btn float-left btn-success"> 저장</button>
-                                                        <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> 취소</button>
-                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="btn-send" class="btn btn-primary"> 발송</button>
+                                                    <button id="btn-save" class="btn float-left btn-success"> 저장</button>
+                                                    <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> 취소</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 메세지 보내는 Modal 창 끝 -->
+                                    </div>
+                                    <!-- 메세지 발송 Modal 창 끝 -->
                                     </div>
                                 </div>
                             </div>
@@ -360,47 +353,7 @@
                                     </div>`
                                     
                     msgTemporaryHTML += `<div id="inNo` + no + `" class="collapse" aria-labelledby="#outNo` + no + `" data-bs-parent="#mailbox-inbox">
-                                        <div class="mail-content-container sentmail">
-                                        
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <div class="d-flex user-info">
-                                                <div class="f-body">
-                                                    <div class="meta-mail-time">
-                                                    	<p class="user-email"><span>To,</span>` + item.enameS + `</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="action-btns">
-                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Reply">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left reply"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
-                                                </a>
-                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Forward">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-right forward"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <p class="mail-content"> 
-                                        ` + item.content + ` </p>
-                                        <p> ` + item.enameR + ` </p>
-                    
-                                        <div class="attachments">
-                                            <h6 class="attachments-section-title">Attachments</h6>
-                    
-                                            <div class="attachment file-folder">
-                                                <div class="media">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                                    <div class="media-body">
-                                                        <p>
-                                                            ` + ((item.fileNameM != null)? item.fileNameM + "." + item.extM : '첨부파일없음') + `
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    
-                                        </div>
-                                    </div>
-                                </div>`
+						                `
                                     
                     no++;
                                 

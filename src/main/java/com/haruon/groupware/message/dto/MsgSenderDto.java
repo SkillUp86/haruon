@@ -23,9 +23,10 @@ public class MsgSenderDto { // 보낸쪽지함, 임시보관함
 	
 	private String title; // 제목
 	private String content; // 내용
-	private String fileNameE; // 직원 사진 이름
-	private String extE; // 직원 사진 확장자
-	private String originNameM; // 첨부 파일 이름
+	private String fileNameE; // 수신인 파일명
+	private String extE; // 수신인 파일 확장자
+	private String originNameM; // 첨부파일 원본이름
+	private String fileNameM; // 첨부파일 DB 이름
 	private String extM; // 첨부 파일 확장자
 	
 }

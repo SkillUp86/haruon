@@ -135,7 +135,7 @@
                     </div>
                     <!--  END BREADCRUMBS  -->
                 
-                <!-- 쪽지함 편집 시작 -->
+                <!-- 보낸 쪽지함 편집 시작 -->
                 
                <div class="row layout-top-spacing">
                         <div class="col-xl-12 col-lg-12 col-md-12">
@@ -175,10 +175,10 @@
                                                 <div class="message-box-scroll" id="ct">
                                                     <!-- 보낸 쪽지함 시작 -->
                                                     <div class="mail-item">
-                                                        <!-- 메일 리스트 HTML 동적처리할 부분-->
                                                         <div id="msgSenders" class="mail-item">
-                                                        </div>
+                                                        <!-- 메일 리스트 HTML 동적처리할 부분-->
                                                         <!-- 메일 리스트 끝 -->
+                                                        </div>
                                                     </div>
                                                 </div>
         
@@ -192,8 +192,8 @@
                                                     <!-- 메일 상세보기 시작 - HTML 동적 처리할 부분 -->                                               
                                                     <!-- 메일 상세보기 끝 -->
                                                     </div>
-                                                        
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     <!-- 메세지 박스 끝 -->
@@ -338,7 +338,7 @@
 	</script>
 	
 	<!-- 메일 뷰 -->
-   <script>
+	<script>
          $.ajax({
                 url: "/MsgSenders/" + "${principal.empNo}",
                 method: 'GET', 
@@ -358,6 +358,7 @@
                                                             <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
                                                         </div>
                                                         <div class="f-head ms-3">
+                                                        	<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + "." + item.extE + `" class="user-profile" alt="avatar">
                                                         </div>
                                                         <div class="f-body">
                                                             <div class="meta-mail-time">
@@ -383,7 +384,7 @@
                                                 <div class="f-body">
                                                     <div class="meta-mail-time">
                                                         <div class="">
-                                                            <p class="user-email"><span>To.</span>` + item.enameS + `</p>
+                                                            <p class="user-email"><span>To.</span>` + item.enameR + `</p>
                                                         </div>
                                                         <p class="mail-content-meta-date current-recent-mail">` + item.sendDate.substr(0, 10) + `</p>
                                                         <p class="meta-time align-self-center">` + item.sendDate.substr(11) + `</p>
@@ -402,7 +403,7 @@
                                         </div>
                                         <p class="mail-content"> 
                                         ` + item.content + ` </p>
-                                        <p> From.` + item.enameR + ` </p>
+                                        <p> From.` + item.enameS + ` </p>
                     
                                         <div class="attachments">
                                             <h6 class="attachments-section-title">Attachments</h6>
@@ -411,10 +412,15 @@
                                                 <div class="media">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                                     <div class="media-body">
-                                                        <p>
-                                                            ` + ((item.originNameM != null)? item.originNameM + "." + item.extM : '첨부파일없음') + ` 
-                                                            <a href="${pageContext.request.contextPath}/upload/` + item.originNameM + "." + item.extM + ` download="${cfl.originName}.${cfl.ext}>
-                                                        </p>
+                                                        <p>`;
+                                                        
+                                                        
+                    msgSenderHTML += ((item.originNameM != null)?  
+                              		           `<a href="${pageContext.request.contextPath}/upload/msg/` + item.fileNameM + "." + item.extM + `" download="` + item.originNameM + "." + item.extM + `"> ` + item.originNameM + "." + item.extM 
+                              				  : `첨부파일없음`) 
+                              		
+                  
+                    msgSenderHTML += `</p>
                                                     </div>
                                                 </div>
                                             </div>

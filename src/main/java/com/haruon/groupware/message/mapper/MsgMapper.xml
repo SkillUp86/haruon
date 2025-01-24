@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
 
+	<!-- 임시저장 쪽지 발송 -->
+	<update id="modifyMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		UPDATE msg
+		SET title = #{title}, content = #{content}
+		WHERE msg_no = ${msgNo}
+	</update>
+	
 	<!-- 쪽지 발송/임시저장 -->
 	<insert id="insertMsg" parameterType="com.haruon.groupware.message.dto.MsgDto"
 			useGeneratedKeys="true" keyProperty="msgNo">
@@ -45,56 +52,8 @@
 			#{msgNo}, #{empNoR}
 		)
 	</insert>
-
-	<!-- 받은 쪽지함 -->
-	<select id="getReadersMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
-	   SELECT m.msg_no msgNo
-	        , es.ename enameS
-	        , es.email emailS
-	        , ccs.descript descriptS
-	        , m.title title
-	        , ms.send_date sendDate
-	        , mr.read_date readDate
-	        , ccmr.descript state
-		 FROM msg_reader mr
-		 JOIN msg m ON mr.msg_no = m.msg_no
-		 JOIN msg_sender ms ON mr.msg_no = ms.msg_no
-		 JOIN emp es ON ms.emp_no = es.emp_no
-		 JOIN common_code ccs ON es.location = ccs.common_code
-		 JOIN common_code ccmr ON mr.state = ccmr.common_code
-		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02'
-	</select>
-	
-	<!-- 받은 쪽지 -->
-	<select id="getReaderMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
-	SELECT
-		   m.msg_no msgNo
-		 , mr.msgr_no msgrNo
-		 , es.ename enameS
-		 , ccs.descript descriptS
-		 , es.email emailS
-		 , er.ename enameR
-		 , ccr.descript descriptR 
-		 , er.email emailR
-		 , ms.send_date sendDate
-		 , m.title title
-		 , m.content content
-	     , erf.file_name fileNameE
-		 , erf.ext extE
-		 , mf.file_name fileNameM
-	     , mf.ext extM
-	  FROM msg_reader mr
-	  JOIN msg m ON mr.msg_no = m.msg_no
-	  JOIN msg_sender ms ON mr.msg_no = ms.msg_no
-	  JOIN emp es ON ms.emp_no = es.emp_no
-	  JOIN common_code ccs ON es.location = ccs.common_code
-	  JOIN emp er ON mr.emp_no = er.emp_no
-	  JOIN common_code ccr ON er.location = ccr.common_code
-	  LEFT OUTER JOIN emp_file erf ON er.emp_no = erf.emp_no
-	  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
-	 WHERE m.msg_no = #{msgNo} AND ms.state = 'E02'
-							   AND mr.state IN ('D01', 'D02')
-	</select>
+	<!-- update -->
+	<!-- 쪽지 발송/임시저장 끝 -->
 	
 	<!-- 쪽지 파일 -->
 	<select id="getMsgFileList" parameterType="Integer" resultType="com.haruon.groupware.message.entity.MsgFile">
@@ -110,15 +69,90 @@
 		 WHERE msg_no = #{msgNo}
 	</select>
 	
+	<!-- 받은 쪽지 -->
+	<select id="getReadersMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
+		SELECT mr.msg_no msgNo
+			  , mr.msgr_no msgrNo
+			  , mr.emp_no empNoR
+			  , er.ename enameR
+			  , er.email emailR
+			  , ccr.descript descriptR
+			  , mr.state stateR
+			  , ccmr.descript state
+			  , mr.read_date readDate
+			  , ms.emp_no empNoS
+			  , es.ename enameS
+			  , es.email emailS
+			  , ccs.descript descriptS
+			  , m.title title
+			  , m.content content
+			  , ms.send_date sendDate
+		     , esf.file_name fileNameE
+		     , esf.ext extE
+		     , mf.origin_name originNameM
+		     , mf.file_name fileNameM
+		     , mf.ext extM
+		FROM msg_reader mr
+		JOIN emp er ON mr.emp_no = er.emp_no
+		JOIN common_code ccr ON er.location = ccr.common_code
+		JOIN common_code ccmr ON mr.state = ccmr.common_code
+		JOIN msg m ON mr.msg_no = m.msg_no
+		JOIN msg_sender ms ON mr.msg_no = ms.msg_no
+		JOIN emp es ON ms.emp_no = es.emp_no
+		JOIN common_code ccs ON es.location = ccs.common_code
+		LEFT OUTER JOIN emp_file esf ON es.emp_no = esf.emp_no
+		LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
+		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02' AND (mr.state = 'D01' OR mr.state = 'D02')
+	</select>
 	<!-- 읽음 상태변경 -->
 	<update id="modifyReadState" parameterType="Integer">
 		UPDATE msg_reader
 		SET state = "D02", read_date = now()
 		WHERE msg_no = #{msgNo}
 	</update>
+	<!-- 휴지통 이동 -->
+	<update id="modifyTrashMsg" parameterType="Integer">
+		UPDATE msg_reader
+		SET state = "D03"
+		WHERE msg_no = #{msgNo}
+	</update>	
+
+	<!-- 받은 쪽지 휴지통 -->
+	<select id="getTrashsMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
+		SELECT mr.msg_no msgNo
+			  , mr.msgr_no msgrNo
+			  , mr.emp_no empNoR
+			  , er.ename enameR
+			  , er.email emailR
+			  , ccr.descript descriptR
+			  , mr.state stateR
+			  , mr.read_date readDate
+			  , ms.emp_no empNoS
+			  , es.ename enameS
+			  , es.email emailS
+			  , ccs.descript descriptS
+			  , m.title title
+			  , m.content content
+			  , ms.send_date sendDate
+		     , esf.file_name fileNameE
+		     , esf.ext extE
+		     , mf.origin_name originNameM
+		     , mf.file_name fileNameM
+		     , mf.ext extM
+		FROM msg_reader mr
+		JOIN emp er ON mr.emp_no = er.emp_no
+		JOIN common_code ccr ON er.location = ccr.common_code
+		JOIN msg m ON mr.msg_no = m.msg_no
+		JOIN msg_sender ms ON mr.msg_no = ms.msg_no
+		JOIN emp es ON ms.emp_no = es.emp_no
+		JOIN common_code ccs ON es.location = ccs.common_code
+		LEFT OUTER JOIN emp_file esf ON es.emp_no = esf.emp_no
+		LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
+		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02' AND mr.state = 'D03'
+	</select>
 	
 	<!-- 보낸 쪽지 -->
-	<select id="getSenderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
+	<select id="getSendersMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
 		SELECT m.msg_no msgNo
 			 , ms.msgs_no msgsNo
 		     , es.ename enameS
@@ -149,8 +183,7 @@
 	
 	<!-- 임시 보관 -->
 	<select id="getTemporaryMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
-		SELECT 
-			   m.msg_no msgNo
+		SELECT m.msg_no msgNo
 			 , ms.msgs_no msgsNo
 		     , es.ename enameS
 		     , ccs.descript descriptS
@@ -161,7 +194,6 @@
 		     , ms.send_date sendDate
 		     , m.title title
 		     , m.content content
-		     , ms.state state
 		     , erf.file_name fileNameE
 		     , erf.ext extE
 		     , mf.origin_name originNameM

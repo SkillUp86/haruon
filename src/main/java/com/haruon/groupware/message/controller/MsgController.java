@@ -51,27 +51,16 @@ public class MsgController {
 		// 로그인정보
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		Integer empNo = userDetails.getEmpNo();
+		String ename = userDetails.getEname();
+		String email = userDetails.getUsername();
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("ename", ename);
+		model.addAttribute("email", email);
 		
 		// 메일 보내기 - 직원 목록
 		List<EmpDto> empList = empService.getEmpList();
 		model.addAttribute("empList", empList);
 		return "msg/readersMsg";
-	}
-
-	// 받은 쪽지
-	@GetMapping("/readerMsg/{msgNo}")
-	public String getReaderMsg(@PathVariable Integer msgNo, Authentication authentication, Model model) {
-		// 로그인정보
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		Integer empNo = userDetails.getEmpNo();
-		
-		MsgReaderDto msgReaderDto = msgService.getReaderMsg(msgNo);
-		List<MsgFile> msgFileList = msgService.getMsgFileList(msgNo);
-		model.addAttribute("mr", msgReaderDto);
-		model.addAttribute("mfl", msgFileList);
-		log.debug("msgReaderDto =====> " + msgReaderDto);
-		
-		return "msg/readerMsg";
 	}
 	
 	// 보낸 쪽지함
@@ -85,9 +74,6 @@ public class MsgController {
 		model.addAttribute("empNo", empNo);
 		model.addAttribute("ename", ename);
 		model.addAttribute("email", email);
-		
-		List<MsgSenderDto> sendersMsgDto = msgService.getSendersMsg(empNo);
-		model.addAttribute("sendersMsgDto", sendersMsgDto);
 		
 		// 메일 보내기 - 직원 목록
 		List<EmpDto> empList = empService.getEmpList();
@@ -109,5 +95,23 @@ public class MsgController {
 		List<EmpDto> empList = empService.getEmpList();
 		model.addAttribute("empList", empList);
 		return "msg/temporarysMsg";
+	}
+	
+	// 받은 쪽지 휴지통
+	@GetMapping("/trashsMsg")
+	public String getMsgTrashs (Authentication authentication, Model model) {
+		// 로그인정보
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		Integer empNo = userDetails.getEmpNo();
+		String ename = userDetails.getEname();
+		String email = userDetails.getUsername();
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("ename", ename);
+		model.addAttribute("email", email);
+		
+		// 메일 보내기 - 직원 목록
+		List<EmpDto> empList = empService.getEmpList();
+		model.addAttribute("empList", empList);
+		return "msg/trashsMsg";
 	}
 }
