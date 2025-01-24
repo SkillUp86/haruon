@@ -62,11 +62,7 @@
 		 JOIN emp es ON ms.emp_no = es.emp_no
 		 JOIN common_code ccs ON es.location = ccs.common_code
 		 JOIN common_code ccmr ON mr.state = ccmr.common_code
-		WHERE mr.emp_no = #{empNo} AND ms.state = (SELECT common_code
-											         FROM common_code
-											        WHERE descript = '발송' AND parent_code = (SELECT common_code 
-																					            FROM common_code 
-	                           					   	 								           WHERE descript='msg_sender_state'))
+		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02'
 	</select>
 	
 	<!-- 받은 쪽지 -->
@@ -96,26 +92,8 @@
 	  JOIN common_code ccr ON er.location = ccr.common_code
 	  LEFT OUTER JOIN emp_file erf ON er.emp_no = erf.emp_no
 	  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
-	 WHERE m.msg_no = #{msgNo} AND ms.state = (
-								   SELECT common_code
-							         FROM common_code
-							        WHERE descript = '발송' 
-								          AND parent_code = (
-								  		      SELECT common_code
-								  		        FROM common_code
-								  		       WHERE descript = 'msg_sender_state'
-								    	  )
-							   ) 
-							   AND mr.state IN (
-							   	   SELECT common_code
-							   	     FROM common_code
-							   	    WHERE (descript = '읽음' OR descript = '읽지않음') 
-							     		   AND parent_code = (
-								   			   SELECT common_code
-								   			     FROM common_code
-								   				WHERE descript = 'msg_reader_state'
-							   			   )
-							   )
+	 WHERE m.msg_no = #{msgNo} AND ms.state = 'E02'
+							   AND mr.state IN ('D01', 'D02')
 	</select>
 	
 	<!-- 쪽지 파일 -->
@@ -166,11 +144,7 @@
 		  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
 		  JOIN common_code ccr ON er.location = ccr.common_code
 		  JOIN common_code ccs ON es.location = ccs.common_code
-	     WHERE ms.emp_no = #{empNo} AND ms.state = (SELECT common_code
-									                  FROM common_code
-									                 WHERE descript = '발송' AND parent_code = (SELECT common_code 
-																						         FROM common_code 
-                                    					   	 							        WHERE descript='msg_sender_state'))
+	     WHERE ms.emp_no = #{empNo} AND ms.state = 'E02'
 	</select>
 	
 	<!-- 임시 보관 -->
@@ -202,11 +176,7 @@
 		  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
 		  JOIN common_code ccr ON er.location = ccr.common_code
 		  JOIN common_code ccs ON es.location = ccs.common_code
-	     WHERE ms.emp_no = #{empNo} AND ms.state = (SELECT common_code
-									                  FROM common_code
-									                 WHERE descript = '임시저장' AND parent_code = (SELECT common_code 
-																						           FROM common_code 
-                                    					   	 							          WHERE descript='msg_sender_state'))
+	     WHERE ms.emp_no = #{empNo} AND ms.state = 'E01'
 	</select>
 	
 	<select id="findUnreadMsgSum" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderListDto">
@@ -214,16 +184,14 @@
 		     , e.ename senderName
 			 , ef.file_name senderProfileName
 			 , ef.ext senderProfileExt
+			 , ms.msg_no msgNo
+			 , ms.send_date sendDate
 		  FROM msg_reader mr
 		 INNER JOIN msg_sender ms ON ms.msg_no = mr.msg_no
 		 INNER JOIN emp e ON ms.emp_no = e.emp_no
 		 INNER JOIN emp_file ef ON ef.emp_no = ms.emp_no
 		 WHERE mr.emp_no = #{empNo}
-		   AND mr.state = (SELECT common_code 
-								  FROM common_code 
-								  WHERE parent_code = (SELECT common_code FROM common_code
-															  WHERE descript = "msg_reader_state") 
-								  AND descript = "읽지않음");
+		   AND mr.state = 'D01'
 	</select>
 	
 	<select id="findUnreadMsgCnt" parameterType="Integer" resultType="Integer">
@@ -233,11 +201,7 @@
 		 INNER JOIN emp e ON ms.emp_no = e.emp_no
 		 INNER JOIN emp_file ef ON ef.emp_no = ms.emp_no
 		 WHERE mr.emp_no = #{empNo}
-		   AND mr.state = (SELECT common_code 
-								  FROM common_code 
-								  WHERE parent_code = (SELECT common_code FROM common_code
-															  WHERE descript = "msg_reader_state") 
-								  AND descript = "읽지않음");
+		   AND mr.state = 'D01'
 	</select>
 	
 </mapper>
