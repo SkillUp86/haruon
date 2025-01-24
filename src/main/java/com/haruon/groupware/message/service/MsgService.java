@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.haruon.groupware.course.entity.EducationFile;
 import com.haruon.groupware.message.dto.MsgDto;
 import com.haruon.groupware.message.dto.MsgReaderDto;
+import com.haruon.groupware.message.dto.MsgReaderListDto;
 import com.haruon.groupware.message.dto.MsgSenderDto;
 import com.haruon.groupware.message.entity.MsgFile;
 import com.haruon.groupware.message.mapper.MsgMapper;
@@ -97,6 +97,15 @@ public class MsgService {
 	// 임시 보관함
 	public List<MsgSenderDto> getTemporaryMsgList(Integer empNo) {
 		return msgMapper.getTemporaryMsgList(empNo);
+	}
+	
+	// Header에 표시할 읽지 않은 상태인 수신쪽지관련 정보요약
+	public List<MsgReaderListDto> findUnreadMsgSum(Integer empNo) {
+		return msgMapper.findUnreadMsgSum(empNo);
+	}
+	// Header에 표시할 읽지 않은 상태인 수신쪽지의 수
+	public Integer findUnreadMsgCnt(Integer empNo) {
+		return msgMapper.findUnreadMsgCnt(empNo);
 	}
 	
 }
