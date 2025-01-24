@@ -1,10 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="footer-wrapper">
-    <div class="footer-section f-section-1">
-        <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
+	
+    <div id="leftFooterConteiner" class="footer-section f-section-1">
+		<div class="theme-brand d-flex align-items-center">
+			<img src="${pageContext.request.contextPath}/src/assets/img/logo.svg">
+			<span>HARUON</span>
+		</div>
     </div>
-    <div class="footer-section f-section-2">
-        <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
+    
+    <div id="rightFooterConteiner" class="footer-section f-section-2">
+       
     </div>
+    
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	$.ajax( {
+		url: '${pageContext.request.contextPath}/company/information',
+		method: 'GET',
+	}).done(function(result) {
+		rightFooterHTML = `<p class="text-end">
+								<span>` + result.comName.toUpperCase() + ` 대표 ` + result.leader + `</span> 
+								<span>` + result.address + `</span> 
+						   </p>
+								<span>phone- ` + result.phone + ` email- ` + result.email + `</span>`;
+		
+		$("#rightFooterConteiner").append(rightFooterHTML);
+	}).fail(function() {
+		console.log('show company information ajax 호출 실패')
+	});
+</script>
