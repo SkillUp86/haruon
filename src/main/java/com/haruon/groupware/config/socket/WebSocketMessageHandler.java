@@ -34,17 +34,17 @@ public class WebSocketMessageHandler extends TextWebSocketHandler {
 	
 	// 룸ID 별 접속 핸들링을 위한 Map
 	Map<String, WebSocketSession> roomSessionMap = new HashMap<>();
-	
-	
 
 	// 웹 소켓 연결 설정된 후 실행
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		
 		log.info("{} - 클라이언트 접속", session.toString());
 		//log.debug("쿼리파라미터(roomId) 결과 = {}", searchRoomNo(session));
 		// sessionMap<roomId, session> 설정
 		String roomId = searchRoomNo(session);
 		log.debug("roomId = {}",roomId);
+
 		
 		sessionList.add(session);
 		roomSessionMap.put(roomId, session);
