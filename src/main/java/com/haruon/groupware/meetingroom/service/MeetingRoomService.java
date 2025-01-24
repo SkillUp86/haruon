@@ -30,21 +30,38 @@ public class MeetingRoomService {
 	}
 	
 	
-	public Integer deleteMeetingroom(Integer meeNo) {
-	    // 1. 먼저 meetingroom_file 테이블에서 파일 정보 삭제
-	    Integer fileDeleteResult = meetingRoomMapper.deleteMeetingroomFile(meeNo);
-	    if (fileDeleteResult < 1) {
+	public Integer deleteMeetingroom(Integer meeNo, String path) {
+	    // 관련 파일 조회
+	    MeetingRoomFile meetingRoomFile = meetingRoomMapper.findMeetingRoomFileByMeeNo(meeNo);
+
+	    if (meetingRoomFile != null) {
+	        // 파일 경로 생성
+	        String filePath = path + meetingRoomFile.getFileName() + "." + meetingRoomFile.getExt();
+
+	        // 파일 삭제
+	        File file = new File(filePath);
+	        if (file.exists() && file.isFile()) {
+	            if (!file.delete()) {
+	                throw new RuntimeException("파일 삭제 실패: " + filePath);
+	            }
+	        }
+
+	        // DB에서 파일 정보 삭제
+	        int fileDeleteResult = meetingRoomMapper.deleteMeetingroomFile(meeNo);
+	        if (fileDeleteResult <= 0) {
+	            throw new RuntimeException("파일 DB 삭제 실패: meeNo=" + meeNo);
+	        }
 	    }
 
-	    // 2. 예약 삭제
-	    Integer reservationResult = reservationMapper.deleteReservation(meeNo);
-	    if (reservationResult < 1) {
+	    // 회의실 삭제
+	    int meetingroomDeleteResult = meetingRoomMapper.deleteMeetingroom(meeNo);
+	    if (meetingroomDeleteResult <= 0) {
+	        throw new RuntimeException("회의실 삭제 실패: meeNo=" + meeNo);
 	    }
-	    
-	    // 3. 회의실 삭제
-	    Integer meetingRoomResult = meetingRoomMapper.deleteMeetingroom(meeNo);
-	    return meetingRoomResult;
+
+	    return meetingroomDeleteResult;
 	}
+
 	
 	public void addMeetingroom(MeetingRoom meetingRoom, MultipartFile file, String path) {
 	    // 1. 회의실 정보 저장
@@ -99,58 +116,55 @@ public class MeetingRoomService {
 	    }
 	}
 	
-	public void updateMeetingroom(MeetingRoom meetingRoom, MultipartFile meetingroomFile, String path) {
-	    // 회의실 정보 수정
+	public void updateMeetingroom(MeetingRoom meetingRoom) {
 	    int updateResult = meetingRoomMapper.updateMeetingroom(meetingRoom);
 	    if (updateResult <= 0) {
 	        throw new RuntimeException("회의실 수정 실패: meeNo=" + meetingRoom.getMeeNo());
 	    }
+	}
 
-	    // 파일 처리
-	    if (meetingroomFile != null && !meetingroomFile.isEmpty()) {
-	        String originalFilename = meetingroomFile.getOriginalFilename();
-	        if (originalFilename == null || originalFilename.isEmpty()) {
-	            throw new RuntimeException("유효하지 않은 파일 이름");
-	        }
+	public void profileUpload(MultipartFile file, Integer meeNo, String path) {
+	    MeetingRoomFile meetingRoomFile = meetingRoomMapper.findMeetingRoomFileByMeeNo(meeNo);
+	    if (meetingRoomFile == null) {
+	        insertFile(file, meeNo, path);
+	        return;
+	    }
 
-	        int dotIdx = originalFilename.lastIndexOf(".");
-	        if (dotIdx == -1) {
-	            throw new RuntimeException("파일 확장자를 찾을 수 없음");
-	        }
+	    // 기존 파일 삭제 후 새 파일 추가
+	    String filename = path + meetingRoomFile.getFileName() + "." + meetingRoomFile.getExt();
+	    File f = new File(filename);
+	    f.delete();
+	    int row = meetingRoomMapper.deleteMeetingroomFile(meeNo);
+	    if (row == 1) {
+	        insertFile(file, meeNo, path);
+	    }
+	}
 
-	        String originName = originalFilename.substring(0, dotIdx);
-	        String ext = originalFilename.substring(dotIdx + 1);
-	        String filename = UUID.randomUUID().toString().replace("-", "");
-
-	        // 파일 정보 엔티티 생성
-	        MeetingRoomFile meetingRoomFileEntity = new MeetingRoomFile();
-	        meetingRoomFileEntity.setMeeNo(meetingRoom.getMeeNo());
-	        meetingRoomFileEntity.setKind(meetingroomFile.getContentType());
-	        meetingRoomFileEntity.setSize(meetingroomFile.getSize());
-	        meetingRoomFileEntity.setOriginalName(originName);
-	        meetingRoomFileEntity.setFileName(filename);
-	        meetingRoomFileEntity.setExt(ext);
-
-	        // DB에 파일 정보 업데이트
-	        int fileUpdateResult = meetingRoomMapper.updateMeetingroomFile(meetingRoomFileEntity);
-	        if (fileUpdateResult <= 0) {
-	            throw new RuntimeException("회의실 파일 수정 실패: meeNo=" + meetingRoom.getMeeNo());
-	        }
-
-	        // 파일 저장
-	        File directory = new File(path);
-	        if (!directory.exists() && !directory.mkdirs()) {
-	            throw new RuntimeException("파일 저장 경로 생성 실패");
-	        }
-
+	private void insertFile(MultipartFile file, Integer meeNo, String path) {
+	    if (file.getOriginalFilename().isEmpty()) {
+	        return;
+	    }
+	    MeetingRoomFile meetingRoomFile = new MeetingRoomFile();
+	    meetingRoomFile.setMeeNo(meeNo);
+	    meetingRoomFile.setKind(file.getContentType());
+	    meetingRoomFile.setSize(file.getSize());
+	    int dotInx = file.getOriginalFilename().lastIndexOf(".");
+	    String originName = file.getOriginalFilename().substring(0, dotInx);
+	    String fileName = UUID.randomUUID().toString().replace("-", "");
+	    String ext = file.getOriginalFilename().substring(dotInx + 1);
+	    meetingRoomFile.setFileName(fileName);
+	    meetingRoomFile.setOriginalName(originName);
+	    meetingRoomFile.setExt(ext);
+	    int row = meetingRoomMapper.addMeetingroomFile(meetingRoomFile);
+	    if (row == 1) {
 	        try {
-	            meetingroomFile.transferTo(new File(directory, filename + "." + ext));
-	        } catch (IOException e) {
-	            log.error("파일 저장 중 IOException 발생", e);
-	            throw new RuntimeException("파일 저장 중 오류 발생", e);
+	            file.transferTo(new File(path + fileName + "." + ext));
+	        } catch (IllegalStateException | IOException e) {
+	            throw new IllegalArgumentException("파일 업로드 중 오류 발생", e);
 	        }
 	    }
 	}
+	
     // 회의실 정보 조회
     public MeetingRoomDto meetingroomOne(Integer meeNo) {
         return meetingRoomMapper.meetingroomOne(meeNo);

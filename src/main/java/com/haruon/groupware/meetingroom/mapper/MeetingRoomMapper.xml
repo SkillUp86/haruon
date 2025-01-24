@@ -57,7 +57,8 @@ WHERE mee_no = #{meeNo}
 </delete>
 
 <delete id="deleteMeetingroomFile" parameterType="Integer">
-    DELETE FROM meetingroom_file WHERE mee_no = #{meeNo}
+    DELETE FROM meetingroom_file 
+    WHERE mee_no = #{meeNo}
 </delete>
 
 <update id="updateMeetingroom" parameterType="com.haruon.groupware.meetingroom.entity.MeetingRoom">
@@ -117,4 +118,15 @@ WHERE mee_no = #{meeNo}
     </set>
     WHERE mee_no = #{meeNo}
 </update>
+<select id="findMeetingRoomFileByMeeNo" parameterType="Integer" resultType="com.haruon.groupware.meetingroom.entity.MeetingRoomFile">
+    	select
+				mee_no meeNo
+			,	original_name originalName
+			,	file_name fileName
+			,	ext
+			,	kind
+			,	size
+		from meetingroom_file
+		where mee_no = #{meeNo}
+</select>
 </mapper>

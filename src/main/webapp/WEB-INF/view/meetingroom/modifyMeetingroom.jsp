@@ -111,22 +111,26 @@
     					<input type="hidden" name="meeNo" value="${meetingRoom.meeNo}">
 
     					<!-- 회의실 사진 수정 -->
-					    <div class="row">
-					        <div class="col-md-8">
-					            <label for="meetingroomFile">회의실 사진</label>
-					            <div class="multiple-file-upload">
-					                <c:if test="${not empty meetingRoom.fileName}">
-					                    <!-- 기존 파일이 있을 경우 -->
-					                    <img class="mb-2" src="${pageContext.request.contextPath}/upload/meetingroom/${meetingRoom.fileName}.${meetingRoom.fileExt}" id="meetingroom-img" style="max-width: 200px;">
-					                </c:if>
-					                <c:if test="${empty meetingRoom.fileName}">
-					                    <!-- 기존 파일이 없을 경우 -->
-					                    <img class="mb-2" src="${pageContext.request.contextPath}/upload/meetingroom/default_image.svg" id="meetingroom-img" style="max-width: 200px;">
-					                </c:if>
-					                <input class="form-control file-upload-input" type="file" id="meetingroomFile" name="meetingroomFile">
-					            </div>
-					        </div>
-					    </div>
+					    <div class="row">z
+						    <div class="col-md-8">
+						        <label for="meetingroomFile">회의실 사진</label>
+						        <div class="multiple-file-upload">
+						            <c:if test="${not empty meetingRoom.fileName}">
+						                <!-- 기존 파일이 있을 경우 -->
+						                <img class="mb-2" 
+						                     src="${pageContext.request.contextPath}/upload/meetingroom/${meetingRoom.fileName}.${meetingRoom.fileExt}" 
+						                     id="meetingroom-img" style="max-width: 200px;">
+						            </c:if>
+						            <c:if test="${empty meetingRoom.fileName}">
+						                <!-- 기존 파일이 없을 경우 -->
+						                <img class="mb-2" 
+						                     src="${pageContext.request.contextPath}/upload/meetingroom/default_image.png" 
+						                     id="meetingroom-img" style="max-width: 200px;">
+						            </c:if>
+						            <input class="form-control file-upload-input" type="file" id="meetingroomFile" name="meetingroomFile">
+						        </div>
+						    </div>
+						</div>
 					    <br>
 					    <!-- 회의실 이름 -->
 					    <div class="row mb-4">
@@ -165,6 +169,9 @@
         </div>
     </div>
 </div>
+
+
+
 
         <!-- 메인컨텐츠 END -->
     </div>

@@ -28,4 +28,6 @@ public interface MeetingRoomMapper {
 	MeetingRoomDto meetingroomOne(Integer meeNo);
 	
 	Integer updateMeetingroomFile(MeetingRoomFile meetingRoomFile);
+	
+	MeetingRoomFile findMeetingRoomFileByMeeNo(Integer meeNo);
 }
