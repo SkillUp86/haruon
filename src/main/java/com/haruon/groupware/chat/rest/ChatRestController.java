@@ -67,6 +67,17 @@ public class ChatRestController {
 		log.debug("로그인상태 변경 - {}", status);
 	}
 	
+	// 사원이 참여하고있는 특정 채팅방 나가기
+	@PostMapping("/room/{roomId}/particiant/delete")
+	public void roomDelete(Authentication auth, @PathVariable String roomId) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		ChatRoom deleteTarget = new ChatRoom();
+		deleteTarget.setEmpNo(userDetails.getEmpNo());
+		deleteTarget.setRoomId(roomId);
+		chatService.deleteAttendanceFromRoom(deleteTarget);
+	}
+	
+	
 	// 특정 채팅방의 채팅 상대방 정보 
 	@GetMapping("/room/{roomId}/particiant")
 	public ResponseEntity<ChatRoomDTO> roomParticiant(Authentication auth, @PathVariable String roomId) {

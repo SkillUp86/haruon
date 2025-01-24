@@ -118,7 +118,7 @@
     	// 채팅 상대방 정보
     	function showParticiant() {
     		$.ajax({
-    			url: '/chat/room/' + ${roomId} + '/particiant',
+    			url: `/chat/room/${roomId}/particiant`,
     			method: 'GET',
     		}).done(function(result) {
     			let conn = result.connectionStatus;
@@ -143,7 +143,7 @@
 		// 이전 대화내용
     	function showConversation() {
     		$.ajax({
-    			url: '/chat/room/' + ${roomId} + '/conversation',
+    			url: '/chat/room/${roomId}/conversation',
     			method: 'GET',
     			async: false,
     		}).done(function(result) {
@@ -232,7 +232,7 @@
     </script>
     
     <script>
-	    const socket = new WebSocket(`ws://localhost:80/ws/chat/room?id=${roomId}`);
+	    const socket = new WebSocket('ws://localhost:80/ws/chat/room?id=${roomId}');
 	    
 	    // 소켓 연결 디버깅	
 	    socket.onopen = () => {
@@ -307,7 +307,7 @@
 				// 발송인, 채팅방ID, 발송시간(현재)
 		        let today = new Date();
 		        var senderNo = `${principal.empNo}`;
-		        var roomId = ${roomId};
+		        var roomId = '${roomId}';
 		        var sendTime = today.getFullYear() + '-' + (today.getMonth()+1 +'').padStart(2, 0) + '-' + (today.getDate() +'').padStart(2, 0) + ' '
 		                        + (today.getHours() +'').padStart(2, 0) + ':' + (today.getMinutes() +'').padStart(2, 0) + ':'+ (today.getSeconds() +'').padStart(2, 0);
 		        

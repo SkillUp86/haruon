@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.chat.dto.ChatRoomDTO;
+import com.haruon.groupware.chat.dto.CheckRoomDTO;
 import com.haruon.groupware.chat.entity.Chat;
 import com.haruon.groupware.chat.entity.ChatRoom;
 import com.haruon.groupware.user.dto.EmpListDTO;
@@ -34,4 +35,10 @@ public interface ChatMapper {
 	
 	// 채팅 내역 추가 
 	Integer insertChat(Chat chat);
+	
+	// 참가자로 채팅방 유무 확인
+	String findChatRoomExist(CheckRoomDTO checkRoomDTO);
+	
+	// 채팅방 나가기 
+	Integer deleteAttendanceFromRoom(ChatRoom deleteTarget);
 }

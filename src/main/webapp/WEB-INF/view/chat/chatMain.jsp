@@ -166,7 +166,7 @@
 			showChatRoomList();
 		});
 	</script>    
-	
+	<!-- 상태변경 script -->
 	<script>
 		var switchBtn = {
 			switchConnectionJ01 : '/chat/connection/update/J01',
@@ -243,7 +243,45 @@
     	}
 	</script>
     
-    <!-- ajax 호출 : 채팅방 리스트, 사원검색 리스트 -->
+    <!-- 사원검색 -> 채팅시작 버튼 클릭 script : showEmployeesList 관련-->
+    <script>
+    	// 채팅방 탐색 버튼 클릭 => 새창에서 매칭되는 폼 제출
+	   document.addEventListener('click', function(event) {
+		    // 클릭된 대상이 ID 패턴(enterChatRoomBtn+숫자)과 일치하는지 확인
+		    if (event.target && event.target.id.startsWith('enterChatRoomBtn')) {
+		        console.log('enterChatRoomBtn 버튼 클릭' + event.target.id);
+
+		     let targetId = event.target.id.replace('enterChatRoomBtn','');
+             let targetForm = "#checkChatRoom" + targetId;
+
+             window.open('', 'popup', 'width=410, height=500');
+             console.log("#checkChatRoom" + targetId + " 번 폼 제출");
+             targetForm.target = 'popup'
+             $(targetForm).submit();
+		    }
+		});
+    	
+    	// 채팅방 나가기 버튼
+    	
+    	document.addEventListener('click', function(event) {
+    		if (event.target && event.target.id.startsWith('getOutOfRoomBtn')) {
+    			console.log('getOutOfRoomBtn 버튼 클릭' + event.target.id);
+    			let targetId = event.target.id.replace('getOutOfRoomBtn','');
+    			
+    			$.ajax({
+					url: '/chat/room/' + targetId + '/particiant/delete',
+					method: 'POST',
+				}).done(function() {
+					showChatRoomList();	
+				}).fail(function() {
+					console.log("switchConnectionStatus - 실패");
+				});
+    		}
+    	});
+       	
+    </script>
+    
+    <!-- ajax 호출 : 사원검색 리스트 - showEmployeesList -->
     <script>
     	// 로그인한 사원을 포함한 전직원의 리스트 출력
     	function showEmployeesList() {
@@ -252,12 +290,14 @@
 	    	   method: 'GET',
 	    	}).done(function(result) {
 				let empListHTML = "";
-				
+				let variableVal = '';
 	    	   $(result).each(function(index, item) {   
 	     		  let conn = item.connectionStatus; 
 	    		  let profile = item.fileName + "." + item.ext;
 	    		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
-	    		  
+	    		  variableVal++;
+
+	    		  // 내프로필
 	    		  if(item.empNo === ${principal.empNo}) {
 	    			  let userProfileHtml = `<img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" style="width:96px; height:96px;" alt="avatar" >`
 	    			  $('#userProfile').append(userProfileHtml);
@@ -298,6 +338,7 @@
 	    			  return true;
 	    		  }
 	    		  
+	    		  // 나를 제외한 다른 사람의 프로필
 	    	      empListHTML += `<div class="items">
 				    	    	    <div class="item-content">
 				    	    	        <div class="user-profile align-items-center">
@@ -319,8 +360,12 @@
 		            					</div>  
 				 					</div>
 				    	    	        <div class="action-btn">
-				    	    	            <a onclick="window.open('${pageContext.request.contextPath}/chat?id=` + item.empNo + `', '_blank', 'width=410, height=500', 'left=410')" 
-				    	    	             type="button" class="btn btn-outline-primary btn-hover">채팅</a>
+					    	    	        <button id="enterChatRoomBtn` + variableVal + `" type="button" class="btn btn-outline-primary btn-hover">채팅</button>
+	
+					    	    	        <form id="checkChatRoom` + variableVal + `" method="post" action="${pageContext.request.contextPath}/chat/room/findOrCreate" target="popup">
+					    	    	            <input name="empNo1" value="` + ${principal.empNo} + `" type="hidden">
+					    	    	            <input name="empNo2" value="` + item.empNo + `" type="hidden">
+					    	    	        </form>
 				    	    	        </div>
 				    	    	    </div>
 				    	    	</div>
@@ -333,19 +378,23 @@
 	    	});
     	}
 		
-    	// 로그인한 사원이 참가하고있는 채팅방 리스트 출력
-    	function showChatRoomList() {
+    </script>
+    
+    <script>
+	 // 로그인한 사원이 참가하고있는 채팅방 리스트 출력
+		function showChatRoomList() {
 	   		$.ajax({
-	     	   url: '/chat/rooms/' + ${principal.empNo},
+	     	   url: '/chat/rooms/${principal.empNo}',
 	     	   method: 'GET',
 	     	}).done(function(result) {
-	     		
+	     		$("#chatRoomList").empty();
 	 			let roomListHTML = "";
-	 			
+	 			let variableNumber = 0;
 	     	   $(result).each(function(index, item) {   
 	      		  let conn = item.connectionStatus; 
 	     		  let profile = item.fileName + "." + item.ext;
 	     		  profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+	     		  variableNumber++;
 	     		  
 	     		  let now = new Date();
 	     		  now.setHours(0,0,0,0);
@@ -373,30 +422,32 @@
 		   		    	         : ` `;
 		   		    	         
 	           	  roomListHTML +=		`</span>
+           								<p style="font-color: #515365">(` + item.dname + `)</p>
 	           							<div class="d-flex justify-content-between">
-	           								<p style="font-color: #515365">(` + item.dname + `)</p>
+			         						<p>` + item.message + `</p>
 			         						<p>` + sendTime + `</p>
 			         					</div>	
-			         					<span>` + item.message + `</span>
 			         				</div>
 						  	        <div class="action-btn ms-3 mt-2">
 						  	            <a onclick="window.open('${pageContext.request.contextPath}/chat/room?id=` + item.roomId + `', '_blank', 'width=410, height=500', 'left=410')" 
 						  	             type="button" class="btn btn-outline-primary btn-hover mb-1">채팅</a>
 						  	             <br>
-						  	             <a onclick="window.open('${pageContext.request.contextPath}/chat?id=1', '_blank', 'width=410, height=500', 'left=410')" 
-						  	             type="button" class="btn btn-outline-danger btn-hover">삭제</a>
+						  	             <button id="getOutOfRoomBtn` + item.roomId + `" type="button" class="btn btn-outline-danger btn-hover">나가기</a>
 						  	        </div>
 								</div>  
 				  	        </div>
 						</div> `;
-	     			  
+	     		
 	     	   });
-	
+	     	  
+	  			
+	  			
 	     	   $("#chatRoomList").append(roomListHTML);
 	     	}).fail(function() {
 	     	   console.log("chatList - ajax 호출 실패");
 	     	});
-    	}
+		}
+    
     </script>
 </body>
 </html>

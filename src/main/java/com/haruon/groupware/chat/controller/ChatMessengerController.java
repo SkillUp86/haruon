@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.haruon.groupware.chat.service.ChatService;
@@ -28,5 +29,11 @@ public class ChatMessengerController {
 		return "chat/chatMain";
 	}
 	
+	@PostMapping("chat/room/findOrCreate")
+	public String findOrCreateChatRoom(@RequestParam Integer empNo1
+										, @RequestParam Integer empNo2) {
+		String roomId = chatService.findOrCreateChatRoom(empNo1, empNo2);
+		return "redirect:/chat/room?id=" + roomId;
+	}
 
 }
