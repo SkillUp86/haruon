@@ -37,7 +37,7 @@
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
-    <title>보낸 쪽지함</title>
+    <title>임시 보관함</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -89,7 +89,7 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">Message</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Send</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Temprary</li>
                                             </ol>
                                         </nav>
                         
@@ -173,10 +173,10 @@
                                             <div class="message-box">
                                                 
                                                 <div class="message-box-scroll" id="ct">
-                                                    <!-- 보낸 쪽지함 시작 -->
+                                                    <!-- 임시 보관함 시작 -->
                                                     <div class="mail-item">
                                                         <!-- 메일 리스트 HTML 동적처리할 부분-->
-                                                        <div id="msgSenders" class="mail-item">
+                                                        <div id="msgTemporarys" class="mail-item">
                                                         </div>
                                                         <!-- 메일 리스트 끝 -->
                                                     </div>
@@ -188,7 +188,7 @@
                                                         <h2 class="mail-title" data-selectedMailTitle=""></h2>
                                                     </div>
 
-                                                    <div id="msgSender">
+                                                    <div id="msgTemporary">
                                                     <!-- 메일 상세보기 시작 - HTML 동적 처리할 부분 -->                                               
                                                     <!-- 메일 상세보기 끝 -->
                                                     </div>
@@ -203,7 +203,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">발송</h5>
+                                                        <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">Compose</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                                         </button>
@@ -213,15 +213,15 @@
                                                         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
                                                         <div class="compose-box">
                                                             <div class="compose-content">
-                                                                <form id="m-form" method="post" action="${pageContext.request.contextPath}/insertMsg" enctype="multipart/form-data">
+                                                                <form>
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <div class="mb-4 mail-to">
 	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
-                                                                                <select class="form-control" id="m-to" name="empNoR">
+                                                                                <select class="form-control" id="m-to">
 	                                                                                <option value="">직원 선택</option>
 	                                                                                <c:forEach items="${empList}" var="el">
-		                                                                                <option value="${el.empNo}">${el.ename} &lt;${el.email}&gt;</option>
+		                                                                                <option value="${el.email}">${el.ename} &lt;${el.email}&gt;</option>
 	                                                                                </c:forEach>
                                                                             	</select>
                                                                         	</div>
@@ -233,8 +233,6 @@
                                                                     	<div class="mb-4 mail-form">
                                                                             <p>From: ${ename}</p>
                                                                             <input type="email" id="m-from" class="form-control" name="emailS" value="${email}" readonly> 
-                                                                            <input type="hidden" name="empNoS" value="${empNo}">
-                                                                            <input type="hidden" id="stateS" name="stateS" value="E01">
                                                                         </div>
                                                                     </div>
 
@@ -254,7 +252,7 @@
                                                                     <div class="mb-4">
                                                                         <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
                                                                         <div class="w-100">
-                                                                            <input type="text" id="m-title" name="title" class="form-control">
+                                                                            <input type="text" id="m-title" class="form-control">
                                                                             <span class="validation-text"></span>
                                                                         </div>
                                                                     </div>
@@ -262,12 +260,21 @@
                                                                     <div class="">
                                                                         <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
                                                                         <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-                                                                        <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+                                                                        <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple">
                                                                     </div>
-                                                                    
-																	<div id="editor-container">
-                                                                	</div>
-                                                                    <input type="hidden" id="m-content" name="content">
+
+																	<div id="editor-container" class="ql-container ql-snow">
+																		<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true" data-placeholder="내용">
+																			<p><br></p>
+																		</div>
+																		<div class="ql-clipboard" contenteditable="true" tabindex="-1">
+																		</div>
+																		<div class="ql-tooltip ql-hidden">
+																			<a class="ql-preview" target="_blank" href="about:blank"></a>
+																			<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">
+																			<a class="ql-action"></a><a class="ql-remove"></a>
+																		</div>
+																	</div>
 
                                                                 </form>
                                                             </div>
@@ -315,41 +322,19 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/mailbox.js"></script>
 
    <!-- END PAGE LEVEL SCRIPTS -->
-   
-   <!-- 모달 메일 발송 -->
-	<script>
-		// 발송 버튼 클릭 시 
-		$('#btn-send').click(function() {
-			// state 값을 E02로 변경
-			$('#stateS').val("E02");
-			// content 값 채우기
-			$('#m-content').val($('.ql-editor').html());
-			
-			if($('#m-to').val() == '') {
-				alert('수신인을 선택해주세요');
-			} else if($('#m-title').val() == '') {
-				alert('제목을 입력해주세요');
-			} else if($('#m-content').val() == '') {
-				alert('내용을 입력해주세요');
-			} else {
-				$('#m-form').submit(); // 폼 제출
-			}
-		});
-	</script>
-	
-	<!-- 메일 뷰 -->
+      
    <script>
          $.ajax({
-                url: "/MsgSenders/" + "${principal.empNo}",
+                url: "/MsgTemporarys/" + "${principal.empNo}",
                 method: 'GET', 
             }).done(function(result) {
 
-                let msgSendersHTML = "";
-                let msgSenderHTML = "";
+                let msgTemporarysHTML = "";
+                let msgTemporaryHTML = "";
                 let no = 0;
                 
                 $(result).each(function(index, item) {
-                    msgSendersHTML += `<div class="animated animatedFadeInUp fadeInUp" id="`+ "outNo" + no +`">
+                    msgTemporarysHTML += `<div class="animated animatedFadeInUp fadeInUp" id="`+ "outNo" + no +`">
                                         <div class="mb-0">
                                             <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false"  aria-controls="inNo` + no + `">
                                                 <div class="mail-item-inner">
@@ -366,7 +351,6 @@
                                                             <div class="meta-title-tag">
                                                                 <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
                                                                 <span class="mail-title">` + item.title + `
-                                                                <p class="meta-time align-self-center me-3">` + item.sendDate + `</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -375,18 +359,14 @@
                                         </div>
                                     </div>`
                                     
-                    msgSenderHTML += `<div id="inNo` + no + `" class="collapse" aria-labelledby="#outNo` + no + `" data-bs-parent="#mailbox-inbox">
+                    msgTemporaryHTML += `<div id="inNo` + no + `" class="collapse" aria-labelledby="#outNo` + no + `" data-bs-parent="#mailbox-inbox">
                                         <div class="mail-content-container sentmail">
                                         
                                         <div class="d-flex justify-content-between mb-3">
                                             <div class="d-flex user-info">
                                                 <div class="f-body">
                                                     <div class="meta-mail-time">
-                                                        <div class="">
-                                                            <p class="user-email"><span>To.</span>` + item.enameS + `</p>
-                                                        </div>
-                                                        <p class="mail-content-meta-date current-recent-mail">` + item.sendDate.substr(0, 10) + `</p>
-                                                        <p class="meta-time align-self-center">` + item.sendDate.substr(11) + `</p>
+                                                    	<p class="user-email"><span>To,</span>` + item.enameS + `</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,7 +382,7 @@
                                         </div>
                                         <p class="mail-content"> 
                                         ` + item.content + ` </p>
-                                        <p> From.` + item.enameR + ` </p>
+                                        <p> ` + item.enameR + ` </p>
                     
                                         <div class="attachments">
                                             <h6 class="attachments-section-title">Attachments</h6>
@@ -412,8 +392,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                                     <div class="media-body">
                                                         <p>
-                                                            ` + ((item.originNameM != null)? item.originNameM + "." + item.extM : '첨부파일없음') + ` 
-                                                            <a href="${pageContext.request.contextPath}/upload/` + item.originNameM + "." + item.extM + ` download="${cfl.originName}.${cfl.ext}>
+                                                            ` + ((item.fileNameM != null)? item.fileNameM + "." + item.extM : '첨부파일없음') + `
                                                         </p>
                                                     </div>
                                                 </div>
@@ -435,12 +414,12 @@
                 document.body.appendChild(script);
                 
                 
-                $('#msgSenders').append(msgSendersHTML);
-                $('#msgSender').append(msgSenderHTML);
+                $('#msgTemporarys').append(msgTemporarysHTML);
+                $('#msgTemporary').append(msgTemporaryHTML);
 
                 
             }).fail(function() {
-                console.log("senderMsg fail");
+                console.log("temporarysMsg fail");
             });
             
 
@@ -465,7 +444,7 @@
             var getCollpaseElementId = this.id;
             var getSelectedMailTitleElement = $('.content-box').find('.mail-title');
             var getSelectedMailContentTitle = $(this).find('.mail-content').attr('data-mailTitle');
-            $(this).parent('#msgSender').parent('.content-box').css({
+            $(this).parent('#msgTemporary').parent('.content-box').css({
                width: '100%',
                left: '0',
                right: '100%'

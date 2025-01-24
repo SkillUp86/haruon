@@ -1,10 +1,9 @@
 package com.haruon.groupware.message.mapper;
 
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 
+import com.haruon.groupware.message.dto.MsgDto;
 import com.haruon.groupware.message.dto.MsgReaderDto;
 import com.haruon.groupware.message.dto.MsgSenderDto;
 import com.haruon.groupware.message.entity.MsgFile;
@@ -13,18 +12,23 @@ import com.haruon.groupware.message.entity.MsgFile;
 public interface MsgMapper {
 	
 	
+	// 쪽지 작성
+	Integer insertMsg(MsgDto msgDto); 
+	Integer insertMsgFile(MsgFile msgFile);
+	Integer insertSenderMsg(MsgDto msgDto);
+	Integer insertReaderMsg(MsgDto msgDto);
+	
 	// 받은 쪽지함
 	List<MsgReaderDto> getReadersMsgList(Integer empNo);
+	Integer modifyReadState(Integer msgNo); // 읽음 상태변경
+	
 	// 받은 쪽지
 	MsgReaderDto getReaderMsg(Integer msgNo);
 	List<MsgFile> getMsgFileList(Integer msgNo);
-	
-	// 읽음 상태변경
-	Integer modifyReadState(Integer msgNo);
 
 	// 보낸 쪽지
 	List<MsgSenderDto> getSenderMsgList(Integer empNo);
 	
-//	// 임시 보관함
-//	List<MsgSenderDto> getTemporaryMsgList(Map<String, Object> mapT);
+	// 임시 보관함
+	List<MsgSenderDto> getTemporaryMsgList(Integer empNo);
 }

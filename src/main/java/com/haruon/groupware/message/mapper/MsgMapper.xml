@@ -3,42 +3,76 @@
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
 
 	<!-- 쪽지 발송/임시저장 -->
-	<insert id="insertMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
-		INSERT INTO (
+	<insert id="insertMsg" parameterType="com.haruon.groupware.message.dto.MsgDto"
+			useGeneratedKeys="true" keyProperty="msgNo">
+		INSERT INTO msg (
 			title, content
-		) VALUE (
+		) VALUES (
 			#{title}, #{content}
+		)
+	</insert>
+	<insert id="insertMsgFile" parameterType="com.haruon.groupware.message.entity.MsgFile">
+		INSERT INTO msg_file (
+			  msg_no
+			, origin_name 
+			, file_name
+			, ext
+			, kind
+			, size
+		) VALUES (
+			#{msgNo}, #{originName}, #{fileName}, #{ext}, #{kind}, #{size}
+		)
+	</insert>
+	<insert id="insertSenderMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		INSERT INTO msg_sender (
+			  msg_no
+			, emp_no
+			, state
+			, send_date
+		) VALUES (
+			#{msgNo}, #{empNoS}, #{stateS}, 
+	        <choose>
+	            <when test="stateS == 'E01'">null</when>
+	            <when test="stateS != 'E01'">now()</when>
+	        </choose>
+		)
+	</insert>
+	<insert id="insertReaderMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		INSERT INTO msg_reader (
+			  msg_no
+			, emp_no
+		) VALUES (
+			#{msgNo}, #{empNoR}
 		)
 	</insert>
 
 	<!-- 받은 쪽지함 -->
 	<select id="getReadersMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
-	   SELECT 
-	          m.msg_no msgNo
+	   SELECT m.msg_no msgNo
 	        , es.ename enameS
 	        , es.email emailS
 	        , ccs.descript descriptS
 	        , m.title title
 	        , ms.send_date sendDate
 	        , mr.read_date readDate
-	        , ccr.descript state
+	        , ccmr.descript state
 		 FROM msg_reader mr
 		 JOIN msg m ON mr.msg_no = m.msg_no
 		 JOIN msg_sender ms ON mr.msg_no = ms.msg_no
 		 JOIN emp es ON ms.emp_no = es.emp_no
 		 JOIN common_code ccs ON es.location = ccs.common_code
-		 JOIN common_code ccr ON mr.state = ccr.common_code
+		 JOIN common_code ccmr ON mr.state = ccmr.common_code
 		WHERE mr.emp_no = #{empNo} AND ms.state = (SELECT common_code
-											   FROM common_code
-											  WHERE descript = '발송' AND parent_code = (SELECT common_code 
-																					     FROM common_code 
-	                           					   	 								    WHERE descript='msg_sender_state'))
+											         FROM common_code
+											        WHERE descript = '발송' AND parent_code = (SELECT common_code 
+																					            FROM common_code 
+	                           					   	 								           WHERE descript='msg_sender_state'))
 	</select>
 	
 	<!-- 받은 쪽지 -->
 	<select id="getReaderMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
 	SELECT
-		   m.msg_no
+		   m.msg_no msgNo
 		 , mr.msgr_no msgrNo
 		 , es.ename enameS
 		 , ccs.descript descriptS
@@ -107,8 +141,8 @@
 	
 	<!-- 보낸 쪽지 -->
 	<select id="getSenderMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
-		SELECT 
-			   m.msg_no msgNo
+		SELECT m.msg_no msgNo
+			 , ms.msgs_no msgsNo
 		     , es.ename enameS
 		     , ccs.descript descriptS
 		     , es.email emailS
@@ -139,21 +173,40 @@
                                     					   	 							        WHERE descript='msg_sender_state'))
 	</select>
 	
-	<!-- 임시보관함 -->
+	<!-- 임시 보관 -->
 	<select id="getTemporaryMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
 		SELECT 
-			er.ename ename
-			, ccr.descript descriptR
-			, m.title title
-			, ms.send_date sendDate
-			, ccs.descript descript
-		FROM msg_sender ms
-		JOIN msg m ON ms.msg_no = m.msg_no
-		JOIN msg_reader mr ON ms.msg_no = mr.msg_no
-		JOIN emp er ON mr.emp_no = er.emp_no
-		JOIN common_code ccr ON er.location = ccr.common_code
-		JOIN common_code ccs ON ms.state = ccs.common_code
-		WHERE ms.emp_no = #{empNo} AND ms.state = #{state};
+			   m.msg_no msgNo
+			 , ms.msgs_no msgsNo
+		     , es.ename enameS
+		     , ccs.descript descriptS
+		     , es.email emailS
+		     , er.ename enameR
+		     , ccr.descript descriptR
+		     , er.email emailR
+		     , ms.send_date sendDate
+		     , m.title title
+		     , m.content content
+		     , ms.state state
+		     , erf.file_name fileNameE
+		     , erf.ext extE
+		     , mf.origin_name originNameM
+		     , mf.file_name fileNameM
+		     , mf.ext extM
+		  FROM msg_sender ms
+		  JOIN emp es ON ms.emp_no = es.emp_no
+		  JOIN msg m ON ms.msg_no = m.msg_no
+		  JOIN msg_reader mr ON ms.msg_no = mr.msg_no
+		  JOIN emp er ON mr.emp_no = er.emp_no
+		  LEFT OUTER JOIN emp_file erf ON er.emp_no = erf.emp_no
+		  LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
+		  JOIN common_code ccr ON er.location = ccr.common_code
+		  JOIN common_code ccs ON es.location = ccs.common_code
+	     WHERE ms.emp_no = #{empNo} AND ms.state = (SELECT common_code
+									                  FROM common_code
+									                 WHERE descript = '임시저장' AND parent_code = (SELECT common_code 
+																						           FROM common_code 
+                                    					   	 							          WHERE descript='msg_sender_state'))
 	</select>
 	
 </mapper>
