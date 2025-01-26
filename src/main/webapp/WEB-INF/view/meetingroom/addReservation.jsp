@@ -136,18 +136,27 @@
                 </div>
 
                 <div class="row mb-4">
-                    <div class="col-sm-6">
-                        <label for="startTime" class="form-label">시작 시간</label>
-                        <!-- 시작 시간 입력 -->
-                        <input type="datetime-local" class="form-control" id="startTime" name="startTime" required>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="endTime" class="form-label">종료 시간</label>
-                        <!-- 종료 시간 입력 -->
-                        <input type="datetime-local" class="form-control" id="endTime" name="endTime" required>
-                    </div>
-                </div>
+				    <div class="col-sm-6">
+				        <label for="revDate" class="form-label">예약 일자</label>
+				        <!-- 예약 일자 선택 -->
+				        <input type="date" class="form-control" id="revDate" name="revDate" required>
+				    </div>
+				    <div class="col-sm-6">
+				        <label for="revTime" class="form-label">예약 시간</label>
+				        <!-- 예약 시간 선택 -->
+				        <select class="form-control" id="revTime" name="revTime" required>
+				            <option value="" selected>시간을 선택하세요</option>
+				        </select>
+				    </div>
+				</div>
 
+				<div class="form-group row invoice-note">
+			                    <label>예약 정보</label>
+			                    <div class="col-sm-12">
+			                        <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
+			                    </div>
+			                </div>
+                
                 <div class="input-group mb-4">
                     <div class="input-group">
                         <span class="input-group-text label-text">참조자</span>
@@ -165,7 +174,8 @@
                         </svg>
                     </button>
                 </div>
-
+                
+                
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">예약하기</button>
                     <a href="javascript:history.back()" class="btn btn-secondary ms-2">뒤로가기</a>
@@ -315,6 +325,25 @@ $('#btnInsertApprover').on('click', function () {
 });
 
 
+document.getElementById("revDate").addEventListener("change", function () {
+    const revDate = this.value; // 선택된 날짜
+    const meeNo = ${meeNo} // 예시, 실제로는 전달받은 미팅룸 번호 사용
+
+    fetch(`/available-times?revDate=${revDate}&meeNo=${meeNo}`)
+        .then(response => response.json())
+        .then(data => {
+            const revTimeSelect = document.getElementById("revTime");
+            revTimeSelect.innerHTML = '<option value="" selected>시간을 선택하세요</option>'; // 초기화
+
+            data.forEach(time => {
+                const option = document.createElement("option");
+                option.value = time;
+                option.textContent = time;
+                revTimeSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error fetching available times:", error));
+});
 
 </script>
 </body>

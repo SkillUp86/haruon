@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.meetingroom.mapper.ReservationMapper">
+
 <delete id="deleteReservation" parameterType="Integer">
 	DELETE FROM reservation
 	WHERE res_no = #{resNo}
 </delete>
+
  <select id="findReservationByScheduleNo" parameterType="Integer" resultType="Integer">
     SELECT res_no
     FROM reservation
     WHERE sch_no = #{schNo}
+</select>
+						       
+<select id="revTimeList" resultType="String">
+SELECT common_code FROM common_code 
+WHERE common_code !=  'K00'
+AND PARENT_CODE = 'K00'
+AND common_code NOT IN ( SELECT rev_time FROM reservation
+                       WHERE MEE_NO = #{meeNo}
+                         AND rev_date = #{revDate})                
 </select>
 </mapper>

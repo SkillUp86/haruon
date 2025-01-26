@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/src/assets/css/light/apps/ecommerce-create.css">
     <!--  END CUSTOM STYLE FILE  -->
        
-    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>x
+    <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
     
     <!-- 페이지 제목 입력칸 -->
     <title>회의실 추가</title>
@@ -100,7 +100,7 @@
         </div>
 
         <!-- 수정 폼 -->
-        <div class="row mb-4 layout-spacing layout-top-spacing">
+<div class="row mb-4 layout-spacing layout-top-spacing">
     <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="widget-content widget-content-area blog-create-section">
             <div class="row mb-4">
@@ -111,7 +111,7 @@
     					<input type="hidden" name="meeNo" value="${meetingRoom.meeNo}">
 
     					<!-- 회의실 사진 수정 -->
-					    <div class="row">z
+					    <div class="row">
 						    <div class="col-md-8">
 						        <label for="meetingroomFile">회의실 사진</label>
 						        <div class="multiple-file-upload">
@@ -210,6 +210,35 @@
 
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
+<script>
+    // 폼 제출 전에 유효성 검사하는 함수
+    function validateForm() {
+        // 회의실 이름 검사
+        const mname = document.getElementById("mname").value.trim();
+        if (!mname) {
+            alert("회의실 이름을 입력해주세요.");
+            return false; // 제출을 막음
+        }
+        // 수용 가능 인원 검사
+        const capacity = document.getElementById("capacity").value.trim();
+        if (!capacity) {
+            alert("수용 가능한 인원을 입력해주세요.");
+            return false; // 제출을 막음
+        }
+
+        // 회의실 정보 검사
+        const info = document.getElementById("info").value.trim();
+        if (!info) {
+            alert("회의실 정보를 입력해주세요.");
+            return false; // 제출을 막음
+        }
+
+        // 모든 검사가 통과하면 폼 제출
+        return true;
+    }
+    // 폼 제출 이벤트에 validateForm 적용
+    document.getElementById("formUpdate").onsubmit = validateForm;
+</script>
 
 </body>
 </html>

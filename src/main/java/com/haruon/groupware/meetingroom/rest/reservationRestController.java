@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.meetingroom.service.ReservationService;
 
 @RestController
 public class reservationRestController {
 
     @Autowired ApprovalService approvalService;
+    @Autowired ReservationService reservationService;
 
     @GetMapping("/reservation/depts/{deptNo}/employees")
     public ResponseEntity<List<ResponseEmployee>> getEmployeeListByDept(@PathVariable int deptNo, Authentication authentication) {
@@ -29,4 +31,8 @@ public class reservationRestController {
         
         return ResponseEntity.ok(empList);
     }
+    
+	/*
+	 * @GetMapping("/revTimeList") public
+	 */    
 }

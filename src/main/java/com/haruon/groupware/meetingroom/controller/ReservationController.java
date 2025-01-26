@@ -28,10 +28,9 @@ public class ReservationController {
 	public String myReservation() {
 		return"meetingroom/myReservation";
 	}
-	
+	//회의실 예약 리스트
 	@GetMapping("/addReservation/{meeNo}")
 	public String addReservation(@PathVariable int meeNo, Model model) {
-	    // 회의실 정보를 가져오기 위해 Service를 호출합니다.
 	    MeetingRoomDto meetingRoom = meetingRoomService.meetingroomOne(meeNo);
 	    List<Dept> deptList = deptService.findByAll();
 	    model.addAttribute("meetingRoom", meetingRoom);

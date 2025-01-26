@@ -8,8 +8,9 @@ public class Reservation {
 	private Integer meeNo;
 	private Integer schNo;
 	private Integer empNo;
-	private Integer startTime;
-	private String endTime;
+	private String revDate;
+	private String revTime;
+	private String content;
 	private String kind;
 	private String bookDate;
 }

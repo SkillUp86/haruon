@@ -100,60 +100,59 @@
                     <!--  END BREADCRUMBS  -->
                 </div>
                 <!-- 메인컨텐츠 입력칸 -->
-			                <div class="row mb-4 layout-spacing layout-top-spacing">
-			    <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-			        <div class="widget-content widget-content-area blog-create-section">
-			            <div class="row mb-4">
-			                <h2>회의실 추가</h2>
-			                <br>
-			                <form id="formInsert" action="${pageContext.request.contextPath}/addMeetingroom" method="post" enctype="multipart/form-data">
-			                    <div class="row">
-			                        <div class="col-md-8">
-			                            <label for="meetingroomFile">회의실 사진</label>
-			                            <div class="multiple-file-upload">
-			                                <input class="form-control file-upload-input" 
-			                                       type="file" 
-			                                       id="meetingroomFile" 
-			                                       name="meetingroomFile">
-			                            </div>
+		<div class="row mb-4 layout-spacing layout-top-spacing">
+			<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+			    <div class="widget-content widget-content-area blog-create-section">
+			        <div class="row mb-4">
+			            <h2>회의실 추가</h2>
+			            <br>
+			            <form id="formInsert" action="${pageContext.request.contextPath}/addMeetingroom" method="post" enctype="multipart/form-data">
+			                <div class="row">
+			                    <div class="col-md-8">
+			                        <label for="meetingroomFile">회의실 사진</label>
+			                        <div class="multiple-file-upload">
+			                            <input class="form-control file-upload-input" 
+			                                   type="file" 
+			                                   id="meetingroomFile" 
+			                                   name="meetingroomFile" required>
 			                        </div>
 			                    </div>
-			                    <br>
-			                    <div class="row mb-4">
-			                        <div class="col-sm-12">
-			                            <label>회의실 이름</label>
-			                            <input type="text" class="form-control" id="mname" name="mname" required>
-			                        </div>
-			                    </div>
-			
-			                    <div class="row mb-4">
-			                        <div class="col-sm-12">
-			                            <label>수용가능 인원</label>
-			                            <input type="text" class="form-control" id="capacity" name="capacity" required>
-			                        </div>
-			                    </div>
-			
-			                    <div class="form-group row invoice-note">
-			                        <label>회의실 정보</label>
-			                        <div class="col-sm-12">
-			                            <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
-			                        </div>
-			                    </div>
-			                    <br>
-			
-			                    <div class="col-sm-12 text-center" style="margin-top: 20px;">
-			                        <button id="addButton" type="submit" class="btn btn-success mb-4">회의실 추가</button>
-			                    </div>
-			                </form>
-			
-			                <div class="icon-container">
-			                    <a href="javascript:history.back()" class="btn btn-secondary me-4 mb-2">목록으로</a>
 			                </div>
+			                <br>
+			                <div class="row mb-4">
+			                    <div class="col-sm-12">
+			                        <label>회의실 이름</label>
+			                        <input type="text" class="form-control" id="mname" name="mname" required>
+			                    </div>
+			                </div>
+			
+			                <div class="row mb-4">
+			                    <div class="col-sm-12">
+			                        <label>수용가능 인원</label>
+			                        <input type="text" class="form-control" id="capacity" name="capacity" required>
+			                    </div>
+			                </div>
+			
+			                <div class="form-group row invoice-note">
+			                    <label>회의실 정보</label>
+			                    <div class="col-sm-12">
+			                        <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
+			                    </div>
+			                </div>
+			                <br>
+			
+			                <div class="col-sm-12 text-center" style="margin-top: 20px;">
+			                    <button id="addButton" type="button" class="btn btn-success mb-4" onclick="validateForm()">회의실 추가</button>
+			                </div>
+			            </form>
+			
+			            <div class="icon-container">
+			                <a href="javascript:history.back()" class="btn btn-secondary me-4 mb-2">목록으로</a>
 			            </div>
 			        </div>
 			    </div>
 			</div>
-
+		</div>
                 <!-- 메인컨텐츠 END -->
             </div>
             <!--  BEGIN FOOTER  -->
@@ -190,6 +189,36 @@
 
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
+<script>
+    function validateForm() {
+        // Get form values
+        const meetingroomFile = document.getElementById("meetingroomFile").value.trim();
+        const mname = document.getElementById("mname").value.trim();
+        const capacity = document.getElementById("capacity").value.trim();
+        const info = document.getElementById("info").value.trim();
+
+        // Check for empty values
+        if (!meetingroomFile) {
+            alert("회의실 사진을 선택해주세요.");
+            return false;
+        }
+        if (!mname) {
+            alert("회의실 이름을 입력해주세요.");
+            return false;
+        }
+        if (!capacity || isNaN(capacity)) {
+            alert("수용가능 인원을 숫자로 입력해주세요.");
+            return false;
+        }
+        if (!info) {
+            alert("회의실 정보를 입력해주세요.");
+            return false;
+        }
+
+        // Submit the form if validation passes
+        document.getElementById("formInsert").submit();
+    }
+</script>
 
 </body>
 </html>

@@ -121,39 +121,38 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <c:forEach var="m" items="${meetingroomList}">
-											    <tr>
-											        <td>
-														<img src="${pageContext.request.contextPath}/upload/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
-											        </td>
-											        <td>
-											            <div class="d-flex justify-content-left align-items-center">
-											                <div class="d-flex flex-column">
-											                    <span class="text-truncate fw-bold">
-											                        <a href="${pageContext.request.contextPath}/modifyMeetingroom/${m.meeNo}">${m.mname}</a>
-											                    </span>
-											                </div>
-											            </div>
-											        </td>
-											        <td>${m.meeNo}</td>
-											        <td>${m.capacity}</td>
-											        <td>${m.availYn}</td>
-											        <td>
-											            <div class="btn-group" role="group" aria-label="Action Buttons">
-											                 <!-- 예약 버튼 -->
-											                <form action="${pageContext.request.contextPath}/addReservation/${m.meeNo}" method="get" style="display: inline;">
-															<button class="btn btn-primary btn-sm" type="submit">예약하기</button>
-															</form>
-															<!-- 삭제 버튼 -->
-															<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-															<button class="btn btn-danger btn-sm" type="submit">삭제하기</button>
-															</form>
-															
-											             
-											            </div>
-											        </td>
-											    </tr>
-											</c:forEach>
+                                          <c:forEach var="m" items="${meetingroomList}">
+										    <tr data-availYn="${m.availYn}">
+										        <td>
+										            <img src="${pageContext.request.contextPath}/upload/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
+										        </td>
+										        <td>
+										            <div class="d-flex justify-content-left align-items-center">
+										                <div class="d-flex flex-column">
+										                    <span class="text-truncate fw-bold">
+										                        <a href="${pageContext.request.contextPath}/modifyMeetingroom/${m.meeNo}">${m.mname}</a>
+										                    </span>
+										                </div>
+										            </div>
+										        </td>
+										        <td>${m.meeNo}</td>
+										        <td>${m.capacity}</td>
+										        <td>${m.availYn}</td>
+										        <td>
+										            <div class="btn-group" role="group" aria-label="Action Buttons">
+										                <!-- 예약 버튼 -->
+										                <form action="${pageContext.request.contextPath}/addReservation/${m.meeNo}" method="get" style="display: inline;">
+										                    <button class="btn btn-primary btn-sm reserve-btn" type="button" data-availYn="${m.availYn}">예약하기</button>
+										                </form>
+										                <!-- 삭제 버튼 -->
+										               <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
+    														<button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
+													   </form>
+										            </div>
+										        </td>
+										    </tr>
+										</c:forEach>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -208,6 +207,30 @@
             "lengthMenu": [1, 3, 5, 10],
             "pageLength": 10 
         });
+    
+        // 모든 예약 버튼에 대해 클릭 이벤트 추가
+        document.querySelectorAll('.reserve-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const availYn = this.getAttribute('data-availYn'); // 버튼의 예약 가능 상태 가져오기
+                if (availYn === 'N') {
+                    alert('이 회의실은 예약할 수 없습니다.');
+                } else {
+                    // 예약 가능 상태인 경우 폼 제출
+                    this.closest('form').submit();
+                }
+            });
+        });
+        
+        // 삭제 버튼 클릭 시 확인 다이얼로그
+        function confirmDelete(button) {
+            // 삭제 확인 메시지
+            const confirmDelete = confirm("정말로 이 회의실을 삭제하시겠습니까?");
+            
+            if (confirmDelete) {
+                // 사용자가 "확인"을 클릭했을 경우 폼을 제출
+                button.closest('form').submit();
+            }
+        }
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
 </body>

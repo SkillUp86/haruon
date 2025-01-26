@@ -101,23 +101,18 @@
 	                        <div class="col-md-12">
 	                            <h2>내 예약 리스트</h2>
                
-               					<div style="text-align: right;">
-	                                <a class="btn btn-secondary" id="meetingroomList" href="${pageContext.request.contextPath}/addMeetingroom">
-	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-	                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 회의실 추가
-	                                </a>
-                                 </div>
+               					
                                  
                                 <div class="widget-content widget-content-area br-8">
                                     <table id=noticeList class="zero-config table dt-table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                            	<th>호실</th>
-                                                <th>예약사용일</th>
-                                                <th>예약등록일</th>
-                                                <th>예약유형</th>
-                                                <th>참가자</th>
-                                                <th>삭제</th>
+                                            	<th>회의실 이름</th>
+                                                <th>예약 날짜</th>
+                                                <th>예약시작시간</th>
+                                                <th>예약종료시간</th>
+                                                <th>예약자</th>
+                                                <th>에약 취소	</th>
                                                 
 
                                             </tr>

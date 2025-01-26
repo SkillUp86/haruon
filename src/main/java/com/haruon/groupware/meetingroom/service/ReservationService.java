@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
+import com.haruon.groupware.meetingroom.mapper.ReservationMapper;
 
 @Service
 public class ReservationService {
 	
 	@Autowired ApprovalMapper approvalMapper;
+	@Autowired ReservationMapper reservationMapper;
 	
 	 public List<ResponseEmployee> getEmployeesByDept(int deptNo, int empNo) {
 	        return approvalMapper.findEmpByDept(deptNo, empNo);
 	    }
 
-}
+//	 public List<Reservation>revTimeList(){
+//		 return reservationMapper.revTimeList();
+	 }
+
