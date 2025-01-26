@@ -104,6 +104,7 @@
         <div class="widget-content widget-content-area blog-create-section">
             <h2 class="mb-4">회의실 예약</h2>
             <form id="formInsert" action="${pageContext.request.contextPath}/addReservation/${meetingRoom.meeNo}" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="meetingRoomId" name="meetingRoomId" value="${meetingRoom.meeNo}">
                 <div class="row mb-4">
                     <div class="col-md-8">
                         <!-- 이미지 출력 -->
@@ -138,17 +139,19 @@
                 <div class="row mb-4">
 				    <div class="col-sm-6">
 				        <label for="revDate" class="form-label">예약 일자</label>
-				        <!-- 예약 일자 선택 -->
 				        <input type="date" class="form-control" id="revDate" name="revDate" required>
 				    </div>
 				    <div class="col-sm-6">
 				        <label for="revTime" class="form-label">예약 시간</label>
-				        <!-- 예약 시간 선택 -->
 				        <select class="form-control" id="revTime" name="revTime" required>
 				            <option value="" selected>시간을 선택하세요</option>
+				            <c:forEach var="time" items="${reservationTime}">
+				                <option value="${time}">${time}</option>
+				            </c:forEach>
 				        </select>
 				    </div>
 				</div>
+
 
 				<div class="form-group row invoice-note">
 			                    <label>예약 정보</label>
@@ -167,7 +170,7 @@
 
                 <div class="text-end">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
-                        참조자 선택
+                        참여자 선택
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -190,7 +193,7 @@
 	    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h5 class="modal-title">결재자 선택</h5>
+	                <h5 class="modal-title">회의 참여자 선택</h5>
 	            </div>
 	            <div class="modal-body container">
 	                <div class="row">
@@ -262,42 +265,45 @@ s					    </div>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 <script>
 // 참조자 선택 후 선택된 사람들을 입력창에 표시
-$('.dept').click(function() {
-			let deptNo = $(this).val();
-			$.ajax({
-				url: '/reservation/depts/' + deptNo + '/employees',
-				method: "GET"
-			}).done(function(response) {
-				emp = response;
-				employeeList(emp);  // 직원 목록 표시
-			}).fail(function() {
-				alert('실패');
-			})
-		});
-		
-function employeeList(emp) {
-	let empList = $('#employeeList');
-	let empSubList = $('#employeeSubList');
-	empList.empty();
-	empSubList.empty();
+// 부서 클릭 시 직원 목록 가져오기
+$('.dept').click(function () {
+    let deptNo = $(this).val();
+    $.ajax({
+        url: '/reservation/depts/' + deptNo + '/employees',
+        method: "GET",
+    })
+        .done(function (response) {
+            emp = response;
+            employeeList(emp); // 직원 목록 표시
+        })
+        .fail(function () {
+            alert('직원 목록을 불러오지 못했습니다.');
+        });
+});
 
-	if (emp && emp.length > 0) {
-		emp.forEach(function(item) {
-			//console.log(item)
-	
-			let selectEmpList = $(`
-						<li class="form-check">
-							<input type="checkbox" class="form-check-input" namxe="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
-							<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
-						</li>
-						`);
-			
-			empSubList.append(selectEmpList.clone());
-			empList.append(selectEmpList.clone());
-		});
-	} 
+// 직원 목록 표시 함수
+function employeeList(emp) {
+    let empList = $('#employeeList');
+    let empSubList = $('#employeeSubList');
+    empList.empty();
+    empSubList.empty();
+
+    if (emp && emp.length > 0) {
+        emp.forEach(function (item) {
+            let selectEmpList = $(`
+                <li class="form-check">
+                    <input type="checkbox" class="form-check-input" name="employeeRadio" id="${item.empNo}" value="${item.empNo}">
+                    <label class="form-check-label" for="${item.empNo}">(${item.descript}) ${item.ename}</label>
+                </li>
+            `);
+
+            empSubList.append(selectEmpList.clone());
+            empList.append(selectEmpList.clone());
+        });
+    }
 }
 
+// 참조자 선택 후 확인 버튼 클릭 시 동작
 $('#btnInsertApprover').on('click', function () {
     let selectedRefs = [];
     let selectedRefIds = [];
@@ -320,29 +326,43 @@ $('#btnInsertApprover').on('click', function () {
     $('#refName').val(selectedRefs.join(', '));
     $('#refNo').val(selectedRefIds.join(', '));
 
-    // 모달 닫기	
+    // 모달 닫기
     $('#approvalModal').modal('hide');
 });
 
+//예약 날짜 변경 시 시간 목록 가져오기
 
-document.getElementById("revDate").addEventListener("change", function () {
-    const revDate = this.value; // 선택된 날짜
-    const meeNo = ${meeNo} // 예시, 실제로는 전달받은 미팅룸 번호 사용
+$('#revDate').on('change', function () {
+    let meeNo = $('#meetingRoomId').val();
+    let revDate = $(this).val();
 
-    fetch(`/available-times?revDate=${revDate}&meeNo=${meeNo}`)
-        .then(response => response.json())
-        .then(data => {
-            const revTimeSelect = document.getElementById("revTime");
-            revTimeSelect.innerHTML = '<option value="" selected>시간을 선택하세요</option>'; // 초기화
+    console.log('Meeting Room ID:', meeNo);
+    console.log('Selected Date:', revDate);
 
-            data.forEach(time => {
-                const option = document.createElement("option");
-                option.value = time;
-                option.textContent = time;
-                revTimeSelect.appendChild(option);
-            });
-        })
-        .catch(error => console.error("Error fetching available times:", error));
+    $.ajax({
+        url: '/addReservation/' + meeNo + '/times',
+        method: 'GET',
+        data: { revDate: revDate },
+        success: function(times) {
+            console.log('Received Times:', times);
+            const revTimeSelect = $('#revTime');
+            revTimeSelect.empty();
+            revTimeSelect.append(`<option value="">시간을 선택하세요</option>`);
+
+            if (times && times.length > 0) {
+                times.forEach(function (time) {
+                    revTimeSelect.append(`<option value="${time}">${time}</option>`);
+                });
+            } else {
+                console.log('No times available');
+                alert('선택한 날짜에 예약 가능한 시간이 없습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            alert('시간 데이터를 가져오는 데 실패했습니다.');
+        }
+    });
 });
 
 </script>

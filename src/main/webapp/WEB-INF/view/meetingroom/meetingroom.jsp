@@ -146,8 +146,8 @@
 										                </form>
 										                <!-- 삭제 버튼 -->
 										               <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-    														<button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
-													   </form>
+														    <button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
+														</form>
 										            </div>
 										        </td>
 										    </tr>
@@ -189,26 +189,30 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
     <script>
-    	noticeList = $('#noticeList').DataTable({
-            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
-                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch":  '<div class="dataTables_filter"> <lable>' +
-                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>'
-                                +  '</lable> </div>', 
-                "sSearchPlaceholder": "Search...",
-                "sLengthMenu": "Results :  _MENU_",
+ // DataTables 초기화
+    const noticeList = $('#noticeList').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+               "<'table-responsive'tr>" +
+               "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "oLanguage": {
+            "oPaginate": { 
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' 
             },
-            "stripeClasses": [],
-            "lengthMenu": [1, 3, 5, 10],
-            "pageLength": 10 
-        });
-    
-        // 모든 예약 버튼에 대해 클릭 이벤트 추가
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch":  '<div class="dataTables_filter"><label>' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
+                        '</label></div>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [1, 3, 5, 10],
+        "pageLength": 10
+    });
+
+    // 이벤트 리스너 초기화 함수
+    function initializeReserveButtonEvents() {
         document.querySelectorAll('.reserve-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const availYn = this.getAttribute('data-availYn'); // 버튼의 예약 가능 상태 가져오기
@@ -220,17 +224,16 @@
                 }
             });
         });
-        
-        // 삭제 버튼 클릭 시 확인 다이얼로그
-        function confirmDelete(button) {
-            // 삭제 확인 메시지
-            const confirmDelete = confirm("정말로 이 회의실을 삭제하시겠습니까?");
-            
-            if (confirmDelete) {
-                // 사용자가 "확인"을 클릭했을 경우 폼을 제출
-                button.closest('form').submit();
-            }
-        }
+    }
+
+    // DataTables 'draw' 이벤트에 리스너 추가
+    noticeList.on('draw', function () {
+        initializeReserveButtonEvents();
+    });
+
+    // 초기 페이지 로드 시 이벤트 리스너 추가
+    initializeReserveButtonEvents();
+
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
 </body>

@@ -14,11 +14,14 @@
 </select>
 						       
 <select id="revTimeList" resultType="String">
-SELECT common_code FROM common_code 
+SELECT common_code 
+FROM common_code 
 WHERE common_code !=  'K00'
-AND PARENT_CODE = 'K00'
-AND common_code NOT IN ( SELECT rev_time FROM reservation
-                       WHERE MEE_NO = #{meeNo}
-                         AND rev_date = #{revDate})                
+	AND PARENT_CODE = 'K00'
+	AND common_code NOT IN (
+		 SELECT rev_time
+		 FROM reservation
+		 WHERE MEE_NO = #{meeNo}
+		 AND rev_date = #{revDate})      
 </select>
 </mapper>

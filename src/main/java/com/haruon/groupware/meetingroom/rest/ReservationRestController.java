@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication; // 올바른 Authentication 클래스 import
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.approval.dto.ResponseEmployee;
@@ -15,7 +16,7 @@ import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.meetingroom.service.ReservationService;
 
 @RestController
-public class reservationRestController {
+public class ReservationRestController {
 
     @Autowired ApprovalService approvalService;
     @Autowired ReservationService reservationService;
@@ -32,7 +33,12 @@ public class reservationRestController {
         return ResponseEntity.ok(empList);
     }
     
-	/*
-	 * @GetMapping("/revTimeList") public
-	 */    
+    @GetMapping("/addReservation/{meeNo}/times")
+    public ResponseEntity<List<String>> getAvailableTimes(
+            @PathVariable("meeNo") int meeNo,
+            @RequestParam("revDate") String revDate) {
+        List<String> availableTimes = reservationService.ReservationTime(meeNo, revDate);
+        return ResponseEntity.ok(availableTimes);
+    }
+    
 }

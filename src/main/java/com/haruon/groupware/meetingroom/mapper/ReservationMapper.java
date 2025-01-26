@@ -3,6 +3,8 @@
 	import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.haruon.groupware.meetingroom.entity.Reservation;
 	
 	@Mapper
 	public interface ReservationMapper {
@@ -11,7 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
 	
 		Integer deleteReservation(Integer resNo);
 		
-		List<String> revTimeList(Integer resNo);
-	
-	
+		List<String> revTimeList(Reservation reservation);
+
 	}
