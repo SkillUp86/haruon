@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.meetingroom.service.ReservationService;
 
 @RestController
@@ -34,10 +35,10 @@ public class ReservationRestController {
     }
     
     @GetMapping("/addReservation/{meeNo}/times")
-    public ResponseEntity<List<String>> getAvailableTimes(
+    public ResponseEntity<List<CommonCode>> getAvailableTimes(
             @PathVariable("meeNo") int meeNo,
             @RequestParam("revDate") String revDate) {
-        List<String> availableTimes = reservationService.ReservationTime(meeNo, revDate);
+        List<CommonCode> availableTimes = reservationService.ReservationTime(meeNo, revDate);
         return ResponseEntity.ok(availableTimes);
     }
     

@@ -95,66 +95,46 @@
                 </div>
                 <!-- 메인컨텐츠 입력칸 -->
                 
-                <div class="account-settings-container layout-top-spacing">
-	                <div class="account-content">
-	                    <div class="row mb-3">
-	                        <div class="col-md-12">
-	                            <h2>내 예약 리스트</h2>
-               
-               					
-                                 
-                                <div class="widget-content widget-content-area br-8">
-                                    <table id=noticeList class="zero-config table dt-table-hover" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                            	<th>회의실 이름</th>
-                                                <th>예약 날짜</th>
-                                                <th>예약시작시간</th>
-                                                <th>예약종료시간</th>
-                                                <th>예약자</th>
-                                                <th>에약 취소	</th>
-                                                
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                           <c:forEach var="m" items="${myReservationList}">
-											    <tr>
-											        <td>
-														<img src="${pageContext.request.contextPath}/upload/meetingroom/${m.fileName}.${m.fileExt}" style="width: 100px; height: auto;" />
-											        </td>
-											        <td>
-											            <div class="d-flex justify-content-left align-items-center">
-											                <div class="d-flex flex-column">
-											                    <span class="text-truncate fw-bold">
-											                        <a href="${pageContext.request.contextPath}/modifyMeetingroom/${m.meeNo}">${m.mname}</a>
-											                    </span>
-											                </div>
-											            </div>
-											        </td>
-											        <td>${m.meeNo}</td>
-											        <td>${m.capacity}</td>
-											        <td>${m.availYn}</td>
-											        <td>
-											            <div class="btn-group" role="group" aria-label="Action Buttons">
-											                <!-- 삭제 버튼 -->
-															<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-															<button class="btn btn-danger btn-sm" type="submit">예약취소</button>
-															</form>
-											
-											                <!-- 예약 버튼 -->
-											             
-											            </div>
-											        </td>
-											    </tr>
-											</c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-                			</div>
-                		</div>
-                	</div>
+<div class="account-settings-container layout-top-spacing">
+    <div class="account-content">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <h2>내 예약 리스트</h2>
+                <div class="widget-content widget-content-area br-8">
+                    <table id="noticeList" class="zero-config table dt-table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>회의실 이름</th>
+                                <th>예약 날짜</th>
+                                <th>예약 시간</th>
+                                <th>예약 정보</th>
+                                <th>예약 취소</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${myReservationList}" var="r">
+                                <tr>
+                                    <td>${r.mname}</td>
+                                    <td>${r.revDate}</td>
+                                    <td>${r.descript}</td>
+                                    <td>${r.content}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <form action="${pageContext.request.contextPath}/deleteReservation/${r.resNo}" method="get" style="display: inline;">
+                                                <button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                 <!-- 메인컨텐츠 END -->
             </div>
             <!--  BEGIN FOOTER  -->

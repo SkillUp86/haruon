@@ -136,37 +136,37 @@
                     <textarea class="form-control" id="info" name="info" rows="5" readonly>${meetingRoom.info}</textarea>
                 </div>
 
-                <div class="row mb-4">
-				    <div class="col-sm-6">
-				        <label for="revDate" class="form-label">예약 일자</label>
-				        <input type="date" class="form-control" id="revDate" name="revDate" required>
-				    </div>
-				    <div class="col-sm-6">
-				        <label for="revTime" class="form-label">예약 시간</label>
-				        <select class="form-control" id="revTime" name="revTime" required>
-				            <option value="" selected>시간을 선택하세요</option>
-				            <c:forEach var="time" items="${reservationTime}">
-				                <option value="${time}">${time}</option>
-				            </c:forEach>
-				        </select>
-				    </div>
-				</div>
+	                <div class="row mb-4">
+					    <div class="col-sm-6">
+					        <label for="revDate" class="form-label">예약 일자</label>
+					        <input type="date" class="form-control" id="revDate" name="revDate" required>
+					    </div>
+					    <div class="col-sm-6">
+					        <label for="revTime" class="form-label">예약 시간</label>
+					        <select class="form-control" id="revTime" name="revTime" required>
+							    <option value="" selected>시간을 선택하세요</option>
+							    <c:forEach var="time" items="${reservationTime}">
+							        <option value="${time.commonCode}" data-descript="${time.descript}">${time.descript}</option>
+							    </c:forEach>
+							</select>
+						</div>
+					</div>
 
 
 				<div class="form-group row invoice-note">
 			                    <label>예약 정보</label>
 			                    <div class="col-sm-12">
-			                        <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
+			                        <textarea class="form-control" id="info" name="content" style="height: 300px;" required></textarea>
 			                    </div>
 			                </div>
                 
                 <div class="input-group mb-4">
-                    <div class="input-group">
-                        <span class="input-group-text label-text">참조자</span>
-                        <input type="hidden" class="form-control" id="refNo" name="refNo" value="" required readonly="readonly">
-                        <input type="text" class="form-control" id="refName" name="refName" value="" placeholder="참조자 입력" required readonly>
-                    </div>
-                </div>
+				    <div class="input-group">
+				        <span class="input-group-text label-text">참여자</span>
+				        <input type="hidden" class="form-control" id="attendees" name="attendees" value="" required>
+				        <input type="text" class="form-control" id="attendeeNames" placeholder="참여자 목록" required readonly>
+				    </div>
+				</div>
 
                 <div class="text-end">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
@@ -264,94 +264,89 @@ s					    </div>
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 <script>
-// 참조자 선택 후 선택된 사람들을 입력창에 표시
-// 부서 클릭 시 직원 목록 가져오기
-$('.dept').click(function () {
-    let deptNo = $(this).val();
-    $.ajax({
-        url: '/reservation/depts/' + deptNo + '/employees',
-        method: "GET",
-    })
-        .done(function (response) {
-            emp = response;
-            employeeList(emp); // 직원 목록 표시
-        })
-        .fail(function () {
-            alert('직원 목록을 불러오지 못했습니다.');
-        });
-});
-
-// 직원 목록 표시 함수
+//참조자 선택 후 선택된 사람들을 입력창에 표시
+$('.dept').click(function() {
+			let deptNo = $(this).val();
+			$.ajax({
+				url: '/reservation/depts/' + deptNo + '/employees',
+				method: "GET"
+			}).done(function(response) {
+				emp = response;
+				employeeList(emp);  // 직원 목록 표시
+			}).fail(function() {
+				alert('실패');
+			})
+		});
+		
 function employeeList(emp) {
-    let empList = $('#employeeList');
-    let empSubList = $('#employeeSubList');
-    empList.empty();
-    empSubList.empty();
-
-    if (emp && emp.length > 0) {
-        emp.forEach(function (item) {
-            let selectEmpList = $(`
-                <li class="form-check">
-                    <input type="checkbox" class="form-check-input" name="employeeRadio" id="${item.empNo}" value="${item.empNo}">
-                    <label class="form-check-label" for="${item.empNo}">(${item.descript}) ${item.ename}</label>
-                </li>
-            `);
-
-            empSubList.append(selectEmpList.clone());
-            empList.append(selectEmpList.clone());
-        });
-    }
+	let empList = $('#employeeList');
+	let empSubList = $('#employeeSubList');
+	empList.empty();
+	empSubList.empty();
+	if (emp && emp.length > 0) {
+		emp.forEach(function(item) {
+			//console.log(item)
+	
+			let selectEmpList = $(`
+						<li class="form-check">
+							<input type="checkbox" class="form-check-input" namxe="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+							<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
+						</li>
+						`);
+			
+			empSubList.append(selectEmpList.clone());
+			empList.append(selectEmpList.clone());
+		});
+	} 
 }
-
-// 참조자 선택 후 확인 버튼 클릭 시 동작
 $('#btnInsertApprover').on('click', function () {
-    let selectedRefs = [];
-    let selectedRefIds = [];
-
-    // 선택된 체크박스 값 가져오기
+    let selectedEmps = [];
+    let selectedEmpIds = [];
     $('.form-check-input:checked').each(function () {
-        let refName = $(this).next('label').text().trim();
-        let refId = $(this).val();
-
-        selectedRefs.push(refName); // 이름 추가
-        selectedRefIds.push(refId); // ID 추가
+        let empName = $(this).next('label').text().trim();
+        let empId = $(this).val();
+        selectedEmps.push(empName);
+        selectedEmpIds.push(empId);
     });
-
-    if (selectedRefs.length === 0) {
-        alert('참조자를 선택해주세요.');
-        return; // 선택되지 않은 경우 종료
+    if (selectedEmpIds.length === 0) {
+        alert('참여자를 선택해주세요.');
+        return;
     }
-
-    // 선택된 참조자 정보를 입력 필드에 설정
-    $('#refName').val(selectedRefs.join(', '));
-    $('#refNo').val(selectedRefIds.join(', '));
-
-    // 모달 닫기
+    $('#attendees').val(selectedEmpIds.join(','));
+    $('#attendeeNames').val(selectedEmps.join(', '));
     $('#approvalModal').modal('hide');
 });
 
-//예약 날짜 변경 시 시간 목록 가져오기
+
+
 
 $('#revDate').on('change', function () {
     let meeNo = $('#meetingRoomId').val();
     let revDate = $(this).val();
 
-    console.log('Meeting Room ID:', meeNo);
-    console.log('Selected Date:', revDate);
+    // 값을 콘솔에 출력하여 확인
+    console.log('Meeting Room ID:', meeNo); // meeNo 값 확인
+    console.log('Selected Date:', revDate); // revDate 값 확인
 
+    // AJAX 요청 전 revDate 값 확인
+    console.log('AJAX 요청 URL:', `/addReservation/${meeNo}/times?revDate=${revDate}`);
+
+    // AJAX 요청
     $.ajax({
-        url: '/addReservation/' + meeNo + '/times',
+        url: '/addReservation/'+ meeNo + '/times', // URL 경로
         method: 'GET',
-        data: { revDate: revDate },
+        data: { revDate: revDate }, // 전달 데이터
         success: function(times) {
-            console.log('Received Times:', times);
+            // 요청 성공 시 응답 데이터를 콘솔에 출력
+            console.log('Received Times:', times); 	
+
             const revTimeSelect = $('#revTime');
             revTimeSelect.empty();
             revTimeSelect.append(`<option value="">시간을 선택하세요</option>`);
 
             if (times && times.length > 0) {
                 times.forEach(function (time) {
-                    revTimeSelect.append(`<option value="${time}">${time}</option>`);
+                    revTimeSelect.append(`<option value="\${time.commonCode}">\${time.descript}</option>`);
                 });
             } else {
                 console.log('No times available');
@@ -359,12 +354,56 @@ $('#revDate').on('change', function () {
             }
         },
         error: function(xhr, status, error) {
+            // 요청 실패 시 오류 메시지 출력
             console.error('AJAX Error:', status, error);
+            console.log('AJAX Error Response:', xhr.responseText); // 서버 응답 내용
             alert('시간 데이터를 가져오는 데 실패했습니다.');
         }
     });
 });
+$('#revTime').on('change', function() {
+    let selectedOption = $(this).find('option:selected');
+    let descriptValue = selectedOption.data('descript');
 
+    console.log('Descript Value:', descriptValue); // 디버깅 로그 추가
+
+    if ($('#revTimeDescript').length) {
+        $('#revTimeDescript').val(descriptValue);
+    } else {
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'revTimeDescript',
+            name: 'revTimeDescript',
+            value: descriptValue
+        }).appendTo('#formInsert');
+    }
+});
+
+
+
+$('#formInsert').submit(function(e) {
+    e.preventDefault();
+
+    let formData = $(this).serialize();
+    console.log('Form Data:', formData);
+
+    let meeNo = $('#meetingRoomId').val();
+    console.log('Meeting Room ID:', meeNo);
+
+    $.ajax({
+        url: '/addReservation/' + meeNo,
+        method: 'POST',
+        data: formData,
+        success: function(response) {
+            alert('회의실 예약이 완료되었습니다.');
+            window.location.href = '/myReservation';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error Response:', xhr.responseText);
+            alert('예약 처리 중 오류가 발생했습니다.');
+        }
+    });
+});
 </script>
 </body>
 </html>

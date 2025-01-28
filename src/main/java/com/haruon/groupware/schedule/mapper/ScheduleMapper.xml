@@ -49,18 +49,6 @@
         #{title}, #{kind}, #{content}, #{startTime}, #{endTime}
     )
 	</insert>
-	<insert id="addScheduleAttendance" parameterType="Integer">
-		insert into schedule_attendance
-		(
-			 sch_no
-			,emp_no
-		) 
-			values 
-		(
-			 #{schNo}
-			,#{empNo}
-		)
-	</insert>
 	
 <delete id="deleteSchedule" parameterType="Integer">
 DELETE FROM schedules
@@ -82,4 +70,53 @@ WHERE sch_no = #{schNo}
     end_time = #{endTime}
 WHERE sch_no = #{schNo}
 </update>
+
+
+	<insert id="addMeetingroomSchedule" parameterType="com.haruon.groupware.schedule.dto.ScheduleDto"
+        useGeneratedKeys="true" keyProperty="schNo" keyColumn="sch_no">
+   INSERT INTO schedules(
+    kind,
+    title,
+    content,
+    start_time,
+    end_time
+) VALUES (
+    #{kind},
+    #{title},
+    #{content},
+    STR_TO_DATE( 
+        CONCAT(#{revDate}, ' ',
+            CASE WHEN #{revTimeDescript} LIKE '%오후%' 
+                THEN CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED) + 12
+                ELSE CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED)
+            END
+        ),
+        '%Y-%m-%d %H'
+    ),
+    STR_TO_DATE( 
+        CONCAT(#{revDate}, ' ',
+            CASE WHEN #{revTimeDescript} LIKE '%오후%' 
+                THEN CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED) + 12
+                ELSE CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED)
+            END
+        ),
+        '%Y-%m-%d %H'
+    ) + INTERVAL 1 HOUR
+)
+
+</insert>
+
+
+	<insert id="addScheduleAttendance" parameterType="Integer">
+		insert into schedule_attendance
+		(
+			 sch_no
+			,emp_no
+		) 
+			values 
+		(
+			 #{schNo}
+			,#{empNo}
+		)
+	</insert>
 </mapper>

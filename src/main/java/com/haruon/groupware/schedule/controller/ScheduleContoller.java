@@ -44,6 +44,7 @@ public class ScheduleContoller {
 	public String deleteSchedule(@PathVariable("schNo") Integer schNo) {
 	    scheduleService.deleteSchedule(schNo);
 	    return "redirect:/calendar"; 
+	    
 	}
 
 	@PostMapping("/updateSchedule")

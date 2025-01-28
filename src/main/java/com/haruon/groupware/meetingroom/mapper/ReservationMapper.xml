@@ -13,15 +13,48 @@
     WHERE sch_no = #{schNo}
 </select>
 						       
-<select id="revTimeList" resultType="String">
-SELECT common_code 
+<select id="revTimeList" resultType="com.haruon.groupware.common.entity.CommonCode">
+SELECT common_code  code,
+       descript
 FROM common_code 
-WHERE common_code !=  'K00'
-	AND PARENT_CODE = 'K00'
-	AND common_code NOT IN (
-		 SELECT rev_time
-		 FROM reservation
-		 WHERE MEE_NO = #{meeNo}
-		 AND rev_date = #{revDate})      
-</select>
+WHERE common_code != 'K00'
+  AND parent_code = 'K00'
+  AND common_code NOT IN (
+      SELECT rev_time
+      FROM reservation
+      WHERE mee_no = #{meeNo}
+        AND rev_date = #{revDate}
+</select> 
+<insert id="addReservation" parameterType="com.haruon.groupware.meetingroom.entity.Reservation">
+    INSERT INTO reservation (
+    mee_no,
+    rev_date,
+    rev_time,
+    sch_no,
+    emp_no,
+    content
+    )VALUES(
+    #{meeNo}, #{revDate}, #{revTime}, #{schNo}, #{empNo}, #{content}
+    )
+</insert>
+
+	<select id="myReservationList" resultType="com.haruon.groupware.meetingroom.dto.MyReservationDto">
+	SELECT 
+	    r.res_no resNo,
+	    r.mee_no meeNo,
+	    m.mname mname,
+	    r.rev_date revDate,
+	    r.rev_time revTime,
+	    c.descript descript,
+	    r.content content,
+	    e.ename ename
+	FROM reservation r
+	INNER JOIN schedules s ON r.sch_no = s.sch_no
+	INNER JOIN emp e ON r.emp_no = e.emp_no
+	INNER JOIN meetingroom m ON r.mee_no = m.mee_no
+	INNER JOIN common_code c ON r.rev_time = c.common_code
+	WHERE r.emp_no = #{empNo}
+	    AND c.parent_code = 'K00'
+	ORDER BY r.rev_date DESC, r.rev_time DESC
+	</select>
 </mapper>

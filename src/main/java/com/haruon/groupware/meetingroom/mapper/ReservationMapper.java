@@ -4,6 +4,8 @@
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.haruon.groupware.common.entity.CommonCode;
+import com.haruon.groupware.meetingroom.dto.MyReservationDto;
 import com.haruon.groupware.meetingroom.entity.Reservation;
 	
 	@Mapper
@@ -13,6 +15,10 @@ import com.haruon.groupware.meetingroom.entity.Reservation;
 	
 		Integer deleteReservation(Integer resNo);
 		
-		List<String> revTimeList(Reservation reservation);
+		List<CommonCode> revTimeList(Reservation reservation);
+		
+		int addReservation(Reservation reservation);
+		
+		List<MyReservationDto> myReservationList(int empNo);
 
 	}

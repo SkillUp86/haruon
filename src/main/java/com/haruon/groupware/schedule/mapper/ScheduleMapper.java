@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.haruon.groupware.schedule.dto.ScheduleDto;
 import com.haruon.groupware.schedule.entity.Schedules;
 
 
@@ -23,7 +24,8 @@ public interface ScheduleMapper {
 	
 	Schedules scheduleOne (Integer schNo);
 
-
 	int addScheduleAttendance(int schNo, int empNo);
+	
+	int addMeetingroomSchedule(ScheduleDto scheduleDto);
 	
 }

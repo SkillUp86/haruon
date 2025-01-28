@@ -13,6 +13,5 @@ public interface CommonMapper {
 		List<CommonCode> findByParentCode(String parentCode);
 
 		
-		
 	
 }

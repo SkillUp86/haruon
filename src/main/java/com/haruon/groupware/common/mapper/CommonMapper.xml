@@ -9,7 +9,8 @@
 		     , parent_code parentCode
 		     , descript descript
       	from   common_code
-	    where  parent_code = #{parentCode}  
+	    where  parent_code = #{parentCode}
 	</select>
-	
+		
+
 </mapper>
