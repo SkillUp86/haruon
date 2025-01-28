@@ -144,19 +144,19 @@
 					    <div class="col-sm-6">
 					        <label for="revTime" class="form-label">예약 시간</label>
 					        <select class="form-control" id="revTime" name="revTime" required>
-							    <option value="" selected>시간을 선택하세요</option>
-							    <c:forEach var="time" items="${reservationTime}">
-							        <option value="${time.commonCode}" data-descript="${time.descript}">${time.descript}</option>
-							    </c:forEach>
-							</select>
-						</div>
+						    <option value="" selected>시간을 선택하세요</option>
+						    <c:forEach var="time" items="${reservationTime}">
+						        <option value="${time.commonCode}">${time.descript}</option>
+						    </c:forEach>
+						</select>
+					    </div>
 					</div>
 
 
 				<div class="form-group row invoice-note">
 			                    <label>예약 정보</label>
 			                    <div class="col-sm-12">
-			                        <textarea class="form-control" id="info" name="content" style="height: 300px;" required></textarea>
+			                        <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
 			                    </div>
 			                </div>
                 
@@ -318,7 +318,7 @@ $('#btnInsertApprover').on('click', function () {
 });
 
 
-
+//예약 날짜 변경 시 시간 목록 가져오기
 
 $('#revDate').on('change', function () {
     let meeNo = $('#meetingRoomId').val();
@@ -361,25 +361,6 @@ $('#revDate').on('change', function () {
         }
     });
 });
-$('#revTime').on('change', function() {
-    let selectedOption = $(this).find('option:selected');
-    let descriptValue = selectedOption.data('descript');
-
-    console.log('Descript Value:', descriptValue); // 디버깅 로그 추가
-
-    if ($('#revTimeDescript').length) {
-        $('#revTimeDescript').val(descriptValue);
-    } else {
-        $('<input>').attr({
-            type: 'hidden',
-            id: 'revTimeDescript',
-            name: 'revTimeDescript',
-            value: descriptValue
-        }).appendTo('#formInsert');
-    }
-});
-
-
 
 $('#formInsert').submit(function(e) {
     e.preventDefault();
