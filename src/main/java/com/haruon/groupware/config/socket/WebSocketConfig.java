@@ -12,14 +12,10 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 public class WebSocketConfig implements WebSocketConfigurer {
 	
 	private final WebSocketMessageHandler webSocketMessageHandlers;
-
-	
 	
 	public WebSocketConfig(WebSocketMessageHandler webSocketMessageHandlers) {
 		this.webSocketMessageHandlers = webSocketMessageHandlers;
 	}
-
-
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -32,7 +28,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	public HandshakeInterceptor handshakeInterceptor() {
 	    return new ChattingHandShakeInterceptor();
 	}
-	
-
 	
 }

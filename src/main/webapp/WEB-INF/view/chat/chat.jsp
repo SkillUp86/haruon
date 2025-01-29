@@ -11,17 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>HARUON 메신저</title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="../src/assets/css/light/apps/chat.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/chat.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->
     <style>
 	    #content-sub {
@@ -50,25 +50,28 @@
             <div class="chat-section layout-top-spacing">
                 <div>
                     <div class="chat-system">
+            
                         <!-- 채팅 내역 시작 -->
                         <div class="chat-box">
                             <div class="chat-box-inner">
-                                <div class="chat-meta-user">
+                            	<!-- 상단 - 채팅 헤더 -->
+                                <div class="chat-meta-user  d-flex justify-content-between ">
                                     <div class="current-chat-user-name">
-                                    	<!-- 상대방 정보 -->
                                         <span id="particiant">
-
                                         </span>
                                     </div>
-
+                                    <div class="align-content-center me-3">
+					        			<a class="btn btn-warning" onclick="window.close()">창닫기</a>
+					        		</div>	
                                 </div>
+                                <!-- 중단 - 채팅 내역 -->
                                 <div class="chat-conversation-box">
                                     <div id="chat-conversation-box-scroll" class="chat-conversation-box-scroll">
                                         <div id="conversation" class="chat active-chat person">
                                         </div>
-                                        
                                     </div>
                                 </div>
+                                <!-- 하단 - 채팅 입력 input -->
                                 <div class="chat-footer">
                                     <div class="chat-input">
                                         <form class="chat-form" action="javascript:void(0);">
@@ -84,9 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text-end m-2">
-        		<a class="btn btn-warning" onclick="window.close()">창닫기</a>
-        	</div>
+
         	
         </div>
         <!--  END CONTENT AREA  -->
@@ -94,26 +95,34 @@
     <!-- END MAIN CONTAINER -->
     
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/plugins/src/global/vendors.min.js"></script>
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="../src/assets/js/apps/chat.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/apps/chat.js"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
     
     <!-- ajax 호출 채팅 상대방 정보 / 이전 대화내역 -->
 	<script>
 		$(document).ready(function() {
 			showParticiant();
-
+			
 		})
 	</script>
-
+	
+	<!-- 스크롤을 최하단으로 내리는 함수 -->
+	<script>
+		function moveScrollBottom() {
+			var chatBox = $(".chat-conversation-box");		
+			chatBox.scrollTop(chatBox.prop("scrollHeight"));
+		}
+	</script>
+	
     <script>
     	// 채팅 상대방 정보
     	function showParticiant() {
@@ -225,6 +234,8 @@
     			
     			$("#conversation").append(oneChatHTML);
     			
+    			moveScrollBottom();
+
     		}).fail(function() {
     			console.log('showParticiant ajax 호출 실패');
     		});
@@ -247,7 +258,7 @@
 	    };
 	
 	    socket.onerror = (error) => {
-	        console.error("에러 {}", error);
+	        console.error("에러", error);
 	    };
 		
 	    
@@ -289,11 +300,10 @@
 			// HTML 하나로 합치기 
 			getMessageHTML = senderHTML + messageHTML + timeHTML;
 	        	
-			// 스크롤바 조절
-			const getScrollContainer = document.querySelector('.chat-conversation-box');
-	        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
-	       
 	        $("#conversation").append(getMessageHTML);
+	        
+			// 스크롤바 조절
+			moveScrollBottom();
 	    };
 		
 		    
@@ -315,6 +325,7 @@
                 socket.send(roomId + '~' + senderNo + '~' + sendTime + '~' + chatMessageValue);
                 
 		        var clearmessage = message.val('');
+
 		    }
 		})
 

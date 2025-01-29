@@ -12,17 +12,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 
 public class ChattingHandShakeInterceptor implements HandshakeInterceptor {
-	// https://innu3368.tistory.com/214
+	// 소켓 연결 전 roomId를 세션 속성에 저장
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response
 									, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 		
 		UriComponents uriComponents = UriComponentsBuilder
-				  .fromUriString(Objects.requireNonNull(request.getURI()).toString())
-				  .build();
-		String id = uriComponents.getQueryParams().getFirst("id");
-		
-		String path = request.getURI().getPath();
+									  .fromUriString(Objects.requireNonNull(request.getURI()).toString())
+									  .build();
         String roomId = uriComponents.getQueryParams().getFirst("id");
         attributes.put("roomId", roomId);
         return true;
@@ -31,10 +28,5 @@ public class ChattingHandShakeInterceptor implements HandshakeInterceptor {
 	@Override
 	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Exception exception) {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	
-
 }
