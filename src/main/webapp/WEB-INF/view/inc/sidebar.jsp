@@ -77,12 +77,29 @@
 		
 		<!-- 쪽지함 : id - messageToggle -->
 		<li class="menu">
-			<a id="messageToggle" href="#" aria-expanded="false" class="dropdown-toggle">
+			<a id="messageToggle" href="#mail" data-bs-toggle="collapse" aria-expanded="false" class="attendanceToggle dropdown-toggle">
 				<div>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-					<span>쪽지함(수정필요)</span>
+					<span>메일함</span>
+				</div>
+				<div>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 				</div>
 			</a>
+			<ul class="collapse submenu list-unstyled" id="mail" data-bs-parent="#sideBarAccordion">
+				<li class="active">
+					<a href="${pageContext.request.contextPath}/readersMsg">받은 메일함</a>
+				</li>
+				<li class="active">
+					<a href="${pageContext.request.contextPath}/sendersMsg">보낸 메일함</a>
+				</li>
+				<li class="active">
+					<a href="${pageContext.request.contextPath}/temporarysMsg">임시 보관함</a>
+				</li>
+				<li class="active">
+					<a href="${pageContext.request.contextPath}/trashsMsg">휴지통</a>
+				</li>
+			</ul>
 		</li>
 
 		<!-- 일정 : id - scheduleToggle -->
@@ -199,7 +216,7 @@
 					</li>
 				</c:if>
 				<li>
-					<a href="${pageContext.request.contextPath}/myReservation">내 예약 리스트(수정필요)</a>
+					<a href="${pageContext.request.contextPath}/myReservation">내 예약 리스트</a>
 				</li>
 			</ul>
 		</li>
@@ -332,20 +349,22 @@
 		if(currentPath === "/employee/attendance" || currentPath === "/department/attendance") {
 			$("#attendanceToggle").attr("aria-expanded", "true");
 		}
-		// 쪽지함
-		if(currentPath === "#") {
+		
+		// 메일함
+		if(currentPath === "/readersMsg" || currentPath === "/sendersMsg" || currentPath === "/temporarysMsg" || currentPath === "/trashsMsg") {
 			$("#messageToggle").attr("aria-expanded", "true");
 		}
+		
 		// 일정
 		if(currentPath === "/calendar") {
 			$("#scheduleToggle").attr("aria-expanded", "true");
 		}
 		// 문서
-		if(currentPath === "/approval" || currentPath === "/draft/list") {
+		if(currentPath === "/approval" || currentPath.startsWith("/draft")) {
 			$("#draftToggle").attr("aria-expanded", "true");
 		}
 		// 조직도
-		if(currentPath === "/addEmp") {
+		if(currentPath === "/addEmp" || currentPath === "/employees") {
 			$("#coworkerToggle").attr("aria-expanded", "true");
 		}
 		
@@ -355,7 +374,7 @@
 			$("#boardToggle").attr("aria-expanded", "true");
 		}
 		// 회의실 예약
-		if(currentPath === "#") {
+		if(currentPath === "/myReservation" || currentPath === "/meetingroom") {
 			$("#meetingToggle").attr("aria-expanded", "true");
 		}
 		// 가맹점
