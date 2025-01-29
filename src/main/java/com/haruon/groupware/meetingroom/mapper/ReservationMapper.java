@@ -15,10 +15,14 @@ import com.haruon.groupware.meetingroom.entity.Reservation;
 	
 		Integer deleteReservation(Integer resNo);
 		
+		Integer deleteMyReservation(Integer schNo);
+		
 		List<CommonCode> revTimeList(Reservation reservation);
 		
 		int addReservation(Reservation reservation);
 		
 		List<MyReservationDto> myReservationList(int empNo);
+		
+		Integer findReservationresNo(Integer schNo);
 
 	}

@@ -16,9 +16,9 @@ import com.haruon.groupware.department.entity.Dept;
 import com.haruon.groupware.department.service.DeptService;
 import com.haruon.groupware.meetingroom.dto.MeetingRoomDto;
 import com.haruon.groupware.meetingroom.dto.MyReservationDto;
+import com.haruon.groupware.meetingroom.dto.RequestReservationDto;
 import com.haruon.groupware.meetingroom.service.MeetingRoomService;
 import com.haruon.groupware.meetingroom.service.ReservationService;
-import com.haruon.groupware.schedule.dto.ScheduleDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public class ReservationController {
 	@Autowired DeptService deptService;
 
 	@GetMapping("/myReservation")
-	public String myReservation(Model model ) {
+	public String myReservation(Model model ,Integer schNo) {
 		List<MyReservationDto> myReservationList = reservationService.MyReservationList();
 		model.addAttribute("myReservationList",myReservationList);
 		return"meetingroom/myReservation";
@@ -59,23 +59,17 @@ public class ReservationController {
 	}
 	
 	@PostMapping("addReservation/{meeNo}")
-	public String addReservation(@PathVariable int meeNo, @RequestParam String content,@RequestParam String revDate,@RequestParam String revTime,@RequestParam String revTimeDescript,@RequestParam String attendees , Model model) {
-	    
-	    ScheduleDto scheduleDto = new ScheduleDto();
-	    scheduleDto.setMeeNo(meeNo);
-	    scheduleDto.setContent(content);
-	    scheduleDto.setRevDate(revDate);
-	    scheduleDto.setRevTime(revTime); 
-	    scheduleDto.setRevTimeDescript(revTimeDescript); 
-	    
-	    reservationService.addReservationAndSchedule(scheduleDto, attendees, model);
-	    return "redirect:/meetingroom";
-	}
+	   public String addReservation(@PathVariable int meeNo, RequestReservationDto reservationDto) {
+	      
+	      log.debug(reservationDto.toString());
+	      reservationService.addReservationAndSchedule(meeNo, reservationDto);
+	      return "redirect:/meetingroom";
+	   }
 	
-	@GetMapping("/deleteReservation/{resNo}")
-	public String deleteReservation(@PathVariable("resNo") Integer resNo) {
-	    reservationService.deleteReservation(resNo);
-	    return"meetingroom/myReservation";
-	    
+	@GetMapping("/deleteReservation/{schNo}")
+	public String deleteReservation(@PathVariable Integer schNo , Model model) {
+	    reservationService.deleteReservation(schNo);
+	    return "redirect:/myReservation";
 	}
 }
+	

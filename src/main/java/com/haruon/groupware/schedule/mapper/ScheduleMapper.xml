@@ -17,7 +17,6 @@
 		where sa.emp_no = #{empNo}
 	</select>
 	
-	<!-- schedule attendance랑 조인해서 emp 작성자 이름가져오기 -->
 	<select id="scheduleOne" resultType="com.haruon.groupware.schedule.entity.Schedules" parameterType="Integer">
 	SELECT
         s.sch_no schNo,
@@ -86,18 +85,18 @@ WHERE sch_no = #{schNo}
     #{content},
     STR_TO_DATE( 
         CONCAT(#{revDate}, ' ',
-            CASE WHEN #{revTimeDescript} LIKE '%오후%' 
-                THEN CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED) + 12
-                ELSE CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED)
+            CASE WHEN #{revTime} LIKE '%오후%' 
+                THEN CAST(SUBSTR(#{revTime}, -2) AS UNSIGNED) + 12
+                ELSE CAST(SUBSTR(#{revTime}, -2) AS UNSIGNED)
             END
         ),
         '%Y-%m-%d %H'
     ),
     STR_TO_DATE( 
         CONCAT(#{revDate}, ' ',
-            CASE WHEN #{revTimeDescript} LIKE '%오후%' 
-                THEN CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED) + 12
-                ELSE CAST(SUBSTR(#{revTimeDescript}, -2) AS UNSIGNED)
+            CASE WHEN #{revTime} LIKE '%오후%' 
+                THEN CAST(SUBSTR(#{revTime}, -2) AS UNSIGNED) + 12
+                ELSE CAST(SUBSTR(#{revTime}, -2) AS UNSIGNED)
             END
         ),
         '%Y-%m-%d %H'

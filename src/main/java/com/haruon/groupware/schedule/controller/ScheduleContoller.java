@@ -22,7 +22,7 @@ public class ScheduleContoller {
 	@GetMapping("/calendar")
     public String calendar(Model model, Integer schNo ) {
        
-        return "schedule/calendar"; // 일정 페이지 반환
+        return "schedule/calendar"; 
     }
 
 	@PostMapping("/addSchedule")

@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.meetingroom.dto.MyReservationDto;
+import com.haruon.groupware.meetingroom.dto.RequestReservationDto;
 import com.haruon.groupware.meetingroom.entity.Reservation;
 import com.haruon.groupware.meetingroom.mapper.ReservationMapper;
 import com.haruon.groupware.schedule.dto.ScheduleDto;
@@ -44,41 +44,50 @@ public class ReservationService {
 		    return reservationMapper.revTimeList(reservation);
 		}
 	 
-	 public void addReservationAndSchedule(ScheduleDto scheduleDto, String attendees, Model model) {
-		    CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	 public void addReservationAndSchedule(int meeNo, RequestReservationDto reservationDto) {
+         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		    if (scheduleDto.getRevDate() == null || scheduleDto.getRevTime() == null ) {
-		        throw new IllegalArgumentException("예약 날짜, 시간 및 시간 설명이 필요합니다.");
-		    }
-		    scheduleDto.getRevTimeDescript();
-		    log.debug("RevTimeDescript: {}", scheduleDto.getRevTimeDescript());
-		    scheduleDto.setKind("G04");
-		    scheduleDto.setTitle("회의");
+         if (reservationDto.getRevDate() == null || reservationDto.getRevTime() == null ) {
+             throw new IllegalArgumentException("예약 날짜, 시간 및 시간 설명이 필요합니다.");
+         }
+         String[] parts = reservationDto.getRevTime().split(",");
+        String commonCode = parts[0]; // commonCode 추출
+        String descript = parts[1]; // descript 추출
+        ScheduleDto scheduleDto = new ScheduleDto();
+        scheduleDto.setMeeNo(meeNo);
+        scheduleDto.setContent(reservationDto.getContent());
+        scheduleDto.setRevDate(reservationDto.getRevDate());
+        scheduleDto.setRevTime(descript);   
+         
+         scheduleDto.setKind("G04");
+         scheduleDto.setTitle("회의");
 
-		    // 스케줄 추가
-		    int schNo = scheduleMapper.addMeetingroomSchedule(scheduleDto);
+         // 스케줄 추가
+         scheduleMapper.addMeetingroomSchedule(scheduleDto);
+         
+         int schNo = scheduleDto.getSchNo();
+         // 예약(reservation) 추가
+         Reservation reservation = new Reservation();
+         reservation.setMeeNo(scheduleDto.getMeeNo());
+         reservation.setRevDate(scheduleDto.getRevDate());
+         reservation.setRevTime(commonCode);
+         reservation.setSchNo(schNo);
+         reservation.setEmpNo(userDetails.getEmpNo());
+         reservationMapper.addReservation(reservation);
 
-		    // 예약(reservation) 추가
-		    Reservation reservation = new Reservation();
-		    reservation.setMeeNo(scheduleDto.getMeeNo());
-		    reservation.setRevDate(scheduleDto.getRevDate());
-		    reservation.setRevTime(scheduleDto.getRevTime());
-		    reservation.setSchNo(schNo);
-		    reservation.setEmpNo(userDetails.getEmpNo());
-		    reservationMapper.addReservation(reservation);
-
-		    // 참석자 추가
-		    String[] attendeeList = attendees.split(",");
-		    for (String attendeeEmpNo : attendeeList) {
-		        try {
-		            int attendeeNo = Integer.parseInt(attendeeEmpNo.trim());
-		            scheduleMapper.addScheduleAttendance(schNo, attendeeNo);
-		        } catch (NumberFormatException e) {
-		            // 잘못된 숫자 형식의 참석자 번호가 포함된 경우 처리
-		            throw new IllegalArgumentException("참석자 번호는 숫자 형식이어야 합니다: " + attendeeEmpNo, e);
-		        }
-		    }
-		}
+         // 참석자 추가
+         String[] attendeeList = reservationDto.getAttendees().split(",");
+         for (String attendeeEmpNo : attendeeList) {
+             try {
+                 int attendeeNo = Integer.parseInt(attendeeEmpNo.trim());
+                 scheduleMapper.addScheduleAttendance(schNo, attendeeNo);
+             } catch (NumberFormatException e) {
+                 // 잘못된 숫자 형식의 참석자 번호가 포함된 경우 처리
+                 throw new IllegalArgumentException("참석자 번호는 숫자 형식이어야 합니다: " + attendeeEmpNo, e);
+             }
+         }
+     }
+	 
 	 public List<MyReservationDto>MyReservationList(){
 		 CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			int empNo = userDetails.getEmpNo();
@@ -86,27 +95,32 @@ public class ReservationService {
 	 }
 	 
 	 public Integer deleteReservation(Integer schNo) {
+		    log.info("Deleting reservation for schNo: {}", schNo);
 		    Integer resNo = reservationMapper.findReservationByScheduleNo(schNo);
+		    log.info("Found resNo: {}", resNo);
+
 		    if (resNo != null) {
-		        Integer reservationResult = reservationMapper.deleteReservation(resNo);
+		        int reservationResult = reservationMapper.deleteMyReservation(resNo);
+		        log.info("Deleted reservation. Result: {}", reservationResult);
 		        if (reservationResult < 1) {
-		            log.debug("예약 삭제 실패: resNo " + resNo);
+		            log.error("Failed to delete reservation with resNo: {}", resNo);
+		            throw new RuntimeException("Failed to delete reservation");
 		        }
 		    }
-		    // 출석 삭제 (출석 데이터가 없는 경우에도 예외를 던지지 않고 넘어감)
-		    Integer attendanceResult = scheduleMapper.deleteScheduleAttendance(schNo);
-		    if (attendanceResult < 0) { 
-		       log.debug("출석 데이터가 없거나 삭제되지 않았습니다. schNo: " + schNo);
-		    }
-		    // 스케줄 삭제
-		    Integer scheduleResult = scheduleMapper.deleteSchedule(schNo);
-		    if (scheduleResult < 1) {
-		       log.debug("스케줄 삭제 실패: schNo " + schNo);
-		        return 0; 
-		    }
-		    return scheduleResult; 
-		}
 
+		    int attendanceResult = scheduleMapper.deleteScheduleAttendance(schNo);
+		    log.info("Deleted attendance. Result: {}", attendanceResult);
+
+		    int scheduleResult = scheduleMapper.deleteSchedule(schNo);
+		    log.info("Deleted schedule. Result: {}", scheduleResult);
+
+		    if (scheduleResult < 1) {
+		        log.error("Failed to delete schedule with schNo: {}", schNo);
+		        throw new RuntimeException("Failed to delete schedule");
+		    }
+
+		    return scheduleResult;
+		}
 	 
 
 	}

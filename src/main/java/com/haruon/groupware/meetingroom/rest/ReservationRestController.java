@@ -16,6 +16,8 @@ import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.meetingroom.service.ReservationService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RestController
 public class ReservationRestController {
 
@@ -39,6 +41,7 @@ public class ReservationRestController {
             @PathVariable("meeNo") int meeNo,
             @RequestParam("revDate") String revDate) {
         List<CommonCode> availableTimes = reservationService.ReservationTime(meeNo, revDate);
+        log.debug(availableTimes.toString());
         return ResponseEntity.ok(availableTimes);
     }
     

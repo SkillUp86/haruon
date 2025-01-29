@@ -95,7 +95,7 @@
                 </div>
                 <!-- 메인컨텐츠 입력칸 -->
                 
-<div class="account-settings-container layout-top-spacing">
+                <div class="account-settings-container layout-top-spacing">
     <div class="account-content">
         <div class="row mb-3">
             <div class="col-md-12">
@@ -108,6 +108,7 @@
                                 <th>예약 날짜</th>
                                 <th>예약 시간</th>
                                 <th>예약 정보</th>
+                                <th>예약자</th>
                                 <th>예약 취소</th>
                             </tr>
                         </thead>
@@ -118,12 +119,14 @@
                                     <td>${r.revDate}</td>
                                     <td>${r.descript}</td>
                                     <td>${r.content}</td>
+                                    <td>${r.ename}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <form action="${pageContext.request.contextPath}/deleteReservation/${r.resNo}" method="get" style="display: inline;">
-                                                <button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
-                                            </form>
-                                        </div>
+                                            <form action="${pageContext.request.contextPath}/deleteReservation/${r.schNo}" method="get" style="display: inline;">
+    											<button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">
+    											삭제하기
+    											</button>
+											</form>             								                             </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -134,8 +137,6 @@
         </div>
     </div>
 </div>
-
-                <!-- 메인컨텐츠 END -->
             </div>
             <!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
@@ -183,7 +184,13 @@
             "pageLength": 10 
         });
     	
-   
+    	function confirmDelete(button) {
+    	    if (confirm('예약을 취소하시겠습니까?')) {
+    	        // 버튼이 속한 form을 찾아서 제출
+    	        var form = button.closest('form');
+    	        form.submit();
+    	    }
+    	}
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
 

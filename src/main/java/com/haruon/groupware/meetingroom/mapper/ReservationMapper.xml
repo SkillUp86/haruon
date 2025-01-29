@@ -4,7 +4,12 @@
 
 <delete id="deleteReservation" parameterType="Integer">
 	DELETE FROM reservation
-	WHERE res_no = #{resNo}
+	WHERE sch_no = #{resNo}
+</delete>
+
+<delete id="deleteMyReservation" parameterType="Integer">
+    DELETE FROM reservation 
+    WHERE res_no = #{resNo}
 </delete>
 
  <select id="findReservationByScheduleNo" parameterType="Integer" resultType="Integer">
@@ -12,9 +17,9 @@
     FROM reservation
     WHERE sch_no = #{schNo}
 </select>
-						       
+
 <select id="revTimeList" resultType="com.haruon.groupware.common.entity.CommonCode">
-SELECT common_code  code,
+SELECT common_code  CommonCode,
        descript
 FROM common_code 
 WHERE common_code != 'K00'
@@ -43,6 +48,7 @@ WHERE common_code != 'K00'
 SELECT 
     r.res_no resNo,
     r.mee_no meeNo,
+    r.sch_no schNo,
     m.mname mname,
     r.rev_date revDate,
     r.rev_time revTime,
@@ -58,4 +64,5 @@ WHERE r.emp_no = #{empNo}
     AND c.parent_code = 'K00'
 ORDER BY r.rev_date DESC, r.rev_time DESC
 </select>
+
 </mapper>

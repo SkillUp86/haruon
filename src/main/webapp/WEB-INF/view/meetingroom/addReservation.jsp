@@ -109,7 +109,7 @@
                     <div class="col-md-8">
                         <!-- 이미지 출력 -->
                         <img src="${pageContext.request.contextPath}/upload/meetingroom/${meetingRoom.fileName}.${meetingRoom.fileExt}" 
-                             style="width: 150; height: 150;" />
+                             style="width: 100; height: 100;" />
                     </div>
                 </div>
 
@@ -146,7 +146,7 @@
 					        <select class="form-control" id="revTime" name="revTime" required>
 						    <option value="" selected>시간을 선택하세요</option>
 						    <c:forEach var="time" items="${reservationTime}">
-						        <option value="${time.commonCode}">${time.descript}</option>
+						        <option value="${time.commonCode},${time.descript}">${time.descript}</option>
 						    </c:forEach>
 						</select>
 					    </div>
@@ -156,7 +156,7 @@
 				<div class="form-group row invoice-note">
 			                    <label>예약 정보</label>
 			                    <div class="col-sm-12">
-			                        <textarea class="form-control" id="info" name="info" style="height: 300px;" required></textarea>
+			                        <textarea class="form-control" id="info" name="content" style="height: 300px;" required></textarea>
 			                    </div>
 			                </div>
                 
@@ -346,7 +346,7 @@ $('#revDate').on('change', function () {
 
             if (times && times.length > 0) {
                 times.forEach(function (time) {
-                    revTimeSelect.append(`<option value="\${time.commonCode}">\${time.descript}</option>`);
+                	revTimeSelect.append(`<option value="\${time.commonCode},\${time.descript}">\${time.descript}</option>`);
                 });
             } else {
                 console.log('No times available');
@@ -384,6 +384,15 @@ $('#formInsert').submit(function(e) {
             alert('예약 처리 중 오류가 발생했습니다.');
         }
     });
+});
+$('#revTime').on('change', function() {
+    let selectedOption = $(this).find('option:selected');
+    let descriptValue = selectedOption.data('descript');
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'revTimeDescript',
+        value: descriptValue
+    }).appendTo('#formInsert');
 });
 </script>
 </body>

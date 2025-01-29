@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class MyReservationDto {
-	private Integer resNo;
+	private Integer resNo;	
 	private Integer meeNo;
+	private Integer schNo;
 	private String mname;
 	private String revDate;
 	private String revTime;
