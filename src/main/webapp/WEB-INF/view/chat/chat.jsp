@@ -273,15 +273,15 @@
 	    	}
 	    	
 	        console.log("메시지 수신:", msg.data); // 메시지 내용 확인
-	        let str = msg.data.split('~');
+	        let messageBox = msg.data.split('~');
 	        
 			// 서버로 부터 받은 메시지 HTML 적용
 	        let getMessageHTML = '';
 	        
-	        var roomId = str[0];
-	        var senderNo = str[1];
-	        var sendTime = str[2];
-	        var message = str[3];
+	        var roomId = messageBox[0];
+	        var senderNo = messageBox[1];
+	        var sendTime = messageBox[2];
+	        var message = messageBox[3];
 	        
 	        // 발화자에 따라 다른 형식의 HTML 적용
 	        let senderHTML = '';
