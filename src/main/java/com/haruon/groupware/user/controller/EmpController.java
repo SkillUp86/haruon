@@ -28,8 +28,7 @@ public class EmpController {
 	DeptService deptService;
 	@Autowired
 	EmpService empService;
-	@Autowired
-	JavaMailSender javaMailSender;
+
 
 	// 로그아웃
 	@GetMapping("/logout")

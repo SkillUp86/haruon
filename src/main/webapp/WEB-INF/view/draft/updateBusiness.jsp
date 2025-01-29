@@ -201,7 +201,13 @@
                                                         <div class="form-group mb-4">
 				                                            <input class="form-control file-upload-input" type="file" id="formFile" name="formFile" multiple="multiple">
 				                                        </div>
-
+                                                        <c:if test="${msg != null}">
+                                                            <div class="col-xxl-12 col-md-12 mb-4">
+                                                                <div class="alert alert-warning" role="alert">
+                                                                        ${msg}
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
                                                          <div class="col-xxl-12 col-md-12 mb-4">
 				                                            <button id="btnUpdateBusiness" type="button" class="btn btn-primary w-100">등록</button>
 				                                        </div>

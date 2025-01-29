@@ -31,6 +31,8 @@ public class ApprovalService {
 
 	// 기안서 유형 추가
 	public void addApproval(RequestApproval approval, String path) {
+		// 유형별 유효성 검증
+		validateByKind(approval);
 		// 기본 기안서
 		int basicRow = approvalMapper.saveBasicDraftByUser(approval);
 		Integer draNo = approval.getDraNo();
@@ -57,7 +59,41 @@ public class ApprovalService {
 		}
 
 	}
+	// 유형별 유효성 검증 로직
+	private void validateByKind(RequestApproval approval) {
+		switch (approval.getKind()) {
+			case "C02": // 출장 보고서
+				if (approval.getPlace() == null || approval.getPlace().isBlank()) {
+					throw new IllegalArgumentException("출장 지역은 필수입니다.");
+				}
+				if (approval.getPlaceStartDate() == null || approval.getPlaceEndDate() == null) {
+					throw new IllegalArgumentException("출장 기간은 필수입니다.");
+				}
+				break;
 
+			case "C03": // 매출 보고서
+				if (approval.getYm() == null || approval.getYm().isBlank()) {
+					throw new IllegalArgumentException("연월은 필수입니다.");
+				}
+				if (approval.getRevenue() == null || approval.getRevenue() <= 0) {
+					throw new IllegalArgumentException("매출액은 필수이며 0보다 커야 합니다.");
+				}
+				break;
+
+			case "C04": // 휴가 보고서
+				if (approval.getVacStartDate() == null || approval.getVacFinishDate() == null) {
+					throw new IllegalArgumentException("휴가 기간은 필수입니다.");
+				}
+				if (approval.getVacationType() == null || approval.getVacationType().isBlank()) {
+					throw new IllegalArgumentException("휴가 유형은 필수입니다.");
+				}
+				break;
+
+			default:
+				// 기본 기안서 등 기타 유형 처리
+				break;
+		}
+	}
 	// 결재 첨부파일 존재시 추가
 	private void existApprovalFile(RequestApproval approval, String path, int basicRow, Integer draNo) {
 		log.debug("getFormFile {}",approval.getFormFile().isEmpty());

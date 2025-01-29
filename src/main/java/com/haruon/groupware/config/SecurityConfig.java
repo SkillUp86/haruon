@@ -17,25 +17,20 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
         	.csrf(csrf -> csrf.disable());
-        
+
         http.authorizeHttpRequests(auth -> auth
-        							.requestMatchers("/home").authenticated()
-					                .requestMatchers("/login").permitAll()
-					                .anyRequest().permitAll()
+									.requestMatchers("/", "/login","/WEB-INF/view/**").permitAll() // 뷰 페이지 허용
+									.requestMatchers("/layouts/**", "/src/**").permitAll() // js css 허용
+					                .anyRequest().authenticated()
 					                );
         http.formLogin(auth -> auth
-			            .loginPage("/login")
+			            .loginPage("/login").permitAll()
 			            .usernameParameter("email")
 			            .passwordParameter("empPw")
 			            .loginProcessingUrl("/loginSuccess")
 			            .successHandler(customLoginSuccessHandler())
 			            .permitAll()
 			            );
-        
-        http
-        .sessionManagement((session) -> session
-                		.sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
-        				);
         
         http.logout(logout -> logout
         		.logoutUrl("/logout")
@@ -45,12 +40,6 @@ public class SecurityConfig {
         		);
         
 		return http.build();
-	}
-	
-	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer() {
-	    return (web) -> web.ignoring()
-	            .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 	
 	@Bean

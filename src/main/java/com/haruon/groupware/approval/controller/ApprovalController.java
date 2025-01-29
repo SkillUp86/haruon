@@ -2,9 +2,11 @@ package com.haruon.groupware.approval.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +36,13 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/approval")
-	public String insertApproval(@ModelAttribute RequestApproval approval, Model model, HttpSession session) {
+	public String insertApproval(@Valid RequestApproval approval, BindingResult bindingResult, Model model, HttpSession session) {
 		log.debug(approval.toString());
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "/approval/approval";
+		}
+
 		List<MultipartFile> list = approval.getFormFile();
 		if (list != null && !list.isEmpty()) {
 			for (MultipartFile f : list) {

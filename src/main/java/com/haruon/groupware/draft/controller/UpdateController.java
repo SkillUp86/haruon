@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import com.haruon.groupware.draft.service.UpdateService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -99,7 +101,11 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/vacationDraft")
-	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, HttpSession session) {
+	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/draft/"+vacationDraft.getType()+"/update/"+vacationDraft.getDraNo();
+		}
 		Integer draNo = vacationDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateVacationDraft(vacationDraft, path);
@@ -107,7 +113,12 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/salesDraft")
-	public String updateSalesDraft(RequestUpdateSalesDraft salesDraft, HttpSession session) {
+	public String updateSalesDraft(RequestUpdateSalesDraft salesDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+
+			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/draft/"+salesDraft.getType()+"/update/" + salesDraft.getDraNo();
+		}
 		Integer draNo = salesDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateSalesDraft(salesDraft, path);
@@ -115,7 +126,11 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/businessDraft")
-	public String updateBusinessDraft(RequestUpdateBusinessDraft businessDraft, HttpSession session) {
+	public String updateBusinessDraft(RequestUpdateBusinessDraft businessDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/draft/"+businessDraft.getType()+"/update/" + businessDraft.getDraNo();
+		}
 		Integer draNo = businessDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBusinessDraft(businessDraft, path);
@@ -123,8 +138,11 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/basicDraft")
-	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, HttpSession session) {
-		log.debug(basicDraft.toString());
+	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/draft/"+basicDraft.getType()+"/update/" + basicDraft.getDraNo();
+		}
 		Integer draNo = basicDraft.getDraNo();
 		String path = isAccess(session, draNo);
 		updateService.getUpdateBasicDraft(basicDraft, path);
