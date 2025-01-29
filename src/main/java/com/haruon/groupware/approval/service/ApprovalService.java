@@ -37,22 +37,22 @@ public class ApprovalService {
 		int basicRow = approvalMapper.saveBasicDraftByUser(approval);
 		Integer draNo = approval.getDraNo();
 		// 기안서 분기
-		if (approval.getKind().equals("C02")) {
-			approvalMapper.saveBusinessTripByUser(approval); // 출장 보고서
-			approvalMapper.saveApprovalByUser(approval);
-			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} else if (approval.getKind().equals("C03")) {
-			approvalMapper.saveSalesByUser(approval); // 매출 보고서
-			approvalMapper.saveApprovalByUser(approval);
-			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} else if (approval.getKind().equals("C04")) {
-			approvalMapper.saveVacationByUser(approval); // 휴가 보고서
-			approvalMapper.saveApprovalByUser(approval);
-			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
-		} else {
-			approvalMapper.saveApprovalByUser(approval);
-			existApprovalFile(approval, path, basicRow, draNo); // 파일저장
+		// 기안서 유형에 따라 분기 처리
+		switch (approval.getKind()) {
+			case "C02":
+				approvalMapper.saveBusinessTripByUser(approval); // 출장 보고서
+				break;
+			case "C03":
+				approvalMapper.saveSalesByUser(approval); // 매출 보고서
+				break;
+			case "C04":
+				approvalMapper.saveVacationByUser(approval); // 휴가 보고서
+				break;
+			default:
+				break;
 		}
+		approvalMapper.saveApprovalByUser(approval);
+		existApprovalFile(approval, path, basicRow, draNo); // 파일 저장
 		// 참조자 있을시 참조자 입력
 		if (approval.getRefNo() != null) {
 			approvalMapper.saveApprovalReference(approval);
@@ -88,9 +88,7 @@ public class ApprovalService {
 					throw new IllegalArgumentException("휴가 유형은 필수입니다.");
 				}
 				break;
-
 			default:
-				// 기본 기안서 등 기타 유형 처리
 				break;
 		}
 	}

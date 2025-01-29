@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>SignIn Boxed | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <title>Haruon | 로그인 </title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
@@ -50,16 +51,22 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     
-                                    <h2>Sign In</h2>
-                                    <p>Enter your email and password to login</p>
+                                    <h2>로그인</h2>
+                                    <p>이메일과 비밀번호를 입력해주세요</p>
                                     
                                 </div>
+                                <c:if test="${msg != null}">
+                                    <div class="col-xxl-12 col-md-12 mb-4">
+                                        <div class="alert alert-danger" role="alert">${msg}</div>
+                                        <c:remove var="msg" scope="session"/>
+                                    </div>
+                                </c:if>
                                 <div class="col-md-12">
 								    <form id="empLogin" action="${pageContext.request.contextPath}/loginSuccess" method="post" novalidate>
 								        <div class="form-row">
 								            <!-- 사원 번호 -->
 								            <div class="col-md-12 mb-4">
-								                <label for="empNo" class="form-label">이메일</label>
+								                <label for="email" class="form-label">이메일</label>
 								                <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
 								                <div class="valid-feedback">입력완료</div>
 								                <div class="invalid-feedback">이메일을 입력해주세요</div>
@@ -75,7 +82,7 @@
 								        </div>
 								
 								        <!-- 제출 버튼 -->
-								        <button class="btn btn-primary submit-fn mt-2 w-100" type="submit">SIGN IN</button>
+								        <button class="btn btn-primary submit-fn mt-2 w-100" type="submit">로그인</button>
 								    </form>
 								    <br>
 			                                <a href="findPw"> 비밀번호 찾기 </a>

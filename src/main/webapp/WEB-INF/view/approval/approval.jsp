@@ -203,10 +203,10 @@
 										<div class="input-group mb-4">
 											<span class="input-group-text label-text">시작날짜</span>
 											<input class="form-control" type="datetime-local" id="vacStartDate" name="vacStartDate">
-									
+
 											<span class="input-group-text label-text">종료날짜</span>
 											<input class="form-control" type="datetime-local" id="vacFinishDate" name="vacFinishDate">
-									
+
 											<span class="input-group-text label-text">유형</span>
 											<select class="form-select" id="vacationType" name="vacationType">
 												<option value="">:::선택:::</option>

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -19,7 +21,7 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-									.requestMatchers("/", "/login","/WEB-INF/view/**").permitAll() // 뷰 페이지 허용
+									.requestMatchers("/findPw", "/login","/WEB-INF/view/**").permitAll() // 뷰 페이지 허용
 									.requestMatchers("/layouts/**", "/src/**").permitAll() // js css 허용
 					                .anyRequest().authenticated()
 					                );
@@ -29,6 +31,7 @@ public class SecurityConfig {
 			            .passwordParameter("empPw")
 			            .loginProcessingUrl("/loginSuccess")
 			            .successHandler(customLoginSuccessHandler())
+						.failureHandler(customLoginFailureHandler())
 			            .permitAll()
 			            );
         
@@ -41,12 +44,18 @@ public class SecurityConfig {
         
 		return http.build();
 	}
-	
+
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
+	@Bean
+	public AuthenticationFailureHandler customLoginFailureHandler() {
+		return new CustomLoginFailureHandler();
+	}
+
 	@Bean
 	public CustomLoginSuccessHandler customLoginSuccessHandler() {
 		return new CustomLoginSuccessHandler();

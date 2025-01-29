@@ -61,10 +61,7 @@ public class EmpController {
 		return "redirect:/login";
 	}
 
-	@GetMapping("/findPw")
-	public String findPw() {
-		return "user/findPw";
-	}
+
 
 	// 내 정보
 	@GetMapping("/myInfo")
