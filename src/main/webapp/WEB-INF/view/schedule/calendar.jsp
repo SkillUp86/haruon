@@ -21,7 +21,6 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <!-- BEGIN PAGE LEVEL STYLE -->
     <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
