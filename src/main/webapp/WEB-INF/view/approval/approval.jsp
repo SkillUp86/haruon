@@ -38,7 +38,7 @@
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
-    <title>결재 페이지</title>
+    <title>Haruon | 결재 페이지</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -99,24 +99,24 @@
                     <!--  END BREADCRUMBS  -->
                 </div>
                 <!-- 메인컨텐츠 입력칸 -->
-                
-                <h1>전자 결재</h1>
+
+				<h2 class="mt-3 mb-3">전자결재</h2>
 	                <form id="formInsertApproval" method="post" action="${pageContext.request.contextPath}/approval" enctype="multipart/form-data">
 						<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
 							<div class="widget-content widget-content-area mt-4">
 								<div class="input-group mb-4">
 									<h5 class="mb-4">결재라인</h5>
-										
+
 								</div>
 								<div class="input-group mb-4">
-								
+
 									<span class="input-group-text label-text">기안자</span>
 									<input type="hidden" class="form-control" id="empNo" name="empNo" value="${empNo}" readonly>
 									<input type="text" class="form-control" id="empName" name="empName" value="${empName}" readonly>
 									<span class="input-group-text label-text">부서</span>
 									<input type="text" class="form-control" id="depName" name="depName" value="${dname}" readonly>
 								</div>
-									
+
 								<div class="input-group mb-4">
 									<div class="input-group">
 										<span class="input-group-text label-text">중간결재자</span>
@@ -130,8 +130,8 @@
 										<input type="text" class="form-control" id="refName" name="refName" value="" placeholder="참조자 입력" required readonly>
 									</div>
 								</div>
-									
-									
+
+
 								<div class="input-group mb-4">
 									<div class="input-group">
 										<span class="input-group-text label-text">유형</span>
@@ -159,15 +159,15 @@
 										<div class="input-group mb-4">
 											<span class="input-group-text label-text">출장지역</span>
 											<input type="text" class="form-control" id="place" name="place">
-											
+
 											<span class="input-group-text label-text">시작날짜</span>
 											<input type="date" class="form-control" id="placeStartDate" name="placeStartDate">
-									
+
 											<span class="input-group-text label-text">종료날짜</span>
 											<input type="date" class="form-control" id="placeEndDate" name="placeEndDate">
 										</div>
 									</div>
-									
+
 									<div id="sales" class=" kind-field" style="display: none;">
 										<div class="input-group mb-4">
 											<span class="input-group-text label-text">가맹점</span>
@@ -182,9 +182,9 @@
 											<span class="input-group-text label-text">매출액</span>
 											<input class="form-control" type="number" id="revenue" name="revenue">
 										</div>
-										
+
 									</div>
-								
+
 									<div id="vacation" class="kind-field" style="display: none;">
 										<div class="input-group  mb-4">
 											<span class="input-group-text label-text">대체업무자</span>
@@ -217,9 +217,9 @@
 											<span class="input-group-text label-text">비상연락처</span>
 											<input class="form-control" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" id="urgentPhone" placeholder="010-0000-0000">
 										</div>
-										
+
 									</div>
-									
+
 								</div>
 								<!-- 보고서 끝 -->
 								<div class="input-group mb-4">
@@ -242,6 +242,7 @@
 						</div>
 					</form>
 			</div>
+    <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
 		</div>
 	</div>
     <!-- 결재자 모달 -->
@@ -261,17 +262,17 @@
 					            </c:forEach>
 					        </div>
 					    </div>
-					    
+
 					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
 					            <div class="list-group approverList">
-					            
+
 					            </div>
 					        </div>
-					       
+
 					    </div>
-					    
+
 					    <div class="col-5">
 					        <h6 class="modal-body">중간결재자</h6>
 					        <div class="list-group">
@@ -294,7 +295,7 @@
 			                		</button>
 				                </div>
 				            </div>
-					
+
 					        <h6 class="modal-body">최종결재자</h6>
 				         	<div class="list-group">
 				                <div class="input-group">
@@ -315,7 +316,7 @@
 				            		</button>
 				            	</div>
 				            </div>
-					
+
 					        <h6 class="modal-body">참조자</h6>
 				         	<div class="list-group">
 				                <div class="input-group">
@@ -366,15 +367,15 @@
 							</c:forEach>
 						</div>
 					</div>
-					
+
 					<div class="col-4 d-flex border-end">
 						<div class="flex-grow-1">
 							<h6>직원 목록</h6>
 							<div class="list-group subWorkerList">
-							
+
 							</div>
 						</div>
-					   
+
 					</div>
 
 					<div class="col-5">
@@ -410,9 +411,6 @@
 </div>
 </div>
 
-    <!--  BEGIN FOOTER  -->
-    <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-    <!--  END FOOTER  -->
     <!-- END MAIN CONTAINER -->
     <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>

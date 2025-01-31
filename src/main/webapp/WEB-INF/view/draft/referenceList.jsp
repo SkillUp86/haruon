@@ -86,8 +86,8 @@
                                         <div class="page-title"></div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">내문서함</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">참조문서</li>
+                                                <li class="breadcrumb-item"><a href="#">문서</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">참조문서함</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -100,7 +100,7 @@
                 <!-- 메인컨텐츠 입력칸 -->
 
                 <div class="row layout-top-spacing">
-                    <h3>참조문서함</h3>
+                    <h2 class="mt-3 mb-3">참조문서함</h2>
                     <div class="col-xl-12 col-lg-12 col-sm-12 mt-2  layout-spacing">
                         <div class="simple-tab">
 
@@ -163,7 +163,7 @@
         },
         "columnDefs": [
             {
-                "targets": -1, // 마지막 열
+                "targets": -1,
                 "className": 'text-center'
             }
         ],
