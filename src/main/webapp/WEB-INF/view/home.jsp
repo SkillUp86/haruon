@@ -154,7 +154,6 @@
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
 							<p class="text-end">	
-							<a href="${pageContext.request.contextPath}/calendar"><strong>더보기</strong></a></p>
 									        <div id="calendar"></div>
                                 </div>
                             </div>
@@ -162,7 +161,6 @@
                         <!-- 캘린더 컨텐츠 끝 -->
 
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
-                            <br>
                             <div class="widget-heading">
                                 <div class="widget widget-table-two" style="padding: 20px;">
                                     <div class="widget-heading" style="margin-left:10px">
@@ -176,23 +174,19 @@
                                             <table id="draft-list" class="table dt-table-hover">
                                                 <thead>
                                                 <tr>
-                                                    <th>문서번호</th>
-                                                    <th>날짜</th>
-                                                    <th>문서양식</th>
-                                                    <th class="text-center">제목</th>
-                                                    <th class="text-center">결재상태</th>
+                                                    <th>결재대기</th>
+                                                    <th>결재중</th>
+                                                    <th>결재완료</th>
+                                                    <th>반려</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach items="${draftList}" var="d">
                                                     <tr>
-                                                        <td>${d.draNo}</td>
-                                                        <td>${d.createDate}</td>
-                                                        <td>${d.draftType}</td>
-                                                        <td>${d.title}</td>
-                                                        <td class="text-center">${d.approvalState}</td>
+                                                        <td>${d.a01}건</td>
+                                                        <td>${d.a02}건</td>
+                                                        <td>${d.a03}건</td>
+                                                        <td>${d.a04}건</td>
                                                     </tr>
-                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -200,13 +194,14 @@
                                 </div>
                              <!-- 결재함 컨텐츠 끝-->
                             <!-- 쪽지함 시작-->
-                            (담당자 : 우림)<br>
+                            <br>
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
                                     <div class="widget-heading">
                                         <h5 style="display: inline-block;">쪽지함</h5>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
                                         	<a href="${pageContext.request.contextPath}/"><strong>더보기</strong></a>
+                                            <br>
                                         </p>
                                     </div>
                                     
@@ -221,7 +216,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                	<tr>
+                                                    <tr>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -235,15 +230,19 @@
                              <!-- 쪽지함 끝-->
                         </div>
 
+
+
+
+                    </div>
                         <!-- 공지 게시판 컨텐츠 시작-->
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                             <br>
                             <div class="widget-heading">
                                 <div class="widget widget-table-two" style="padding: 20px;">
                                     <div class="widget-heading" style="margin-left:10px">
                                         <h5 style="display: inline-block;">공지게시판</h5>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
-                                        	<a href="${pageContext.request.contextPath}/board/notice"><strong>더보기</strong></a>
+                                            <a href="${pageContext.request.contextPath}/board/notice"><strong>더보기</strong></a>
                                         </p>
                                     </div>
 
@@ -251,27 +250,27 @@
                                         <div class="table-responsive">
                                             <table id="board-list" class="table dt-table-hover">
                                                 <thead>
-                                                    <tr>
-                                                        <th>번호</th>
-                                                        <th>제목</th>
-                                                        <th>작성자</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>번호</th>
+                                                    <th>제목</th>
+                                                    <th>작성자</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
-                                                	<c:forEach var="n" items="${noticeList}" varStatus="status">
-	                                                    <tr>
-	                                                        <td>${n.boaNo}</td>
-	                                                        <td>
-	                                                        	<a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title} &nbsp;
-	                                                        		<!-- 최근 2개 항목에만 'new' 배지 추가 -->
-													                <c:if test="${status.index < 2}">
-													                    <span class="badge badge-light-info mb-2 me-4">new</span>
-													                </c:if>
-	                                                        	</a>
-	                                                        </td>
-	                                                        <td>${n.ename}</td>
-	                                                    </tr>
-	                                                 </c:forEach>   
+                                                <c:forEach var="n" items="${noticeList}" varStatus="status">
+                                                    <tr>
+                                                        <td>${n.boaNo}</td>
+                                                        <td>
+                                                            <a href="${pageContext.request.contextPath}/board/${n.boaNo}">${n.title} &nbsp;
+                                                                <!-- 최근 2개 항목에만 'new' 배지 추가 -->
+                                                                <c:if test="${status.index < 2}">
+                                                                    <span class="badge badge-light-info mb-2 me-4">new</span>
+                                                                </c:if>
+                                                            </a>
+                                                        </td>
+                                                        <td>${n.ename}</td>
+                                                    </tr>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -282,14 +281,14 @@
                         <!-- 공지 게시판 컨텐츠 끝-->
 
                         <!-- 자유 게시판 컨텐츠 시작-->
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                             <br>
                             <div class="widget-heading">
                                 <div class="widget widget-table-two" style="padding: 20px;">
                                     <div class="widget-heading" style="margin-left:10px">
                                         <h5 style="display: inline-block;">자유게시판</h5>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
-                                        	<a href="${pageContext.request.contextPath}/board"><strong>더보기</strong></a>
+                                            <a href="${pageContext.request.contextPath}/board"><strong>더보기</strong></a>
                                         </p>
                                     </div>
 
@@ -297,20 +296,20 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
-                                                    <tr>
-                                                        <th>번호</th>
-                                                        <th>제목</th>
-                                                        <th>작성자</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>번호</th>
+                                                    <th>제목</th>
+                                                    <th>작성자</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
-                                                	<c:forEach var="b" items="${boardList}">
-	                                                    <tr>
-	                                                        <td>${b.boaNo}</td>
-	                                                        <td><a href="${pageContext.request.contextPath}/board/${b.boaNo}">[${b.catName}] ${b.title}</a></td>
-	                                                        <td>${b.ename}</td>
-	                                                    </tr>
-	                                                 </c:forEach>   
+                                                <c:forEach var="b" items="${boardList}">
+                                                    <tr>
+                                                        <td>${b.boaNo}</td>
+                                                        <td><a href="${pageContext.request.contextPath}/board/${b.boaNo}">[${b.catName}] ${b.title}</a></td>
+                                                        <td>${b.ename}</td>
+                                                    </tr>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -319,10 +318,8 @@
                             </div>
                         </div>
                         <!-- 자유 게시판 컨텐츠 끝-->
-
                     </div>
                 </div>
-            </div>
             <!--  BEGIN FOOTER  -->
             <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
             <!--  END FOOTER  -->

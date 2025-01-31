@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.haruon.groupware.approval.dto.RequestApproval;
+import com.haruon.groupware.approval.dto.ResponseApprovalCount;
 import com.haruon.groupware.approval.dto.ResponseEmployee;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.entity.DraftFileEntity;
@@ -33,5 +34,6 @@ public interface ApprovalMapper {
 	
 	List<ResponseEmployee> findEmpDept(int deptNo, int empNo);
 
-	
+	// 메인페이지에 보여줄 5개
+	ResponseApprovalCount findApprovalByMainPage(int empNo);
 }

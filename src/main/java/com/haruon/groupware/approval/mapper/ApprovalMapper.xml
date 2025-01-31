@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.approval.mapper.ApprovalMapper">
+	<!-- 메인페이지  -->
+	<select id="findApprovalByMainPage" resultType="com.haruon.groupware.approval.dto.ResponseApprovalCount">
+		SELECT
+			   COUNT(CASE WHEN state = 'A01' THEN 1 END) 'a01',
+			   COUNT(CASE WHEN state = 'A02' THEN 1 END) 'a02',
+			   COUNT(CASE WHEN state = 'A03' THEN 1 END) 'a03',
+			   COUNT(CASE WHEN state = 'A04' THEN 1 END) 'a04'
+		  FROM approval;
+	</select>
 	<!-- 참조자 추가 -->
 	<insert id="saveApprovalReference" parameterType="com.haruon.groupware.approval.entity.ReferEntity">
 		insert into refer(

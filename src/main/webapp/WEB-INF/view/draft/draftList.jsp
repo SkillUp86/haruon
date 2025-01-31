@@ -192,6 +192,7 @@
                 "type": "get",       // GET 요청
                 "dataSrc": "data",
                 "data": function (d) {
+                	console.log('요청성공');
                     console.log(d); // 요청 데이터 로깅
                 }
             }	,

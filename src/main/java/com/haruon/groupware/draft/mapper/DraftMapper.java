@@ -51,8 +51,6 @@ public interface DraftMapper {
 	// 검색된 사원별 기안문서 갯수
 	Integer findSearchTotalDraftByEmp(int empNo, String search);
 
-	
-
 	// 참조자 결재문서 리스트
 	List<ResponseReferencesList> findDraftByReferences(int empNo, String search, int start, int length);
 	// 참조자 결재문서 갯수
@@ -60,6 +58,5 @@ public interface DraftMapper {
 	// 검색된 참조문서 갯수
 	Integer findSearchTotalReferences(int empNo, String search);
 
-	// 메인페이지에 보여줄 5개
-    List<ResponseDraft> findDraftListByMainPage(int empNo);
+	
 }

@@ -9,19 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.haruon.groupware.approval.dto.ResponseApprovalCount;
+import com.haruon.groupware.approval.service.ApprovalService;
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.board.service.BoardService;
-import com.haruon.groupware.draft.dto.response.ResponseDraft;
-import com.haruon.groupware.draft.service.DraftService;
 
 @Controller
 public class HomeController {
 	@Autowired BoardService boardService;
 	
-	private final DraftService draftService;
+	private final ApprovalService approvalService;
 
-	public HomeController(DraftService draftService) {
-		this.draftService = draftService;
+	public HomeController(ApprovalService approvalService) {
+		this.approvalService = approvalService;
 	}
 
 	@GetMapping("/home")
@@ -31,9 +31,9 @@ public class HomeController {
 		model.addAttribute("empNo", empNo);
 		model.addAttribute("deptNo", userDetails.getDepNo());
 		
-		// 결재함 5개
-		List<ResponseDraft> draftList = draftService.getDraftListByMainPage(empNo);
-		model.addAttribute("draftList", draftList);
+		// 결재 상태 표기
+		ResponseApprovalCount draft = approvalService.getApprovalByMainPage(empNo);
+		model.addAttribute("d", draft);
 		
 		// 자유 게시판 5개
 		List<Map<String,Object>> boardList = boardService.getBoardHome();

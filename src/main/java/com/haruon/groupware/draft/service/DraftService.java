@@ -117,7 +117,5 @@ public class DraftService {
 		return draftMapper.findSearchTotalReferences(empNo,search);
 	}
 
-    public List<ResponseDraft> getDraftListByMainPage(int empNo) {
-		return draftMapper.findDraftListByMainPage(empNo);
-    }
+  
 }
