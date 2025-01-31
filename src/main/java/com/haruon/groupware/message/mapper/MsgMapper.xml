@@ -111,9 +111,14 @@
 		WHERE msg_no = #{msgNo}
 	</update>
 	<!-- 휴지통 이동 -->
-	<update id="modifyTrashMsg" parameterType="Integer">
+	<update id="insertTrashMsg" parameterType="Integer">
 		UPDATE msg_reader
 		SET state = "D03"
+		WHERE msg_no = #{msgNo}
+	</update>	
+	<!-- 영구 삭제 -->
+	<update id="deleteMsg" parameterType="Integer">
+		DELETE FROM msg_reader
 		WHERE msg_no = #{msgNo}
 	</update>	
 

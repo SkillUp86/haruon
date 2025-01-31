@@ -161,7 +161,7 @@
 
                                             <div class="action-center">
                                                 <div class="d-flex">
-                                                    <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
+                                                    <div class="form-check form-check-primary form-check-inline mt-1 ms-1 " data-bs-toggle="collapse" data-bs-target>
                                                         <input class="form-check-input inbox-chkbox" type="checkbox" id="inboxAll">
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-12 text-center mail-btn-container">

@@ -31,11 +31,6 @@ public class MsgRestController {
 	public List<MsgReaderDto> getTrashsMsg(@PathVariable Integer empNo) {
 		return msgService.getTrashsMsg(empNo);
 	}
-	// 휴지통 이동
-	@PostMapping("/trashMsg/{msgNo}")
-	public Integer modifyTrashMsg(@PathVariable Integer msgNo) {
-		return msgService.modifyTrashMsg(msgNo);
-	}
 	
 	// 쪽지 읽음
 	@PostMapping("/readMsg/{msgNo}")

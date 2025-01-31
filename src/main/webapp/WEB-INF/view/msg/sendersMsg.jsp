@@ -161,8 +161,8 @@
 
                                             <div class="action-center">
                                                 <div class="d-flex">
-                                                    <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                        <input class="form-check-input inbox-chkbox" type="checkbox" id="inboxAll">
+                                                    <div class="" data-bs-toggle="collapse" data-bs-target>
+                                                        <input class="" type="hidden" id="inboxAll">
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-12 text-center mail-btn-container">
                                                         <a id="btn-compose-mail" class="btn btn-block" href="javascript:void(0);">메일 보내기</a>
@@ -354,8 +354,8 @@
                                             <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false"  aria-controls="inNo` + no + `">
                                                 <div class="mail-item-inner">
                                                     <div class="d-flex">
-                                                        <div class="form-check form-check-primary form-check-inline mt-1 ms-1" data-bs-toggle="collapse" data-bs-target>
-                                                            <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default2">
+                                                        <div class="" data-bs-toggle="collapse" data-bs-target>
+                                                            <input class="" type="hidden" id="form-check-default2">
                                                         </div>
                                                         <div class="f-head ms-3">
                                                         	<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + "." + item.extE + `" class="user-profile" alt="avatar">
@@ -393,12 +393,15 @@
                                             </div>
                     
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Reply">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left reply"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
-                                                </a>
-                                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-original-title="Forward">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-right forward"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>
-                                                </a>
+	                                        	<form id="formTrash" method="post" action="${pageContext.request.contextPath}/trashMsg/` + item.msgNo + `">
+		                                    		<button type="button" id="btnTrash">
+			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
+				                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
+				                                            <path d="M9 4v1h6V4z"/>
+			                                          	</svg>
+		                                    		</button>
+		                                    	</form>
                                             </div>
                                         </div>
                                         <p class="mail-content"> 
@@ -515,5 +518,19 @@
             }
          }
    </script>
+   
+   <script>
+	    // 휴지통 버튼 클릭 시
+		$(document).on('click', '#btnTrash', function() {
+		    var isConfirm = confirm('삭제 하시겠습니까?');
+		    console.log($('#formTrash'));  // 폼이 제대로 선택되는지 확인
+		
+		    if(isConfirm) {
+		        $('#formTrash').submit();  // 폼 제출
+		    } else {
+		        // 취소 시 아무 일도 하지 않음
+		    }
+		});	
+	</script>
 </body>
 </html>

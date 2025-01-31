@@ -87,8 +87,12 @@ public class MsgService {
 		return msgMapper.modifyReadState(msgNo);
 	}
 	// 휴지통 이동
-	public Integer modifyTrashMsg(Integer msgNo) {
-		return msgMapper.modifyTrashMsg(msgNo);
+	public Integer insertTrashMsg(Integer msgNo) {
+		return msgMapper.insertTrashMsg(msgNo);
+	}
+	// 영구 삭제
+	public Integer deleteMsg(Integer msgNo) {
+		return msgMapper.deleteMsg(msgNo);
 	}
 
 	// 보낸 쪽지함

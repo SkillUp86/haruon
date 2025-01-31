@@ -28,7 +28,8 @@ public interface MsgMapper {
 	// 받은 쪽지함
 	List<MsgReaderDto> getReadersMsg(Integer empNo);
 	Integer modifyReadState(Integer msgNo); // 읽음 상태변경
-	Integer modifyTrashMsg(Integer msgNo); // 휴지통으로 이동
+	Integer insertTrashMsg(Integer msgNo); // 휴지통으로 이동
+	Integer deleteMsg(Integer msgNo); // 영구 삭제
 	
 	// 휴지통(받은 쪽지)
 	List<MsgReaderDto> getTrashsMsg(Integer empNo);

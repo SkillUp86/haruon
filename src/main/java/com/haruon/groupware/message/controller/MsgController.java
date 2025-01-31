@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.message.dto.MsgDto;
-import com.haruon.groupware.message.dto.MsgReaderDto;
 import com.haruon.groupware.message.dto.MsgSenderDto;
-import com.haruon.groupware.message.entity.MsgFile;
 import com.haruon.groupware.message.service.MsgService;
 import com.haruon.groupware.user.dto.EmpDto;
 import com.haruon.groupware.user.service.EmpService;
@@ -27,6 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 public class MsgController {
 	@Autowired MsgService msgService;
 	@Autowired EmpService empService;
+	
+	// 휴지통 이동
+	@PostMapping("/trashMsg/{msgNo}")
+	public String insertTrashMsg(@PathVariable Integer msgNo) {
+		msgService.insertTrashMsg(msgNo);
+		return "redirect:/trashsMsg";
+	}
+	// 영구 삭제
+	@PostMapping("/deleteMsg/{msgNo}")
+	public String deleteMsg(@PathVariable Integer msgNo) {
+		msgService.deleteMsg(msgNo);
+		return "redirect:/trashsMsg";
+	}
 	
 	// 메일 발송
 	@PostMapping("/insertMsg")
