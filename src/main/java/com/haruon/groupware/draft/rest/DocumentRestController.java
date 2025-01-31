@@ -79,7 +79,9 @@ public class DocumentRestController {
 	
 	// 참조 문서
 	@GetMapping("/refers")
-	public ResponseEntity<Map<String,Object>> referenceList(@RequestParam int start, @RequestParam int length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw){
+	public ResponseEntity<Map<String,Object>> referenceList(@RequestParam int start, @RequestParam int length,
+															@RequestParam(required = false, name = "search[value]") String search,
+															@RequestParam(required = false) Integer draw){
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
 		List<ResponseReferencesList> referenceList = draftService.getReferencesByEmp(empNo, search, start, length);
