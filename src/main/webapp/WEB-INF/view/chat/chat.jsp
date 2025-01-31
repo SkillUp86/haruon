@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>HARUON 메신저</title>
+    <title>HARUON | 메신저</title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
