@@ -151,7 +151,7 @@
 					
 					let profile = (item.senderProfileName == null)? 'noProfile.png' : item.senderProfileName + '.' + item.senderProfileExt;
 					unreadMsgSumListHtml +=`<div class="mb-2">
-												<a href="${pageContext.request.contextPath}/readerMsg/` + item.msgNo + `">
+												<a href="${pageContext.request.contextPath}/readersMsg">
 													<div class="rounded w-100 d-flex justify-content-between align-items-center">
 														<div>
 												        	<img alt="avatar" src="${pageContext.request.contextPath}/upload/profile/` + profile + `" class="rounded"/>

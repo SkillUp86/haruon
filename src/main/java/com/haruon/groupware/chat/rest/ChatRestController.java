@@ -37,14 +37,14 @@ public class ChatRestController {
 		return ResponseEntity.ok(empList);
 	}
 	
-	// 접속한 사람의 모든 채팅방 목록 반환 - endPoint 1
+	// 접속한 사람의 모든 채팅방 목록 반환 
 	@GetMapping("/rooms/{empNo}")
 	public ResponseEntity<List<ChatRoomDTO>> getRoomsByEmpNo(@PathVariable Integer empNo) {
 		List<ChatRoomDTO> chatRoomsList = chatService.getChatRoomsInfoByEmp(empNo);
 		return ResponseEntity.ok(chatRoomsList);
 	}
 	
-	// 채팅방 생성 -> 해당 채팅방 ID 반환 - endPoint 2
+	// 채팅방 생성 -> 해당 채팅방 ID 반환 
 	@PostMapping("/room")
 	@ResponseBody
 	public String createRoom(@RequestParam Integer emp1
@@ -52,19 +52,11 @@ public class ChatRestController {
 		return chatService.createChatRoom(emp1, emp2);
 	}
 	
-	// 특정 채팅방 입장 - endPoint 3
+	// 특정 채팅방 입장 
 	@GetMapping("/room/{roomId}")
 	@ResponseBody
 	public String enterChatRoom(@PathVariable String roomId) {
 		return chatService.findChatRoom(roomId);
-	}
-	
-	// 사원이 직접 상태 변경
-	@GetMapping("/connection/update/{status}")
-	public void connectionUpdate(Authentication auth, @PathVariable String status) {
-		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-		empUpdateService.changeConnectionInfo(userDetails.getEmpNo(), status);
-		log.debug("로그인상태 변경 - {}", status);
 	}
 	
 	// 사원이 참여하고있는 특정 채팅방 나가기
@@ -96,5 +88,13 @@ public class ChatRestController {
 		List<ChatRoomDTO> conversationList = chatService.getChatConversation(roomId);
 		
 		return ResponseEntity.ok(conversationList);
+	}
+	
+	// 사원이 직접 상태 변경
+	@GetMapping("/connection/update/{status}")
+	public void connectionUpdate(Authentication auth, @PathVariable String status) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		empUpdateService.changeConnectionInfo(userDetails.getEmpNo(), status);
+		log.debug("로그인상태 변경 - {}", status);
 	}
 }
