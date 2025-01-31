@@ -34,7 +34,7 @@
         }
     </style>    
     <!-- 페이지 제목 입력칸 -->
-    <title>사원 조회</title>
+    <title>HARUON | 사원 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -46,7 +46,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -58,9 +58,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -102,17 +100,17 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12" style="background-color: white;">
-	                            <h2 style="margin-top: 10px;">직원 목록</h2>
-	                            
-               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
-	               					<div style="text-align: right; margin-top: 20px;" class="me-4">
-		                                <a class="btn btn-secondary me-4" href="${pageContext.request.contextPath}/addEmp">
-		                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-		                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 직원등록
-		                                </a>
-	                                 </div>
-                                
-                                	<div style="margin: 0 20px;">
+	               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
+		               					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; margin-top: 10px;">
+				                            <h2 class="mt-3 mb-3">&nbsp; 직원 목록</h2>
+				                            <div style="text-align: right; margin-top: 20px;" class="me-4">
+				                                <a class="btn btn-secondary me-4" href="${pageContext.request.contextPath}/addEmp">
+				                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+				                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 직원등록
+				                                </a>
+			                                 </div>
+		                            	</div>
+	               						<div style="margin: 0 20px;">
                                 		<table id="employeeList" class="zero-config table dt-table-hover" style="width:100%">
 	                                        <thead>
 	                                            <tr>

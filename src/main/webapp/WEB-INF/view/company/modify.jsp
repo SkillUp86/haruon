@@ -44,7 +44,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- 페이지 제목 입력칸 -->
-    <title>회사 정보 수정</title>
+    <title>HARUON | 회사 정보 수정</title>
     <!-- 페이지 제목 입력칸 -->
 
 </head>
@@ -57,7 +57,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -69,9 +69,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -97,8 +95,8 @@
                         
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">조직도</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">회사 정보</li>
+                                                <li class="breadcrumb-item"><a href="#">회사/부서 관리</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">회사</li>
                                             </ol>
                                         </nav>
                         
@@ -112,60 +110,57 @@
 					<div class="account-settings-container layout-top-spacing">
 						<div class="account-content">
 							<div class="row mb-3">
-								<div class="col-md-12">
-									<h2>회사 정보 수정</h2>
+								<div class="widget-content widget-content-area br-8">
+								<h2 class="mt-3 mb-3">&nbsp; 회사 정보 수정</h2>
+									<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 
-									<div class="widget-content widget-content-area br-8">
-										<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
-
-											<div class="container col-xl-6">
-											
-												<form id="formModify" action="${pageContext.request.contextPath}/company/modify" method="post">
-													<div class="form-group row mb-3">
-														<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control form-control-md" id="comName" name="comName" placeholder="Company Name" value="${c.comName}">
-														</div>
+										<div class="container col-xl-6">
+										
+											<form id="formModify" action="${pageContext.request.contextPath}/company/modify" method="post">
+												<div class="form-group row mb-3">
+													<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control form-control-md" id="comName" name="comName" placeholder="Company Name" value="${c.comName}">
 													</div>
-													<div class="form-group row mb-3">
-														<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
-														<div class="col-sm-9">
-															<div class="form-group">
-                                                                 <input type="hidden" class="form-control mb-3" id="selectPostcode" name="postCode">
-                                                                 <input type="text" class="form-control mb-3" value="${c.address}" id="roadAddress" name="address"placeholder="주소" >
-                                                                 <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
-                                                                 <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
-                                                                 <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
-                                                                 <span id="guide" style="color:#999;display:none"></span>
-                                                             </div>
-                                                             <div class="form-group">
-                                                                 <input type="button" class="btn btn-warning mb-3" onclick="Postcode()" value="주소 찾기"><br>
-                                                             </div>
-														</div>
+												</div>
+												<div class="form-group row mb-3">
+													<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
+													<div class="col-sm-9">
+														<div class="form-group">
+                                                                <input type="hidden" class="form-control mb-3" id="selectPostcode" name="postCode">
+                                                                <input type="text" class="form-control mb-3" value="${c.address}" id="roadAddress" name="address"placeholder="주소" >
+                                                                <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
+                                                                <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
+                                                                <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
+                                                                <span id="guide" style="color:#999;display:none"></span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="button" class="btn btn-warning mb-3" onclick="Postcode()" value="주소 찾기"><br>
+                                                            </div>
 													</div>
-													<div class="form-group row mb-3">
-														<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control form-control-md" id="leader" name="leader" placeholder="Leader Name" value="${c.leader}">
-														</div>
+												</div>
+												<div class="form-group row mb-3">
+													<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control form-control-md" id="leader" name="leader" placeholder="Leader Name" value="${c.leader}">
 													</div>
-													<div class="form-group row mb-3">
-														<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control form-control-md" id="phone" name="phone" placeholder="Company phone number" value="${c.phone}">
-														</div>
+												</div>
+												<div class="form-group row mb-3">
+													<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control form-control-md" id="phone" name="phone" placeholder="Company phone number" value="${c.phone}">
 													</div>
-													<div class="form-group row mb-3">
-														<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control form-control-md" id="email" name="email" placeholder="Company Email" value="${c.email}">
-														</div>
+												</div>
+												<div class="form-group row mb-3">
+													<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control form-control-md" id="email" name="email" placeholder="Company Email" value="${c.email}">
 													</div>
-													<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
-														<button id="btnModify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</button>
-													</div>
-												</form>
-											</div>
+												</div>
+												<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
+													<button id="btnModify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>

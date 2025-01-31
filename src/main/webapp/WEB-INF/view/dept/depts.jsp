@@ -45,7 +45,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        
     <!-- 페이지 제목 입력칸 -->
-    <title>부서 관리</title>
+    <title>HARUON | 부서 관리</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -57,7 +57,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -69,9 +69,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -96,7 +94,7 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">회사/부서 정보 관리</a></li>
+                                                <li class="breadcrumb-item"><a href="#">회사/부서 관리</a></li>
                                                 <li class="breadcrumb-item active" aria-current="page">부서</li>
                                             </ol>
                                         </nav>
@@ -110,134 +108,127 @@
                 <!-- 메인컨텐츠 입력칸 -->
                 
                  <div class="account-settings-container layout-top-spacing">
-                      <div class="account-content">
-                          <div class="row mb-3">
-                              <div class="col-md-12" style="background-color: white;">
-                              <h2 style="margin-top: 10px;">부서 관리</h2>
-                              	<div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
-                                  	<div class="widget-content widget-content-area br-8"  style="margin-bottom: 20px;">
-		            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
-		            					
-		            						 <div style="text-align: right; margin-bottom: 10px;">
-		                                        <a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/depts/insert" data-bs-toggle="modal" data-bs-target="#inputFormModal" onclick="setModalData(this)">
-	                                       			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-	                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록</a>
-	                                       	</div>
-	                                       	
-	                                       	<!-- Modal - insert-->
-												<div class="modal fade inputForm-modal" id="inputFormModal" tabindex="-1" role="dialog" aria-labelledby="inputFormModalLabel" aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered" role="document">
-														<div class="modal-content">
-															<div class="modal-header" id="inputFormModalLabel">
-																<h5 class="modal-title">부서 등록</h5>
-																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-																	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-																		<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-																</button>
-															</div>
-															
-															<form id="formInsert" action="${pageContext.request.contextPath}/depts/insert" method="post">
-																<div class="modal-body">
-																	<div class="mb-3">
-																		<label for="dname" class="form-label">이름</label> 
-																		<input type="text" class="form-control" id="insertDname" name="dname" required>
-																	</div>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-																	<button id="btnInsert" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">등록</button>
-																</div>
-															</form>
-		
+                     <div class="row mb-3">
+                       	<div class="widget-content widget-content-area br-8"  style="margin-bottom: 20px;">
+                         	<h2 class="mt-3 mb-3">부서 관리</h2>
+        					<div class="container" style="margin-top: 10px; margin-bottom: 100px; width: 100%;">
+        					
+        						<div style="text-align: right; margin-bottom: 10px;">
+	                               	<a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/depts/insert" data-bs-toggle="modal" data-bs-target="#inputFormModal" onclick="setModalData(this)">
+	                           			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+	                           			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록</a>
+                               	</div>
+                                  	
+                                  	<!-- Modal - insert-->
+									<div class="modal fade inputForm-modal" id="inputFormModal" tabindex="-1" role="dialog" aria-labelledby="inputFormModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered" role="document">
+											<div class="modal-content">
+												<div class="modal-header" id="inputFormModalLabel">
+													<h5 class="modal-title">부서 등록</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+														<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+															<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+													</button>
+												</div>
+												
+												<form id="formInsert" action="${pageContext.request.contextPath}/depts/insert" method="post">
+													<div class="modal-body">
+														<div class="mb-3">
+															<label for="dname" class="form-label">이름</label> 
+															<input type="text" class="form-control" id="insertDname" name="dname" required>
 														</div>
 													</div>
-												</div> <!-- END Modal -->
-											
-							                <table id="style-3" class="table style-3 dt-table-hover">
-							                    <thead>
-							                        <tr>
-							                            <th style="width: 10%;">번호</th>
-							                            <th>부서명</th>
-							                            <th></th>
-							                            <th></th>
-							                        </tr>
-							                    </thead>
-							                    <tbody>
-							                    	<c:forEach var="d" items="${deptList}">
-								                        <tr>
-								                            <td>${d.depNo}</td>
-								                            <td>${d.dname}</td>
-								                            <td>
-								                            	<button type="button" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#updateFormModal" 
-								                            		data-depNo="${d.depNo}" data-dname="${d.dname}" onclick="setModalData(this)">수정</button>
-								                            	<!-- Modal - update -->
-																	<div class="modal fade updateForm-modal" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="updateFormModalLabel" aria-hidden="true">
-																		<div class="modal-dialog modal-dialog-centered" role="document">
-																			<div class="modal-content">
-																				<div class="modal-header" id="updateFormModalLabel">
-																					<h5 class="modal-title">부서 수정</h5>
-																					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
-																						<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-																							stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-																							<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-																					</button>
-																				</div>
-																				
-																				<form id="formUpdate" action="${pageContext.request.contextPath}/depts/update" method="post">
-																					<div class="modal-body">
-																						<div class="mb-3">
-																							<label for="depNo" class="form-label">번호</label> 
-																							<input type="text" class="form-control" id="depNo" name="depNo" value="${d.depNo}" style="background-color: #e7e7e7 !important;" readonly>
-																						</div>
-																						<div class="mb-3">
-																							<label for="dname" class="form-label">이름</label> 
-																							<input type="text" class="form-control" id="dname" name="dname" value="${d.dname}" required>
-																						</div>
-																					</div>
-																					<div class="modal-footer">
-																						<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-																						<button id="btnUpdate" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">수정</button>
-																					</div>
-																				</form>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+														<button id="btnInsert" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">등록</button>
+													</div>
+												</form>
 			
+											</div>
+										</div>
+									</div> <!-- END Modal -->
+					
+				                <table id="style-3" class="table style-3 dt-table-hover">
+				                    <thead>
+				                        <tr>
+				                            <th style="width: 10%;">번호</th>
+				                            <th>부서명</th>
+				                            <th></th>
+				                            <th></th>
+				                        </tr>
+				                    </thead>
+				                    <tbody>
+				                    	<c:forEach var="d" items="${deptList}">
+					                        <tr>
+					                            <td>${d.depNo}</td>
+					                            <td>${d.dname}</td>
+					                            <td>
+					                            	<button type="button" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#updateFormModal" 
+					                            		data-depNo="${d.depNo}" data-dname="${d.dname}" onclick="setModalData(this)">수정</button>
+					                            	<!-- Modal - update -->
+														<div class="modal fade updateForm-modal" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="updateFormModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content">
+																	<div class="modal-header" id="updateFormModalLabel">
+																		<h5 class="modal-title">부서 수정</h5>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+																			<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+																				stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+																				<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+																		</button>
+																	</div>
+																	
+																	<form id="formUpdate" action="${pageContext.request.contextPath}/depts/update" method="post">
+																		<div class="modal-body">
+																			<div class="mb-3">
+																				<label for="depNo" class="form-label">번호</label> 
+																				<input type="text" class="form-control" id="depNo" name="depNo" value="${d.depNo}" style="background-color: #e7e7e7 !important;" readonly>
+																			</div>
+																			<div class="mb-3">
+																				<label for="dname" class="form-label">이름</label> 
+																				<input type="text" class="form-control" id="dname" name="dname" value="${d.dname}" required>
 																			</div>
 																		</div>
-																	</div> <!-- END Modal - update -->
-								                            </td>
-								                            <td>
-								                            	<div class="widget-content warning">
-								                            		<button type="button" class="btn btn-rounded mb-2 me-4 warning
-								                            			<c:choose>
-																	        <c:when test="${d.activeYn == 'Y'}">
-																	            btn-dark
-																	        </c:when>
-																	        <c:when test="${d.activeYn == 'N'}">
-																	            btn-light-dark
-																	        </c:when>
-																	    </c:choose>" 
-																	    data-depNo="${d.depNo}" data-activeYn="${d.activeYn}" onclick="setModalData(this)">
-									                            			<c:choose>
-																			    <c:when test="${d.activeYn == 'Y'}">
-																			        활성화
-																			    </c:when>
-																			    <c:when test="${d.activeYn == 'N'}">
-																			        비활성화
-																			    </c:when>
-																			</c:choose>
-								                            		</button>
-								                            	</div>
-								                            </td>
-								                        </tr>
-													</c:forEach>
-							                    </tbody>
-							                </table>
-							                
-						                </div> <!-- End Container -->
-						                
-					             	</div>
-					         	</div>
-	            			</div>
-	        			</div>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+																			<button id="btnUpdate" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">수정</button>
+																		</div>
+																	</form>
+			
+																</div>
+															</div>
+														</div> <!-- END Modal - update -->
+					                            </td>
+					                            <td>
+					                            	<div class="widget-content warning">
+					                            		<button type="button" class="btn btn-rounded mb-2 me-4 warning
+					                            			<c:choose>
+														        <c:when test="${d.activeYn == 'Y'}">
+														            btn-dark
+														        </c:when>
+														        <c:when test="${d.activeYn == 'N'}">
+														            btn-light-dark
+														        </c:when>
+														    </c:choose>" 
+														    data-depNo="${d.depNo}" data-activeYn="${d.activeYn}" onclick="setModalData(this)">
+						                            			<c:choose>
+																    <c:when test="${d.activeYn == 'Y'}">
+																        활성화
+																    </c:when>
+																    <c:when test="${d.activeYn == 'N'}">
+																        비활성화
+																    </c:when>
+																</c:choose>
+					                            		</button>
+					                            	</div>
+					                            </td>
+					                        </tr>
+										</c:forEach>
+				                    </tbody>
+				                </table>
+                			</div> <!-- End Container -->
+                
+            			</div>
 		    		</div>
 				</div>
                 <!-- 메인컨텐츠 END -->

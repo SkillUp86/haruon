@@ -49,7 +49,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
       
     <!-- 페이지 제목 입력칸 -->
-    <title>조직도</title>
+    <title>HARUON | 조직도</title>
     <!-- 페이지 제목 입력칸 -->
     
     <style>
@@ -197,7 +197,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -209,9 +209,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -252,9 +250,9 @@
                 
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
-                          <div class="row mb-3">
+                          <div class="card row mb-3">
                               <div class="col-md-12" style="background-color: white;">
-                              <h2 style="margin-top: 10px;">조직도</h2>
+                              <h2 class="mt-3 mb-3">조직도</h2>
                               
 	           					<div class="container" style="margin-bottom: 300px; width: 100%;">
 	           					 	<div class="orgChart tree">

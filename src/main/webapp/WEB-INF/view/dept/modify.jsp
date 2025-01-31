@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Haruon | 직원 정보 수정</title>
+    <title>HARUON | 직원 정보 수정</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
@@ -112,7 +112,7 @@
 										<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 											<ol class="breadcrumb">
 												<li class="breadcrumb-item"><a href="#">조직도</a></li>
-												<li class="breadcrumb-item active" aria-current="page">직원 정보 수정</li>
+												<li class="breadcrumb-item active" aria-current="page">사원 조회</li>
 											</ol>
 										</nav>
 									</div>
@@ -126,12 +126,12 @@
 				<div class="tab-content" id="animateLineContent-4">
 					<div class="tab-pane fade show active" id="animated-underline-home"
 						role="tabpanel" aria-labelledby="animated-underline-home-tab">
-						<div class="row">
+						<div class="card row">
 							<div class="widget-content widget-content-area br-8">
 								<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
 									<div class="info">
 										<h4><strong>${e.ename}</strong>님 정보 수정</h4>
-									</div>
+									</div><br>
 									
 									<form id="formUpdateEmp" action="${pageContext.request.contextPath}/employees/modify" method="post">
 										<div class="row">

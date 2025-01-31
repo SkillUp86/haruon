@@ -45,7 +45,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        
     <!-- 페이지 제목 입력칸 -->
-    <title>카테고리 관리</title>
+    <title>HARUON | 카테고리 관리</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -57,7 +57,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -69,9 +69,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -111,113 +109,111 @@
                 
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
-                          <div class="row mb-3">
+                          <div class="card row mb-3">
                               <div class="col-md-12" style="background-color: white;">
-                              <h2 style=" margin-top: 10px;">카테고리 관리</h2>
-                              	<div class="tab-pane fade show active" id="전체-tab-pane" role="tabpanel" aria-labelledby="tab1">
-                                  	<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
-		            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
-		            					
-		            						 <div style="text-align: right; margin-bottom: 10px;">
-		                                        <a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/board/category/insert" data-bs-toggle="modal" data-bs-target="#inputFormModal" onclick="setModalData(this)">
-	                                       			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-	                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록</a>
-	                                       	</div>
-	                                       	
-	                                       	<!-- Modal -->
-												<div class="modal fade inputForm-modal" id="inputFormModal" tabindex="-1" role="dialog" aria-labelledby="inputFormModalLabel" aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered" role="document">
-														<div class="modal-content">
-															<div class="modal-header" id="inputFormModalLabel">
-																<h5 class="modal-title">카테고리 등록</h5>
-																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-																	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-																		<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-																</button>
-															</div>
-															
-															<form id="formInsert" action="${pageContext.request.contextPath}/category/insert" method="post">
-																<div class="modal-body">
-																	<div class="mb-3">
-																		<label for="catName" class="form-label">이름</label> 
-																		<input type="text" class="form-control" id="insertCatName" name="catName" required>
-																	</div>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-																	<button id="btnInsert" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">등록</button>
-																</div>
-															</form>
-		
+                              	<h2 class="mt-3 mb-3">카테고리 관리</h2>
+                               	<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
+	            					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
+	            					
+	            						 <div style="text-align: right; margin-bottom: 10px;">
+	                                        <a class="btn btn-secondary" id="insertBoard" href="${pageContext.request.contextPath}/board/category/insert" data-bs-toggle="modal" data-bs-target="#inputFormModal" onclick="setModalData(this)">
+                                       			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                       			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록</a>
+                                       	</div>
+                                       	
+                                       	<!-- Modal -->
+											<div class="modal fade inputForm-modal" id="inputFormModal" tabindex="-1" role="dialog" aria-labelledby="inputFormModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document">
+													<div class="modal-content">
+														<div class="modal-header" id="inputFormModalLabel">
+															<h5 class="modal-title">카테고리 등록</h5>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+																<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+																	<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+															</button>
 														</div>
+														
+														<form id="formInsert" action="${pageContext.request.contextPath}/category/insert" method="post">
+															<div class="modal-body">
+																<div class="mb-3">
+																	<label for="catName" class="form-label">이름</label> 
+																	<input type="text" class="form-control" id="insertCatName" name="catName" required>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+																<button id="btnInsert" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">등록</button>
+															</div>
+														</form>
+	
 													</div>
-												</div> <!-- END Modal -->
-											
-							                <table id="style-3" class="table style-3 dt-table-hover">
-							                    <thead>
+												</div>
+											</div> <!-- END Modal -->
+										
+						                <table id="style-3" class="table style-3 dt-table-hover">
+						                    <thead>
+						                        <tr>
+						                            <th style="width: 10%;">번호</th>
+						                            <th>이름</th>
+						                            <th></th>
+						                            <th></th>
+						                        </tr>
+						                    </thead>
+						                    <tbody>
+						                    	<c:forEach var="c" items="${categoryList}">
 							                        <tr>
-							                            <th style="width: 10%;">번호</th>
-							                            <th>이름</th>
-							                            <th></th>
-							                            <th></th>
-							                        </tr>
-							                    </thead>
-							                    <tbody>
-							                    	<c:forEach var="c" items="${categoryList}">
-								                        <tr>
-								                            <td>${c.catNo}</td>
-								                            <td>${c.catName}</td>
-								                            <td>
-								                            	<button type="button" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#updateFormModal" 
-								                            		data-catno="${c.catNo}" data-catname="${c.catName}" onclick="setModalData(this)">수정</button>
-								                            	<!-- Modal - update -->
-																	<div class="modal fade updateForm-modal" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="updateFormModalLabel" aria-hidden="true">
-																		<div class="modal-dialog modal-dialog-centered" role="document">
-																			<div class="modal-content">
-																				<div class="modal-header" id="updateFormModalLabel">
-																					<h5 class="modal-title">카테고리 수정</h5>
-																					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
-																						<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-																							stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-																							<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-																					</button>
-																				</div>
-																				
-																				<form id="formUpdate" action="${pageContext.request.contextPath}/category/update" method="post">
-																					<div class="modal-body">
-																						<div class="mb-3">
-																							<label for="catNo" class="form-label">번호</label> 
-																							<input type="text" class="form-control" id="catNo" name="catNo" value="${c.catNo}" style="background-color: #e7e7e7 !important;" readonly>
-																						</div>
-																						<div class="mb-3">
-																							<label for="catName" class="form-label">이름</label> 
-																							<input type="text" class="form-control" id="catName" name="catName" value="${c.catName}" required>
-																						</div>
-																					</div>
-																					<div class="modal-footer">
-																						<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
-																						<button id="btnUpdate" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">수정</button>
-																					</div>
-																				</form>
-			
+							                            <td>${c.catNo}</td>
+							                            <td>${c.catName}</td>
+							                            <td>
+							                            	<button type="button" class="btn btn-secondary btn-rounded mb-2 me-4" data-bs-toggle="modal" data-bs-target="#updateFormModal" 
+							                            		data-catno="${c.catNo}" data-catname="${c.catName}" onclick="setModalData(this)">수정</button>
+							                            	<!-- Modal - update -->
+																<div class="modal fade updateForm-modal" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="updateFormModalLabel" aria-hidden="true">
+																	<div class="modal-dialog modal-dialog-centered" role="document">
+																		<div class="modal-content">
+																			<div class="modal-header" id="updateFormModalLabel">
+																				<h5 class="modal-title">카테고리 수정</h5>
+																				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+																					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+																						stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+																						<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+																				</button>
 																			</div>
+																			
+																			<form id="formUpdate" action="${pageContext.request.contextPath}/category/update" method="post">
+																				<div class="modal-body">
+																					<div class="mb-3">
+																						<label for="catNo" class="form-label">번호</label> 
+																						<input type="text" class="form-control" id="catNo" name="catNo" value="${c.catNo}" style="background-color: #e7e7e7 !important;" readonly>
+																					</div>
+																					<div class="mb-3">
+																						<label for="catName" class="form-label">이름</label> 
+																						<input type="text" class="form-control" id="catName" name="catName" value="${c.catName}" required>
+																					</div>
+																				</div>
+																				<div class="modal-footer">
+																					<button type="button" class="btn btn-light-danger mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">취소</button>
+																					<button id="btnUpdate" type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect">수정</button>
+																				</div>
+																			</form>
+		
 																		</div>
-																	</div> <!-- END Modal - update -->
-								                            </td>
-								                            <td>
-								                            	<div class="widget-content">
-								                            		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4 warning" data-catno="${c.catNo}" onclick="setModalData(this)">삭제</button>
-								                            	</div>
-								                            </td>
-								                        </tr>
-													</c:forEach>
-							                    </tbody>
-							                </table>
-							                
-						                </div> <!-- End Container -->
+																	</div>
+																</div> <!-- END Modal - update -->
+							                            </td>
+							                            <td>
+							                            	<div class="widget-content">
+							                            		<button type="button" class="btn btn-dark btn-rounded mb-2 me-4 warning" data-catno="${c.catNo}" onclick="setModalData(this)">삭제</button>
+							                            	</div>
+							                            </td>
+							                        </tr>
+												</c:forEach>
+						                    </tbody>
+						                </table>
 						                
-					             	</div>
-					         	</div>
+					                </div> <!-- End Container -->
+					                
+				             	</div>
 	            			</div>
 	        			</div>
 		    		</div>

@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>가맹점 등록</title>
+    <title>HARUON | 가맹점 등록</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -82,10 +82,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Insert Franchise</li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">가맹점 등록</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -98,29 +96,18 @@
                 
                 <!-- 메인컨텐츠 입력칸 -->
                 <div class="row layout-spacing layout-top-spacing" id="cancel-row">
-                    <div class="col-lg-12">
+                    <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div class="widget-content searchable-container list">
-
-                            <div class="row">
-								<div class="row">
-
-                        <div id="flLoginForm" class="col-lg-12 layout-spacing">
-                            <div class="statbox widget box box-shadow">
-                                <div class="widget-header">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                            <h2 class="mt-3 mb-3">&nbsp; 가맹점 등록</h2>
-                                        </div>                                                                        
-                                    </div>
-                                </div>
+							<div class="card row mb-4">
+                                <h2 class="mt-3 mb-3">&nbsp; 가맹점 등록</h2>
                                 <div class="widget-content widget-content-area">
                                     <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/insert" class="row g-3">
                                         <div class="col-12">
-                                            <label for="fname" class="form-label">FNAME</label>
+                                            <label for="fname" class="form-label">가맹점명</label>
                                             <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
                                         </div>
                                         <div class="col-12">
-	                                            <label for="postCode" class="form-label">POST CODE</label>
+	                                            <label for="postCode" class="form-label">우편번호</label>
 	                                            <div class="row">
 		                                            <div class="col-md-6 d-flex">
 			                                            <input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호" readonly>
@@ -130,29 +117,29 @@
 		                                            </div>
 	                                            </div><br>
 	                                        <div class="col-md-12">
-	                                            <label for="address" class="form-label">ADDRESS</label>
+	                                            <label for="address" class="form-label">주소</label>
 	                                            <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
 	                                        </div>
 	                                            <label for="" class="form-label"></label>
                                         </div>
                                         <div class="col-12">
-                                            <label for="id" class="form-label">ID</label>
+                                            <label for="id" class="form-label">사업자 번호</label>
                                             <input type="text" class="form-control" id="id" name="id" placeholder="사업자번호">
                                         </div>
                                         <div class="col-12">
-                                            <label for="leader" class="form-label">LEADER</label>
+                                            <label for="leader" class="form-label">가맹점주</label>
                                             <input type="text" class="form-control" id="leader" name="leader" placeholder="가맹점주">
                                         </div>
                                         <div class="col-12">
-                                            <label for="phone" class="form-label">PHONE</label>
+                                            <label for="phone" class="form-label">연락처</label>
                                             <input type="text" class="form-control" id="phone" name="phone" placeholder="연락처">
                                         </div>
                                         <div class="col-12">
-                                            <label for="email" class="form-label">EMAIL</label>
+                                            <label for="email" class="form-label">이메일</label>
                                             <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
                                         </div>
-                                        <div class="col-12 ">
-                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">등록</button>
+                                        <div class="col-sm-12 text-center" style="margin-top: 20px;">
+                                            <button type="button" id="addBtn" class="btn btn-success _effect--ripple waves-effect waves-light">등록</button>
                                         </div>
                                     </form>
                                 </div>
@@ -160,9 +147,6 @@
                         </div>
 
                     </div>
-	                        </div>
-                        </div>
-                  	</div>
                	</div>
                 <!-- 메인컨텐츠 END -->
 			</div>
@@ -192,11 +176,11 @@
 	<script>
 		$('#addBtn').click(function() {
 			if($('#fname').val() == '') {
-				alert('FNAME을 입력하세요');
+				alert('가맹점명을 입력하세요');
 			} else if($('#address').val() == '') {
-				alert('ADDRESS를 입력하세요');
+				alert('주소를 입력하세요');
 			} else if(!/^\d{10}$/.test($('#id').val())) {
-				alert('ID : 10자리 숫자를 입력하세요');
+				alert('사업자번호 10자리 숫자를 입력하세요');
 			} else if($('#leader').val() == '') {
 				alert('가맹점주 이름을 입력하세요');
 			} else if(!/^\d{11}$/.test($('#phone').val())) {

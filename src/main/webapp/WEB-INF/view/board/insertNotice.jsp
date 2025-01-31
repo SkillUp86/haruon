@@ -37,7 +37,7 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
     
     <!-- 페이지 제목 입력칸 -->
-    <title>공지게시판 글 작성</title>
+    <title>HARUON | 공지게시판 글쓰기</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -49,7 +49,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -61,9 +61,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -89,7 +87,7 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">게시판</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">공지</li>
+                                                <li class="breadcrumb-item active" aria-current="page">공지 게시판</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -103,8 +101,8 @@
                 <div class="row mb-4 layout-spacing layout-top-spacing">
                 	<div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     	<div class="widget-content widget-content-area blog-create-section">
-                               <div class="row mb-4">
-                               <h2>공지게시판 글 작성</h2>
+                               <div class="card row mb-4">
+                               <h2 class="mt-3 mb-3">공지게시판 글 작성</h2>
                                
                                	<form id="formInsert" action="${pageContext.request.contextPath}/board/insertNotice" method="post" enctype="multipart/form-data">
 	                                <div class="row mb-4">

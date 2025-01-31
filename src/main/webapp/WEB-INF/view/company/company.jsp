@@ -44,7 +44,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- 페이지 제목 입력칸 -->
-    <title>회사 정보</title>
+    <title>HARUON | 회사 정보</title>
     <!-- 페이지 제목 입력칸 -->
 
 </head>
@@ -57,7 +57,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -69,9 +69,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
-
             <jsp:include page="/WEB-INF/view/inc/sidebar.jsp" />
-
         </div>
         <!--  END SIDEBAR  -->
 
@@ -98,7 +96,7 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">조직도</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">회사 정보</li>
+                                                <li class="breadcrumb-item active" aria-current="page">회사</li>
                                             </ol>
                                         </nav>
                         
@@ -111,57 +109,54 @@
 
 					<div class="account-settings-container layout-top-spacing">
 						<div class="account-content">
-							<div class="row mb-3">
-								<div class="col-md-12">
-									<h2 style="margin-top: 10px;">회사 정보</h2>
+							<div class="card row mb-3">
+								<div class="widget-content widget-content-area br-8">
+									<h2 class="mt-3 mb-3">&nbsp; 회사 정보</h2>
+									<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
 
-									<div class="widget-content widget-content-area br-8">
-										<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
-
-											<div class="container col-xl-6">
-												<div class="d-flex align-items-center mb-5" style="display: flex; justify-content: center;">
-													<img src="${pageContext.request.contextPath}/src/assets/img/logo.svg" style="width: 50px;height: auto;">
-													<h4 class="mb-0 ms-3">${c.comName}</h4>
-												</div>
-
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.comName}" readonly>
-													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.address}" readonly>
-													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.leader}" readonly>
-													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.phone}" readonly>
-													</div>
-												</div>
-												<div class="form-group row mb-3">
-													<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.email}" readonly>
-													</div>
-												</div>
-												
-												<!-- 전산과(depNo=4, System)만 회사 정보 수정 가능 -->
-												<c:if test="${depNo == 4}">
-													<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
-														<a href="${pageContext.request.contextPath}/company/modify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</a>
-													</div>
-												</c:if>
+										<div class="container col-xl-6">
+											<div class="d-flex align-items-center mb-5" style="display: flex; justify-content: center;">
+												<img src="${pageContext.request.contextPath}/src/assets/img/logo.svg" style="width: 50px;height: auto;">
+												<h4 class="mb-0 ms-3">${c.comName}</h4>
 											</div>
+
+											<div class="form-group row mb-3">
+												<label class="col-sm-2 col-form-label col-form-label-md">회사명</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.comName}" readonly>
+												</div>
+											</div>
+											<div class="form-group row mb-3">
+												<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.address}" readonly>
+												</div>
+											</div>
+											<div class="form-group row mb-3">
+												<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.leader}" readonly>
+												</div>
+											</div>
+											<div class="form-group row mb-3">
+												<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.phone}" readonly>
+												</div>
+											</div>
+											<div class="form-group row mb-3">
+												<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.email}" readonly>
+												</div>
+											</div>
+											
+											<!-- 전산과(depNo=4, System)만 회사 정보 수정 가능 -->
+											<c:if test="${depNo == 4}">
+												<div class="d-flex justify-content-end mb-2" style="margin-top: 30px; padding-right: 35px;">
+													<a href="${pageContext.request.contextPath}/company/modify" type="button" class="btn btn-secondary btn-rounded mb-2 me-4">수정</a>
+												</div>
+											</c:if>
 										</div>
 									</div>
 								</div>
