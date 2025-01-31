@@ -76,7 +76,7 @@
                                     <div class="chat-input">
                                         <form class="chat-form" action="javascript:void(0);">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                            <input name="message" type="text" class="mail-write-box form-control" placeholder="Message"/>
+                                            <input id="mail-write-box-form" name="message" type="text" class="mail-write-box form-control" placeholder="Message"/>
                                         </form>
                                     </div>
                                 </div>
@@ -130,20 +130,40 @@
     			url: `/chat/room/${roomId}/particiant`,
     			method: 'GET',
     		}).done(function(result) {
-    			let conn = result.connectionStatus;
-    			conn = (conn === "J01")? `<span class="badge badge-light-success ms-2">온라인</span>`
-   	            	   : (conn === "J02")? `<span class="badge badge-light-secondary ms-2">오프라인</span>` 
-  		    	       : (conn === "J03")? `<span class="badge badge-light-info ms-2">자리비움</span>`
-  		    	       : (conn === "J04")? `<span class="badge badge-light-warning ms-2">회의중</span>`
-  		    	   							: '';
+    			let checkUndefined = (result.ename === undefined);
     			
-    			let profile = result.fileName + "." + result.ext;
-    		  	profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
-    		  	
+    			
+    			
+    			
     		  	let particiantHTML = ''
-    		  	particiantHTML += ` <img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" alt="dynamic-image">
-					                <span>` + result.ename + conn + `</span>
-					            	`;
+    		  	
+  		    	if(checkUndefined) {
+  	    		  	particiantHTML += ` <img src="${pageContext.request.contextPath}/upload/profile/noProfile.png">
+						                <span>알수없음</span>
+						               `;
+						               
+					$("#mail-write-box-form").prop('readonly', true);
+					$("#mail-write-box-form").attr('placeholder', '상대방이 채팅방을 나갔습니다;')
+  		    	}
+  		    	
+  		    	if(!checkUndefined) {
+  		    		let profile = result.fileName + "." + result.ext;
+  	    		  	profile = (profile.trim() === "null.null")? "noProfile.png" : profile;
+  		    		
+  		    		let conn = result.connectionStatus;
+  	    			conn = (conn === "J01")? `<span class="badge badge-light-success ms-2">온라인</span>`
+  	   	            	   : (conn === "J02")? `<span class="badge badge-light-secondary ms-2">오프라인</span>` 
+  	  		    	       : (conn === "J03")? `<span class="badge badge-light-info ms-2">자리비움</span>`
+  	  		    	       : (conn === "J04")? `<span class="badge badge-light-warning ms-2">회의중</span>`
+  	  		    	   							: '';
+  	  		    	       
+  	    		  	particiantHTML += ` <img src="${pageContext.request.contextPath}/upload/profile/` + profile + `">
+						                <span>` + result.ename + conn + `</span>
+						               `;
+  		    	}
+    			
+    		  	
+    		  	
     		  	$("#particiant").append(particiantHTML);
     		}).fail(function() {
     			console.log('showParticiant ajax 호출 실패');

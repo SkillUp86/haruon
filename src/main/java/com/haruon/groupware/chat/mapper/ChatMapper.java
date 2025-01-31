@@ -30,8 +30,8 @@ public interface ChatMapper {
 	// 채팅방 찾기 
 	String findChatRoom(String roomId);
 	
-	// 해당 채팅방에 입장하려고 하는 사원이 참가하고 있는지 확인 
-	Integer checkParticipation(Integer empNo);
+	// 대화하려는 사원이 같이 있는 채팅방이 있는지 확인 
+	Integer checkParticipation(ChatRoom chatRoom);
 	
 	// 채팅 내역 추가 
 	Integer insertChat(Chat chat);
@@ -41,4 +41,7 @@ public interface ChatMapper {
 	
 	// 채팅방 나가기 
 	Integer deleteAttendanceFromRoom(ChatRoom deleteTarget);
+	
+	// 이전 대화내용 삭제
+	Integer deleteChatRoomConversation(ChatRoom chatRoom);
 }

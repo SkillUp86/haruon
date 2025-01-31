@@ -10,29 +10,46 @@
 		)	
 	</insert>
 	
-	<!-- 로그인한 사원이 참여하고 있는 채팅방 정보 호출 : 채팅내역이 있어야 출력됨-->
+	<!-- 로그인한 사원이 참여하고 있는 채팅방 정보 호출 : 채팅내역이 있어야 출력됨 -->
 	<select id="getChatRoomsInfoByEmp" parameterType="Integer" resultType="com.haruon.groupware.chat.dto.ChatRoomDTO">
-		SELECT e.emp_no empNo 			    , e.ename ename
-			 , d.dname dname				, cc.common_code connectionStatus
-			 , ef.file_name fileName	    , ef.ext ext
-			 , V1.roomId roomId			    , V1.sendTime sendTime
-			 , V1.message message			, V1.senderNo senderNo
-	FROM emp e
-	INNER JOIN dept d ON d.dep_no = e.dep_no
-	INNER JOIN common_code cc ON cc.common_code = e.connection_status AND cc.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_connection_status')
-	INNER JOIN chat_room cr ON cr.emp_no = e.emp_no 
-	LEFT OUTER JOIN emp_file ef ON ef.emp_no = e.emp_no
-	INNER JOIN (SELECT V0.roomId roomId		, V0.sendTime sendTime
-					 , V0.message message	, V0.senderNo senderNo
-				  FROM (SELECT c.room_id roomId		, c.send_time sendTime
-						     , c.message message	, cr.emp_no empNo	, c.sender_no senderNo
-							 , ROW_NUMBER() OVER(PARTITION BY c.room_id ORDER BY c.send_time desc) AS recentNumber
-							FROM chat_room cr JOIN chat c ON c.room_id = cr.room_id
-							WHERE cr.room_id IN (SELECT room_id 
-											  		     FROM chat_room WHERE emp_no = #{empNo})) V0
-				 WHERE V0.recentNumber = 1) V1
-					ON V1.roomId = cr.room_id
-	     WHERE e.emp_no != #{empNo}
+		SELECT empNo, ename
+			 , dname, connectionStatus
+			 , fileName, ext, roomId
+		  	 , sendTime, message, senderNo
+		  FROM (SELECT case when room_cnt.roomCnt = 1 then '-1' ELSE e.emp_no end AS empNo
+			  		 , case when room_cnt.roomCnt = 1 then '알수없음' ELSE e.ename end AS ename
+			  		 , case when room_cnt.roomCnt = 1 then '알수없음' ELSE d.dname end AS dname
+			  		 , case when room_cnt.roomCnt = 1 then '알수없음' ELSE cc.common_code end AS connectionStatus
+			  		 , ef.file_name fileName	 , ef.ext ext
+			  		 , V1.roomId roomId		 	 , V1.sendTime sendTime
+			  		 , V1.message message		 , V1.senderNo senderNo
+		  FROM chat_room cr
+    INNER JOIN (SELECT V0.roomId roomId  , V0.sendTime sendTime
+		  			 , V0.message message, V0.senderNo senderNo
+		  		  FROM (SELECT c.room_id roomId , c.send_time sendTime , c.sender_no senderNo, c.message message, cr.emp_no empNo	
+  							 , ROW_NUMBER() OVER(PARTITION BY c.room_id ORDER BY c.send_time desc) AS recentNumber
+  						  FROM chat_room cr 
+  					INNER JOIN chat c ON c.room_id = cr.room_id
+	  					 WHERE cr.room_id IN (SELECT room_id
+	  					 					    FROM chat_room WHERE emp_no = #{empNo})) V0
+		  		 WHERE V0.recentNumber = 1) V1
+		  	ON cr.room_id = V1.roomId
+		  LEFT OUTER JOIN emp e ON e.emp_no = cr.emp_no
+		 INNER JOIN dept d ON e.dep_no = d.dep_no
+		 INNER JOIN common_code cc ON cc.common_code = e.connection_status AND cc.parent_code = (SELECT common_code FROM common_code WHERE descript = 'emp_connection_status')
+		  LEFT OUTER JOIN emp_file ef ON ef.emp_no = e.emp_no
+		  LEFT JOIN (SELECT cr.room_id roomId, count(cr.room_id) roomCnt
+		  			  FROM chat_room cr
+		  			 INNER JOIN (SELECT V0.roomId roomId
+		  						   FROM (SELECT c.room_id roomId
+		  									  , ROW_NUMBER() OVER(PARTITION BY c.room_id ORDER BY c.send_time desc) AS recentNumber
+		  								   FROM chat_room cr JOIN chat c ON c.room_id = cr.room_id
+		  								  WHERE cr.room_id IN (SELECT room_id 
+		  														 FROM chat_room WHERE emp_no = #{empNo})) V0
+		  						  WHERE V0.recentNumber = 1) V1
+		  		  			 ON cr.room_id = V1.roomId
+		  			   GROUP BY cr.room_id) room_cnt ON room_cnt.roomId = cr.room_id) V2
+		 WHERE empNo != #{empNo}
 	</select>
 	
 	<!-- 특정 Room의 채팅 상대방의 이름, 사진(확장자), 연결상태 -->
@@ -65,11 +82,11 @@
 				  WHERE room_id = #{roomId}
 	</select>
 	
-	<!-- 채팅방에 입장하고자 하는 사원이 있는지 확인  -->
+	<!-- 대화하려는 사원이 같이 있는 채팅방이 있는지 확인 -->
 	<select id="checkParticipation" resultType="Integer" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
-		SELECT COUNT(emp_no) roomId
+		SELECT COUNT(emp_no)
 		  from chat_room
-		 where room_id = #{roomId} AND emp_no= #{empNo}
+		 where room_id = #{roomId}
 	</select>
 	
 	<!-- 채팅 내역 추가 -->
@@ -93,5 +110,9 @@
 	<delete id="deleteAttendanceFromRoom" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
 		DELETE FROM chat_room 
 		 WHERE room_id=#{roomId} AND emp_no=#{empNo}
+	</delete>
+	
+	<delete id="deleteChatRoomConversation" parameterType="com.haruon.groupware.chat.entity.ChatRoom">
+		DELETE FROM chat WHERE room_id = #{roomId}
 	</delete>
 </mapper>
