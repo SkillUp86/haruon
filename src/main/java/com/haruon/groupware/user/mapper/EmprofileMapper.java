@@ -9,8 +9,8 @@ public interface EmprofileMapper {
 
 	int saveProfileByUser(EmpFile empFile);
 	
-	EmpFile findEmpFileByUser(int empNo);
+	EmpFile findEmpFileByUser(String email);
 
-	int removeProfileFile(int empNo);
+	int removeProfileFile(String email);
 
 }

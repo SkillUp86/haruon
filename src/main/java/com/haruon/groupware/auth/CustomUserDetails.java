@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.haruon.groupware.user.entity.EmpFile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +17,15 @@ import lombok.Getter;
 @Data
 public class CustomUserDetails implements UserDetails {
 
+	
+	private static final long serialVersionUID = 1L;
 	private final EmpEntity empEntity;
+	private final EmpFile empFile;
 
-	public CustomUserDetails(EmpEntity empEntity) {
+	public CustomUserDetails(EmpEntity empEntity, EmpFile empFile) {
 		this.empEntity = empEntity;
-	}
+        this.empFile = empFile;
+    }
 
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -83,5 +88,11 @@ public class CustomUserDetails implements UserDetails {
     public String getConnectionStatus() {
     	return empEntity.getConnectionStatus(); // 접속 상태
     }
-    
+
+	public String getProfileUrl() { // 프로필 이미지
+		if (empFile == null || empFile.getFileName() == null || empFile.getExt() == null) {
+			return "/upload/profile/noProfile.png";
+		}
+		return "/upload/profile/" + empFile.getFileName() + "." + empFile.getExt();
+	}
 }

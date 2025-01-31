@@ -3,6 +3,9 @@ package com.haruon.groupware.user.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+
+import com.haruon.groupware.auth.CustomUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,31 +23,34 @@ public class EmpProfileService {
 	}
 
 	// 프로필 보기
-	public EmpFile getProfileByUser(int empNo) {
-		return emprofileMapper.findEmpFileByUser(empNo);
+	public EmpFile getProfileByUser(String email) {
+		return emprofileMapper.findEmpFileByUser(email);
 	}
 
 	// 프로필 업로드
-	public void profileUpload(MultipartFile file, int empNo, String path) {
-		EmpFile empFile = emprofileMapper.findEmpFileByUser(empNo);
+	public void profileUpload(MultipartFile file, String email, String path) {
+		EmpFile empFile = emprofileMapper.findEmpFileByUser(email);
 		if (empFile == null) {
-			insertFile(file, empNo, path);
+			insertFile(file, email, path);
 			return;
 		}
 		// 사진 있을시 삭제후 추가
 		String filname = path + empFile.getFileName() + "." + empFile.getExt();
 		File f = new File(filname);
 		f.delete();
-		int row = emprofileMapper.removeProfileFile(empNo);
+		int row = emprofileMapper.removeProfileFile(email);
 		if (row == 1) {
-			insertFile(file, empNo, path);
+			insertFile(file, email, path);
 		} 
 	}
 
-	private void insertFile(MultipartFile file, int empNo, String path) {
+	private void insertFile(MultipartFile file, String email, String path) {
 		if (file.getOriginalFilename().isEmpty()) {
 			return;
 		}
+		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		int empNo = details.getEmpNo();
 		EmpFile empFile = new EmpFile();
 		empFile.setEmpNo(empNo);
 		empFile.setKind(file.getContentType());

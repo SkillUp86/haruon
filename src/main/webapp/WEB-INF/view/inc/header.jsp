@@ -4,6 +4,7 @@
 <sec:authentication property="principal" var="principal"/>
 
 
+
 <header class="header navbar navbar-expand-sm expand-header">
 	<!-- 로고 부분 -->
 	<ul class="navbar-item theme-brand flex-row  text-center">
@@ -63,7 +64,7 @@
 			<a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<div class="avatar-container">
 					<div class="avatar avatar-sm avatar-indicators avatar-online">
-						<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" class="img-fluid me-2 rounded-circle" alt="avatar">
+						<img src="${principal.profileUrl}" class="img-fluid me-2 rounded-circle" alt="avatar">
 					</div>
 				</div>
 			</a>

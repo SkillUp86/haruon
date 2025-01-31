@@ -2,10 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.user.mapper.EmprofileMapper">
 	<!-- 프로필 사진 삭제 -->
-	<delete id="removeProfileFile" parameterType="Integer">
+	<delete id="removeProfileFile" parameterType="String">
 		delete
 		from emp_file
-		where emp_no = #{empNo}
+		where emp_no = (select emp_no
+						from emp
+						where email = #{email})
 	</delete>
 	<!-- 사진 저장 -->
 	<insert id="saveProfileByUser" parameterType="com.haruon.groupware.user.entity.EmpFile">
@@ -26,7 +28,7 @@
 		)
 	</insert>
 	<!-- 사진 불러오기 -->
-	<select id="findEmpFileByUser" parameterType="Integer" resultType="com.haruon.groupware.user.entity.EmpFile">
+	<select id="findEmpFileByUser" parameterType="String" resultType="com.haruon.groupware.user.entity.EmpFile">
 		select
 				emp_no empNo
 			,	original_name originalName
@@ -35,6 +37,8 @@
 			,	kind
 			,	size
 		from emp_file
-		where emp_no = #{emp_no}
+		where emp_no = (select emp_no
+						from emp
+						where email = #{email})
 	</select>
 </mapper>

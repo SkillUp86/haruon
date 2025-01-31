@@ -30,9 +30,9 @@ private final EmpProfileService empProfileService;
 		log.debug("file = {}",file.getOriginalFilename());
 		String path = session.getServletContext().getRealPath("/upload/profile/");
 		CustomUserDetails details = (CustomUserDetails)authentication.getPrincipal();
-		int empNo = details.getEmpNo();
-		log.debug("empNo = {}",empNo);
-		empProfileService.profileUpload(file, empNo, path);
+		String email = details.getUsername();
+		log.debug("email = {}",email);
+		empProfileService.profileUpload(file, email, path);
 		
 		return "redirect:/myInfo";
 	}

@@ -1,5 +1,7 @@
 package com.haruon.groupware.auth;
 
+import com.haruon.groupware.user.entity.EmpFile;
+import com.haruon.groupware.user.mapper.EmprofileMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,15 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	private final EmpMapper empMapper;
+	private final EmprofileMapper emprofileMapper;
 	
-	public CustomUserDetailsService(EmpMapper empMapper, BCryptPasswordEncoder passwordEncoder) {
+	public CustomUserDetailsService(EmpMapper empMapper, EmprofileMapper emprofileMapper) {
 		this.empMapper = empMapper;
-	}
+        this.emprofileMapper = emprofileMapper;
+    }
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		EmpEntity empEntity = empMapper.findByEmp(email);
-		log.debug(new CustomUserDetails(empEntity).getAuthorities().toString());
-		return new CustomUserDetails(empEntity);
+
+		EmpFile profile = emprofileMapper.findEmpFileByUser(email);
+		log.debug(new CustomUserDetails(empEntity,profile).getAuthorities().toString());
+		return new CustomUserDetails(empEntity,profile);
 	}
 }
