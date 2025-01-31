@@ -8,7 +8,7 @@
 			 , d.kind type
 			 , kc.descript draftType
 			 , d.title title
-			 , date_format(d.create_date, '%y/%c/%e/ %H/%i') createDate
+			 , date_format(d.create_date, '%c월%e일 %H시%i분') createDate
 			 , sc.descript approvalState
 		  from draft d
 			   inner join approval a

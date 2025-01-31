@@ -171,8 +171,8 @@
                                                 <table id="draft-list" class="table dt-table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>문서번호</th>
-                                                        <th>날짜</th>
+                                                        <th class="text-center">문서번호</th>
+                                                        <th class="text-center">날짜</th>
                                                         <th>문서양식</th>
                                                         <th class="text-center">제목</th>
                                                         <th class="text-center">결재상태</th>
@@ -181,10 +181,10 @@
                                                     <tbody>
                                                     <c:forEach items="${draftList}" var="d">
                                                         <tr>
-                                                            <td>${d.draNo}</td>
-                                                            <td>${d.createDate}</td>
+                                                            <td class="text-center">${d.draNo}</td>
+                                                            <td class="text-center">${d.createDate}</td>
                                                             <td>${d.draftType}</td>
-                                                            <td>${d.title}</td>
+                                                            <td class="text-center">${d.title}</td>
                                                             <td class="text-center">${d.approvalState}</td>
                                                         </tr>
                                                     </c:forEach>
