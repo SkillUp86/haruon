@@ -96,7 +96,7 @@
                 <div class="row mb-4 layout-spacing layout-top-spacing">
 
                         <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-							<h2 style="margin-top: 20px; padding-bottom: 10px;">공지 수정</h2>
+							<h2 style="margin-top: 10px; padding-bottom: 10px;">공지 수정</h2>
                             <div class="widget-content widget-content-area ecommerce-create-section">
 								
                                 <form id="formUpdate" action="${pageContext.request.contextPath}/board/modifyNotice" method="post" enctype="multipart/form-data">
@@ -121,9 +121,15 @@
 	                                        <label>첨부파일</label>
 	                                        <div class="multiple-file-upload">
 	                                            <c:forEach var="bf" items="${boardFiles}">
-						                 			<a href="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}" download="${bf.originalName}.${bf.ext}" class="btn btn-dark mt-1 file">
-								                       ${bf.originalName}.${bf.ext}
-								                    </a><br>
+						                 			<div>
+							                 			<a href="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}" download="${bf.originalName}.${bf.ext}" class="btn btn-dark mt-1 file">
+									                       ${bf.originalName}.${bf.ext}
+									                    </a>
+									                    <a href="javascript:void(0);" class="delete-file-btn" data-boafno="${bf.boafNo}"><!-- 첨부파일 삭제 아이콘 -->
+										                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+										                    	<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+										                </a>
+										            </div><br>
 						                 		</c:forEach>
 						                 		<br>
 	                                            <input class="form-control file-upload-input" type="file" id="boardFile" name="boardFile" multiple="multiple">
@@ -170,6 +176,30 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 
     <script>
+	 	// 첨부파일 하나씩 삭제
+		$(document).ready(function() {
+		    $(".delete-file-btn").click(function() {
+		        let boafNo = $(this).data("boafno");
+		        let $fileContainer = $(this).closest("div"); // 삭제 버튼이 포함된 파일 항목의 div를 선택
+		
+		        $.ajax({
+		            url: "/board/deleteBoardFile",
+		            type: "POST",
+		            data: { boafNo: boafNo },
+		            success: function(response) {
+		                if (response === "success") {
+		                    $fileContainer.remove(); // 화면에서 파일 삭제
+		                } else {
+		                    alert("파일 삭제에 실패했습니다.");
+		                }
+		            },
+		            error: function() {
+		                alert("서버 오류가 발생했습니다.");
+		            }
+		        });
+		    });
+		});
+ 
     	$('#btnUpdate').click(function(){
     		if($('#title').val() == ''){
     			alert('제목을 입력하세요');

@@ -173,6 +173,19 @@
 		background-color: #d6e1ff !important;
 		font-size: larger; font-style: italic;
 	}
+	
+	.author-img {
+	    width: 100px;
+	    height: 100px;
+	    background-size: cover; 
+	    background-position: center; /* 이미지 중앙 정렬 */
+	    border-radius: 50%; /* 원형으로 만들기 */
+	     display: block;
+	    margin: 0 auto;
+	}
+	.profile-image-area {
+    	text-align: center;
+	}
 	</style>
 </head>
 <body class="layout-boxed">
@@ -241,9 +254,9 @@
                       <div class="account-content">
                           <div class="row mb-3">
                               <div class="col-md-12" style="background-color: white;">
-                              <h2 style="margin-top: 20px;">조직도</h2>
+                              <h2 style="margin-top: 10px;">조직도</h2>
                               
-	           					<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">
+	           					<div class="container" style="margin-bottom: 300px; width: 100%;">
 	           					 	<div class="orgChart tree">
 	           							<!-- 조직도 차트 -->
 	           						</div>
@@ -254,7 +267,7 @@
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title">부서장 정보</h5>
+												<h5 class="modal-title">부서장</h5>
 												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
 													<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 														stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
@@ -263,6 +276,18 @@
 											</div>
 											
 											<div class="modal-body">
+												<div class="profile-image">
+											    	<c:if test="${e.fileName != null}">
+												       <div class="profile-image-area mb-2">
+								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
+									                    </div>
+											    	</c:if>
+											    	<c:if test="${e.fileName == null}">
+												       <div class="profile-image-area mb-2">
+								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/profile.svg" id="author-img">
+									                    </div>
+											    	</c:if>
+											    </div>
 												<div class="mb-3">
 													<label class="form-label">이름</label> 
 													<input type="text" class="form-control" name="ename" readonly>

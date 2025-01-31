@@ -102,7 +102,7 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12" style="background-color: white;">
-	                            <h2 style="margin-top: 20px;">직원 목록</h2>
+	                            <h2 style="margin-top: 10px;">직원 목록</h2>
 	                            
                					<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
 	               					<div style="text-align: right; margin-top: 20px;" class="me-4">

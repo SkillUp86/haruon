@@ -113,7 +113,7 @@
 						<div class="account-content">
 							<div class="row mb-3">
 								<div class="col-md-12">
-									<h2>회사 정보</h2>
+									<h2 style="margin-top: 10px;">회사 정보</h2>
 
 									<div class="widget-content widget-content-area br-8">
 										<div class="container" style="margin-top: 50px; margin-bottom: 300px; width: 100%;">

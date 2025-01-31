@@ -194,6 +194,19 @@
 		FROM board_file
 		WHERE boa_no = #{boaNo}
 	</select>
+	<!-- 글 수정 시 첨부파일 삭제 -->
+	<select id="selectBoardFileByBoafNo" parameterType="Integer" resultType="com.haruon.groupware.board.entity.BoardFile">
+	    SELECT boaf_no boafNo
+	    		, original_name originName
+	    		, file_name fileName
+	    		, ext
+	    FROM board_file
+	    WHERE boaf_no = #{boafNo}
+	</select>
+	<delete id="deleteBoardFileByOne" parameterType="Map">
+		DELETE FROM board_file
+		WHERE boaf_no = #{boafNo}
+	</delete>
 
 	<!-- 	
 공지

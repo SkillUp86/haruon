@@ -4,16 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.board.service.BoardService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class BoardRestController {
@@ -54,5 +57,18 @@ public class BoardRestController {
         
 
         return ResponseEntity.ok(response);
+    }
+	
+	// 글 수정 시 첨부파일 삭제
+	@PostMapping("/board/deleteBoardFile")
+    public String deleteFile(@RequestParam Integer boafNo, HttpSession session) {
+        String path = session.getServletContext().getRealPath("/upload/board/");
+        
+        try {
+            boardService.deleteBoardFileByOne(boafNo, path);
+            return "success";
+        } catch (Exception e) {
+            return "fail";
+        }
     }
 }

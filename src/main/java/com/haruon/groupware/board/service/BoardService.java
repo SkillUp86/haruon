@@ -185,6 +185,25 @@ public class BoardService {
 		return boardMapper.selectBoardFiles(boaNo);
 	}
 	
+	// 첨부파일 하나씩 삭제
+	public void deleteBoardFileByOne(Integer boafNo, String path) {
+		// 삭제할 파일 정보
+		BoardFile boardFile = boardMapper.selectBoardFileByBoafNo(boafNo);
+		
+		 if (boardFile != null) {
+			int row = boardMapper.deleteBoardFileByOne(boafNo);
+
+			// 물리적 파일 삭제
+			if (row == 1) {
+				String filePath = path + boardFile.getFileName() + "." + boardFile.getExt();
+	            File file = new File(filePath);
+		        if (file.exists()) {
+		            file.delete();
+		        }
+			}
+	    }
+	}
+	
 /* 공지 */
 	// 공지 리스트
 	public List<Map<String,Object>> getNoticeList(){

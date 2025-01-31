@@ -96,7 +96,7 @@
 						<div class="account-content">
 							<div class="row mb-3">
 								<div class="col-md-12" style="background-color: white;">
-									<h2 style=" margin-top: 20px;">자유 게시판</h2>
+									<h2 style="margin-top: 10px;">자유 게시판</h2>
 
 									<div class="simple-pill" style="margin-bottom: 20px;">
 										<!-- 탭 title -->

@@ -90,12 +90,12 @@
 	                	<div class="single-post-content">
 			                <div class="post-header">
 			                     <div class="post-title">
-			                         <h1 class="mb-0"><span style="font-size: smaller;">[${b.catName}]</span> ${b.title}</h1>
+			                         <h2 class="mb-0"><span style="font-size: smaller;">[${b.catName}]</span> ${b.title}</h2>
 			                     </div>
 			                 </div><br>
 			                 
 			                 <div class="post-meta-info d-flex justify-content-between">
-								<h5>작성자: ${b.ename}</h5>
+								<h6>작성자: ${b.ename}</h6>
 								<p style="text-align: right;">
 									조회수: <span id="viewCount">${b.viewCnt}</span> | 작성시간: ${b.createDate}
 									<c:if test="${not empty b.updateDate}">
@@ -119,7 +119,9 @@
 				             </c:if>
 			                 
 			                 <div class="post-content">
-                             	<p class="mb-5">${b.content}</p>
+			                 	<div style="white-space: pre-wrap;">
+                             		<p class="mb-5">${b.content}</p>
+                             	</div>
                              	
                              	<!-- 추천 버튼 -->
                              	<div style="display: flex; justify-content: center; align-items: center; margin-top: 10vh;">
@@ -207,7 +209,7 @@
 		                                             </div>
 	                                             </div>
 	                                         </div>
-	                                         <div class="text-end mt-4">
+	                                         <div class="text-end">
 	                                             <button id="btnComment" class="btn btn-success" type="button">입력</button>
 	                                         </div>
 	                                     </div>

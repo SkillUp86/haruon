@@ -46,6 +46,10 @@ public interface BoardMapper {
 	Integer updateBoard(Map<String,Object> map);
 	List<BoardFile> selectBoardFiles(Integer boaNo);
 	
+	// 글 수정 시 첨부파일 삭제(하나씩 삭제)
+	BoardFile selectBoardFileByBoafNo(Integer boafNo);
+	Integer deleteBoardFileByOne(Integer boafNo);
+	
 /* 공지 */
 	// 공지 리스트
 	List<Map<String,Object>> selectNoticeList(Map<String,Object> map);
