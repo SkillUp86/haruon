@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
      
@@ -18,13 +17,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
     <!-- 페이지 제목 입력칸 -->
@@ -145,64 +142,68 @@
 
                         <!-- 캘린더 컨텐츠 시작  -->
                         <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12 layout-spacing">
-                            (담당자 : 정우)<br>
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
                                     <div class="widget-heading">
-                                        <h1 class="">캘린터 컨텐츠</h1>
-                                        줄바꿈 테스트 지워도 됩니다.-> <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                        <div class="widget-content widget-content-area">
+                                            <div id="calendar"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- 캘린더 컨텐츠 끝 -->
 
-                        <div class="col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
                             <!-- 결재함 컨텐츠 시작-->
-                            <div class="layout-spacing ">
-                                <div class="widget widget-six">
-                                    <p class="text-end"><a href="${pageContext.request.contextPath}/draft/list"><strong>더보기</strong></a></p>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="table-primary">문서번호</th>
-                                                    <th scope="col">날짜</th>
-                                                    <th scope="col">문서양식</th>
-                                                    <th class="text-center" scope="col">제목</th>
-                                                    <th class="text-center" scope="col">결재상태</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${draftList}" var="d">
+                            <div class="col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
+                                <br>
+                                <div class="widget-heading">
+                                    <div class="widget widget-table-two" style="padding: 20px;">
+                                        <div class="widget-heading" style="margin-left:10px">
+                                            <h5 style="display: inline-block;">문서 결재</h5>
+                                            <p style="display: inline-block; float: right; margin-right: 15px;">
+                                                <a href="${pageContext.request.contextPath}/draft/list"><strong>더보기</strong></a>
+                                            </p>
+                                        </div>
+
+                                        <div class="widget-content">
+                                            <div class="table-responsive">
+                                                <table id="draft-list" class="table dt-table-hover">
+                                                    <thead>
                                                     <tr>
-                                                        <td>
-                                                            <span class="table-inner-text">${d.draNo}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="table-inner-text">${d.createDate}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="table-inner-text">${d.draftType}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="table-inner-text">${d.title}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="table-inner-text">${d.approvalState}</span>
-                                                        </td>
+                                                        <th class="text-center">문서번호</th>
+                                                        <th class="text-center">날짜</th>
+                                                        <th>문서양식</th>
+                                                        <th class="text-center">제목</th>
+                                                        <th class="text-center">결재상태</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${draftList}" var="d">
+                                                        <tr>
+                                                            <td class="text-center">${d.draNo}</td>
+                                                            <td class="text-center">${d.createDate}</td>
+                                                            <td>${d.draftType}</td>
+                                                            <td class="text-center">${d.title}</td>
+                                                            <td class="text-center">${d.approvalState}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                              <!-- 결재함 컨텐츠 끝-->
                             <!-- 쪽지함 시작-->
-                            (담당자 : 우림)<br>
+
+                        <div class="col-xl-5 col-lg-4 col-md-12 col-sm-12 col-12 layout-spacing">
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
                                     <div class="widget-heading">
                                         <h5 style="display: inline-block;">쪽지함</h5>
+                                        (담당자 : 우림)<br>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
                                         	<a href="${pageContext.request.contextPath}/"><strong>더보기</strong></a>
                                         </p>
@@ -336,12 +337,11 @@
     <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
     <script src="../src/plugins/src/waves/waves.min.js"></script>
     <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/template.js"></script>
+    <script src="../src/plugins/src/fullcalendar/fullcalendar.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-    <script src="../src/assets/js/dashboard/dash_1.js"></script>
+    <script src="../src/plugins/src/fullcalendar/custom-fullcalendar.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     
     <script>
@@ -420,6 +420,64 @@
     		showRegisterAttendanceResult();
     	});
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let calendarEl = document.getElementById('calendar');
 
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+
+                },
+                customButtons: {
+                    addEventButton: {
+                        text: "신규일정추가",
+                        click: function() {
+                            $("#addSchedule").modal("show");
+                        }
+                    }
+                },
+                locale: 'ko',
+                selectable: true,
+                dayMaxEvents: true,
+                events: function(response, successCallback, failureCallback) { // 콜백 함수 사용
+                    $.ajax({
+                        url: "/schedule/calendarList",
+                        method: "GET"
+                    })
+                        .done((response) => {
+                            console.log(response);
+                            let events = response.map(schedule => ({
+                                title: schedule.title,
+                                start: schedule.startTime,
+                                end: schedule.endTime,
+                                backgroundColor: getScheduleColor(schedule.kind),
+                                borderColor: getScheduleColor(schedule.kind),
+                                url: `/calendarDetail/\${schedule.schNo}`,
+                                allDay: false
+                            }));
+                            successCallback(events);
+                        })
+                        .fail(() => {
+                            failureCallback();
+                        });
+                }
+            });
+
+            calendar.render();
+
+            function getScheduleColor(kind) {
+                switch (kind) {
+                    case 'G01': return '#81bbb2'; // 일정
+                    case 'G02': return '#af92e2'; // 연차
+                    case 'G03': return '#ffbb57'; // 출장
+                    case 'G04': return '#82f029'; // 회의
+                    case 'G05': return '#9aff47'; // 반차
+                    default: return '#ffffff';
+                }
+            }
+
+
+        });
+    </script>
 </body>
 </html>
