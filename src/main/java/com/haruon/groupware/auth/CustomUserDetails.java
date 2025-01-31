@@ -91,8 +91,8 @@ public class CustomUserDetails implements UserDetails {
 
 	public String getProfileUrl() { // 프로필 이미지
 		if (empFile == null || empFile.getFileName() == null || empFile.getExt() == null) {
-			return "/upload/profile/noProfile.png";
+			return "upload/profile/noProfile.png";
 		}
-		return "/upload/profile/" + empFile.getFileName() + "." + empFile.getExt();
+		return "upload/profile/" + empFile.getFileName() + "." + empFile.getExt();
 	}
 }

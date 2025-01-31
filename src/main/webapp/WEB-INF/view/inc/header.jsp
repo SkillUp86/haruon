@@ -64,7 +64,7 @@
 			<a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<div class="avatar-container">
 					<div class="avatar avatar-sm avatar-indicators avatar-online">
-						<img src="${principal.profileUrl}" class="img-fluid me-2 rounded-circle" alt="avatar">
+						<img src="${pageContext.request.contextPath}/${principal.profileUrl}" class="img-fluid me-2 rounded-circle" alt="avatar">
 					</div>
 				</div>
 			</a>
