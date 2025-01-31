@@ -122,6 +122,8 @@ public class ReservationService {
 		    return scheduleResult;
 		}
 	 
-
+	 public List<ResponseEmployee> findEmpDept(int deptNo, int empNo) {
+			return approvalMapper.findEmpDept(deptNo, empNo);
+		}
 	}
 

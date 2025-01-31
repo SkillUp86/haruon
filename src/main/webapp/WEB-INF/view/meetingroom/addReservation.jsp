@@ -197,7 +197,7 @@
 	            </div>
 	            <div class="modal-body container">
 	                <div class="row">
-					    <div class="col-3 border-end">
+					    <div class="col-6 border-end">
 					        <h6>부서 목록</h6>
 					        <div class="list-group">
 					            <c:forEach var="d" items="${deptList}">
@@ -206,14 +206,14 @@
 					        </div>
 					    </div>
 					    
-					    <div class="col-4 d-flex border-end">
+					    <div class="col-6 d-flex">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
 					            <div class="list-group" id="employeeList">
 					            
 					            </div>
 					        </div>
-s					    </div>
+				    		</div>
 					    </div>
 					</div>
 	            <div class="modal-footer">
@@ -268,7 +268,7 @@ s					    </div>
 $('.dept').click(function() {
 			let deptNo = $(this).val();
 			$.ajax({
-				url: '/reservation/depts/' + deptNo + '/employees',
+				url: '/reservation/depts/' + deptNo + '/employee',
 				method: "GET"
 			}).done(function(response) {
 				emp = response;

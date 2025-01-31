@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     end: schedule.endTime,
                     backgroundColor: getScheduleColor(schedule.kind),
                     borderColor: getScheduleColor(schedule.kind),
-                    url: `/calendarDetail/\${schedule.schNo}`,
+                    url: `/calendarDetail/\${schedule.schNo}?kind=\${schedule.kind}`,
                     allDay: false
                 }));
                 successCallback(events);

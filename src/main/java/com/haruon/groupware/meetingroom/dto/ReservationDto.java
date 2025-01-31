@@ -12,6 +12,5 @@ public class ReservationDto {
 	private String revDate;
 	private String revTime;
 	private String content;
-	private String kind;
 	private String bookDate;
 }

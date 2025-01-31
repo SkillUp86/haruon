@@ -65,4 +65,6 @@ WHERE r.emp_no = #{empNo}
 ORDER BY r.rev_date DESC, r.rev_time DESC
 </select>
 
+
+
 </mapper>

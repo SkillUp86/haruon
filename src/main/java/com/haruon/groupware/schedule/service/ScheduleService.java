@@ -63,7 +63,11 @@ public class ScheduleService {
 	}
 	
 	public Schedules scheduleOne(Integer schNo) {
-	    return scheduleMapper.scheduleOne(schNo);
+		return scheduleMapper.scheduleOne(schNo);
+	}
+	
+	public Schedules scheduleOneByReservation (Integer schNo) {
+		return scheduleMapper.scheduleOneByReservation(schNo);
 	}
 
 	public int addSchedule(Schedules schedule) {

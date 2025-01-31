@@ -24,5 +24,7 @@ import com.haruon.groupware.meetingroom.entity.Reservation;
 		List<MyReservationDto> myReservationList(int empNo);
 		
 		Integer findReservationresNo(Integer schNo);
+		
+
 
 	}

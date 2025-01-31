@@ -5,8 +5,8 @@
 			resultType="com.haruon.groupware.schedule.entity.Schedules">
 	SELECT
 		 s.sch_no schNo
-		 ,c.descript
-		 ,s.kind
+		 ,c.descript descript
+		 ,s.kind kind
 		 ,s.title title
 		 ,s.content content
 		 ,s.start_time startTime
@@ -118,4 +118,23 @@ WHERE sch_no = #{schNo}
 			,#{empNo}
 		)
 	</insert>
+	
+	<select id="scheduleOneByReservation" resultType="com.haruon.groupware.schedule.entity.Schedules" parameterType="Integer">
+	SELECT
+        s.sch_no schNo,
+        c.descript,
+        s.kind,
+        s.title title,
+        s.content content,
+    	s.start_time startTime,
+    	s.end_time endTime,
+    	e.ename ename,
+    	e.emp_no empNo
+    FROM schedules s
+   	INNER JOIN common_code c ON s.kind = c.common_code
+    left JOIN reservation re ON s.sch_no = re.sch_no
+    left JOIN emp e ON re.emp_no = e.emp_no
+    WHERE s.sch_no = #{schNo}
+	</select>
+	
 </mapper>

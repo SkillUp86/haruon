@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.schedule.entity.Schedules;
@@ -64,8 +65,13 @@ public class ScheduleContoller {
 
 	
 	@GetMapping("/calendarDetail/{schNo}")
-	public String getMethodName(@PathVariable Integer schNo ,Model model) {
-		Schedules schedule = scheduleService.scheduleOne(schNo);
+	public String getMethodName(@PathVariable Integer schNo ,Model model , @RequestParam String kind) {
+		Schedules schedule = null;
+		if(kind.equals("G04")) {
+			schedule = scheduleService.scheduleOneByReservation(schNo);
+		}else {
+			schedule =scheduleService.scheduleOne(schNo);
+		}
 		model.addAttribute("s",schedule);
 		return "schedule/scheduleDetail";
 	}

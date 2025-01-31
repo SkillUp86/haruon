@@ -31,4 +31,7 @@ public interface ApprovalMapper {
 	// 가맹점 결재 리스트
 	List<ResponseFranchise> findByFranchise();
 	
+	List<ResponseEmployee> findEmpDept(int deptNo, int empNo);
+
+	
 }

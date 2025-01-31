@@ -27,5 +27,7 @@ public interface ScheduleMapper {
 	int addScheduleAttendance(int schNo, int empNo);
 	
 	int addMeetingroomSchedule(ScheduleDto scheduleDto);
+
+	Schedules scheduleOneByReservation(Integer schNo);
 	
 }

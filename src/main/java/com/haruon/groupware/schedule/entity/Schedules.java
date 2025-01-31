@@ -11,5 +11,6 @@ public class Schedules {
 	private String startTime;
 	private String endTime;
 	private String ename;
+	private Integer empNo;
 	
 }

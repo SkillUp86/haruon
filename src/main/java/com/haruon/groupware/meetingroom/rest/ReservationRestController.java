@@ -45,4 +45,15 @@ public class ReservationRestController {
         return ResponseEntity.ok(availableTimes);
     }
     
+    @GetMapping("/reservation/depts/{deptNo}/employee")
+    public ResponseEntity<List<ResponseEmployee>> findEmpDept(@PathVariable int deptNo, Authentication authentication) {
+        // 로그인한 사용자 정보 가져오기
+        CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
+        int empNo = details.getEmpNo();
+        
+        // 해당 부서의 직원 목록을 가져오기
+        List<ResponseEmployee> empList = reservationService.findEmpDept(deptNo, empNo);
+        
+        return ResponseEntity.ok(empList);
+    }
 }
