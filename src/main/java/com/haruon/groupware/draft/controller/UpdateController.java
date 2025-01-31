@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,7 +102,7 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/vacationDraft")
-	public String updateVacationDraft(RequestUpdateVacationDraft vacationDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateVacationDraft(@Valid RequestUpdateVacationDraft vacationDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+vacationDraft.getType()+"/update/"+vacationDraft.getDraNo();
@@ -113,7 +114,7 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/salesDraft")
-	public String updateSalesDraft(RequestUpdateSalesDraft salesDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateSalesDraft(@Valid RequestUpdateSalesDraft salesDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
@@ -126,7 +127,7 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/businessDraft")
-	public String updateBusinessDraft(RequestUpdateBusinessDraft businessDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateBusinessDraft(@Valid RequestUpdateBusinessDraft businessDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+businessDraft.getType()+"/update/" + businessDraft.getDraNo();
@@ -138,7 +139,7 @@ public class UpdateController {
 	}
 
 	@PostMapping("/update/basicDraft")
-	public String updateBasicDraft(RequestUpdateBasicDraft basicDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateBasicDraft(@Valid RequestUpdateBasicDraft basicDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+basicDraft.getType()+"/update/" + basicDraft.getDraNo();

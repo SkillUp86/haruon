@@ -44,7 +44,11 @@
 
                                     <h2>직원 등록</h2>
                                     <p>직원을 등록해주세요</p>
-                                    
+									<c:if test="${msg != null}">
+										<div class="col-xxl-12 col-md-12 mb-4">
+											<div class="alert alert-danger" role="alert">${msg}</div>
+										</div>
+									</c:if>
 								<form id="addEmp" method="post" action="${pageContext.request.contextPath}/addEmp">
 								    <div class="col-md-12">
 								        <div class="mb-3">

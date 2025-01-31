@@ -2,12 +2,14 @@ package com.haruon.groupware.user.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -52,8 +54,12 @@ public class EmpController {
 
 	// 회원가입 처리
 	@PostMapping("/addEmp")
-	public String addEmp(EmpDto emp) {
+	public String addEmp(@Valid EmpDto emp, BindingResult bindingResult, Model model) {
 		log.debug(emp.toString());
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "user/addEmp";
+		}
 		// 2. 회원가입 처리
 		empService.addEmp(emp);
 

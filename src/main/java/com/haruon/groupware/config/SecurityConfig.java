@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -34,7 +35,13 @@ public class SecurityConfig {
 						.failureHandler(customLoginFailureHandler())
 			            .permitAll()
 			            );
-        
+		http.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+						.sessionConcurrency(concurrency -> concurrency
+								.maximumSessions(1)
+								.maxSessionsPreventsLogin(false)
+						)
+				);
         http.logout(logout -> logout
         		.logoutUrl("/logout")
         		.logoutSuccessHandler(customLogoutSuccessHandler())

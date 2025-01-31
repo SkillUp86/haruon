@@ -37,7 +37,6 @@ public class ApprovalService {
 		int basicRow = approvalMapper.saveBasicDraftByUser(approval);
 		Integer draNo = approval.getDraNo();
 		// 기안서 분기
-		// 기안서 유형에 따라 분기 처리
 		switch (approval.getKind()) {
 			case "C02":
 				approvalMapper.saveBusinessTripByUser(approval); // 출장 보고서

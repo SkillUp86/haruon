@@ -265,7 +265,7 @@
 					    <div class="col-4 d-flex border-end">
 					        <div class="flex-grow-1">
 					            <h6>직원 목록</h6>
-					            <div class="list-group employeeList">
+					            <div class="list-group approverList">
 					            
 					            </div>
 					        </div>
@@ -370,7 +370,7 @@
 					<div class="col-4 d-flex border-end">
 						<div class="flex-grow-1">
 							<h6>직원 목록</h6>
-							<div class="list-group employeeList">
+							<div class="list-group subWorkerList">
 							
 							</div>
 						</div>
@@ -389,8 +389,8 @@
 										<line x1="8" y1="12" x2="16" y2="12"></line>
 									</svg>
 								</button>
-								<input class="form-control" id="subEmpNo" name="subEmpNo" type="hidden" value="" placeholder="중간결재자" readonly="readonly">
-								<input class="form-control" id="subEname" name="subEname" type="text" value="" placeholder="중간결재자" readonly="readonly">
+								<input class="form-control" id="subEmpNo" name="subEmpNo" type="hidden" value="" placeholder="대체업무자" readonly="readonly">
+								<input class="form-control" id="subEname" name="subEname" type="text" value="" placeholder="대체업무자" readonly="readonly">
 								<button type="button" class="btn btn-Warning-Light" onclick="clearInput('subEmp')">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle">
 										<circle cx="12" cy="12" r="10"></circle>
@@ -455,7 +455,7 @@
 		let midAppSelected = null;
 		let finAppSelected = null;
 		let refAppSelected = null;
-
+	   	let subEmpSelected = null;
 		// 대체업무자, 결재자 if문 분기
 		let existEmployee = true;
 		$('#subWorkerModal').on('show.bs.modal', function() {
@@ -473,15 +473,18 @@
 				method: "GET"
 			}).done(function(response) {
 				emp = response;
-				employeeList(emp);  // 직원 목록 표시
+				if (existEmployee) {
+					employeeList(emp, '.approverList', 'approverRadio'); // 결재자 모달
+				} else {
+					employeeList(emp, '.subWorkerList', 'subWorkerRadio'); // 대체업무자 모달
+				}  // 직원 목록 표시
 			}).fail(function() {
 				alert('실패');
 			})
 		});
 
-		function employeeList(emp) {
-			let empList = $('.employeeList');
-
+		function employeeList(emp, targetList, radioName) {
+			let empList = $(targetList);
 			empList.empty();
 
 
@@ -491,19 +494,20 @@
 
 					let selectEmpList = $(`
 								<li class="form-check">
-									<input type="radio" class="form-check-input" name="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+									<input type="radio" class="form-check-input" name="\${radioName}" id="\${item.empNo}" value="\${item.empNo}">
 									<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
 								</li>
 								`);
-					
+
 					empList.append(selectEmpList);
 				});
-			} 
+			}
 		}
 
 		// 결재 라인 추가
 		function applyOn(type) {
-			let selectedEmp = $('input[name="employeeRadio"]:checked');  // 선택된 사원 찾기
+			let radioName = existEmployee ? "approverRadio" : "subWorkerRadio";  // 선택된 사원 찾기
+			let selectedEmp = $(`input[name="\${radioName}"]:checked`);
 			if (selectedEmp.length === 0) {
 				alert('사원을 선택해주세요.');
 				return;
@@ -556,15 +560,15 @@
 					refAppSelected = empNo;
 					$('#refAppEmpNo').val(empNo);
 					$('#refAppEname').val(empName);
-				} 
+				}
 			}
 
 			if (type === 'subEmp') {
-					$('#subEmpNo').val(empNo);
-					$('#subDept').val(dept);
-					$('#subEname').val(empName);
-				}
-			
+				$('#subEmpNo').val(empNo);
+				$('#subDept').val(dept);
+				$('#subEname').val(empName);
+			}
+
 			selectedEmp.prop('checked', false);
 
 		}

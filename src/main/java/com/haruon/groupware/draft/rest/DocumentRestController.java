@@ -49,12 +49,11 @@ public class DocumentRestController {
 	public ResponseEntity<Map<String, Object>> draftList(@RequestParam int start, @RequestParam int length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw) {
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
-		int totalRecords = draftService.getDraftCount(empNo);
 		List<ResponseDraft> draftByPage = draftService.getDraftByPage(empNo, search, start, length);
 		int recordsFiltered = draftService.getSearchDraftCount(empNo, search);
 		Map<String, Object> response = new HashMap<>();
 	    response.put("draw", draw);
-	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsTotal", recordsFiltered);
 	    response.put("recordsFiltered", recordsFiltered); 
 	    response.put("data", draftByPage);
 	    log.debug(response.toString());
@@ -66,13 +65,12 @@ public class DocumentRestController {
 	public ResponseEntity<Map<String,Object>> approvalList(@RequestParam(defaultValue = "0") Integer start, @RequestParam Integer length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw) {
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
-		Integer totalRecords = draftService.getApprovalCount(empNo);
 		List<ResponseDraft> draftByApproval = draftService.getDraftByApproval(empNo, search, start, length);
 		Integer recordsFiltered = draftService.getSearchApprovalCount(empNo, search);
 		log.debug("draftByApproval = {}",draftByApproval.toString());
 		Map<String, Object> response = new HashMap<>();
 	    response.put("draw", draw);
-	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsTotal", recordsFiltered);
 	    response.put("recordsFiltered", recordsFiltered); 
 	    response.put("data", draftByApproval);
 	    
@@ -84,12 +82,11 @@ public class DocumentRestController {
 	public ResponseEntity<Map<String,Object>> referenceList(@RequestParam int start, @RequestParam int length, @RequestParam(required = false, name = "search[value]") String search, @RequestParam(required = false) Integer draw){
 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
-		Integer totalRecords = draftService.getReferencesCount(empNo);
 		List<ResponseReferencesList> referenceList = draftService.getReferencesByEmp(empNo, search, start, length);
 		Integer recordsFiltered = draftService.getSearchReferencesCount(empNo, search);
 		Map<String, Object> response = new HashMap<>();
 	    response.put("draw", draw);
-	    response.put("recordsTotal", totalRecords);
+	    response.put("recordsTotal", recordsFiltered);
 	    response.put("recordsFiltered", recordsFiltered); 
 	    response.put("data", referenceList);
 	    

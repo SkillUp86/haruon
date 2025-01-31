@@ -58,7 +58,7 @@
 	                                        </div>
 	                                       		<c:if test="${ d.state == 'A01'}">
 			                                        <div class="col-xxl-12 col-md-12 mb-4">
-			                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/mid/${d.draNo}">결재</a>
+			                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/mid/${d.draNo}">승인</a>
 			                                        </div>
 		                                       		
 			                                        <div class="col-xxl-12 col-md-12 mb-4">
@@ -94,7 +94,7 @@
 	                                        </div>
 	                                        <c:if test="${ d.state == 'A02' || d.midApp == null && d.state == 'A01'}">
 	                                        <div class="col-xxl-12 col-md-12 mb-4">
-	                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/final/${d.draNo}">결재</a>
+	                                        	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/approval/${d.type}/final/${d.draNo}">승인</a>
 	                                        </div>
 	
 	                                        <div class="col-xxl-12 col-md-12 mb-4">

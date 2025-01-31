@@ -90,11 +90,6 @@ public class DraftService {
 
 	}
 
-	// 기안문서 갯수
-	public Integer getDraftCount(int empNo) {
-		return draftMapper.findTotalDraftByEmp(empNo);
-	}
-
 	// 검색한 기안문서 갯수
 	public Integer getSearchDraftCount(int empNo, String search) {
 		return draftMapper.findSearchTotalDraftByEmp(empNo, search);
@@ -105,10 +100,6 @@ public class DraftService {
 		return draftMapper.findDraftByApproval(empNo, search, start, length);
 	}
 
-	// 결재문서 갯수
-	public Integer getApprovalCount(int empNo) {
-		return draftMapper.findTotalApprovalByEmp(empNo);
-	}
 
 	// 결재문서 검색 갯수
 	public Integer getSearchApprovalCount(int empNo, String search) {
@@ -120,10 +111,7 @@ public class DraftService {
 		return draftMapper.findDraftByReferences(empNo, search, start, length);
 	}
 
-	// 참조문서 갯수
-	public Integer getReferencesCount(int empNo) {
-		return draftMapper.findTotalReferences(empNo);
-	}
+
 	// 검색한 참조문서 갯수
 	public Integer getSearchReferencesCount(int empNo, String search) {
 		return draftMapper.findSearchTotalReferences(empNo,search);

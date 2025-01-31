@@ -389,12 +389,7 @@
 		 order by d.dra_no desc
 		 limit #{start} , #{length}
 	</select>
-	<!-- 참조자 결재문서 갯수 -->
-	<select id="findTotalReferences" resultType="Integer">
-		select count(*)
-		  from refer
-		 where emp_no = #{empNo}
-	</select>
+
 	<!-- 검색된 참조자 결재문서 갯수 -->
 	<select id="findSearchTotalReferences" resultType="Integer">
 		select count(*)
@@ -458,13 +453,7 @@
 		 	   or sc.descript like concat ('%', #{search}, '%'))
 		 </if>
 	</select>
-	<!-- 사원별  결재문서 갯수 -->
-	<select id="findTotalApprovalByEmp" resultType="Integer">
-		select count(*)
-		  from approval
-		 where mid_app = #{empNo}
-			or final_app = #{empNo}
-	</select>
+
 	<!-- 사원별 기안문서 리스트 -->
 	<select id="findDraftByEmp" resultType="com.haruon.groupware.draft.dto.response.ResponseDraft">
 		select 
@@ -491,12 +480,7 @@
 		 limit #{start} , #{length}
 	</select>
 	
-	<!-- 기안문서 갯수 -->
-	<select id="findTotalDraftByEmp" resultType="Integer">
-		select count(*)
-		  from draft
-		 where emp_no = #{empNo}
-	</select>
+
 	<!-- 검색된 기안문서 갯수 -->
 	<select id="findSearchTotalDraftByEmp" resultType="Integer">
 		select count(*)
