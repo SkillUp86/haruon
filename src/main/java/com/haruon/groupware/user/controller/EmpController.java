@@ -41,7 +41,10 @@ public class EmpController {
 	}
 
 	@GetMapping({ "/", "/login"})
-	public String empLogin() {
+	public String empLogin(Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			return "redirect:/home"; //로그인한 사용자는 홈으로 이동
+		}
 		return "user/login";
 	}
 

@@ -1,5 +1,6 @@
 package com.haruon.groupware.auth;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +16,8 @@ import lombok.Data;
 import lombok.Getter;
 
 @Data
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	private final EmpEntity empEntity;
 	private final EmpFile empFile;
@@ -30,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<Role> authorities = empEntity.getAuthorities();
-		
+
 		return authorities.stream()
 				.map(e -> new SimpleGrantedAuthority(e.name())).collect(Collectors.toList());
     }
@@ -64,7 +64,7 @@ public class CustomUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return true; // 계정 활성화 여부
 	}
-	
+
 	public Integer getEmpNo() {
         return empEntity.getEmpNo(); // 사원 번호
     }
@@ -84,7 +84,7 @@ public class CustomUserDetails implements UserDetails {
     public String getDname() {
         return empEntity.getDname(); // 부서 이름
     }
-    
+
     public String getConnectionStatus() {
     	return empEntity.getConnectionStatus(); // 접속 상태
     }

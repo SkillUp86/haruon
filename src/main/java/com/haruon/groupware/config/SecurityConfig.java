@@ -22,8 +22,8 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-									.requestMatchers("/findPw", "/login","/WEB-INF/view/**").permitAll() // 뷰 페이지 허용
-									.requestMatchers("/layouts/**", "/src/**").permitAll() // js css 허용
+									.requestMatchers( "/login").anonymous()
+									.requestMatchers("/findPw", "/layouts/**", "/src/**","/WEB-INF/view/**").permitAll() // js css 뷰 허용
 					                .anyRequest().authenticated()
 					                );
         http.formLogin(auth -> auth

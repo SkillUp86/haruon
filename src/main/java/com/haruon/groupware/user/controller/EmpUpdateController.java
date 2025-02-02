@@ -3,6 +3,7 @@ package com.haruon.groupware.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,10 @@ public class EmpUpdateController {
 
     // 비밀번호 찾기 처리
     @GetMapping("/findPw")
-    public String findPw() {
+    public String findPw(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "redirect:/home"; //로그인한 사용자는 홈으로 이동
+        }
         return "user/findPw";
     }
 

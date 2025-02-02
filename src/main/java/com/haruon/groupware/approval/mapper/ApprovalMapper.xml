@@ -8,7 +8,10 @@
 			   COUNT(CASE WHEN state = 'A02' THEN 1 END) 'a02',
 			   COUNT(CASE WHEN state = 'A03' THEN 1 END) 'a03',
 			   COUNT(CASE WHEN state = 'A04' THEN 1 END) 'a04'
-		  FROM approval;
+		  FROM approval a
+	   	 inner join draft d
+			   on a.dra_no = d.dra_no
+		 where d.emp_no = #{empNo}
 	</select>
 	<!-- 참조자 추가 -->
 	<insert id="saveApprovalReference" parameterType="com.haruon.groupware.approval.entity.ReferEntity">

@@ -1,5 +1,6 @@
 package com.haruon.groupware.user.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import com.haruon.groupware.auth.Role;
 import lombok.Data;
 
 @Data
-public class EmpEntity {
+public class EmpEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer empNo;
 	private String email;
 	private String empPw;
