@@ -31,7 +31,7 @@
         }
     </style>    
     <!-- 페이지 제목 입력칸 -->
-    <title> haruon | 내 예약 리스트 </title>
+    <title>회의실</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -99,7 +99,7 @@
     <div class="account-content">
         <div class="row mb-3">
             <div class="col-md-12">
-                <h2 class="mt-3 mb-3">내 예약 리스트</h2>
+                <h2>내 예약 리스트</h2>
                 <div class="widget-content widget-content-area br-8">
                     <table id="noticeList" class="zero-config table dt-table-hover" style="width:100%">
                         <thead>

@@ -36,7 +36,7 @@
        
     <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
     
-    <title> haruon | 회의실 예약 </title>
+    <title>회의실 추가</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -102,7 +102,7 @@
 <div class="row mb-4 layout-spacing layout-top-spacing">
     <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="widget-content widget-content-area blog-create-section">
-            <h2 class="mt-3 mb-3">회의실 예약</h2>
+            <h2 class="mb-4">회의실 예약</h2>
             <form id="formInsert" action="${pageContext.request.contextPath}/addReservation/${meetingRoom.meeNo}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="meetingRoomId" name="meetingRoomId" value="${meetingRoom.meeNo}">
                 <div class="row mb-4">

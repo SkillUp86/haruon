@@ -37,7 +37,7 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/font-icons/feather/feather.min.js"></script>
     
     <!-- 페이지 제목 입력칸 -->
-    <title> haruon | 회의실 수정 </title>
+    <title>회의실 추가</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -104,7 +104,7 @@
     <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="widget-content widget-content-area blog-create-section">
             <div class="row mb-4">
-                <h2 class="mt-3 mb-3">회의실 수정</h2>
+                <h2>회의실 수정</h2>
                 <br>
                 <form id="formUpdate" action="${pageContext.request.contextPath}/updateMeetingroom" method="post" enctype="multipart/form-data">
    						 <!-- meeNo 값을 hidden input으로 전송 -->
@@ -139,19 +139,6 @@
 					            <input type="text" class="form-control" id="mname" name="mname" value="${meetingRoom.mname}" required>
 					        </div>
 					    </div>
-					    
-					   	<div class="row mb-4">
-						    <div class="col-sm-12">
-						        <label for="availYn">회의실 예약 가능여부</label>
-						        <select class="form-control" id="availYn" name="availYn" required>
-						            <option value="Y" ${meetingRoom.availYn == 'Y' ? 'selected' : ''}>Y</option>
-						            <option value="N" ${meetingRoom.availYn == 'N' ? 'selected' : ''}>N</option>
-						        </select>
-						    </div>
-						</div>
-
-					    
-                            
 					
 					    <!-- 수용 가능 인원 -->
 					    <div class="row mb-4">

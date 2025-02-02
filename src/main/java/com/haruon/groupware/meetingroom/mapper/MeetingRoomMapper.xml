@@ -73,9 +73,6 @@ WHERE mee_no = #{meeNo}
         <if test="info != null">
             info = #{info},
         </if>
-        <if test="availYn != null">
-            avail_yn = #{availYn},
-        </if>
         update_date = NOW()
     </set>
     WHERE mee_no = #{meeNo}
