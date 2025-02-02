@@ -82,21 +82,20 @@
                         <!--  END BREADCRUMBS  -->
                 
                         <!-- 메인컨텐츠 입력칸 -->
-                        <!-- 가맹점 정보 시작 -->
                         <div class="layout-top-spacing">
                             <h2 class="mt-3 mb-3">가맹점관리</h2>
-                        <!-- 전체 가맹점 통계 시작 -->
+                        	<!-- 전체 가맹점 통계 시작 -->
 	                        <div id="toggleAccordion" class="no-icons accordion">
 	                                <div class="card layout-spacing">
 	                                    <div class="widget-content widget-content-area br-8">   
 	                                        <div class="card">
 	                                            <div class="card-header" id="franchiseOverviewHeader">
 	                                                <section class="mb-0 mt-0">
-	                                                    <div role="menu" class="collapsed d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#franchiseOverview" aria-expanded="true" aria-controls="franchiseOverview">
+	                                                    <div id="collapseMenu" role="menu" class="collapsed d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#franchiseOverview" aria-expanded="true" aria-controls="franchiseOverview">
 	                                                        <h3>
 	                                                        	<span>가맹점 전체 통계</span>
 	                                                        	<button class="btn btn-outline-info ms-2">
-																	<span>열기</span>
+																	<span id="openStatisticsHTML">펼치기</span>
 																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mouse-pointer"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></svg>
 																	
 																</button>
@@ -110,11 +109,7 @@
 	                                                        <!-- 가맹점 운영 여부 -->
 	                                                        <div class="col-3">
 	                                                            <h2 class="text-center mb-4 w-100">가맹점 등록건수</h2>
-	                                                            <div class="card p-3 shadow-sm fs-6">
-	                                                                <div>전체 등록건수 : 100건</div>
-	                                                                <div>올해 등록건수 : 50건</div>
-	                                                                <div>이번달 등록건수 : 10건</div>
-	                                                            </div>
+	                                                            <div id="registerCnt" class="card p-3 shadow-sm fs-6"></div>
 	                                                            <h2 class="text-center mt-4 mb-4 w-100">가맹점 운영여부</h2>
 	                                                            <div class="card p-3 shadow-sm">
 	                                                                <canvas id="openYNChart" class="w-100"></canvas>
@@ -128,39 +123,24 @@
 	                                                            </h2>
 	                                                            <div class="text-end m-3">
 	                                                                <button id="setPreviousMonthBtn" type="button" class="btn btn-hover">
-	                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-	                                                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-	                                                                </svg>
-	                                                                이전달
+		                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+		                                                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+		                                                                </svg>
+		                                                                이전달
 	                                                                </button>
 	                                                                <button id="setNextMonthBtn" type="button" class="btn btn-hover">
-	                                                                다음달
-	                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-	                                                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-	                                                                </svg>
+		                                                                다음달
+		                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+		                                                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+		                                                                </svg>
 	                                                                </button>
 	                                                            </div>
-	                                                            <div class="card h-75">
+	                                                            <div class="card">
 	                                                                <div class="row fs-6">
 	                                                                    <!-- 상위 매출 -->
-	                                                                    <div class="col-6">
-	                                                                        <h5 class="text-center mt-4">상위</h5>
-	                                                                        <div class="card m-3 p-3 shadow-sm" style="background-color: #eaeaec;">
-	                                                                            <div>🥇 1위</div>
-	                                                                            <div>지점명 : </div>
-	                                                                            <div>매출: 매출액</div>
-	                                                                        </div>
-	                                                                        🥈2등🥉3등
-	                                                                    </div>
+                                                                        <div id="revenueTop" class="col-6"></div>
 	                                                                    <!-- 하위 매출 -->
-	                                                                    <div class="col-6">
-	                                                                        <h5 class="text-center mt-4">하위</h5>
-	                                                                        <div class="card m-3 p-3 shadow-sm" style="background-color: #eaeaec;">
-	                                                                            <div>🥇 1위</div>
-	                                                                            <div>지점명 : </div>
-	                                                                            <div>매출: 매출액</div>
-	                                                                        </div>
-	                                                                    </div>
+	                                                                     <div id="revenueWorst" class="col-6"></div>
 	                                                                </div>
 	                                                            </div>
 	                                                        </div>
@@ -179,6 +159,7 @@
 	                                    </div>
 	                                </div>
 	                            </div>
+	                            
 	                       		<!-- 가맹점 리스트 섹션 -->
 	                       		<div class="card layout-spacing mt-2">
 	                                <div class="card-header">
@@ -196,9 +177,6 @@
 				                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
 				                                        <line x1="12" y1="5" x2="12" y2="19"></line> <line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록
 				                                    </a>
-				                                    <button class="dt-button buttons-excel buttons-html5 btn" tabindex="0" aria-controls="html5-extension">
-				                                        <span>Excel</span>
-				                                    </button>
 			                                    </div>
 			                                </div>
 			                                <!-- 가맹점 리스트 테이블 -->
@@ -207,11 +185,7 @@
 			                                        <tr class="text-center">
 			                                            <th>가맹점명</th>
 			                                            <th>영업유무</th>
-			                                            <th>
-			                                                <span id="revenueTier" data-container="body" data-placement="top" data-html="true">
-			                                                    매출등급
-			                                                </span>
-			                                            </th>
+			                                            <th>등록일자</th>
 			                                            <th> 상세보기 </th>
 			                                        </tr>
 			                                    </thead>
@@ -242,34 +216,13 @@
 										
 										        <div class="tab-content" id="pills-tabContent">
 										            <div class="tab-pane fade show active" id="pills-information-icon" role="tabpanel" aria-labelledby="pills-information-icon-tab" tabindex="0">
-										                <div class="d-flex justify-content-between align-items-center">
-										                    <h3>정보</h3>
-										                    <a href="${pageContext.request.contextPath}/franchises/insert" class="btn btn-secondary h-100">
-										                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#D9D9D9"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-										                        <line x1="12" y1="5" x2="12" y2="19"></line> <line x1="5" y1="12" x2="19" y2="12"></line></svg>
-										                        수정
-										                    </a>
-										                </div>
-										                <div class="container p-4 rounded-4 fs-5" style="background-color: #eaeaec; width:100%;">
-														    <ul>
-														        <li class="fw-bold ms-4">지점명 : 지점이름</li>
-														        <li class="fw-bold ms-4">대표자명 : 김대표</li>
-														        <li class="fw-bold ms-4">직통번호 : 000-000-0000</li>
-														        <li class="fw-bold ms-4">이메일 : ab@nac</li>
-														        <li class="fw-bold ms-4">등록일자 : 2025-1-1</li>
-														        <li class="fw-bold ms-4">
-														            <span>주소 : 서울 금천구 가산디지털2로 95 서울 금천구 가산동 550-7  (가산동)</span>
-														                <div id="map" style="width:100%;height:250px;"></div>
-														        </li>
-														    </ul>
-										                </div>
-										                
-										
+										                <div id="franchiseInfo"></div>
+									                	<div id="map" style="width:100%;height:250px;"></div>
 										            </div>
 										            <div class="tab-pane fade" id="pills-staticstic-icon" role="tabpanel" aria-labelledby="pills-staticstic-icon-tab" tabindex="0">
 										                <h3 class="mt-4">매출</h3>
-										                <div class="container p-4 rounded-4 fs-5 w-100" style="background-color: #eaeaec;">
-										                        <canvas id="chosenFranchiseChart" class="items-center w-100"></canvas>
+										                <div class="container p-4 rounded-4 fs-5 w-100">
+										                     <canvas id="chosenFranchiseChart" class="items-center w-100"></canvas>
 										                </div>
 										            </div>
 										        </div>
@@ -306,19 +259,37 @@
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
-
    	<!-- END PAGE LEVEL SCRIPTS -->
-	<!-- franchiseSupportSupport 에서 공통 script 내용 가져오기 -->
-	<jsp:include page="/WEB-INF/view/franchise/franchiseSupport.jsp"/>
-	
-	<!-- 페이지 입장할때 불러오는 script - 카카오 Map API 초기 설정 -->
+	<!-- ajax 호출 성공시 zero-config Dom 객체 생성 함수 -->
+	<script>
+		function initDataTable() {
+	           // 페이징, 검색, rowPerPage 관리 항목 객체 생성
+	           $('.zero-config').DataTable({
+	               "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+	                      "<'table-responsive'tr>" +
+	                      "<'dt--bottom-section d-sm-flex justify-content-sm-center text-center'<'dt--pagination'p>>",
+	               "oLanguage": {
+	                   "oPaginate": { 
+	                       "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+	                       "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' 
+	                   },
+	                   "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+	                   "sSearchPlaceholder": "Search...",
+	                   "sLengthMenu": "Results :  _MENU_",
+	               },
+	               "stripeClasses": [],
+	               "lengthMenu": [5, 10, 20, 50],
+	               "pageLength": 5
+	           });
+		}
+	</script>
+
+	<!-- 카카오 맵 설정 함수 -->
 	<script>
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
 		
-		$(document).ready(function() {
-			// 가맹점 리스트 불러오기
-			showFranchises();
-			
+		// 초기값 설정
+		function initKakaoMap() {
 			// 가맹점 상세보기 구역 숨기기
 			$("#choosenFranchiseInfo").attr("hidden", true);
 			
@@ -345,60 +316,286 @@
 		
 			// 인포윈도우를 지도에 표시한다
 			infowindow.open(map, marker);
+		}
+		
+		// 주소 별 맵 이동 
+		function setKakaoMap(address) {
+	     	// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(address, function(result, status) {
+			
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords
+			        });
+			
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">HARUON</div>'
+			        });
+			        infowindow.open(map, marker);
+			
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			    } 
+			}); 
+		}
+	</script>
+	
+	<!-- 페이지 입장할때 불러오는 script -->
+	<script>
+		$(document).ready(function() {
+			showFranchises(); 		// 가맹점 리스트
+	    	initKakaoMap();	  		// 카카오맵 초기 설정
+			showResgisterCount(); 	// 전체통계 - 등록건수
+			showOpenStatus();		// 전체통계 - 운영여부차트
+			showRevenueTop3(); 		// 월별 매출액 top3
+			MonthlyRevenue(); 		// 전년 대비 매출액
 		});
 	</script>
-	<!-- 매출액 TOP3 이전달/다음달 버튼 동작 -->
-	<script>
-		let date = new Date();
-		const now = new Date();
-		
-		// 선택한 연/월 표시
-		$("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
 	
-		$("#setPreviousMonthBtn").click(function() {
-		    console.log("이전달 클릭");
-		    $("#setYearAndMonth").empty();
-		    date = new Date(date.setMonth(date.getMonth() - 1));
-		    $("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
-		    if($("#setNextMonthBtn").attr("disabled") === "disabled") {
-		        $("#setNextMonthBtn").removeAttr("disabled");
+	<!-- 가맹점 전체 통계 펼쳐보기-숨기기 버튼 -->
+	<script>
+		$("#collapseMenu").click(function() {
+	
+		    // class가 'open'인지 확인하고 버튼 텍스트 변경
+		    if ($("#collapseMenu").hasClass("collapsed")) {
+		        $("#openStatisticsHTML").html("펼치기");
+		    } else {
+		        $("#openStatisticsHTML").html("숨기기");
 		    }
 		});
-		
-		$("#setNextMonthBtn").click(function() {
-		  console.log("다음달 클릭");
-		  $("#setYearAndMonth").empty();
-		  date = new Date(date.setMonth(date.getMonth() + 1));
-		  
-		  if(!(now >= date.setMinutes(00,00,0))) {	// 1달 여유있음에도 다음달을 클릭하는 순간 date+1이 now보다 미래가 되지 않도록 분/초단위 설정 
-		      date = new Date(date.setMonth(date.getMonth() - 1));
-		      alert("더 이상 조회할 수 있는 달이 없습니다.");
-		      $("#setNextMonthBtn").attr("disabled", "disabled");
-		  }
-		      $("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
-		});
-	
+
 	</script>
 	
-	<!-- 매출수준 설명 툴팁 동적바인딩 처리 -->
+	<!-- 가맹점 상세보기 클릭시 실행되는 script -->
 	<script>
-		$(document).on('mouseenter', '#revenueTier', function () {
-		    $(this).tooltip({
-		        template: `<div class="tooltip tooltip-primary" role="tooltip">
-		                        <div class="arrow"></div>
-		                        <div class="tooltip-inner"></div>
-		                   </div>`,
-		        title: `평균 매출액 대비 매출 수준<br>
-		                <strong>A등급</strong>: 5% ↑<br>
-		                <strong>B등급</strong>: ±5%<br>
-		                <strong>C등급</strong>: 5% ↓`,
-		        html: true, // HTML 사용 가능하게 설정
-		        trigger: 'hover'
-		    }).tooltip('show');
+	   document.addEventListener('click', function(event) {
+			// 클릭된 대상이 특정 ID 패턴과 일치하는지 확인
+		   if (event.target && event.target.id.startsWith('fraNo')) {
+		        let targetId = event.target.id.replace('fraNo','');	// 출력하고자 하는 가맹점 번호 추출
+		        showFranchiseInfo(targetId);
+		        showFranchiseRevenue(targetId);
+		        
+			    // 가맹점 리스트 구역 줄이기
+			    $("#franchisesList").attr("class","widget-content searchable-container list col-xl-8 col-lg-8 col-md-8 col-sm-12");
+				// 가맹점 상세보기 구역 보이기
+				$("#choosenFranchiseInfo").attr("hidden", false);
+		   }
 		});
 	</script>
 	
-	<!-- 가맹점 간략한 리스트 출력 -->
+	<!-- 매출액 TOP3 이전달/다음달 버튼 동작 -->
+	<script>
+	    let date = new Date();
+	    const lastMonth = new Date();
+	    lastMonth.setMonth(date.getMonth() -1);
+	    date.setMonth(date.getMonth() -1);
+	    
+	    // 선택한 연/월 표시
+	    $("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
+	
+	    $("#setPreviousMonthBtn").click(function() {
+	        console.log("이전달 클릭");
+	        $("#setYearAndMonth").empty();
+	        date = new Date(date.setMonth(date.getMonth() - 1));
+	        $("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
+	        if($("#setNextMonthBtn").attr("disabled") === "disabled") {
+	            $("#setNextMonthBtn").removeAttr("disabled");
+	        }
+	        showRevenueTop3();
+	    });
+	    
+	    $("#setNextMonthBtn").click(function() {
+	      console.log("다음달 클릭");
+	      $("#setYearAndMonth").empty();
+	      date = new Date(date.setMonth(date.getMonth() + 1));
+	      
+	      if(!(lastMonth >= date.setMinutes(00,00,0))) {	// 1달 여유있음에도 다음달을 클릭하는 순간 date+1이 lastMonth보다 미래가 되지 않도록 분/초단위 설정 
+	          date = new Date(date.setMonth(date.getMonth() - 1));
+	          alert("더 이상 조회할 수 있는 달이 없습니다.");
+	          $("#setNextMonthBtn").attr("disabled", "disabled");
+	      }
+	      $("#setYearAndMonth").append(date.getFullYear() + "년 " + (date.getMonth() + 1).toString().padStart(2, '0') + "월 ");
+	      showRevenueTop3();
+	    });
+	</script>
+
+	
+	<!-- 가맹점 전체 통계 ajax -->
+	<script>
+		// 가맹점 등록건수
+		function showResgisterCount() {
+			$.ajax({
+				url: '/franchise/statistics/resgisterCount',
+				method: 'GET',
+			}).done(function(result) {
+				let registerCntHTML = '';
+				registerCntHTML = ` <div>전체 등록건수 : ` + result.totalRegisterCnt + `건</div>
+								    <div>올해 등록건수 : ` + result.thisYearRegisterCnt + `건</div>
+								    <div>이번달 등록건수 : ` + result.thisMonthRegisterCnt + `건</div> `;
+				
+				$("#registerCnt").append(registerCntHTML);
+			}).fail(function() {
+				console.log('가맹점 등록건수 ajax 호출 실패');
+			})
+		}
+		
+		// 가맹점 운영여부
+		function showOpenStatus() {	
+			$.ajax({
+				url: '/franchise/statistics/openStatus',
+				method: 'GET',
+			}).done(function(result) {
+			    var openYNChartxValues = ["운영중", "휴·폐업"];
+				var openYNChartyValues = [result.opendCnt, result.closedCnt];
+				var barColors = [
+				  "#2b5797",
+				  "#b91d47",
+				];
+				
+				new Chart("openYNChart", {
+				  type: "pie",
+				  data: {
+				    labels: openYNChartxValues,
+				    datasets: [{
+				      backgroundColor: barColors,
+				      data: openYNChartyValues
+				    }]
+				  },
+				});							    
+			}).fail(function() {
+				console.log('가맹점 운영여부 ajax 호출 실패');
+			})
+		}
+		
+		// 월 매출액 TOP 3
+		function showRevenueTop3() {
+			function checkNull(value) {
+			    return (value === null || value === undefined || value === '') ? '조회대상없음' : value;
+			}
+			
+			// revenueTop
+			$.ajax({
+				url: '/franchise/statistics/' + date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + '/revenue/top',
+				method: 'GET',
+			}).done(function(result) {
+				$("#revenueTop").empty();
+				let revenueTopHTML = '';
+				
+				for (let i = 0; i < 3; i++) {
+					let target = (result[i] == null)? {} : result[i];
+					let revenue = (checkNull(target.revenue) == '조회대상없음')? checkNull(target.revenue) : checkNull(target.revenue).toLocaleString();
+					
+					revenueTopHTML += `<div class="card m-3 p-3 shadow-sm" style="background-color: #eaeaec;">
+		                                   <h5>상위 ` + (i + 1) + `위</h5>
+		                                   <div>지점명 : ` + checkNull(target.fname) + `</div>
+		                                   <div>매출액: ` + revenue + `</div>
+			                           </div>`;
+			    }
+				
+				$("#revenueTop").append(revenueTopHTML);
+				
+			}).fail(function() {
+				console.log('가맹점 등록건수 ajax 호출 실패');
+			});
+			
+			// revenueWorst
+			$.ajax({
+				url: '/franchise/statistics/' + date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + '/revenue/worst',
+				method: 'GET',
+			}).done(function(result) {
+				
+				$("#revenueWorst").empty();
+				let revenueWorstHTML = '';
+				
+				for (let i = 0; i < 3; i++) {
+					 let target = (result[i] == null)? {} : result[i];
+					 let revenue = (checkNull(target.revenue) == '조회대상없음')? checkNull(target.revenue) : checkNull(target.revenue).toLocaleString();
+					 revenueWorstHTML += `<div class="card m-3 p-3 shadow-sm" style="background-color: #eaeaec;">
+			                                   <h5>하위 ` + (i + 1) + `위</h5>
+			                                   <div>지점명 : ` + checkNull(target.fname) + `</div>
+			                                   <div>매출액: ` + revenue + `</div>
+			                               </div>`;
+			    }
+				
+				$("#revenueWorst").append(revenueWorstHTML);
+			}).fail(function() {
+				console.log('가맹점 등록건수 ajax 호출 실패');
+			});
+			
+		}
+		
+		// 전년 대비 매출액
+		function MonthlyRevenue() {
+			const revenueChartxValues = [1,2,3,4,5,6,7,8,9,10,11,12];
+			var totalChartTitle = ["올해", "작년"]
+			const totalRevenueInThisYear = [];
+			const totalRevenueInLastYear = [];
+			
+			// 올해
+			$.ajax({
+					url: '/franchise/statistics/thisYear/monthlyRevenue',
+					method: 'GET',
+			}).done(function(result) {
+				$(result).each(function(index, item) {
+					totalRevenueInThisYear.push(item.revenue);
+				});
+				
+				// 작년
+				$.ajax({
+						url: '/franchise/statistics/lastYear/monthlyRevenue',
+						method: 'GET',
+				}).done(function(result) {
+					$(result).each(function(index, item) {
+						totalRevenueInLastYear.push(item.revenue);
+					});
+				}).fail(function() {
+					console.log("작년 월별 매출액 ajax 호출 실패");
+				});
+				
+				// 차트 적용
+				new Chart("totalRevenueChart", {
+				      type: "line",
+				      data: {
+				        labels: revenueChartxValues, // X축 라벨
+				        datasets: [
+				          {
+				            label: totalChartTitle[0],
+				            data: totalRevenueInThisYear,
+				            borderColor: "red",
+				            fill: false
+				          },
+				          {
+				            label: totalChartTitle[1], 
+				            data: totalRevenueInLastYear, 
+				            borderColor: "green",
+				            fill: false
+				          }
+				        ]
+				      },
+				      options: {
+				        legend: { display: true }
+				      }
+				});
+			}).fail(function() {
+				console.log("올해 월별 매출액 ajax 호출 실패");
+			});
+		}
+	</script>
+	
+	<!-- 가맹점 정보관련 ajax 호출 함수 -->
 	<script>
 		function showFranchises() {
 			   $.ajax({
@@ -414,7 +611,7 @@
 		    		   fanchisesListHTML += `<tr role="row" class="text-center">
 								                <td class="sorting_01">` + item.fname + `</td>
 								                <td>` + openYN + `</td>
-								                <td>` + item.openYn + `</td>
+								                <td>` + item.createDate.substr(0,10) + `</td>
 								                <td>
 								                	<button id="fraNo` + item.fraNo + `" type="button" class="btn btn-outline-info btn-icon">
 								                		<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#434343"><path d="M192-192v-96l72-72v168h-72Zm126 0v-222l66-66 6 6v282h-72Zm126 0v-228l72 72v156h-72Zm126 0v-186l72-72v258h-72Zm126 0v-312l72-72v384h-72ZM192-378v-102l192-192 144 144 240-240v102L528-426 384-570 192-378Z"/></svg>
@@ -430,140 +627,102 @@
 		    	  console.log("showFranchises ajax fail"); 
 		       });
 		}
-	</script>
-	
-	<!-- 가맹점 상세보기 클릭시 실행되는 script -->
-	<script>
-	   document.addEventListener('click', function(event) {
-		    // 클릭된 대상이 특정 ID 패턴과 일치하는지 확인
-		    if (event.target && event.target.id.startsWith('fraNo')) {
-		        let targetId = event.target.id.replace('updateModal','');	// 출력하고자 하는 가맹점 번호 추출
-		        
-		        // 가맹점 리스트 구역 줄이기
-		        $("#franchisesList").attr("class","widget-content searchable-container list col-xl-8 col-lg-8 col-md-8 col-sm-12");
-		        
-		     	// 지도를 생성합니다    
-				var map = new kakao.maps.Map(mapContainer, mapOption); 
-				
-				// 주소-좌표 변환 객체를 생성합니다
-				var geocoder = new kakao.maps.services.Geocoder();
-				
-				// 주소로 좌표를 검색합니다
-				geocoder.addressSearch(' 서울 금천구 가산디지털2로 95 서울 금천구 가산동 550-7  (가산동)', function(result, status) {
-				
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === kakao.maps.services.Status.OK) {
-				
-				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-				
-				        // 결과값으로 받은 위치를 마커로 표시합니다
-				        var marker = new kakao.maps.Marker({
-				            map: map,
-				            position: coords
-				        });
-				
-				        // 인포윈도우로 장소에 대한 설명을 표시합니다
-				        var infowindow = new kakao.maps.InfoWindow({
-				            content: '<div style="width:150px;text-align:center;padding:6px 0;">HARUON</div>'
-				        });
-				        infowindow.open(map, marker);
-				
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        map.setCenter(coords);
-				    } 
-				}); 
-				// 가맹점 상세보기 구역 숨기기
-				$("#choosenFranchiseInfo").attr("hidden", false);
-		        
-		    }
-		});
-	
-
-	</script>
-	
-	<!-- 전체 매출액 차트 그리는 script -->
-	<script>
-		const revenueChartxValues = [1,2,3,4,5,6,7,8,9,10,11,12];
-	
-		var totalChartTitle = ["올해", "작년"]
-		const totalRevenueInThisYear = [860,1140,1060,1060,1070,1110,1330,2210,7830,2478,7830,2478];
-		const totalRevenueInLastYear = [1330,2210,7830,2478,7830,2478,860,1140,1060,1060,1070,1110];
-
-		new Chart("totalRevenueChart", {
-		      type: "line",
-		      data: {
-		        labels: revenueChartxValues, // X축 라벨
-		        datasets: [
-		          {
-		            label: totalChartTitle[0], // 데이터셋 제목
-		            data: totalRevenueInThisYear, // Y축 데이터
-		            borderColor: "red",
-		            fill: false
-		          },
-		          {
-		            label: totalChartTitle[1], // 데이터셋 제목 (두 번째 데이터)
-		            data: totalRevenueInLastYear, 
-		            borderColor: "green",
-		            fill: false
-		          }
-		        ]
-		      },
-		      options: {
-		        legend: { display: true }
-		      }
-		});
-	</script>
-	
-	<!-- 전체 운영여부 파이 차트 그리는 script -->
-	<script>
-		var openYNChartxValues = ["운영중", "휴·폐업"];
-		var openYNChartyValues = [55, 10];
-		var barColors = [
-		  "#2b5797",
-		  "#b91d47",
-		];
 		
-		new Chart("openYNChart", {
-		  type: "pie",
-		  data: {
-		    labels: openYNChartxValues,
-		    datasets: [{
-		      backgroundColor: barColors,
-		      data: openYNChartyValues
-		    }]
-		  },
-		});
-	</script>
-	
-	<!-- 전체 운영여부 파이 차트 그리는 script -->
-	<script>
-		const chosenFranchiseChartxValues = [1,2,3,4,5,6,7,8,9,10,11,12];
-		var ChartTitle = ["전체", "해당가맹점"]
-		const chosenFranchiseRevenue = [1330,2210,7830,2478,7830,2478,860,1140,1060,1060,1070,1110];
-	
-		new Chart("chosenFranchiseChart", {
-		      type: "line",
-		      data: {
-		        labels: revenueChartxValues, // X축 라벨
-		        datasets: [
-		          {
-		            label: ChartTitle[0], // 데이터셋 제목
-		            data: totalRevenueInThisYear, // Y축 데이터
-		            borderColor: "red",
-		            fill: false
-		          },
-		          {
-		            label: ChartTitle[1], // 데이터셋 제목 (두 번째 데이터)
-		            data: chosenFranchiseRevenue, // Y축 데이터 (동일한 데이터 사용 중, 필요시 수정)
-		            borderColor: "green",
-		            fill: false
-		          }
-		        ]
-		      },
-		      options: {
-		        legend: { display: true }
-		      }
-		});
+		// 특정 가맹점의 정보
+		function showFranchiseInfo(franchiseNo) {
+			$.ajax({
+		           url: '/franchise/' + franchiseNo + '/brief',
+		           method: 'GET',
+		       }).done(function(result) {
+		    	   $("#franchiseInfo").empty();
+		    	   let fanchiseInfoHTML = "";
+		    	   
+		    	   fanchiseInfoHTML = `<div class="d-flex justify-content-between align-items-center">
+						                   <h3>정보</h3>
+						                   <a href="${pageContext.request.contextPath}/franchises/modify?fraNo=` + result.fraNo + `" class="btn btn-secondary h-100">
+						                       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#D9D9D9"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+						                       <line x1="12" y1="5" x2="12" y2="19"></line> <line x1="5" y1="12" x2="19" y2="12"></line></svg>
+						                       수정
+						                   </a>
+						               </div>
+						               <div class="container p-4 rounded-4 fs-6">
+										    <ul>
+										        <li class="fw-bold ms-2">지점명 : ` + result.fname + `</li>
+										        <li class="fw-bold ms-2">대표자명 : ` + result.leader + `</li>
+										        <li class="fw-bold ms-2">직통번호 : ` + result.phone + `</li>
+										        <li class="fw-bold ms-2">이메일 : ` + result.email + `</li>
+										        <li class="fw-bold ms-2">등록일자 : ` + result.createDate.substr(0,10) + `</li>
+										    </ul>
+						               </div>
+						               <hr>
+					               	   <span class="fw-bold fs-6 mt-2">주소 : ` + result.address + `</span>`;
+						               
+		    	   $("#franchiseInfo").append(fanchiseInfoHTML);
+		    	   setKakaoMap(result.address);		//카카오맵 좌표 셋팅
+		       }).fail(function() {
+		    	  console.log("showFranchiseInfo ajax fail"); 
+		       });
+		}
+		
+		// 특정 가맹점의 전년대비 매출액 그래프
+		function showFranchiseRevenue(franchiseNo) {
+		    // 전년 대비 매출액
+		    const revenueChartxValues = [1,2,3,4,5,6,7,8,9,10,11,12];
+		    var chartTitle = ["올해", "작년"]
+		    const franchiseRevenueInThisYear = [];
+		    const franchiseRevenueInLastYear = [];
+		    
+		    // 올해
+		    $.ajax({
+		            url: '/franchise/statistics/' + franchiseNo + '/thisYear/monthlyRevenue',
+		            method: 'GET',
+		    }).done(function(result) {
+		        
+		        $(result).each(function(index, item) {
+		            franchiseRevenueInThisYear.push(item.revenue);
+		        });
+		        
+		        // 작년
+		        $.ajax({
+		                url: '/franchise/statistics/' + franchiseNo + '/lastYear/monthlyRevenue',
+		                method: 'GET',
+		        }).done(function(result) {
+		            $(result).each(function(index, item) {
+		                franchiseRevenueInLastYear.push(item.revenue);
+		            });
+		        }).fail(function() {
+		            console.log("작년 월별 매출액 ajax 호출 실패");
+		        });
+		        
+		        // 차트 적용
+		        new Chart("chosenFranchiseChart", {
+		                type: "line",
+		                data: {
+		                labels: revenueChartxValues, // X축 라벨
+		                datasets: [
+		                    {
+		                    label: chartTitle[0],
+		                    data: franchiseRevenueInThisYear,
+		                    borderColor: "red",
+		                    fill: false
+		                    },
+		                    {
+		                    label: chartTitle[1], 
+		                    data: franchiseRevenueInLastYear, 
+		                    borderColor: "green",
+		                    fill: false
+		                    }
+		                ]
+		                },
+		                options: {
+		                legend: { display: true }
+		                }
+		        });
+		    }).fail(function() {
+		        console.log("올해 월별 매출액 ajax 호출 실패");
+		    });
+		
+		}
 	</script>
 </body>
 </html>

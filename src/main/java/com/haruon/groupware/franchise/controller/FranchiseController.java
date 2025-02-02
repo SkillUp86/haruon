@@ -48,12 +48,7 @@ public class FranchiseController {
 	
 	// 가맹점 리스트
 	@GetMapping("/franchises")
-	public String franchises(Model model) {
-		List<Franchise> franchiseList = franchiseService.getFranchiseList();
-		model.addAttribute("franchiseList", franchiseList);
-
-		log.debug("franchiseList ----->" + franchiseList);
-		
+	public String franchises() {
 		return "franchise/franchises";
 	}
 }

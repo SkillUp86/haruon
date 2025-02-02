@@ -19,5 +19,5 @@ public interface FranchiseMapper {
 	Integer insertFranchise(Franchise franchise);
 	
 	// 가맹점 리스트
-	List<Franchise> selectFranchiseList();
+	List<Franchise> selectFranchiseInfo(Franchise franchise);
 }

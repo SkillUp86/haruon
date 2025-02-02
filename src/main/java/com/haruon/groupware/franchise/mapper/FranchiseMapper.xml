@@ -40,7 +40,7 @@
 		SELECT 
 			fra_no fraNo
 			, fname
-			, post_code postCode
+			
 			, address
 			, id
 			, leader
@@ -66,21 +66,16 @@
 		)
 	</insert>
 	
-	<!-- 가맹점 리스트 -->
-	<select id="selectFranchiseList" resultType="com.haruon.groupware.franchise.entity.Franchise">
-		SELECT
-			fra_no fraNo
-			, fname
-			, post_code postCode
-			, address
-			, id
-			, leader
-			, phone
-			, email
-			, open_yn openYn
-			, create_date createDate
-			, update_date updateDate
+	<!-- 가맹점 리스트 / 특정 가맹점 정보 조회 -->
+	<select id="selectFranchiseInfo" parameterType="com.haruon.groupware.franchise.entity.Franchise" resultType="com.haruon.groupware.franchise.entity.Franchise">
+		SELECT fra_no fraNo, fname, open_yn openYn, create_date createDate
+			 , leader, phone, email, address, id, post_code postCode
 		FROM franchise
+		<where>
+			<if test="fraNo">
+				fra_no = #{fraNo}
+			</if>
+		</where>
 	</select>
 	
 </mapper>
