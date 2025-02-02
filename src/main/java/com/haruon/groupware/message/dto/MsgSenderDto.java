@@ -1,9 +1,5 @@
 package com.haruon.groupware.message.dto;
 
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
@@ -14,9 +10,11 @@ public class MsgSenderDto { // 보낸쪽지함, 임시보관함
 	private String state; // 발신상태 - 임시저장, 발송
 	private String sendDate; // 발신일
 	
+	private Integer empNoS; // 발신인 번호
 	private String enameS; // 발신인
 	private String descriptS; // 발신인 직급
 	private String emailS; // 발신인 메일
+	private Integer empNoR; // 수신인 번호
 	private String enameR; // 수신인
 	private String descriptR; // 수신인 직급
 	private String emailR; // 수신인 메일

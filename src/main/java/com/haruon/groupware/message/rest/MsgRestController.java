@@ -26,10 +26,16 @@ public class MsgRestController {
 	public List<MsgReaderDto> getReadersMsg(@PathVariable Integer empNo) {
 		return msgService.getReadersMsg(empNo);
 	}	
+	
 	// 휴지통(받은 쪽지)
 	@GetMapping("/MsgTrashs/{empNo}")
 	public List<MsgReaderDto> getTrashsMsg(@PathVariable Integer empNo) {
 		return msgService.getTrashsMsg(empNo);
+	}
+	// 휴지통 비우기
+	@PostMapping("/emptyTrash/{empNo}")
+	public Boolean emptyTrash(@PathVariable Integer empNo) {
+	    return msgService.deleteEmptyTrash(empNo);
 	}
 	
 	// 쪽지 읽음

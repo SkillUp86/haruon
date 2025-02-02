@@ -25,21 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MsgController {
 	@Autowired MsgService msgService;
 	@Autowired EmpService empService;
+
 	
-	// 휴지통 이동
-	@PostMapping("/trashMsg/{msgNo}")
-	public String insertTrashMsg(@PathVariable Integer msgNo) {
-		msgService.insertTrashMsg(msgNo);
-		return "redirect:/trashsMsg";
-	}
-	// 영구 삭제
-	@PostMapping("/deleteMsg/{msgNo}")
-	public String deleteMsg(@PathVariable Integer msgNo) {
-		msgService.deleteMsg(msgNo);
-		return "redirect:/trashsMsg";
-	}
-	
-	// 메일 발송
+	// 메일 발송 (+ 임시저장)
 	@PostMapping("/insertMsg")
 	public String insertMsg(HttpSession session, MsgDto msgDto) {
 		log.debug("msgDto ======>" + msgDto);
@@ -52,6 +40,27 @@ public class MsgController {
 		log.debug("path =====> " + path);
 		
 		msgService.insertMsg(msgDto, path);
+		
+		if("E01".equals(msgDto.getStateS())) {
+			return "redirect:/temporarysMsg";
+		} else {
+			return "redirect:/sendersMsg";
+		}
+	}
+	
+	// 임시저장 발송
+	@PostMapping("/modifyMsg/{msgNo}")
+	public String modifyMsg(@PathVariable Integer msgNo, HttpSession session, MsgDto msgDto) {
+		log.debug("msgNo ======>" + msgNo);
+
+		// 파일업로드
+		msgDto.getMsgFiles();
+		
+		// 파일 저장위치
+		String path = session.getServletContext().getRealPath("/upload/msg/");
+		log.debug("path =====> " + path);
+		
+		msgService.modifyMsg(msgDto, path, msgNo);
 		
 		return "redirect:/sendersMsg";
 	}
@@ -98,9 +107,11 @@ public class MsgController {
 		// 로그인정보
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		Integer empNo = userDetails.getEmpNo();
-		
-		List<MsgSenderDto> temporaryMsg = msgService.getTemporaryMsgList(empNo);
-		model.addAttribute("temporaryMsg", temporaryMsg);
+		String ename = userDetails.getEname();
+		String email = userDetails.getUsername();
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("ename", ename);
+		model.addAttribute("email", email);
 		
 		// 메일 보내기 - 직원 목록
 		List<EmpDto> empList = empService.getEmpList();
@@ -108,7 +119,7 @@ public class MsgController {
 		return "msg/temporarysMsg";
 	}
 	
-	// 받은 쪽지 휴지통
+	// 휴지통
 	@GetMapping("/trashsMsg")
 	public String getMsgTrashs (Authentication authentication, Model model) {
 		// 로그인정보
@@ -124,5 +135,31 @@ public class MsgController {
 		List<EmpDto> empList = empService.getEmpList();
 		model.addAttribute("empList", empList);
 		return "msg/trashsMsg";
+	}
+	
+	// 휴지통 이동
+	@PostMapping("/trashMsg/{msgNo}")
+	public String insertTrashMsg(@PathVariable Integer msgNo) {
+		msgService.insertTrashMsg(msgNo);
+		return "redirect:/trashsMsg";
+	}
+	
+	// 휴지통 -> 받은쪽지 복원
+	@PostMapping("/backMsg/{msgNo}")
+	public String backMsg(@PathVariable Integer msgNo) {
+		msgService.backMsg(msgNo);
+		return "redirect:/readersMsg";
+	}
+	
+	// 영구 삭제
+	@PostMapping("/deleteMsgR/{msgNo}")
+	public String deleteMsgR(@PathVariable Integer msgNo) {
+		msgService.deleteMsgR(msgNo);
+		return "redirect:/trashsMsg";
+	}
+	@PostMapping("/deleteMsgS/{msgNo}")
+	public String deleteMsgS(@PathVariable Integer msgNo) {
+		msgService.deleteMsgS(msgNo);
+		return "redirect:/sendersMsg";
 	}
 }

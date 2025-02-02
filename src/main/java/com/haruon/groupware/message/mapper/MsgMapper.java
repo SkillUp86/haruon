@@ -15,6 +15,8 @@ public interface MsgMapper {
 
 	// 임시저장 쪽지 발송
 	Integer modifyMsg(MsgDto msgDto);
+	Integer modifySenderMsg(MsgDto msgDto);
+	Integer modifyReaderMsg(MsgDto msgDto);
 	
 	// 쪽지 작성
 	Integer insertMsg(MsgDto msgDto); 
@@ -29,13 +31,17 @@ public interface MsgMapper {
 	List<MsgReaderDto> getReadersMsg(Integer empNo);
 	Integer modifyReadState(Integer msgNo); // 읽음 상태변경
 	Integer insertTrashMsg(Integer msgNo); // 휴지통으로 이동
-	Integer deleteMsg(Integer msgNo); // 영구 삭제
+	Integer backMsg(Integer msgNo); // 휴지통 -> 받은쪽지 복원
+	Integer deleteMsgR(Integer msgNo); // 영구 삭제
 	
 	// 휴지통(받은 쪽지)
 	List<MsgReaderDto> getTrashsMsg(Integer empNo);
+	// 휴지통 비우기
+	Integer deleteEmptyTrash(Integer empNo);
 
 	// 보낸 쪽지함
 	List<MsgSenderDto> getSendersMsg(Integer empNo);
+	Integer deleteMsgS(Integer msgNo); // 영구 삭제
 	
 	// 임시 보관함
 	List<MsgSenderDto> getTemporaryMsgList(Integer empNo);

@@ -37,7 +37,7 @@
     <!--  END CUSTOM STYLE FILE  -->
     
     <!-- 페이지 제목 입력칸 -->
-    <title>휴지통</title>
+    <title>HARUON | 휴지통</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -88,48 +88,14 @@
                         
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#">Message</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">Trash</li>
+                                                <li class="breadcrumb-item"><a href="#"> 메일함 </a></li>
+                                                <li class="breadcrumb-item active" aria-current="page"> 휴지통 </li>
                                             </ol>
                                         </nav>
                         
                                     </div>
                                 </div>
-                                <ul class="navbar-nav flex-row ms-auto breadcrumb-action-dropdown">
-                                    <li class="nav-item more-dropdown">
-                                        <div class="dropdown  custom-dropdown-icon">
-                                            <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Settings</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down custom-dropdown-arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                            </a>
-                        
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">
-
-                                                <a class="dropdown-item" data-value="Settings" data-icon="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;feather feather-settings&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3&quot;></circle><path d=&quot;M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z&quot;></path></svg>" href="javascript:void(0);">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Settings
-                                                </a>
-
-                                                <a class="dropdown-item" data-value="Mail" data-icon="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;feather feather-mail&quot;><path d=&quot;M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z&quot;></path><polyline points=&quot;22,6 12,13 2,6&quot;></polyline></svg>" href="javascript:void(0);">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Mail
-                                                </a>
-
-                                                <a class="dropdown-item" data-value="Print" data-icon="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;feather feather-printer&quot;><polyline points=&quot;6 9 6 2 18 2 18 9&quot;></polyline><path d=&quot;M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2&quot;></path><rect x=&quot;6&quot; y=&quot;14&quot; width=&quot;12&quot; height=&quot;8&quot;></rect></svg>" href="javascript:void(0);">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print
-                                                </a>
-
-                                                <a class="dropdown-item" data-value="Download" data-icon="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;feather feather-download&quot;><path d=&quot;M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4&quot;></path><polyline points=&quot;7 10 12 15 17 10&quot;></polyline><line x1=&quot;12&quot; y1=&quot;15&quot; x2=&quot;12&quot; y2=&quot;3&quot;></line></svg>" href="javascript:void(0);">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download
-                                                </a>
-
-                                                <a class="dropdown-item" data-value="Share" data-icon="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;feather feather-share-2&quot;><circle cx=&quot;18&quot; cy=&quot;5&quot; r=&quot;3&quot;></circle><circle cx=&quot;6&quot; cy=&quot;12&quot; r=&quot;3&quot;></circle><circle cx=&quot;18&quot; cy=&quot;19&quot; r=&quot;3&quot;></circle><line x1=&quot;8.59&quot; y1=&quot;13.51&quot; x2=&quot;15.42&quot; y2=&quot;17.49&quot;></line><line x1=&quot;15.41&quot; y1=&quot;6.51&quot; x2=&quot;8.59&quot; y2=&quot;10.49&quot;></line></svg>" href="javascript:void(0);">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg> Share
-                                                </a>
-                                                
-                                            </div>
-                        
-                                        </div>
-                                    </li>
-                                </ul>
+                                
                             </header>
                         </div>
                     </div>
@@ -138,6 +104,7 @@
                 <!-- 보낸 쪽지함 편집 시작 -->
                 
                <div class="row layout-top-spacing">
+               		<h2 class="mt-3 mb-3"> 휴지통 </h2>
                         <div class="col-xl-12 col-lg-12 col-md-12">
     
                             <div class="row">
@@ -161,11 +128,16 @@
 
                                             <div class="action-center">
                                                 <div class="d-flex">
-                                                    <div class="" data-bs-toggle="collapse" data-bs-target>
+                                                	<div class="" data-bs-toggle="collapse" data-bs-target>
                                                         <input class="" type="hidden" id="inboxAll">
                                                     </div>
-                                                    <div class="col-md-12 col-sm-12 col-12 text-center mail-btn-container">
-                                                        <a id="btn-compose-mail" class="btn btn-block" href="javascript:void(0);">메일 보내기</a>
+                                                    
+                                                    <div class="d-flex justify-content-end mail-btn-container ms-1">
+                                                        <a id="btn-compose-mail" class="btn" href="javascript:void(0);">메일 보내기</a>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex justify-content-end mail-btn-container ms-3">
+                                                    	<button id="btn-empty-trash" class="btn">전체 비우기</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,15 +231,18 @@
                                                                         </div>
                                                                     </div>
                                                                     
-                                                                    <div class="">
-                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
-                                                                        <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-                                                                        <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
-                                                                    </div>
-                                                                    
-																	<div id="editor-container">
-                                                                	</div>
-                                                                    <input type="hidden" id="m-content" name="content">
+                                                                    <div class="mb-4">
+											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
+											                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
+											                            <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+											                        </div>
+											                        
+											                        <div class="">
+											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Content:</p>
+								                                        <div class="col-sm-12">
+								                                            <textarea class="form-control" id="m-content" name="content" placeholder="내용 작성" style="height: 300px;"></textarea>
+								                                        </div>
+							                                    	</div>
 
                                                                 </form>
                                                             </div>
@@ -335,6 +310,68 @@
 				$('#m-form').submit(); // 폼 제출
 			}
 		});
+		
+		// 저장 버튼 클릭 시 
+		$('#btn-save').click(function() {
+			
+			if($('#m-to').val() == '') {
+				alert('수신인을 선택해주세요');
+			} else if($('#m-title').val() == '') {
+				alert('제목을 입력해주세요');
+			} else if($('#m-content').val() == '') {
+				alert('내용을 입력해주세요');
+			} else {
+				$('#m-form').submit(); // 폼 제출
+			}
+		});
+	</script>
+	
+	<script>
+		// 리스트 휴지통 클릭 시
+	    $('#btn-empty-trash').click(function() {
+	        var isConfirm = confirm('휴지통을 비우시겠습니까?'); // 사용자 확인
+	        if(isConfirm) {
+	            $.ajax({
+	                url: '/emptyTrash/' + "${principal.empNo}",  // 서버의 삭제 API 호출
+	                method: 'POST',
+	                success: function(response) {
+	                    if (response) {
+	                        alert('휴지통이 비워졌습니다.');
+	                        location.reload();  // 페이지 새로고침으로 업데이트 반영
+	                    } else {
+	                        alert('휴지통 비우기 실패');
+	                    }
+	                },
+	                error: function() {
+	                    alert('에러가 발생했습니다. 다시 시도해주세요.');
+	                }
+	            });
+	        }
+	    });  
+		
+	    // 상세 휴지통 버튼 클릭 시
+		$(document).on('click', '#btnTrash', function() {
+		    var isConfirm = confirm('영구 삭제 하시겠습니까?');
+		    console.log($('#formTrash'));  // 폼이 제대로 선택되는지 확인
+		
+		    if(isConfirm) {
+		        $('#formTrash').submit();  // 폼 제출
+		    } else {
+		        // 취소 시 아무 일도 하지 않음
+		    }
+		});	
+	    
+	    // 상세_복원 버튼 클릭 시
+	    $(document).on('click', '#btnBack', function() {
+	    	var isConfirm = confirm('복원하시겠습니까?');
+		    console.log($('#formBack'));  // 폼이 제대로 선택되는지 확인
+		
+		    if(isConfirm) {
+		        $('#formBack').submit();  // 폼 제출
+		    } else {
+		        // 취소 시 아무 일도 하지 않음
+		    }
+	    });
 	</script>
 	
 	<!-- 메일 뷰 -->
@@ -354,12 +391,14 @@
                                             <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false"  aria-controls="inNo` + no + `">
                                                 <div class="mail-item-inner">
                                                     <div class="d-flex">
-                                                        <div class="" data-bs-toggle="collapse" data-bs-target>
-                                                            <input class="" type="hidden" id="form-check-default2">
-                                                        </div>
-                                                        <div class="f-head ms-3">
-                                                        	<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + "." + item.extE + `" class="user-profile" alt="avatar">
-                                                        </div>
+	                                                    <div class="" data-bs-toggle="collapse" data-bs-target>
+		                                                    <input class="" type="hidden" id="form-check-default` + no + `">
+		                                                </div>
+	                                                    <div class="f-head ms-3">` +
+	                                                    	((item.fileNameE != null)?
+		                                                    	`<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + '.' + item.extE + `" class="user-profile" alt="avatar">`
+		                                                      : `<img src="${pageContext.request.contextPath}/upload/profile/profile.svg" class="user-profile" alt="avatar">`)
+                         		           			+ ` </div>
                                                         <div class="f-body">
                                                             <div class="meta-mail-time">
                                                                 <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
@@ -393,7 +432,7 @@
                                             </div>
                     
                                             <div class="action-btns d-flex">
-	                                        	<form id="formTrash" method="post" action="${pageContext.request.contextPath}/deleteMsg/` + item.msgNo + `">
+	                                        	<form id="formTrash" method="post" action="${pageContext.request.contextPath}/deleteMsgR/` + item.msgNo + `">
 	                                        		<button type="button" id="btnTrash">
 			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
 				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
@@ -404,9 +443,9 @@
 	                                        	</form>
 	                                        	<form id="formBack" method="post" action="${pageContext.request.contextPath}/backMsg/` + item.msgNo + `">
 	                                        		<button type="button" id="btnBack">
-			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-			                                            	<path xmlns="http://www.w3.org/2000/svg" d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-			                                          	</svg>
+	                                        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	                                        		  <path d="M12 2a10 10 0 0 1 0 20A10 10 0 0 1 2 12h4l-5 5 5-5H2" />
+	                                        		</svg>
 	                                        		</button>
 	                                        	</form>
 	                                        </div>
@@ -453,7 +492,19 @@
                 
                 $('#MsgTrashs').append(MsgTrashsHTML);
                 $('#MsgTrash').append(MsgTrashHTML);
-
+                
+        	    // 전체 선택 체크박스
+        	    const inboxAll = document.getElementById('inboxAll');
+        	
+        	    // 다른 체크박스들을 모두 선택하기 위해 class로 가져오기
+        	    const checkboxes = document.querySelectorAll('.inbox-chkbox');
+        	
+        	    // 전체 선택 체크박스의 상태에 따라 다른 체크박스를 선택하거나 해제
+        	    inboxAll.addEventListener('change', function() {
+        	        checkboxes.forEach(checkbox => {
+        	            checkbox.checked = inboxAll.checked;  // 전체 선택 상태에 맞춰 체크 여부 설정
+        	        });
+        	    });
                 
             }).fail(function() {
                 console.log("senderMsg fail");
@@ -526,18 +577,5 @@
          }
    </script>
    
-   <script>
-	    // 휴지통 버튼 클릭 시
-		$(document).on('click', '#btnTrash', function() {
-		    var isConfirm = confirm('영구 삭제 하시겠습니까?');
-		    console.log($('#formTrash'));  // 폼이 제대로 선택되는지 확인
-		
-		    if(isConfirm) {
-		        $('#formTrash').submit();  // 폼 제출
-		    } else {
-		        // 취소 시 아무 일도 하지 않음
-		    }
-		});	
-	</script>
 </body>
 </html>

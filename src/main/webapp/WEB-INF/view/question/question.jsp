@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>문의 상세</title>
+    <title>HARUON | 문의 상세</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -83,9 +83,9 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Q&A</li>
+                                                <li class="breadcrumb-item active" aria-current="page">가맹점 문의</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -218,7 +218,7 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
-	
+	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
 	<script>
 		// !!!!!!!!!!!! 답변 등록 질문으로 변경 !!!!!!!!!!
 	    $('#addBtn').click(function(event) {
@@ -235,6 +235,8 @@
 	        }
 	    });
 	</script>
+	
+
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>

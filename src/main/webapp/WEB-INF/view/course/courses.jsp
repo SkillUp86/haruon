@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>교육 조회</title>
+    <title>HARUON | 교육 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -79,9 +79,9 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Course List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">교육 리스트</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -92,15 +92,24 @@
                     <!--  END BREADCRUMBS  -->
                 
                 <!-- 메인컨텐츠 입력칸 -->
-                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+                <div class="row layout-top-spacing mt-2">
+                
+                	<div class="p-2 card card-title row ms-1">
+                	
                     <div class="col-lg-12">
+                    
                         <div class="widget-content searchable-container list">
 
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                	<a href="${pageContext.request.contextPath}/franchises/courses/insert" class="btn">+ 등록</a>
-                                </div>
-                            </div>
+                            <div class="pt-4 ps-4 d-flex justify-content-between align-item-center">
+                           	<h3>교육 리스트</h3>
+                               <div class="h-100">
+                                <a href="${pageContext.request.contextPath}/franchises/insert" class="btn btn-secondary" style="margin-right: 15px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line> <line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록
+                                </a>
+                               </div>
+                             </div>
 
                             <table class="table text-center" id="board-list">
 							    <thead>

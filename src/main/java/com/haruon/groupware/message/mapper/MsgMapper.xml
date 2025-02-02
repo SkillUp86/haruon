@@ -2,11 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
 
-	<!-- 임시저장 쪽지 발송 -->
+	<!-- 임시저장 쪽지 발송 시 수정 -->
 	<update id="modifyMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
 		UPDATE msg
 		SET title = #{title}, content = #{content}
-		WHERE msg_no = ${msgNo}
+		WHERE msg_no = #{msgNo}
+	</update>
+	<update id="modifySenderMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		UPDATE msg_sender
+		SET emp_no = #{empNoS}
+			, state = #{stateS}
+			, send_date = now()
+		WHERE msg_no = #{msgNo}
+	</update>
+	<update id="modifyReaderMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
+		UPDATE msg_reader
+		SET emp_no = #{empNoR}
+		WHERE msg_no = #{msgNo}
 	</update>
 	
 	<!-- 쪽지 발송/임시저장 -->
@@ -115,12 +127,27 @@
 		UPDATE msg_reader
 		SET state = "D03"
 		WHERE msg_no = #{msgNo}
-	</update>	
+	</update>
+	<!-- 휴지통 -> 받은쪽지 복원 -->
+	<update id="backMsg" parameterType="Integer">
+		UPDATE msg_reader
+		SET state = "D01"
+		WHERE msg_no = #{msgNo}
+	</update>
+	<!-- 휴지통 비우기 -->
+	<delete id="deleteEmptyTrash" parameterType="Integer">
+		DELETE FROM msg_reader
+		WHERE emp_no = #{empNo} AND state = 'D03'
+	</delete>
 	<!-- 영구 삭제 -->
-	<update id="deleteMsg" parameterType="Integer">
+	<delete id="deleteMsgR" parameterType="Integer">
 		DELETE FROM msg_reader
 		WHERE msg_no = #{msgNo}
-	</update>	
+	</delete>	
+	<delete id="deleteMsgS" parameterType="Integer">
+		DELETE FROM msg_sender
+		WHERE msg_no = #{msgNo}
+	</delete>	
 
 	<!-- 받은 쪽지 휴지통 -->
 	<select id="getTrashsMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
@@ -186,13 +213,16 @@
 	     WHERE ms.emp_no = #{empNo} AND ms.state = 'E02'
 	</select>
 	
-	<!-- 임시 보관 -->
+	<!-- 임시 보관함 -->
 	<select id="getTemporaryMsgList" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
-		SELECT m.msg_no msgNo
+		SELECT DISTINCT
+			   m.msg_no msgNo
 			 , ms.msgs_no msgsNo
+			 , es.emp_no empNoS
 		     , es.ename enameS
 		     , ccs.descript descriptS
 		     , es.email emailS
+		     , er.emp_no empNoR
 		     , er.ename enameR
 		     , ccr.descript descriptR
 		     , er.email emailR

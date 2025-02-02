@@ -27,7 +27,7 @@
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>문의 조회</title>
+    <title>HARUON | 문의 조회</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -79,9 +79,9 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                             	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
                                                 <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Question List</li>
+                                                <li class="breadcrumb-item active" aria-current="page">문의 상세</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -94,8 +94,10 @@
                 <!-- 메인컨텐츠 입력칸 -->
                 <div class="row layout-spacing layout-top-spacing" id="cancel-row">
                     <div class="col-lg-12">
-                        <div class="widget-content searchable-container list">
-
+                        <div class="card widget-content searchable-container list">
+							<div class="pt-4 ps-4 d-flex justify-content-between align-item-center">
+                           	<h3>문의 리스트</h3>
+                           	</div>
                             <table class="table text-center" id="board-list">
 							    <thead>
 							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
@@ -165,22 +167,25 @@
 	
 	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
     <script>
-      $('#board-list').DataTable({
-         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-           "<'table-responsive'tr>" +
-           "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-               "oLanguage": {
-                   "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                   "sInfo": "Showing page _PAGE_ of _PAGES_",
-                   "sSearchPlaceholder": "Search",
-                   "sLengthMenu": "Row : _MENU_",
-               },
-               "stripeClasses": [],
-               "lengthMenu": [5, 10, 20, 50],
-               "pageLength": 10 
-               "order" : [[0, 'desc']]
-      });
-      
+    $(document).ready(function() {
+        $('#board-list').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                   "<'table-responsive'tr>" +
+                   "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearchPlaceholder": "Search",
+                "sLengthMenu": "Row : _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 10 
+        });
+    });
     </script>
 
 	<!-- END PAGE LEVEL SCRIPTS -->
