@@ -31,7 +31,7 @@
         }
     </style>    
     <!-- 페이지 제목 입력칸 -->
-    <title>회의실</title>
+    <title> haruon | 회의실  </title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -99,7 +99,7 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12">
-	                            <h2>회의실 예약</h2>
+	                            <h2 class="mt-3 mb-3">회의실 예약</h2>
                
                					<div style="text-align: right;">
 	                                <a class="btn btn-secondary" id="meetingroomList" href="${pageContext.request.contextPath}/addMeetingroom">
