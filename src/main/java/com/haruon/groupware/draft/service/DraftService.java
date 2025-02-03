@@ -38,22 +38,18 @@ public class DraftService {
 				.getPrincipal();
 		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
 				.getAuthorities();
-		int empNo = (int) details.getEmpNo();
-		int depNo = (int) details.getDepNo();
+		int empNo = details.getEmpNo();
+		int depNo = details.getDepNo();
 		ResponseAccessDraft access = draftMapper.isAccess(draNo);
 		log.debug(access.toString());
-		Integer midApp = access.getMidApp();
-		Integer refNo = access.getRefNo();
-		Integer finalApp = access.getFinalApp();
-		Integer draftEmpNo = access.getEmpNo();
 		// 해당 기안자 팀 부서장 모든 결재 접근 가능
 		if (authorities.stream()
 				.anyMatch(authority -> authority.getAuthority().equals("ROLE_HEAD") && (access.getDepNo() == depNo))) {
 			return true;
 		}
 		// 결재라인, 참조자 접근가능
-		if ((midApp != null && midApp == empNo) || finalApp == empNo || (refNo != null && refNo == empNo)
-				|| empNo == draftEmpNo) {
+		if ((access.getMidApp() != null && access.getMidApp() == empNo) || access.getFinalApp() == empNo || (access.getRefNo() != null && access.getRefNo() == empNo)
+				|| empNo == access.getEmpNo()) {
 			return true;
 		}
 		return false;

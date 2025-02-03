@@ -23,6 +23,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
 									.requestMatchers( "/login").anonymous()
+									.requestMatchers("/addEmp").hasRole("HR") // 인사과만 사원 추가가능
 									.requestMatchers("/findPw", "/layouts/**", "/src/**","/WEB-INF/view/**").permitAll() // js css 뷰 허용
 					                .anyRequest().authenticated()
 					                );

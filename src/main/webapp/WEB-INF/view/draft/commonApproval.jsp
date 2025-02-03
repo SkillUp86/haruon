@@ -9,7 +9,7 @@
 	                                    <div class="row">
 	                                        <div class="col-xxl-12 mb-4">
 	                                            <div class="form-bootstrap-basic">
-	                                                <label class="switch-label">결재 상태</label>
+
 	                                            </div>
 	                                        </div>
 	                                        <div class="col-xxl-12 mb-4">
@@ -48,11 +48,11 @@
 	                           <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
-	                                        <div class="col-xxl-12 mb-4">
-	                                            <div class="form-bootstrap-basic">
-	                                                <label class="switch-label">결재 상태</label>
-	                                            </div>
-	                                        </div>
+											<div class="col-xxl-12 mb-4">
+												<div class="form-bootstrap-basic">
+
+												</div>
+											</div>
 	                                        <div class="col-xxl-12 mb-4">
 	                                                <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
@@ -84,11 +84,11 @@
 	                            <div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
-	                                        <div class="col-xxl-12 mb-4">
-	                                            <div class="form-bootstrap-basic">
-	                                                <label class="switch-label">결재 상태</label>
-	                                            </div>
-	                                        </div>
+											<div class="col-xxl-12 mb-4">
+												<div class="form-bootstrap-basic">
+
+												</div>
+											</div>
 	                                        <div class="col-xxl-12 mb-4">
 	                                                <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
@@ -120,6 +120,11 @@
                             		<div class="col-xxl-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 	                                <div class="widget-content widget-content-area">
 	                                    <div class="row">
+											<div class="col-xxl-12 mb-4">
+												<div class="form-bootstrap-basic">
+
+												</div>
+											</div>
 	                                        <div class="col-xxl-12 mb-4">
 	                                            <label class="form-control text-center">${d.approvalState}</label>
 	                                        </div>
