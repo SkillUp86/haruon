@@ -71,6 +71,7 @@ public class MsgService {
 		msgMapper.modifySenderMsg(msgDto);
 	}
 
+
 	// 쪽지 발송
 	public void insertMsg (MsgDto msgDto, String path) {
 		// 교육 등록

@@ -327,7 +327,7 @@
 	</script>
 	
 	<script>
-		// 리스트 휴지통 클릭 시
+		// 리스트 비우기 클릭 시
 	    $('#btn-empty-trash').click(function() {
 	        var isConfirm = confirm('휴지통을 비우시겠습니까?'); // 사용자 확인
 	        if(isConfirm) {
@@ -349,27 +349,33 @@
 	        }
 	    });  
 		
-	    // 상세 휴지통 버튼 클릭 시
-		$(document).on('click', '#btnTrash', function() {
-		    var isConfirm = confirm('영구 삭제 하시겠습니까?');
-		    console.log($('#formTrash'));  // 폼이 제대로 선택되는지 확인
 		
-		    if(isConfirm) {
-		        $('#formTrash').submit();  // 폼 제출
-		    } else {
-		        // 취소 시 아무 일도 하지 않음
+	    document.addEventListener('click', function(event) {
+            // closest()를 사용해 클릭한 요소에서 가장 가까운 버튼 확인
+            let button = event.target.closest('button'); 
+            
+		    // 상세 휴지통 버튼 클릭 시
+            if (button && button.id.startsWith('btnTrash')) {
+                console.log('휴지통 버튼 클릭 ' + button.id);
+                let targetId = button.id.replace('btnTrash', '');
+		
+		    	var isConfirm = confirm('영구 삭제 하시겠습니까?');
+                
+			    if(isConfirm) {
+			        $("#formTrash"+targerId).submit();  // 폼 제출
+			    }
 		    }
-		});	
 	    
 	    // 상세_복원 버튼 클릭 시
-	    $(document).on('click', '#btnBack', function() {
-	    	var isConfirm = confirm('복원하시겠습니까?');
-		    console.log($('#formBack'));  // 폼이 제대로 선택되는지 확인
+            if (button && button.id.startsWith('btnBack')) {
+                console.log('복원 버튼 클릭 ' + button.id);
+                let targetId = button.id.replace('btnBack', '');
 		
-		    if(isConfirm) {
-		        $('#formBack').submit();  // 폼 제출
-		    } else {
-		        // 취소 시 아무 일도 하지 않음
+		    	var isConfirm = confirm('복원 하시겠습니까?');
+                
+			    if(isConfirm) {
+			        $("#formBack"+targerId).submit();  // 폼 제출
+			    }
 		    }
 	    });
 	</script>
@@ -432,8 +438,8 @@
                                             </div>
                     
                                             <div class="action-btns d-flex">
-	                                        	<form id="formTrash" method="post" action="${pageContext.request.contextPath}/deleteMsgR/` + item.msgNo + `">
-	                                        		<button type="button" id="btnTrash">
+	                                        	<form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/deleteMsgR/` + item.msgNo + `">
+	                                        		<button type="button" id="btnTrash` + item.msgNo + `">
 			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
 				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
 				                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
@@ -441,8 +447,8 @@
 			                                          	</svg>
 	                                        		</button>
 	                                        	</form>
-	                                        	<form id="formBack" method="post" action="${pageContext.request.contextPath}/backMsg/` + item.msgNo + `">
-	                                        		<button type="button" id="btnBack">
+	                                        	<form id="formBack` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/backMsg/` + item.msgNo + `">
+	                                        		<button type="button" id="btnBack` + item.msgNo + `">
 	                                        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 	                                        		  <path d="M12 2a10 10 0 0 1 0 20A10 10 0 0 1 2 12h4l-5 5 5-5H2" />
 	                                        		</svg>

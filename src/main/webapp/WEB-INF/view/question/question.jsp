@@ -196,11 +196,11 @@
                	</div>
                 <!-- 메인컨텐츠 END -->
 			</div>
-		</div>
             
         <!--  BEGIN FOOTER  -->
-        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
+        <jsp:include page="${pageContext.request.contextPath}/WEB-INF/view/inc/footer.jsp" />
         <!--  END FOOTER  -->
+		</div>
         
   		<!--  END CONTENT AREA  -->
 	
@@ -219,6 +219,7 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
+	
 	<script>
 		// !!!!!!!!!!!! 답변 등록 질문으로 변경 !!!!!!!!!!
 	    $('#addBtn').click(function(event) {

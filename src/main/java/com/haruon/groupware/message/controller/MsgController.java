@@ -140,6 +140,7 @@ public class MsgController {
 	// 휴지통 이동
 	@PostMapping("/trashMsg/{msgNo}")
 	public String insertTrashMsg(@PathVariable Integer msgNo) {
+		log.debug("msgsNo =========> " + msgNo);
 		msgService.insertTrashMsg(msgNo);
 		return "redirect:/trashsMsg";
 	}

@@ -334,178 +334,184 @@
 		});
 
 	</script>
+	 
+	 <script>
+	   $(document).ready(function() {
+		   showTemporaryMsgList();
+	   });
+	   
+       document.addEventListener('click', function(event) {
+           // closest()를 사용해 클릭한 요소에서 가장 가까운 버튼 확인
+           let button = event.target.closest('button');
+           
+		   // 임시저장 발송 버튼 클릭 시 
+	       if (button && button.id.startsWith('btn-mt-send')) {
+	       console.log('임시저장 발송 버튼 클릭 ' + button.id);
+	       let targetId = button.id.replace('btn-mt-send', '');
+	
+	           $("#stateS"+targetId).val("E02");
+	           
+	           if ($("#mt-to"+targetId).val() == '') {
+	               alert('수신인을 선택해주세요');
+	           } else if ($("#mt-title"+targetId).val() == '') {
+	               alert('제목을 입력해주세요');
+	           } else if ($("#mt-content"+targetId).val() == '') {
+	               alert('내용을 입력해주세요');
+	           } else {
+	               $("#mt-form"+targetId).submit(); // 폼 제출
+	           }
+	       }
+		   
+	    });
+      </script>
 	
 	<!-- 뷰 -->
     <script>
-         $.ajax({
-                url: "/MsgTemporarys/" + "${principal.empNo}",
-                method: 'GET', 
-            }).done(function(result) {
-            	
-            	$('#msgTemporarys').empty();
-                $('#msgTemporary').empty();
-           		
-                let msgTemporarysHTML = "";
-                let msgTemporaryModal = "";
-                let no = 0;
-                
-                $(result).each(function(index, item) {
-                    msgTemporarysHTML += `<div class="animated animatedFadeInUp fadeInUp" id="`+ "outNo" + item.msgNo +`">
-	                    					  <button id="btn-temporary-mail" id="swich` + item.msgNo + `" class="btn button" data-bs-toggle="modal" data-bs-target="#temporaryMailModal` + item.msgNo + `">
-			                                      <div class="mb-0">
-				                                      <div class="mail-item-heading work collapsed" data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + item.msgNo + `" aria-expanded="false"  aria-controls="inNo` + item.msgNo + `">
-				                                          <div class="mail-item-inner">
-					                                          <div class="d-flex">
-						                                          <div class="f-head ms-3">` +
-																       ((item.fileNameE != null)?
-																	       `<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + '.' + item.extE + `" class="user-profile" alt="avatar">`
-																	     : `<img src="${pageContext.request.contextPath}/upload/profile/profile.svg" class="user-profile" alt="avatar">`)
-														      + ` </div>
-						                     	                  <div class="f-body">
-							                                          <div class="meta-mail-time">
-							                                              <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
+    	function showTemporaryMsgList() {
+	         $.ajax({
+	                url: "/MsgTemporarys/" + "${principal.empNo}",
+	                method: 'GET', 
+	            }).done(function(result) {
+	            	
+	            	$('#msgTemporarys').empty();
+	                $('#msgTemporary').empty();
+	           		
+	                let msgTemporarysHTML = "";
+	                let msgTemporaryModal = "";
+	                let no = 0;
+	                
+	                $(result).each(function(index, item) {
+	                    msgTemporarysHTML += `<div class="animated animatedFadeInUp fadeInUp" id="`+ "outNo" + no +`">
+		                    					  <button id="btn-temporary-mail" id="swich` + item.msgNo + `" class="btn button" data-bs-toggle="modal" data-bs-target="#temporaryMailModal` + item.msgNo + `">
+				                                      <div class="mb-0">
+					                                      <div class="mail-item-heading work collapsed" data-bs-toggle="collapse" role="navigation" data-bs-target="#inNo` + no + `" aria-expanded="false"  aria-controls="inNo` + no + `">
+					                                          <div class="mail-item-inner">
+						                                          <div class="d-flex">
+							                                          <div class="f-head ms-3">` +
+																	       ((item.fileNameE != null)?
+																		       `<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + '.' + item.extE + `" class="user-profile" alt="avatar">`
+																		     : `<img src="${pageContext.request.contextPath}/upload/profile/profile.svg" class="user-profile" alt="avatar">`)
+															      + ` </div>
+							                     	                  <div class="f-body">
+								                                          <div class="meta-mail-time">
+								                                              <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
+								                                          </div>
+								                                          <div class="meta-title-tag">
+									                                          <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
+									                                          <span class="mail-title">` + item.title + `
+								                                          </div>
 							                                          </div>
-							                                          <div class="meta-title-tag">
-								                                          <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
-								                                          <span class="mail-title">` + item.title + `
-							                                          </div>
-						                                          </div>
-					                                    	  </div>
+						                                    	  </div>
+					                                          </div>
 				                                          </div>
-			                                          </div>
-			                                      </div>
-			                                  </button>
-		                                  </div>`
-
-					msgTemporaryModal += `<div id="inNo` + item.msgNo + `" class="collapse" aria-labelledby="#outNo` + item.msgNo + `">
-											<div class="modal fade" id="temporaryMailModal` + item.msgNo + `" tabindex="-1" role="dialog" aria-hidden="true">
-												<div class="modal-dialog modal-dialog-centered" role="document">
-												    <div class="modal-content">
-												        <div class="modal-header">
-												            <h5 class="modal-title add-title">발송</h5>
-												            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-												                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-												            </button>
-												        </div>
-												
-												        <div class="modal-body">
-												            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
-												            <div class="compose-box">
-												                <div class="compose-content">
-												                    <form id="mt-form" method="post" action="${pageContext.request.contextPath}/modifyMsg/` + item.msgNo + `" enctype="multipart/form-data">
-												                        <div class="row">
-												                            <div class="col-md-12">
-												                                <div class="mb-4 mail-to">
-												                                 <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
-												                                    <select class="form-control" id="mt-to" name="empNoR">
-												                                     <option value="` + item.empNoR + `">` + item.msgNo + item.enameR + ` &lt;` + item.emailR + `&gt;</option>
-												                                     <c:forEach items="${empList}" var="el">
-												                                      <option value="${el.empNo}">${el.ename} &lt;${el.email}&gt;</option>
-												                                     </c:forEach>
-												                                	</select>
-												                            	</div>
-												                            </div>
-												                        </div>
-												                        
-												                        <div class="row">
-												                        <div class="col-md-6">
-												                        	<div class="mb-4 mail-form">
-												                                <p>From: ` + item.enameS + `</p>
-												                                <input type="email" id="mt-from" class="form-control" name="emailS" value="${email}" readonly> 
-												                                <input type="hidden" name="empNoS" value="${empNo}">
-												                                <input type="hidden" id="stateS" name="stateS" value="E01">
-												                            </div>
-												                        </div>
-												
-															<!-- ??? 참조자 어떻게 할건지 ??? -->
-												                        <div class="col-md-6">
-												                            <div class="mb-4 mail-cc">
-												                                <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
-												                                <div>
-												                                    <input type="text" id="mt-cc" class="form-control">
-												                                    <span class="validation-text"></span>
-												                                </div>
-												                            </div>
-												                        </div>
-												                        <!-- ??? 참조자 ??? -->
-												                    </div>
-												                    
-												                        <div class="mb-4">
-												                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
-												                            <div class="w-100">
-												                                <input type="text" id="mt-title" name="title" class="form-control" value="` + item.title + `">
-												                                <span class="validation-text"></span>
-												                            </div>
-												                        </div>
-												                        
-												                        <div class="mb-4">
-												                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
-												                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-												                            <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
-												                        </div>
-												                        
-												                        <div class="">
-												                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Content:</p>
-									                                        <div class="col-sm-12">
-									                                            <textarea class="form-control" id="mt-content" name="content" placeholder="내용 작성" style="height: 300px;">` + item.content + `</textarea>
-									                                        </div>
-								                                    	</div>
-		
-		                                                            </form>
-	                                                        	</div>
-	                                                    	</div>
-	                                                	</div>
-												        <div class="modal-footer">
-												            <button type="button" id="btn-t-send" class="btn btn-primary send-button" data-msgNo="` + item.msgNo + `"> 발송</button>
-												            <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> 취소</button>
-												        </div>
-												    </div>
+				                                      </div>
+				                                  </button>
+			                                  </div>`
+	
+						msgTemporaryModal += `<div id="inNo` + no + `" class="collapse" aria-labelledby="#outNo` + no + `">
+												<div class="modal fade" id="temporaryMailModal` + item.msgNo + `" tabindex="-1" role="dialog" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered" role="document">
+													    <div class="modal-content">
+													        <div class="modal-header">
+													            <h5 class="modal-title add-title">발송</h5>
+													            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+													                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+													            </button>
+													        </div>
+													
+													        <div class="modal-body">
+													            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
+													            <div class="compose-box">
+													                <div class="compose-content">
+													                    <form id="mt-form` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/modifyMsg/` + item.msgNo + `" enctype="multipart/form-data">
+													                        <div class="row">
+													                            <div class="col-md-12">
+													                                <div class="mb-4 mail-to">
+													                                 <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
+													                                    <select class="form-control" id="mt-to` + item.msgNo + `" name="empNoR">
+													                                     <option value="` + item.empNoR + `">` + item.enameR + ` &lt;` + item.emailR + `&gt;</option>
+													                                     <c:forEach items="${empList}" var="el">
+													                                      <option value="${el.empNo}">${el.ename} &lt;${el.email}&gt;</option>
+													                                     </c:forEach>
+													                                	</select>
+													                            	</div>
+													                            </div>
+													                        </div>
+													                        
+													                        <div class="row">
+													                        <div class="col-md-6">
+													                        	<div class="mb-4 mail-form">
+													                                <p>From: ` + item.enameS + `</p>
+													                                <input type="email" id="mt-from` + item.msgNo + `" class="form-control" name="emailS" value="${email}" readonly> 
+													                                <input type="hidden" name="empNoS" value="${empNo}">
+													                                <input type="hidden" id="stateS` + item.msgNo + `" name="stateS" value="E01">
+													                            </div>
+													                        </div>
+													
+																<!-- ??? 참조자 어떻게 할건지 ??? -->
+													                        <div class="col-md-6">
+													                            <div class="mb-4 mail-cc">
+													                                <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
+													                                <div>
+													                                    <input type="text" id="mt-cc` + item.msgNo + `" class="form-control">
+													                                    <span class="validation-text"></span>
+													                                </div>
+													                            </div>
+													                        </div>
+													                        <!-- ??? 참조자 ??? -->
+													                    </div>
+													                    
+													                        <div class="mb-4">
+													                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
+													                            <div class="w-100">
+													                                <input type="text" id="mt-title` + item.msgNo + `" name="title" class="form-control" value="` + item.title + `">
+													                                <span class="validation-text"></span>
+													                            </div>
+													                        </div>
+													                        
+													                        <div class="mb-4">
+													                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
+													                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
+													                            <input class="form-control file-upload-input" type="file" id="formFile` + item.msgNo + `" multiple="multiple" name="msgFiles">
+													                        </div>
+													                        
+													                        <div class="">
+													                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Content:</p>
+										                                        <div class="col-sm-12">
+										                                            <textarea class="form-control" id="mt-content` + item.msgNo + `" name="content" placeholder="내용 작성" style="height: 300px;">` + item.content + `</textarea>
+										                                        </div>
+									                                    	</div>
+			
+			                                                            </form>
+		                                                        	</div>
+		                                                    	</div>
+		                                                	</div>
+													        <div class="modal-footer">
+													            <button type="button" id="btn-mt-send` + item.msgNo + `" class="btn btn-primary send-button" data-msgNo="` + item.msgNo + `"> 발송</button>
+													            <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> 취소</button>
+													        </div>
+													    </div>
+													</div>
 												</div>
-											</div>
-										</div>`
-
-                    no++;
-                });
-                
-                const script = document.createElement("script");
-                script.src = `${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js`;
-                script.type = "text/javascript";
-                script.async = true;
-                document.body.appendChild(script);
-                
-                
-                $('#msgTemporarys').append(msgTemporarysHTML);
-                $('#msgTemporary').append(msgTemporaryModal);
-                
-            }).fail(function() {
-                console.log("temporarysMsg fail");
-            });
-         
-      // 이벤트 위임을 사용한 모달 클릭 처리
-         $(document).on('click', '[id^="temporaryMailModal"]', function() {
-             var modalId = $(this).attr('id');
-             console.log(modalId + '번 모달 클릭됨');
-         });
-      
-      // 임시저장 발송 버튼 클릭 시 
-         $(document).on('click', '#btn-t-send', function() {
-             // state 값을 E02로 변경
-             $('#stateS').val("E02");
-
-             console.log('To: =====> ' + $('#mt-to').val());
-             console.log('Title:: =====> ' + $('#mt-title').val());
-             console.log('Content:: =====> ' + $('#mt-content').val());
-
-             if ($('#mt-to').val() == '') {
-                 alert('수신인을 선택해주세요');
-             } else if ($('#mt-title').val() == '') {
-                 alert('제목을 입력해주세요');
-             } else if ($('#mt-content').val() == '') {
-                 alert('내용을 입력해주세요');
-             } else {
-                 $('#mt-form').submit(); // 폼 제출
-             }
-         });
+											</div>`
+	
+	                    no++;
+	                });
+	                
+	                const script = document.createElement("script");
+	                script.src = `${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js`;
+	                script.type = "text/javascript";
+	                script.async = true;
+	                document.body.appendChild(script);
+	                
+	                
+	                $('#msgTemporarys').append(msgTemporarysHTML);
+	                $('#msgTemporary').append(msgTemporaryModal);
+	                
+	            }).fail(function() {
+	                console.log("temporarysMsg fail");
+	            });
+    	}
 	</script>
 
 

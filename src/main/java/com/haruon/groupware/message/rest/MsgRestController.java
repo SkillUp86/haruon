@@ -56,6 +56,8 @@ public class MsgRestController {
 		return msgService.getTemporaryMsgList(empNo);
 	}
 
+	
+
 	// Header 에서 수신하지 않은 메세지 리스트
 	@GetMapping("/user/{empNo}/messagies/unread")
 	public ResponseEntity<List<MsgReaderListDto>> getUserMessageUnread(@PathVariable Integer empNo) {

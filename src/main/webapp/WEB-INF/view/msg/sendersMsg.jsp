@@ -319,7 +319,30 @@
 				$('#m-form').submit(); // 폼 제출
 			}
 		});
-</script>
+	</script>
+	
+	<!-- 휴지통 버튼 -->
+   <script>
+	   $(document).ready(function() {
+	   });
+	   
+       document.addEventListener('click', function(event) {
+             // closest()를 사용해 클릭한 요소에서 가장 가까운 버튼 확인
+             let button = event.target.closest('button');
+         	
+             // 휴지통 버튼 클릭 시
+             if (button && button.id.startsWith('btnTrash')) {
+                 console.log('휴지통이동 버튼 클릭 ' + button.id);
+                 let targetId = button.id.replace('btnTrash', '');
+                 
+                 var isConfirm = confirm('휴지통으로 이동하시겠습니까?');
+                 
+                 if(isConfirm) {
+                    $("#formTrash"+targetId).submit();
+                 }
+             }
+		});	
+	</script>
 	
 	<!-- 메일 뷰 -->
 	<script>
@@ -382,8 +405,8 @@
                                             </div>
                     
                                             <div class="action-btns">
-	                                        	<form id="formTrash" method="post" action="${pageContext.request.contextPath}/deleteMsgS/` + item.msgNo + `">
-		                                    		<button type="button" id="btnTrash">
+	                                        	<form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/deleteMsgS/` + item.msgNo + `">
+		                                    		<button type="button" id="btnTrash` + item.msgNo + `">
 			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
 				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
 				                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
@@ -393,6 +416,7 @@
 		                                    	</form>
                                             </div>
                                         </div>
+                                        <p> 제목: `+ item.title +`</p>
                                         <p class="mail-content"> 
                                         ` + item.content + ` </p>
                                         <p> From.` + item.enameS + ` </p>
@@ -508,18 +532,6 @@
          }
    </script>
    
-   <script>
-	    // 휴지통 버튼 클릭 시
-		$(document).on('click', '#btnTrash', function() {
-		    var isConfirm = confirm('삭제 하시겠습니까?');
-		    console.log($('#formTrash'));  // 폼이 제대로 선택되는지 확인
-		
-		    if(isConfirm) {
-		        $('#formTrash').submit();  // 폼 제출
-		    } else {
-		        // 취소 시 아무 일도 하지 않음
-		    }
-		});	
-	</script>
+
 </body>
 </html>

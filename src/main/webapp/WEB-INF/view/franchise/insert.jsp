@@ -150,11 +150,11 @@
                	</div>
                 <!-- 메인컨텐츠 END -->
 			</div>
-		</div>
             
-        <!--  BEGIN FOOTER  -->
-        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-        <!--  END FOOTER  -->
+	        <!--  BEGIN FOOTER  -->
+	        <jsp:include page="${pageContext.request.contextPath}/WEB-INF/view/inc/footer.jsp" />
+	        <!--  END FOOTER  -->
+		</div>
         
   		<!--  END CONTENT AREA  -->
 	
