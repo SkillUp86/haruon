@@ -3,6 +3,8 @@ package com.haruon.groupware.meetingroom.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.meetingroom.dto.MeetingRoomDto;
 import com.haruon.groupware.meetingroom.entity.MeetingRoom;
 import com.haruon.groupware.meetingroom.service.MeetingRoomService;
@@ -85,7 +88,12 @@ public class MeetingRoomController {
 	    public String modifyMeetingroom(@PathVariable Integer meeNo, Model model) {
 	        MeetingRoomDto meetingRoom = meetingRoomService.meetingroomOne(meeNo);
 	        model.addAttribute("meetingRoom", meetingRoom);
-	        return "meetingroom/modifyMeetingroom";  // 수정 화면으로 이동
+	        CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			int deptNo = details.getDepNo();
+	        if (deptNo == 4 ) {
+				return "/modifyMeetingroom";
+	        }
+	        return "redirect:/meetingroom"; 
 	    }
 
 	    // 회의실 수정 처리

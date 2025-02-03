@@ -30,7 +30,6 @@
     <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
 	<script src="../src/plugins/src/fullcalendar/fullcalendar.min.js"></script>
     
-    <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
 
     <!-- 페이지 제목 입력칸 -->
@@ -452,7 +451,6 @@
                     end: schedule.endTime,
                     backgroundColor: getScheduleColor(schedule.kind),
                     borderColor: getScheduleColor(schedule.kind),
-                    url: `/calendarDetail/\${schedule.schNo}?kind=\${schedule.kind}`,
                     allDay: false
                 }));
                 successCallback(events);

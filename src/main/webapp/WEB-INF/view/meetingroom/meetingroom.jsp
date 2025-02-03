@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="user" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,7 +148,9 @@
 										                </form>
 										                <!-- 삭제 버튼 -->
 										               <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
+										                <c:if test="${user.depNo == 4}">
 														    <button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
+										                </c:if>
 														</form>
 										            </div>
 										        </td>

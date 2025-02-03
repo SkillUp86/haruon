@@ -207,7 +207,7 @@
 			<ul class="collapse submenu list-unstyled" id="reservation" data-bs-parent="#sideBarAccordion">
 				<c:if test="${role_it}">
 					<li>
-						<a href="#">회의실 조회 / 관리(수정필요)</a>
+						<a href="${pageContext.request.contextPath}/meetingroom">회의실 조회 / 관리</a>
 					</li>
 				</c:if>
 				<c:if test="${role_it == false}">
