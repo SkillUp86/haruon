@@ -100,7 +100,7 @@
 	                <div class="account-content">
 	                    <div class="row mb-3">
 	                        <div class="col-md-12" style="background-color: white;">
-	               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 20px;">
+	               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 300px; width: 100%;">
 		               					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; margin-top: 10px;">
 				                            <h2 class="mt-3 mb-3">&nbsp; 직원 목록</h2>
 				                            <div style="text-align: right; margin-top: 20px;" class="me-4">
@@ -110,7 +110,7 @@
 				                                </a>
 			                                 </div>
 		                            	</div>
-	               						<div style="margin: 0 20px;">
+	               						<div style="margin: 0 30px 100px;">
                                 		<table id="employeeList" class="zero-config table dt-table-hover" style="width:100%">
 	                                        <thead>
 	                                            <tr>

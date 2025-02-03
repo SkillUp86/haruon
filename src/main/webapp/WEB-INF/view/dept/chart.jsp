@@ -57,7 +57,6 @@
 	    width: 100%;
 	    height: auto;
 	    margin: 0 auto; /* 중앙 정렬 */
-	    padding-top: 30px;
 	    position: relative;
 	    overflow-x: auto; /* 가로 스크롤 가능 */
 	}
@@ -251,110 +250,106 @@
                  <div class="account-settings-container layout-top-spacing">
                       <div class="account-content">
                           <div class="card row mb-3">
-                              <div class="col-md-12" style="background-color: white;">
-                              <h2 class="mt-3 mb-3">조직도</h2>
-                              
-	           					<div class="container" style="margin-bottom: 300px; width: 100%;">
-	           					 	<div class="orgChart tree">
-	           							<!-- 조직도 차트 -->
-	           						</div>
-				                </div> <!-- End Container -->
-				                
-				                <!-- Modal - 부서장 정보-->
-								<div class="modal fade" id="empModal" tabindex="-1" role="dialog" aria-labelledby="empModal" aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">부서장</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
-													<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-														stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-														<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-												</button>
+           					<div class="container" style="margin-bottom: 100px; width: 100%;">
+           					 	<div class="orgChart tree">
+           							<!-- 조직도 차트 -->
+           						</div>
+			                </div> <!-- End Container -->
+			                
+			                <!-- Modal - 부서장 정보-->
+							<div class="modal fade" id="empModal" tabindex="-1" role="dialog" aria-labelledby="empModal" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">부서장</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+												<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+													stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+													<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+											</button>
+										</div>
+										
+										<div class="modal-body">
+											<div class="profile-image">
+										    	<c:if test="${e.fileName != null}">
+											       <div class="profile-image-area mb-2">
+							                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
+								                    </div>
+										    	</c:if>
+										    	<c:if test="${e.fileName == null}">
+											       <div class="profile-image-area mb-2">
+							                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/profile.svg" id="author-img">
+								                    </div>
+										    	</c:if>
+										    </div>
+											<div class="mb-3">
+												<label class="form-label">이름</label> 
+												<input type="text" class="form-control" name="ename" readonly>
 											</div>
-											
-											<div class="modal-body">
-												<div class="profile-image">
-											    	<c:if test="${e.fileName != null}">
-												       <div class="profile-image-area mb-2">
-								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
-									                    </div>
-											    	</c:if>
-											    	<c:if test="${e.fileName == null}">
-												       <div class="profile-image-area mb-2">
-								                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/profile.svg" id="author-img">
-									                    </div>
-											    	</c:if>
-											    </div>
-												<div class="mb-3">
-													<label class="form-label">이름</label> 
-													<input type="text" class="form-control" name="ename" readonly>
-												</div>
-												<div class="mb-3">
-													<label class="form-label">부서</label> 
-													<input type="text" class="form-control" name="dname" readonly>
-												</div>
-												<div class="mb-3">
-													<label class="form-label">직급</label> 
-													<input type="text" class="form-control" name="location" readonly>
-												</div>
-												<div class="mb-3">
-													<label class="form-label">이메일</label> 
-													<input type="text" class="form-control" name="email" readonly>
-												</div>
-												<div class="mb-3">
-													<label class="form-label">내선번호</label> 
-													<input type="text" class="form-control" name="extNum" readonly>
-												</div>
+											<div class="mb-3">
+												<label class="form-label">부서</label> 
+												<input type="text" class="form-control" name="dname" readonly>
 											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">확인</button>
+											<div class="mb-3">
+												<label class="form-label">직급</label> 
+												<input type="text" class="form-control" name="location" readonly>
+											</div>
+											<div class="mb-3">
+												<label class="form-label">이메일</label> 
+												<input type="text" class="form-control" name="email" readonly>
+											</div>
+											<div class="mb-3">
+												<label class="form-label">내선번호</label> 
+												<input type="text" class="form-control" name="extNum" readonly>
 											</div>
 										</div>
-									</div>
-								</div> <!-- END Modal - 부서장 정보-->
-								
-								<!-- Modal - 부서 정보-->
-								<div class="modal fade" id="deptModal" tabindex="-1" role="dialog" aria-labelledby="deptModal" aria-hidden="true">
-									<div class="modal-dialog" role="document" style="max-width: 900px; width: 85%;">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">부서 정보</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
-													<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-														stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-														<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
-												</button>
-											</div>
-											
-											<div class="modal-body">
-												<div class="mb-3">
-													<label class="form-label">부서명</label> 
-													<input type="text" class="form-control" name="dname" readonly>
-												</div>
-												<table class="table">
-								                    <thead>
-								                        <tr>
-								                            <th>이름</th>
-								                            <th>직급</th>
-								                            <th>이메일</th>
-								                            <th>내선번호</th>
-								                        </tr>
-								                    </thead>
-								                    <tbody>
-								                        <!-- 직원 정보 -->
-								                    </tbody>
-								                </table>
-												
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">확인</button>
-											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">확인</button>
 										</div>
 									</div>
-								</div><!-- END Modal - 부서 정보 -->
+								</div>
+							</div> <!-- END Modal - 부서장 정보-->
+							
+							<!-- Modal - 부서 정보-->
+							<div class="modal fade" id="deptModal" tabindex="-1" role="dialog" aria-labelledby="deptModal" aria-hidden="true">
+								<div class="modal-dialog" role="document" style="max-width: 900px; width: 85%;">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">부서 정보</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+												<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+													stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+													<line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+											</button>
+										</div>
+										
+										<div class="modal-body">
+											<div class="mb-3">
+												<label class="form-label">부서명</label> 
+												<input type="text" class="form-control" name="dname" readonly>
+											</div>
+											<table class="table">
+							                    <thead>
+							                        <tr>
+							                            <th>이름</th>
+							                            <th>직급</th>
+							                            <th>이메일</th>
+							                            <th>내선번호</th>
+							                        </tr>
+							                    </thead>
+							                    <tbody>
+							                        <!-- 직원 정보 -->
+							                    </tbody>
+							                </table>
+											
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary mt-2 mb-2 btn-no-effect" data-bs-dismiss="modal">확인</button>
+										</div>
+									</div>
+								</div>
+							</div><!-- END Modal - 부서 정보 -->
 					
-	            			</div>
 	        			</div>
 		    		</div>
 				</div>

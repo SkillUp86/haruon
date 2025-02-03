@@ -34,7 +34,7 @@
     <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
 
     <!-- 페이지 제목 입력칸 -->
-    <title>메인 페이지</title>
+    <title>HARUON | 메인 페이지</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -68,7 +68,7 @@
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
 
-                <div class="middle-content container-xxl p-0">
+                <div class="middle-content container-xxl p-0 mb-5">
 
                     <!--  BEGIN BREADCRUMBS  -->
                     <div class="secondary-nav">
@@ -193,6 +193,7 @@
                                     </div>
                                 </div>
                              <!-- 결재함 컨텐츠 끝-->
+                             
                             <!-- 쪽지함 시작-->
                             <br>
                             <div class="layout-spacing">
@@ -229,8 +230,6 @@
                             </div>
                              <!-- 쪽지함 끝-->
                         </div>
-
-
 
 
                     </div>
@@ -303,10 +302,16 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="b" items="${boardList}">
+                                                <c:forEach var="b" items="${boardList}" varStatus="status">
                                                     <tr>
                                                         <td>${b.boaNo}</td>
-                                                        <td><a href="${pageContext.request.contextPath}/board/${b.boaNo}">[${b.catName}] ${b.title}</a></td>
+                                                        <td>
+                                                        	<a href="${pageContext.request.contextPath}/board/${b.boaNo}">[${b.catName}] ${b.title} &nbsp;
+                                                        		<c:if test="${status.index < 2}">
+                                                        			<span class="badge badge-light-info mb-2 me-4">new</span>
+                                                        		</c:if>
+                                                        	</a>
+                                                        </td>
                                                         <td>${b.ename}</td>
                                                     </tr>
                                                 </c:forEach>
@@ -325,7 +330,7 @@
             <!--  END FOOTER  -->
         </div>
         <!--  END CONTENT AREA  -->
-
+	</div>
     </div>
     <!-- END MAIN CONTAINER -->
 
