@@ -263,7 +263,7 @@
     </script>
     
     <script>
-	    const socket = new WebSocket('ws://localhost:80/ws/chat/room?id=${roomId}');
+	    const socket = new WebSocket('ws://' + window.location.host + ':80/ws/chat/room?id=${roomId}');
 	    
 	    // 소켓 연결 디버깅	
 	    socket.onopen = () => {
