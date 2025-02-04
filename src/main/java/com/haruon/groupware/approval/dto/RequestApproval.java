@@ -40,7 +40,6 @@ public class RequestApproval {
 	private String ym; //연월
 	private Integer revenue; //매출액
 	// 휴가
-	@Pattern(regexp = "^\\d{11}$", message = "전화번호는 01012345678 형식이어야 합니다.")
 	private String subEmpNumber; //대체업무자 사원 전화번호
 	private String vacStartDate;
 	private String vacFinishDate;

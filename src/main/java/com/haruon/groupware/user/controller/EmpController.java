@@ -34,14 +34,6 @@ public class EmpController {
 	EmpService empService;
 
 
-	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		log.debug("로그아웃 성공");
-		return "redirect:/login";
-	}
-
 	@GetMapping({ "/", "/login"})
 	public String empLogin(Authentication authentication) {
 		if (authentication != null && authentication.isAuthenticated()) {

@@ -190,8 +190,8 @@
 											<span class="input-group-text label-text">대체업무자</span>
 											<input class="form-control" id="subEmpNumber" name="subEmpNumber" type="hidden" readonly>
 											<input class="form-control type="text" id="subEmpName" name="subEmpName" placeholder="대체업무자" aria-label="대체업무자" required readonly>
-											<span class="input-group-text label-text">부서</span>
-											<input class="form-control" type="text"  id="subDept" name="subDept" placeholder="대체업무자 부서 입력" aria-label="대체업무자 부서"  required readonly>
+											<span class="input-group-text label-text">직급</span>
+											<input class="form-control" type="text"  id="subDept" name="subDept" required readonly>
 											<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#subWorkerModal">
 												대체업무자 선택
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
@@ -444,7 +444,7 @@
 		        }
 		    });
 		    
-		    $('#kind').trigger('change');".gitignore"
+		    $('#kind').trigger('change');
 		});
 
 		// 중복체크
@@ -591,7 +591,7 @@
 				$('#subDept').val('');
 			}
 		}
-
+		
 		// 결재 라인 입력값 추가
 		$('#btnInsertApprover').click(function() {
 			if(!$('#finalAppEname').val()){
@@ -609,7 +609,10 @@
 			$('#refName').val($('#refAppEname').val())
 			let modal = bootstrap.Modal.getInstance($('#approvalModal')[0]); 
 			modal.hide(); 
-			
+			setTimeout(function() {
+		        $('.modal-backdrop').remove();
+		        $('body').removeClass('modal-open').css({ 'overflow': '', 'padding-right': '' });
+		    }, 100);
 
 		});
 
