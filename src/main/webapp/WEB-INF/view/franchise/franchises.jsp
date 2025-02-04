@@ -20,7 +20,7 @@
 	    <!-- BEGIN PAGE LEVEL STYLES -->
 	    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
 	    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
-   	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92a18e347c8af2e06373990f45801cc6&libraries=services"></script>
+   	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=350f4b4439796ffe88536ec9c39e0d4d&libraries=services"></script>
 	    <!-- END PAGE LEVEL STYLES -->
 	</head>
     <body class="layout-boxed">
@@ -70,7 +70,6 @@
                                             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item"><a href="#">가맹점</span></a></li>
-                                                    <li class="breadcrumb-item"><a href="#">가맹점관리</a></li>
                                                     <li class="breadcrumb-item active" aria-current="page">가맹점리스트</li>
                                                 </ol>
                                             </nav>
