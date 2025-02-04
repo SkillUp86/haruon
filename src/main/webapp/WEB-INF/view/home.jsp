@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
      
@@ -18,20 +17,15 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
     <link href="../src/plugins/src/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
 	<script src="../src/plugins/src/fullcalendar/fullcalendar.min.js"></script>
-    
     <link href="../src/plugins/css/light/fullcalendar/custom-fullcalendar.css" rel="stylesheet" type="text/css" />
-
     <!-- 페이지 제목 입력칸 -->
     <title>HARUON | 메인 페이지</title>
     <!-- 페이지 제목 입력칸 -->
@@ -117,8 +111,8 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
-							<p class="text-end">	
-									        <div id="calendar"></div>
+								<p class="text-end">	
+								<div id="calendar"></div>
                                 </div>
                             </div>
                         </div>
@@ -161,35 +155,16 @@
                             <!-- 쪽지함 시작-->
                             <br>
                             <div class="layout-spacing">
-                                <div class="widget widget-six">
+                                <div class="widget widget-six h-100">
                                     <div class="widget-heading">
-                                        <h5 style="display: inline-block;">쪽지함</h5>
+                                        <h5 style="display: inline-block;">안읽은쪽지함</h5>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
-                                        	<a href="${pageContext.request.contextPath}/"><strong>더보기</strong></a>
+                                        	<a href="${pageContext.request.contextPath}/readersMsg"><strong>더보기</strong></a>
                                             <br>
                                         </p>
                                     </div>
                                     
-                                    <div class="widget-content">
-                                        <div class="table-responsive">
-                                            <table id="board-list" class="table dt-table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>번호</th>
-                                                        <th>제목</th>
-                                                        <th>발신자</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <div id="msgUnreadList"></div>							        
                                 </div>
                             </div>
                              <!-- 쪽지함 끝-->
@@ -308,7 +283,6 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="../src/plugins/src/apex/apexcharts.min.js"></script>
     <script src="../src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     
@@ -322,6 +296,7 @@
     	// 페이지가 준비되면 호출
     	$(document).ready(function() {
     		showTodayAttendance();
+    		showMsgUnreadList()
     	});
     </script>
     
@@ -446,6 +421,52 @@
     	
     
 });
+    </script>
+    
+    <script>
+	    function showMsgUnreadList() {
+	        $.ajax({
+	            url: "/user/${empNo}/messagies/unread",
+	            method: 'GET',
+	        }).done(function(result) {
+	            let msgUnreadListHTML = '';
+	
+	            if (!result || result.length === 0) {
+	                console.log("읽지 않은 메시지가 없습니다.");
+	                msgUnreadListHTML += `<div class="card mt-2">읽지 않은 메세지가 없습니다</div>`
+                	$("#msgUnreadList").append(msgUnreadListHTML);
+	                return;
+	            }
+	
+	            for (let i = 0; i < 3 && i < result.length; i++) {
+	                if (!result[i]) { 
+	                    continue;
+	                }
+	
+	                let profile = result[i].senderProfileName 
+	                    ? result[i].senderProfileName + '.' + result[i].senderProfileExt 
+	                    : 'noProfile.png';
+	
+	                msgUnreadListHTML += `<div class="card mt-2">
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div>
+	                                                <span class="avatar avatar-xl">
+	                                                    <img src="/src/assets/img/` + profile + `" class="rounded">
+	                                                </span>  
+	                                                <span class="ps-5">` + result[i].senderName + `</span>
+	                                                <span class="ps-5">` + result[i].title + `</span>
+	                                            </div>
+	                                            <span class="pe-5">` + result[i].sendDate + `</span>
+	                                        </div>
+	                                    </div>`;
+	            }
+	
+	            $("#msgUnreadList").append(msgUnreadListHTML);
+	        }).fail(function() {
+	            console.log("showMsgUnreadList ajax 호출 실패");
+	        });
+	    }
+
     </script>
 
 </body>

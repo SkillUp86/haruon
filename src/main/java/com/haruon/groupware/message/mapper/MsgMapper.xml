@@ -253,12 +253,15 @@
 			 , ef.ext senderProfileExt
 			 , ms.msg_no msgNo
 			 , ms.send_date sendDate
+			 , msg.title title
 		  FROM msg_reader mr
 		 INNER JOIN msg_sender ms ON ms.msg_no = mr.msg_no
 		 INNER JOIN emp e ON ms.emp_no = e.emp_no
-		 LEFT OUTER JOIN emp_file ef ON ef.emp_no = ms.emp_no
+		 INNER JOIN msg msg ON msg.msg_no = mr.msg_no
+		  LEFT OUTER JOIN emp_file ef ON ef.emp_no = ms.emp_no
 		 WHERE mr.emp_no = #{empNo}
 		   AND mr.state = 'D01'
+	  ORDER BY 6 ASC;
 	</select>
 	
 	<select id="findUnreadMsgCnt" parameterType="Integer" resultType="Integer">

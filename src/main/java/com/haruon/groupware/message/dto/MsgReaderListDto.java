@@ -10,4 +10,5 @@ public class MsgReaderListDto {
 	private String senderProfileExt;	// 발신자 프로필 확장자명
 	private Integer msgNo;
 	private String sendDate;
+	private String title;
 }
