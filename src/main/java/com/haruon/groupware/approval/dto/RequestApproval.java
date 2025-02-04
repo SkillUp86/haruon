@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -38,7 +40,8 @@ public class RequestApproval {
 	private String ym; //연월
 	private Integer revenue; //매출액
 	// 휴가
-	private String subEmpNumber; //대체업무자 사원번호
+	@Pattern(regexp = "^\\d{11}$", message = "전화번호는 01012345678 형식이어야 합니다.")
+	private String subEmpNumber; //대체업무자 사원 전화번호
 	private String vacStartDate;
 	private String vacFinishDate;
 	private String vacationType;

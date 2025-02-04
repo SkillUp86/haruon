@@ -95,7 +95,7 @@
                                     <p>사원을 등록해주세요</p>
 									<c:if test="${msg != null}">
 										<div class="col-xxl-12 col-md-12 mb-4">
-											<div class="alert alert-danger" role="alert">${msg}</div>
+											<div class="alert alert-primary" role="alert">${msg}</div>
 										</div>
 									</c:if>
 								<form id="addEmp" method="post" action="${pageContext.request.contextPath}/addEmp">
@@ -213,8 +213,8 @@
 		} else if ($('input[name="gender"]:checked').length === 0) {
 	      alert('성별을 선택하세요');
 	      return;
-	    } else if(!/^010-\d{4}-\d{4}$/.test($('#phone').val())) {
-	        alert('전화번호 형식이 올바르지 않습니다. 예: 010-0000-0000');
+	    } else if(!/^\d{11}$/.test($('#phone').val())) {
+	        alert('전화번호 형식이 올바르지 않습니다. 예: 01012345678');
 	        return;
 	    }
 		$('#addEmp').submit();

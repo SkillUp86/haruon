@@ -11,9 +11,9 @@ public class EmpDto {
 	private Integer empNo;
 	@NotBlank
 	private String ename;
-	@NotBlank
 	private String empPw;
 	@NotBlank
+	@Pattern(regexp = "^\\d{1,6}$", message = "우편번호는 최대 6자리 숫자만 입력 가능합니다.")
 	private String postCode;
 	@NotBlank
 	@Email(message = "올바른 이메일 형식이 아닙니다.")
@@ -23,7 +23,7 @@ public class EmpDto {
 	@NotNull
 	private Integer depNo;
 	@NotBlank
-	@Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "전화번호는 000-0000-0000 형식이어야 합니다.")
+	@Pattern(regexp = "^\\d{11}$", message = "전화번호는 00000000000 형식이어야 합니다.")
 	private String phone;
 	private String extNum;
 	@NotBlank

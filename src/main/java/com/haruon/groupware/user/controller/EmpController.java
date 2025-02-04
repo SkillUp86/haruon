@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.auth.CustomUserDetails;
 import com.haruon.groupware.department.entity.Dept;
@@ -52,23 +53,26 @@ public class EmpController {
 	@GetMapping("/addEmp")
 	public String addEmp(Model model) {
 		List<Dept> deptList = deptService.findByAll();
+		log.debug(deptList.toString());
 		model.addAttribute("deptList", deptList);
 		return "user/addEmp";
 	}
 
 	// 회원가입 처리
 	@PostMapping("/addEmp")
-	public String addEmp(@Valid EmpDto emp, BindingResult bindingResult, Model model) {
+	public String addEmp(@Valid EmpDto emp, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		log.debug(emp.toString());
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
-			return "user/addEmp";
+			bindingResult.getFieldErrors().forEach(error -> 
+            log.debug("오류 발생 필드: {} / 메시지: {}", error.getField(), error.getDefaultMessage())
+        );
+			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/addEmp";
 		}
 		// 2. 회원가입 처리
 		empService.addEmp(emp);
-
-		// 4. 홈 화면으로 리다이렉트
-		return "redirect:/login";
+		redirectAttributes.addFlashAttribute("msg", "사원 등록 성공!");
+		return "redirect:/addEmp";
 	}
 
 
