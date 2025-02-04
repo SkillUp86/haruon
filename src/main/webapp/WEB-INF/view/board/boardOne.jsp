@@ -169,14 +169,16 @@
                              
                              <!-- 댓글 리스트 -->
                              <hr class="my-1">
-                             <h5 class="mb-5">댓글 <span class="comment-count">(${countCommnet})</span></h5>
+                             <h5 class="mt-3 mb-3">댓글 <span class="comment-count">(${countCommnet})</span></h5>
                              <div class="post-comments">
                              	<c:forEach var="c" items="${commentList}">
-	                                 <div class="media mb-5 pb-5 primary-comment">
+	                                 <div class="media mb-3 pb-2 primary-comment">
 	                                     <div class="media-body">
 	                                         <h5 class="media-heading mb-1">${c.ename}</h5>
 	                                         <div class="meta-info mb-0">${c.createDate}</div>
-	                                         <p class="media-text mt-2 mb-0">${c.content}</p>
+	                                         <div style="white-space: pre-wrap; margin: -30px 0px;">
+			                             		<p class="media-text">${c.content}</p>
+			                             	</div>
 	
 	                                         <!-- 삭제 버튼 -->
 	                                         <!-- 세션의 empNo와 댓글 작성자의 empNo가 같을 때만 삭제 버튼 표시 -->

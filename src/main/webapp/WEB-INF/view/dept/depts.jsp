@@ -110,7 +110,7 @@
                  <div class="account-settings-container layout-top-spacing">
                      <div class="row mb-3">
                        	<div class="widget-content widget-content-area br-8"  style="margin-bottom: 20px;">
-                         	<h2 class="mt-3 mb-3">부서 관리</h2>
+                         	<h2 class="mt-3 mb-3">&nbsp; 부서 관리</h2>
         					<div class="container" style="margin-top: 10px; margin-bottom: 100px; width: 100%;">
         					
         						<div style="text-align: right; margin-bottom: 10px;">

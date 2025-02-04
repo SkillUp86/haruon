@@ -129,25 +129,25 @@
 											<div class="form-group row mb-3">
 												<label class="col-sm-2 col-form-label col-form-label-md">주소</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.address}" readonly>
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Address" value="${c.address}" readonly>
 												</div>
 											</div>
 											<div class="form-group row mb-3">
 												<label class="col-sm-2 col-form-label col-form-label-md">대표자</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.leader}" readonly>
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Leader Name" value="${c.leader}" readonly>
 												</div>
 											</div>
 											<div class="form-group row mb-3">
 												<label class="col-sm-2 col-form-label col-form-label-md">대표번호</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.phone}" readonly>
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Phone Number" value="${c.phone}" readonly>
 												</div>
 											</div>
 											<div class="form-group row mb-3">
 												<label class="col-sm-2 col-form-label col-form-label-md">이메일</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-md" id="comName" placeholder="Business Name" value="${c.email}" readonly>
+													<input type="text" class="form-control form-control-md" id="comName" placeholder="Email" value="${c.email}" readonly>
 												</div>
 											</div>
 											
