@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +22,12 @@
     <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
 
+    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
-    <title>교육 등록</title>
+    <title>HARUON | 교육 등록</title>
     <!-- 페이지 제목 입력칸 -->
 </head>
 <body class="layout-boxed">
@@ -81,10 +82,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Insert Course</li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">교육 등록</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -96,77 +95,57 @@
                 </div>
                 
                 <!-- 메인컨텐츠 입력칸 -->
-                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
-                    <div class="col-lg-12">
-                        <div class="widget-content searchable-container list">
-
-                            <div class="row">
-
-		                        <div id="flLoginForm" class="col-lg-12 layout-spacing">
-		                            <div class="statbox widget box box-shadow">
-		                                <div class="widget-header">
-		                                    <div class="row">
-		                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-		                                            <h2 class="mt-3 mb-3">&nbsp; 교육 등록</h2>
-		                                        </div>                                                                        
-		                                    </div>
-		                                </div>
-		                                <div class="widget-content widget-content-area">
-		                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
-		                                        <div class="col-12">
-		                                            <label for="empNo" class="form-label">EMP</label>
-		                                            <select id="empNo" name="empNo" class="form-control">
-		                                            	<option value="">::: 담당자 :::</option>
-		                                            	<c:forEach items="${empList}" var="el">
-			                                            	<option value="${el.empNo}">${el.ename}</option>
-		                                            	</c:forEach>
-		                                            </select>
-		                                        </div>
-		                                        <div class="col-12">
-		                                            <label for="place" class="form-label">PLACE</label>
-		                                            <input type="text" class="form-control" id="place" name="place" placeholder="장소">
-		                                        </div>
-		                                        <div class="col-12">
-		                                            <label for="eduDate" class="form-label">EDU DATE</label>
-		                                            <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" placeholder="교육 일정">
-		                                        </div>
-		                                        <div class="col-12">
-		                                            <label for="title" class="form-label">TITLE</label>
-		                                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
-		                                        </div>
-												<div class="col-12">
-												    <label for="contents" class="form-label">CONTENT</label>
-												    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40"></textarea>
-												</div>
-		                                        <div class="col-12">
-		                                            <label for="capacity" class="form-label">CAPACITY</label>
-		                                            <input type="number" class="form-control" id="capacity" name="capacity" placeholder="정원">
-		                                        </div>
-												<div class="form-group mb-4">
-													<input class="form-control file-upload-input" type="file" id="educationFile" name="educationFile" multiple="multiple">
-												</div>		                                        
-		                                        <div class="col-12 ">
-		                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">등록</button>
-		                                        </div>
-		                                    </form>
-		                                </div>
-		                            </div>
-		                        </div>
-                   			</div>
+                <div class="layout-top-spacing" id="cancel-row">
+                    <h2 class="mt-3 mb-3">교육 등록</h2>
+                    <div class="card row ms-3 w-50 p-3 row">
+                        <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
+                            <div class="col-6">
+	                            <label for="empNo" class="form-label">교육 담당자</label>
+	                            <select id="empNo" name="empNo" class="form-control">
+	                                <option value="">::: 담당자 :::</option>
+	                                <c:forEach items="${empList}" var="el">
+	                                    <option value="${el.empNo}">${el.ename}</option>
+	                                </c:forEach>
+	                            </select>
+                            </div>
+                            <div class="col-6">
+                            	<label for="capacity" class="form-label">수용인원</label>
+                            	<input type="number" class="form-control" id="capacity" name="capacity" placeholder="정원">
+                            </div>
+                            <div class="col-6">
+	                            <label for="place" class="form-label">교육 장소</label>
+	                            <input type="text" class="form-control" id="place" name="place" placeholder="장소">
+                            </div>
+                            <div class="col-6">
+	                            <label for="eduDate" class="form-label">교육 일정</label>
+	                            <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" placeholder="교육 일정">
+                            </div>
+                            <div>
+	                            <label for="title" class="form-label">교육 내용</label>
+	                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+	                            <textarea class="form-control mt-2" id="contents" name="content" placeholder="내용" rows="5" cols="40"></textarea>
+                            </div>
+                            <div>
+	                            <label for="educationFile" class="form-label">첨부파일</label>
+	                            <input class="form-control file-upload-input" type="file" id="educationFile" name="educationFile" multiple="multiple">
+                            </div>
+                        </form>
+                                
+                        <div class="text-end mt-5 mb-2">
+                            <button type="button" id="addBtn" class="btn btn-success" style="display:inline-block;">등록</button>
                         </div>
                   	</div>
                	</div>
                 <!-- 메인컨텐츠 END -->
 			</div>
+       		<!--  BEGIN FOOTER  -->
+	        <jsp:include page="${pageContext.request.contextPath}/WEB-INF/view/inc/footer.jsp" />
+	        <!--  END FOOTER  -->
 		</div>
             
-        <!--  BEGIN FOOTER  -->
-        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-        <!--  END FOOTER  -->
-        
-  		<!--  END CONTENT AREA  -->
-	
 	</div>
+ 	<!--  END CONTENT AREA  -->
+	
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->

@@ -45,5 +45,8 @@ public class HomeController {
 		return "home";
 	}
 	
-	
+	@GetMapping("/readMe")
+	public String readMe() {
+		return "readMe";
+	}
 }

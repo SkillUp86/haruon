@@ -95,57 +95,45 @@
                 </div>
                 
                 <!-- 메인컨텐츠 입력칸 -->
-                <div class="row layout-spacing layout-top-spacing" id="cancel-row">
-                    <div class="col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <div class="widget-content searchable-container list">
-							<div class="card row mb-4">
-                                <h2 class="mt-3 mb-3">&nbsp; 가맹점 등록</h2>
-                                <div class="widget-content widget-content-area">
-                                    <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/insert" class="row g-3">
-                                        <div class="col-12">
-                                            <label for="fname" class="form-label">가맹점명</label>
-                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
-                                        </div>
-                                        <div class="col-12">
-	                                            <label for="postCode" class="form-label">우편번호</label>
-	                                            <div class="row">
-		                                            <div class="col-md-6 d-flex">
-			                                            <input type="text" class="form-control" id="postCode" name="postCode" placeholder="우편번호" readonly>
-		                                            </div>
-		                                            <div class="col-md-2 d-flex">
-			                                        	<input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-gray">
-		                                            </div>
-	                                            </div><br>
-	                                        <div class="col-md-12">
-	                                            <label for="address" class="form-label">주소</label>
-	                                            <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
-	                                        </div>
-	                                            <label for="" class="form-label"></label>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="id" class="form-label">사업자 번호</label>
-                                            <input type="text" class="form-control" id="id" name="id" placeholder="사업자번호">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="leader" class="form-label">가맹점주</label>
-                                            <input type="text" class="form-control" id="leader" name="leader" placeholder="가맹점주">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="phone" class="form-label">연락처</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="연락처">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="email" class="form-label">이메일</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
-                                        </div>
-                                        <div class="col-sm-12 text-center" style="margin-top: 20px;">
-                                            <button type="button" id="addBtn" class="btn btn-success _effect--ripple waves-effect waves-light">등록</button>
-                                        </div>
-                                    </form>
-                                </div>
+                <div class="layout-top-spacing" id="cancel-row">
+                    <h2 class="mt-3 mb-3">가맹점 등록</h2>
+                    <div class="card row ms-3 w-50 p-3">
+                        <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/insert" class="row g-3">
+                        	<div class="col-6">
+	                            <label for="fname" class="form-label">가맹점명</label>
+	                            <input type="text" class="form-control" id="fname" name="fname" placeholder="가맹점명">
                             </div>
+                            <div class="col-6">
+                            	<label for="id" class="form-label">사업자 번호</label>
+                            	<input type="text" class="form-control" id="id" name="id" placeholder="사업자번호(-없이 입력해주세요)">
+                            </div>
+                            
+                            <div class="col-6">
+                            	<div class="d-flex justify-content-between">
+	                           		<label for="address" class="form-label">주소</label>
+                                	<input style="display:inline-block" type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-gray">
+                               	</div>
+                            	<input type="text" class="form-control mt-2" id="postCode" name="postCode" placeholder="우편번호" readonly>
+	                            <input type="text" class="form-control mt-2" id="address" name="address" placeholder="주소" readonly>
+                            </div>
+                            <div class="col-6"></div>
+                            
+                            <div class="col-6">
+                            	<label for="phone" class="form-label">연락처</label>
+                            	<input type="text" class="form-control" id="phone" name="phone" placeholder="연락처(-없이 입력해주세요)">
+                            </div>
+                            <div class="col-6">
+                            	<label for="email" class="form-label">이메일</label>
+                            	<input type="email" class="form-control" id="email" name="email" placeholder="이메일">
+                            </div>
+                            <div class="col-6">
+                            	<label for="leader" class="form-label">대표자 이름</label>
+                            	<input type="text" class="form-control" id="leader" name="leader" placeholder="이름">
+                            </div>
+                        </form>
+                        <div class="text-end mt-5 mb-2">
+                            <button type="button" id="addBtn" class="btn btn-success" style="display:inline-block;">등록</button>
                         </div>
-
                     </div>
                	</div>
                 <!-- 메인컨텐츠 END -->

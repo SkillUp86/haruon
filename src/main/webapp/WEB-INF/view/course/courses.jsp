@@ -7,28 +7,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <!-- 페이지 제목 입력칸 -->
+    <title>HARUON | 문의 조회</title>
+    <!-- 페이지 제목 입력칸 -->
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
-
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL STYLES -->    
-    
-    <!-- 페이지 제목 입력칸 -->
-    <title>HARUON | 교육 조회</title>
-    <!-- 페이지 제목 입력칸 -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL STYLES -->
 </head>
 <body class="layout-boxed">
     <!-- BEGIN LOADER -->
@@ -39,7 +33,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -78,10 +72,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">가맹점</a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">교육 리스트</li>
+                                                <li class="breadcrumb-item active" aria-current="page">문의 상세</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -91,75 +83,51 @@
                     </div>
                     <!--  END BREADCRUMBS  -->
                 
-                <!-- 메인컨텐츠 입력칸 -->
-                <div class="row layout-top-spacing mt-2">
-                
-                	<div class="p-2 card card-title row ms-1">
-                	
-                    <div class="col-lg-12">
-                    
-                        <div class="widget-content searchable-container list">
-
-                            <div class="pt-4 ps-4 d-flex justify-content-between align-item-center">
-                           	<h3>교육 리스트</h3>
-                               <div class="h-100">
-                                <a href="${pageContext.request.contextPath}/franchises/insert" class="btn btn-secondary" style="margin-right: 15px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line> <line x1="5" y1="12" x2="19" y2="12"></line></svg> 등록
-                                </a>
-                               </div>
-                             </div>
-
-                            <table class="table text-center" id="board-list">
-							    <thead>
-							        <tr style="writing-mode: horizontal-tb; white-space: nowrap;">
-							            <th>번호</th>
-							            <th>교육일정</th>
-							            <th>장소</th>
-							            <th>제목</th>
-							            <th>설명</th>
-							            <th>수용인원</th>
-							        </tr>
-								</thead>
-							    <tbody>
-							        <c:forEach items="${courseList}" var="cl">
-							            <tr onclick="window.location='${pageContext.request.contextPath}/franchises/courses/${cl.eduNo}'">
-							                <td>${cl.eduNo}</td>
-							                <td>${cl.eduDate}</td>
-							                <td>${cl.place}</td>
-							                <td>${cl.title}</td>
-							                <td>${cl.content}</td>
-							                <td>${cl.capacity}</td>
-							            </tr>
-							        </c:forEach>
-							    </tbody>
-							</table>
+                    <!-- 메인컨텐츠 입력칸 -->
+                    <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+                        <div class="col-lg-12">
+                            <h2 class="mt-3 mb-3">문의 리스트</h2>
+                            <div class="card widget-content searchable-container list">
+                                <table class="zero-config table dt-table-hover">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>문의번호</th>
+                                            <th>지점이름</th>
+                                            <th>제목</th>
+                                            <th>등록일</th>
+                                            <th>답변상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${ql}" var="ql">
+                                            <tr role="row" class="text-center" onclick="window.location='${pageContext.request.contextPath}/franchises/questions/${ql.fraAskNo}'">
+                                                <td class="sorting_01">${ql.fraAskNo}</td>
+                                                <td>${ql.fname}</td>
+                                                <td>${ql.title}</td>
+                                                <td>${ql.createDate}</td>
+                                                <c:if test="${ql.replyYn == 'Y'}">
+                                                    <td>완료</td>
+                                                </c:if>
+                                                <c:if test="${ql.replyYn == 'N'}">
+                                                    <td><strong>대기</strong></td>
+                                                </c:if>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                
-	                <!-- 페이징 -->
-	                <nav>
-	                    <ul class="pagination">
-	                        <c:forEach begin="1" end="${lastPage}" var="page">
-	                            <li class="page-item ${page == currentPage ? 'active' : ''}">
-	                                <a class="page-link" href="franchises?page=${page}">${page}</a>
-	                            </li>
-	                        </c:forEach>
-	                    </ul>
-	                </nav>
-                                
-                </div>
-                <!-- 메인컨텐츠 END -->
+                    <!-- 메인컨텐츠 END -->
 				</div>
 			</div>
-		</div>
             
-        <!--  BEGIN FOOTER  -->
-        <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
-        <!--  END FOOTER  -->
-	</div>
+	        <!--  BEGIN FOOTER  -->
+	        <jsp:include page="${pageContext.request.contextPath}/WEB-INF/view/inc/footer.jsp" />
+	        <!--  END FOOTER  -->
         	<!--  END CONTENT AREA  -->
+		</div>
+	</div>
 
     <!-- END MAIN CONTAINER -->
 
@@ -173,27 +141,30 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	
 	<script src="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.js"></script>
     <script>
-      $('#board-list').DataTable({
-         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-           "<'table-responsive'tr>" +
-           "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+    $(document).ready(function() {
+           // 페이징, 검색, rowPerPage 관리 항목 객체 생성
+           $('.zero-config').DataTable({
+               "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                      "<'table-responsive'tr>" +
+                      "<'dt--bottom-section d-sm-flex justify-content-sm-center text-center'<'dt--pagination'p>>",
                "oLanguage": {
-                   "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                   "sInfo": "Showing page _PAGE_ of _PAGES_",
-                   "sSearchPlaceholder": "Search",
-                   "sLengthMenu": "Row : _MENU_",
+                   "oPaginate": { 
+                       "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+                       "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' 
+                   },
+                   "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                   "sSearchPlaceholder": "Search...",
+                   "sLengthMenu": "Results :  _MENU_",
                },
                "stripeClasses": [],
                "lengthMenu": [5, 10, 20, 50],
-               "pageLength": 10 
-      });
-      
+               "pageLength": 5
+           });
+    });
     </script>
-
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

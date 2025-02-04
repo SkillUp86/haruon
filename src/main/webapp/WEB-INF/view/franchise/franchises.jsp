@@ -179,7 +179,7 @@
 			                                    </div>
 			                                </div>
 			                                <!-- 가맹점 리스트 테이블 -->
-			                                <table class="zero-config table dt-table-hover" class="table dt-table-hover">
+			                                <table class="zero-config table dt-table-hover">
 			                                    <thead>
 			                                        <tr class="text-center">
 			                                            <th>가맹점명</th>

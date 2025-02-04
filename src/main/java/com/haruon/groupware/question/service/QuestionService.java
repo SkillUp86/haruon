@@ -18,6 +18,16 @@ public class QuestionService {
 	
 	// 답변 등록
 	public Integer insertAnswer(AnswerDto answerDto) {
+		
+		int result = questionMapper.updateQuestionState(answerDto.getFraAskNo());
+		
+		try {
+			if(result != 1) {
+				throw new RuntimeException("문의상태 변경 오류, 관리자에게 문의하세요.");
+			}
+		} catch(Exception e) {
+			e.getStackTrace();
+		}
 		return questionMapper.insertAnswer(answerDto);
 	}
 	

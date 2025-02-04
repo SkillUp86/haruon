@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.haruon.groupware.question.mapper.QuestionMapper">
-	
+<mapper namespace="com.haruon.groupware.question.mapper.QuestionMapper">
 	
 	<!-- 답변 등록 -->
 	<insert id="insertAnswer" parameterType="com.haruon.groupware.question.dto.AnswerDto">
@@ -14,6 +12,13 @@
 			#{fraAskNo}, #{empNo}, #{content}
 		)
 	</insert>
+	
+	<!-- 답변 등록시 문의 상태 변경 (미답변 -> 답변완료) -->
+	<update id="updateQuestionState" parameterType="Integer">
+		UPDATE franchise_ask
+		   SET reply_yn = 'Y'
+		 WHERE fra_ask_no = #{no}
+	</update>
 	
 	<!-- 문의 상세 -->
 	<select id="getQuestion" parameterType="Integer" resultType="com.haruon.groupware.question.dto.QuestionDto">
