@@ -20,7 +20,7 @@
 	    <!-- BEGIN PAGE LEVEL STYLES -->
 	    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/src/table/datatable/datatables.css">
 	    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/src/plugins/css/light/table/datatable/dt-global_style.css">
-   	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=121dca41c37cd51ce59d7bf7a7d85500&libraries=services"></script>
+   	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92a18e347c8af2e06373990f45801cc6&libraries=services"></script>
 	    <!-- END PAGE LEVEL STYLES -->
 	</head>
     <body class="layout-boxed">

@@ -34,10 +34,8 @@ public class DraftService {
 
 	// 유효성 검증
 	public Boolean isAccess(int draNo) {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
-		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
-				.getAuthorities();
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		int empNo = details.getEmpNo();
 		int depNo = details.getDepNo();
 		ResponseAccessDraft access = draftMapper.isAccess(draNo);
@@ -48,8 +46,9 @@ public class DraftService {
 			return true;
 		}
 		// 결재라인, 참조자 접근가능
-		if ((access.getMidApp() != null && access.getMidApp() == empNo) || access.getFinalApp() == empNo || (access.getRefNo() != null && access.getRefNo() == empNo)
-				|| empNo == access.getEmpNo()) {
+		if ((access.getMidApp() != null && access.getMidApp() == empNo) || access.getFinalApp() == empNo || 
+			(access.getRefNo() != null && access.getRefNo() == empNo) || empNo == access.getEmpNo()) {
+			
 			return true;
 		}
 		return false;

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/view/inc/authVar.jsp"%>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <nav id="sidebar">
 
 	<div class="navbar-nav theme-brand flex-row  text-center">
@@ -334,7 +335,6 @@
 			</a>
 		</li>
 	</ul>
-	
 	
 	<!-- 현재 접속중인 URL에 따라 aria-expanded 속성 동적 처리 -->
 	<script>
