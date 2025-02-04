@@ -102,8 +102,6 @@
 	                    <div class="row mb-3">
 	                        <div class="col-md-12">
 	                            <h2 class="mt-3 mb-3">회의실 예약</h2>
-	                            
-               					<form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
 	                            	<c:if test="${user.depNo == 4}">
                					<div style="text-align: right;">
 	                                <a class="btn btn-secondary" id="meetingroomList" href="${pageContext.request.contextPath}/addMeetingroom">
@@ -146,15 +144,11 @@
 										        <td>
 										            <div class="btn-group" role="group" aria-label="Action Buttons">
 										                <!-- 예약 버튼 -->
-										                <form action="${pageContext.request.contextPath}/addReservation/${m.meeNo}" method="get" style="display: inline;">
-										                    <button class="btn btn-primary btn-sm reserve-btn" type="button" data-availYn="${m.availYn}">예약하기</button>
-										                </form>
+										                <a class="btn btn-primary btn-sm reserve-btn"  href="${pageContext.request.contextPath}/addReservation/${m.meeNo}">예약하기</a>
 										                <!-- 삭제 버튼 -->
-										               <form action="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}" method="get" style="display: inline;">
-										                <c:if test="${user.depNo == 4}">
-														    <button class="btn btn-danger btn-sm" type="button" onclick="confirmDelete(this)">삭제하기</button>
-										                </c:if>
-														</form>
+														 <c:if test="${user.depNo == 4}">
+														<a class="btn btn-danger btn-sm" href="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}">삭제하기</a>
+														</c:if>
 										            </div>
 										        </td>
 										    </tr>

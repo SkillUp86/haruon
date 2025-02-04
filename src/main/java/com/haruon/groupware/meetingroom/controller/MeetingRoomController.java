@@ -91,7 +91,7 @@ public class MeetingRoomController {
 	        CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			int deptNo = details.getDepNo();
 	        if (deptNo == 4 ) {
-				return "/modifyMeetingroom";
+				return "meetingroom/modifyMeetingroom";
 	        }
 	        return "redirect:/meetingroom"; 
 	    }
