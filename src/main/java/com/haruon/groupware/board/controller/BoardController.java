@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -136,6 +137,16 @@ public class BoardController {
 	@GetMapping("/board/modify")
     public String modifyBoard(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
+        
+        // 글 작성자와 다른 사원 접근 막기
+  		int empNo = (int)board.get("empNo");
+  		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  		int loginEmpNo = details.getEmpNo();
+  		log.debug("empNo ={}, loginEmpNo={}",empNo,loginEmpNo);
+  		if(loginEmpNo != empNo) {
+  			return "redirect:/board/" + boaNo;
+  		}
+  		
         model.addAttribute("b", board);
         
         List<Category> categoryList = categoryService.getCategoryListFree();
@@ -200,6 +211,16 @@ public class BoardController {
 	@GetMapping("/board/modifyNotice")
     public String modifyNotice(@RequestParam Integer boaNo, Model model) {
         Map<String, Object> board = boardService.getBoardOne(boaNo);
+        
+        // 글 작성자와 다른 사원 접근 막기
+ 		int empNo = (int)board.get("empNo");
+ 		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 		int loginEmpNo = details.getEmpNo();
+ 		log.debug("empNo ={}, loginEmpNo={}",empNo,loginEmpNo);
+ 		if(loginEmpNo != empNo) {
+ 			return "redirect:/board/" + boaNo;
+ 		}
+     			
         model.addAttribute("b", board);
         
 		List<BoardFile> boardFiles = boardService.getBoardFiles(boaNo);

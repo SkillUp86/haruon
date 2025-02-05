@@ -1,12 +1,9 @@
 package com.haruon.groupware.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,7 +20,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
 									.requestMatchers("/login", "/findPw", "/layouts/**", "/src/**","/WEB-INF/view/**").permitAll()
-									.requestMatchers("/addEmp").hasRole("HR") // 인사과만 사원 추가가능
+									.requestMatchers("/addEmp","/insertNotice", "/modifyNotice").hasRole("HR") // 인사과만 사원 추가, 공지 등록•수정 가능
+									.requestMatchers("/categories","company/modify","depts/update").hasRole("IT") // 전산과만
 					                .anyRequest().authenticated()
 					                );
         http.formLogin(auth -> auth
