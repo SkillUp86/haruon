@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.message.mapper.MsgMapper">
 
+	<!-- reader, sender 둘 다 삭제되어있다면 msg, msg_file 테이블에서 해당 메세지번호 데이터 삭제
+	<delete id="deleteMsgFile">
+		DELETE FROM msg_file
+		 WHERE msg_no NOT IN (SELECT DISTINCT msg_no FROM msg_reader) 
+	  	   AND msg_no NOT IN (SELECT DISTINCT msg_no FROM msg_sender);
+	</delete>
+	<delete id="deleteMsg">
+		DELETE FROM msg
+		 WHERE msg_no NOT IN (SELECT DISTINCT msg_no FROM msg_reader) 
+	  	   AND msg_no NOT IN (SELECT DISTINCT msg_no FROM msg_sender);
+	</delete> -->
+	
 	<!-- 임시저장 쪽지 발송 시 수정 -->
 	<update id="modifyMsg" parameterType="com.haruon.groupware.message.dto.MsgDto">
 		UPDATE msg
@@ -114,12 +126,12 @@
 		JOIN common_code ccs ON es.location = ccs.common_code
 		LEFT OUTER JOIN emp_file esf ON es.emp_no = esf.emp_no
 		LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
-		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02' AND (mr.state = 'D01' OR mr.state = 'D02')
+		WHERE mr.emp_no = #{empNo} AND (ms.state = 'E02' OR ms.state = 'E03') AND (mr.state = 'D01' OR mr.state = 'D02')
 	</select>
 	<!-- 읽음 상태변경 -->
 	<update id="modifyReadState" parameterType="Integer">
 		UPDATE msg_reader
-		SET state = "D02", read_date = now()
+		SET state = 'D02', read_date = now()
 		WHERE msg_no = #{msgNo}
 	</update>
 	<!-- 휴지통 이동 -->
@@ -135,19 +147,22 @@
 		WHERE msg_no = #{msgNo}
 	</update>
 	<!-- 휴지통 비우기 -->
-	<delete id="deleteEmptyTrash" parameterType="Integer">
-		DELETE FROM msg_reader
+	<update id="deleteEmptyTrash" parameterType="Integer">
+		UPDATE msg_reader
+		SET state = 'D04'
 		WHERE emp_no = #{empNo} AND state = 'D03'
-	</delete>
+	</update>
 	<!-- 영구 삭제 -->
-	<delete id="deleteMsgR" parameterType="Integer">
-		DELETE FROM msg_reader
+	<update id="deleteMsgR" parameterType="Integer">
+		UPDATE msg_reader
+		SET state = 'D04'
 		WHERE msg_no = #{msgNo}
-	</delete>	
-	<delete id="deleteMsgS" parameterType="Integer">
-		DELETE FROM msg_sender
+	</update>	
+	<update id="deleteMsgS" parameterType="Integer">
+		UPDATE msg_sender
+		SET state = 'E03'
 		WHERE msg_no = #{msgNo}
-	</delete>	
+	</update>	
 
 	<!-- 받은 쪽지 휴지통 -->
 	<select id="getTrashsMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgReaderDto">
@@ -180,39 +195,11 @@
 		JOIN common_code ccs ON es.location = ccs.common_code
 		LEFT OUTER JOIN emp_file esf ON es.emp_no = esf.emp_no
 		LEFT OUTER JOIN msg_file mf ON ms.msg_no = mf.msg_no
-		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02' AND mr.state = 'D03'
+		WHERE mr.emp_no = #{empNo} AND mr.state = 'D03' AND (ms.state = 'E02' OR ms.state = 'E03') 
 	</select>
-	
-	<resultMap type="com.haruon.groupware.message.dto.MsgSenderDto" id="msgMap">
-		<id property="msgsNo" column="msgsNo"/>
-        <result property="msgNo" column="msgNo"/>
-        <result property="empNo" column="empNo"/>
-        <result property="state" column="state"/>
-        <result property="sendDate" column="sendDate"/>
-        <result property="empNoS" column="empNoS"/>
-        <result property="enameS" column="enameS"/>
-        <result property="descriptS" column="descriptS"/>
-        <result property="emailS" column="emailS"/>
-        <result property="empNoR" column="empNoR"/>
-        <result property="enameR" column="enameR"/>
-        <result property="descriptR" column="descriptR"/>
-        <result property="emailR" column="emailR"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="fileNameE" column="fileNameE"/>
-        <result property="extE" column="extE"/>
-        <collection property="msgFileDtoList" javaType="java.util.List" resultMap="msgFileMap">
-        </collection>
-	</resultMap>
-	
-	<resultMap id="msgFileMap" type="com.haruon.groupware.message.dto.MsgFileDto">
-		<id property="msgsNo" column="msgsNo"/>
-		<result property="originNameM" column="originNameM"/>
-		<result property="fileNameM" column="fileNameM"/>
-		<result property="extM" column="extM"/>
-	</resultMap>
+
 	<!-- 보낸 쪽지 -->
-	<select id="getSendersMsg" parameterType="Integer" resultMap="msgMap">
+	<select id="getSendersMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
 		SELECT m.msg_no msgNo
 			 , ms.msgs_no msgsNo
 		     , es.ename enameS

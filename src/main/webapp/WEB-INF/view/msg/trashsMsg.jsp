@@ -126,7 +126,7 @@
                                                         <input class="" type="hidden" id="inboxAll">
                                                     </div>
                                                     
-                                                    <div class="d-flex justify-content-end mail-btn-container ms-1">
+                                                    <div class="d-flex justify-content-end mail-btn-container">
                                                         <a id="btn-compose-mail" class="btn" href="javascript:void(0);">메일 보내기</a>
                                                     </div>
                                                     
@@ -183,7 +183,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <div class="mb-4 mail-to">
-	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
+	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 수신인:</p>
                                                                                 <select class="form-control" id="m-to" name="empNoR">
 	                                                                                <option value="">직원 선택</option>
 	                                                                                <c:forEach items="${empList}" var="el">
@@ -195,50 +195,50 @@
                                                                     </div>
                                                                     
                                                                     <div class="row">
-                                                                    <div class="col-md-6">
-                                                                    	<div class="mb-4 mail-form">
-                                                                            <p>From: ${ename}</p>
-                                                                            <input type="email" id="m-from" class="form-control" name="emailS" value="${email}" readonly> 
-                                                                            <input type="hidden" name="empNoS" value="${empNo}">
-                                                                            <input type="hidden" id="stateS" name="stateS" value="E01">
-                                                                        </div>
-                                                                    </div>
-
-																	<!-- ??? 참조자 어떻게 할건지 ??? -->
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-cc">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
-                                                                            <div>
-                                                                                <input type="text" id="m-cc" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- ??? 참조자 ??? -->
-                                                                </div>
+	                                                                    <div class="col-md-12">
+	                                                                    	<div class="mb-4 mail-form">
+	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 발신인: </p>
+	                                                                            <input type="email" id="m-from" class="form-control" name="emailS" value="${ename} &lt;${email}&gt;" readonly> 
+	                                                                            <input type="hidden" name="empNoS" value="${empNo}">
+	                                                                            <input type="hidden" id="stateS" name="stateS" value="E01">
+	                                                                        </div>
+	                                                                    </div>
+	
+																		<!--
+																		 ??? 참조자 어떻게 할건지 ???
+	                                                                    <div class="col-md-6">
+	                                                                        <div class="mb-4 mail-cc">
+	                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
+	                                                                            <div>
+	                                                                                <input type="text" id="m-cc" class="form-control">
+	                                                                                <span class="validation-text"></span>
+	                                                                            </div>
+	                                                                        </div>
+	                                                                    </div>
+	                                                                   -->
+                                                                	</div>
                                                                 
                                                                     <div class="mb-4">
-                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Title:</p>
+                                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> 제목:</p>
                                                                         <div class="w-100">
                                                                             <input type="text" id="m-title" name="title" class="form-control">
-                                                                            <span class="validation-text"></span>
                                                                         </div>
                                                                     </div>
                                                                     
-                                                                    <div class="mb-4">
-											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
+											                        <div class="mb-4">
+											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> 첨부파일:</p>
 											                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
 											                            <input class="form-control file-upload-input" type="file" id="formFile" name="msgFiles">
 											                        </div>
 											                        
 											                        <div class="">
-											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Content:</p>
+											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> 내용:</p>
 								                                        <div class="col-sm-12">
 								                                            <textarea class="form-control" id="m-content" name="content" placeholder="내용 작성" style="height: 300px;"></textarea>
 								                                        </div>
 							                                    	</div>
-
                                                                 </form>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

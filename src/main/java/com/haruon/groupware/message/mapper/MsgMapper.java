@@ -46,6 +46,10 @@ public interface MsgMapper {
 	// 임시 보관함
 	List<MsgSenderDto> getTemporaryMsgList(Integer empNo);
 	
+	// reader, sender 둘 다 삭제되어있다면 msg, msg_file 테이블에서 해당 메세지번호 데이터 삭제
+	Integer deleteMsgFile();
+	Integer deleteMsg();
+	
 	// Header에 표시할 읽지 않은 상태인 수신쪽지관련 정보요약
 	List<MsgReaderListDto> findUnreadMsgSum(Integer empNo);
 	

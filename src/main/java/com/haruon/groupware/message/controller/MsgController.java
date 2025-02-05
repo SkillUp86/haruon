@@ -119,6 +119,12 @@ public class MsgController {
 		model.addAttribute("empList", empList);
 		return "msg/temporarysMsg";
 	}
+	// 임시보관함 삭제
+	@PostMapping("/deleteMsg/{msgNo}")
+	public String deleteMsg(@PathVariable Integer msgNo) {
+		msgService.deleteMsg(msgNo);
+		return "msg/temporarysMsg";
+	}
 	
 	// 휴지통
 	@GetMapping("/trashsMsg")
@@ -164,4 +170,5 @@ public class MsgController {
 		msgService.deleteMsgS(msgNo);
 		return "redirect:/sendersMsg";
 	}
+	
 }
