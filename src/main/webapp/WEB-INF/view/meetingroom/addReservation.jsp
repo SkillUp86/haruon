@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -394,6 +394,21 @@ $('#revTime').on('change', function() {
         value: descriptValue
     }).appendTo('#formInsert');
 });
+
+document.getElementById('revDate').min = new Date().toISOString().split('T')[0];
+
+//폼 제출 시 추가 검증
+document.querySelector('#formInsert').addEventListener('submit', function(e) {
+ const selectedDate = new Date(document.getElementById('revDate').value);
+ const now = new Date().setHours(0,0,0,0);
+ 
+ if(selectedDate < now) {
+     e.preventDefault();
+     alert('과거 날짜 예약 불가');
+     document.getElementById('revDate').value = '';
+ }
+});
+
 </script>
 </body>
 </html>
