@@ -120,9 +120,6 @@
                             <div class="col-sm-10">
                                 <select class="form-control" id="kind" name="kind">
                                     <option value="G01" ${s.kind == 'G01' ? 'selected' : ''}>일정</option>
-                                    <option value="G02" ${s.kind == 'G02' ? 'selected' : ''}>연차</option>
-                                    <option value="G05" ${s.kind == 'G05' ? 'selected' : ''}>반차</option>
-                                    <option value="G03" ${s.kind == 'G03' ? 'selected' : ''}>출장</option>
                                 </select>
                             </div>
                         </div>

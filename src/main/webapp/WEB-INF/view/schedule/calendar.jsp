@@ -122,13 +122,10 @@
                         </div>
 
                         <!-- 일정 종류 -->
-                        <label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
+                        <label for="inputEmail" class="col-sm-4 col-form-label">일정</label>
                         <div class="col-sm-8 scheduleModalDiv mb-2">
                             <select class="form-control" id="kind" name="kind">
                                 <option value="G01" selected>일정</option>
-                                <option value="G02">연차</option>
-                                <option value="G05">반차</option>
-                                <option value="G03">출장</option>
                             </select>
                         </div>
 
