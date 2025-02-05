@@ -50,7 +50,7 @@ public class BoardController {
 	
 	// 게시글 상세
 	@GetMapping("/board/{boaNo}")
-    public String getBoardOne(Authentication authentication, HttpSession session, @PathVariable Integer boaNo, Model model) {
+    public String getBoardOne(Authentication authentication, @PathVariable Integer boaNo, Model model) {
 		Map<String, Object> board = boardService.getBoardOne(boaNo);
         model.addAttribute("b", board);
         
@@ -121,12 +121,12 @@ public class BoardController {
         return "board/insert";
     }
 	@PostMapping("/board/insert")
-	public String insertBoard(Authentication authentication, HttpSession session, BoardDto boardDto) {
+	public String insertBoard(Authentication authentication, BoardDto boardDto) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
 		boardDto.setEmpNo(empNo);
 		
-		String path = session.getServletContext().getRealPath("/upload/board/");
+		String path = "/home/ubuntu/upload/board/";
 		boardService.insertBoard(boardDto, path);
 		
 		return "redirect:/board";
@@ -148,13 +148,13 @@ public class BoardController {
     }
 	@PostMapping("/board/modify")
 	public String modifyBoard(@RequestParam Integer boaNo , @RequestParam Integer catNo, @RequestParam String title
-							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
+							, @RequestParam String content, BoardDto boardDto) {
 		boardDto.setBoaNo(boaNo);
 	    boardDto.setCatNo(catNo);
 	    boardDto.setTitle(title);
 	    boardDto.setContent(content);
 
-	    String path = session.getServletContext().getRealPath("/upload/board/");
+	    String path = "/home/ubuntu/upload/board/";
 	    boardService.updateBoard(boardDto, path);
 
 	    return "redirect:/board/" + boaNo;
@@ -175,7 +175,7 @@ public class BoardController {
 	
 	// 공지 입력
 	@GetMapping("/board/insertNotice")
-	public String insertNotice(Authentication authentication, HttpSession session, Model model) {
+	public String insertNotice(Authentication authentication, Model model) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
 		model.addAttribute("empNo",empNo);
@@ -185,12 +185,12 @@ public class BoardController {
 		return "board/insertNotice";
 	}
 	@PostMapping("/board/insertNotice")
-	public String insertNotice(Authentication authentication, HttpSession session, BoardDto boardDto) {
+	public String insertNotice(Authentication authentication, BoardDto boardDto) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
 		boardDto.setEmpNo(empNo);
 		
-		String path = session.getServletContext().getRealPath("/upload/board/");
+		String path = "/home/ubuntu/upload/board/";
 		boardService.insertNotice(boardDto, path);
 		
 		return "redirect:/board/notice";
@@ -209,12 +209,12 @@ public class BoardController {
     }
 	@PostMapping("/board/modifyNotice")
 	public String modifyNotice(@RequestParam Integer boaNo , @RequestParam String title
-							, @RequestParam String content, BoardDto boardDto, HttpSession session) {
+							, @RequestParam String content, BoardDto boardDto) {
 		boardDto.setBoaNo(boaNo);
 	    boardDto.setTitle(title);
 	    boardDto.setContent(content);
 
-	    String path = session.getServletContext().getRealPath("/upload/board/");
+	    String path = "/home/ubuntu/upload/board/";
 	    boardService.updateNotice(boardDto, path);
 
 		return "redirect:/board/"+boaNo;
@@ -222,15 +222,15 @@ public class BoardController {
 	
 	// 글 삭제
 	@GetMapping("/board/delete")
-	public String deleteBoard(HttpSession session, @RequestParam Integer boaNo) {
-		String path = session.getServletContext().getRealPath("/upload/board/");
+	public String deleteBoard(@RequestParam Integer boaNo) {
+		String path = "/home/ubuntu/upload/board/";
 		boardService.deleteBoard(boaNo, path);
 		return "redirect:/board";
 	}
 	// 공지 삭제
 	@GetMapping("/board/deleteNotice")
-	public String deleteNotice(HttpSession session, @RequestParam Integer boaNo) {
-		String path = session.getServletContext().getRealPath("/upload/board/");
+	public String deleteNotice(@RequestParam Integer boaNo) {
+		String path = "/home/ubuntu/upload/board/";
 		boardService.deleteBoard(boaNo, path);
 		return "redirect:/board/notice";
 	}

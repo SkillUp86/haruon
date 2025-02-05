@@ -18,8 +18,8 @@ public class EmpSignRestController {
 	}
 
 	@PostMapping("/saveSign")
-	public ResponseEntity<String> saveSign(@RequestParam String sign, HttpSession session) {
-		String path = session.getServletContext().getRealPath("/upload/sign/");
+	public ResponseEntity<String> saveSign(@RequestParam String sign) {
+		String path = "/home/ubuntu/upload/sign/";
 		boolean saveSign = empSignService.saveSign(sign, path);
 		if(saveSign) {
 			return ResponseEntity.ok("사인 저장 성공");

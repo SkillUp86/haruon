@@ -29,14 +29,14 @@ public class MsgController {
 	
 	// 메일 발송 (+ 임시저장)
 	@PostMapping("/insertMsg")
-	public String insertMsg(HttpSession session, MsgDto msgDto) {
+	public String insertMsg(MsgDto msgDto) {
 		log.debug("msgDto ======>" + msgDto);
 		log.debug("StateS ======> " + msgDto.getStateS());
 		// 파일업로드
 		msgDto.getMsgFiles();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/upload/msg/");
+		String path = "/home/ubuntu/upload/msg/";
 		log.debug("path =====> " + path);
 		
 		msgService.insertMsg(msgDto, path);
@@ -50,14 +50,14 @@ public class MsgController {
 	
 	// 임시저장 발송
 	@PostMapping("/modifyMsg/{msgNo}")
-	public String modifyMsg(@PathVariable Integer msgNo, HttpSession session, MsgDto msgDto) {
+	public String modifyMsg(@PathVariable Integer msgNo, MsgDto msgDto) {
 		log.debug("msgNo ======>" + msgNo);
 
 		// 파일업로드
 		msgDto.getMsgFiles();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/upload/msg/");
+		String path = "/home/ubuntu/upload/msg/";
 		log.debug("path =====> " + path);
 		
 		msgService.modifyMsg(msgDto, path, msgNo);

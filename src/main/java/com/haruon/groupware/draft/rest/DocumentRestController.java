@@ -33,12 +33,12 @@ public class DocumentRestController {
 	}
 	// 결재문서 첨부파일 삭제
 	@DeleteMapping("{type}/delete/{drafNo}/file/{draNo}")
-	public ResponseEntity<Void> deleteFile(@PathVariable String type, @PathVariable int draNo ,@PathVariable int drafNo, HttpSession session){
+	public ResponseEntity<Void> deleteFile(@PathVariable String type, @PathVariable int draNo ,@PathVariable int drafNo){
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		String path = "/home/ubuntu/upload/draft/";
 		log.debug("draNo = {} drafNo = {}", draNo, drafNo);
 		deleteService.getDeleteFile(drafNo, path);
 		return ResponseEntity.ok().build();

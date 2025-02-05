@@ -61,8 +61,8 @@ public class BoardRestController {
 	
 	// 글 수정 시 첨부파일 삭제
 	@PostMapping("/board/deleteBoardFile")
-    public String deleteFile(@RequestParam Integer boafNo, HttpSession session) {
-        String path = session.getServletContext().getRealPath("/upload/board/");
+    public String deleteFile(@RequestParam Integer boafNo) {
+        String path = "/home/ubuntu/upload/board/";
         
         try {
             boardService.deleteBoardFileByOne(boafNo, path);

@@ -25,8 +25,8 @@ public class CourseController {
 	
 	// 교육 삭제
 	@GetMapping("/franchises/courses/delete")
-	public String deleteCourse(HttpSession session, @RequestParam Integer eduNo) {
-		String path = session.getServletContext().getRealPath("/upload/course/");
+	public String deleteCourse(@RequestParam Integer eduNo) {
+		String path = "/home/ubuntu/upload/course/";
 		courseService.deleteCourse(eduNo, path);
 		return "redirect:/franchises/courses";
 	}
@@ -48,12 +48,12 @@ public class CourseController {
 		return "course/modify";
 	}
 	@PostMapping("/franchises/courses/modify")
-	public String modifyCourse(HttpSession session, CourseDto courseDto) {
+	public String modifyCourse(CourseDto courseDto) {
 		// 파일업로드
 		courseDto.getEducationFile();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/upload/course/");
+		String path = "/home/ubuntu/upload/course/";
 		log.debug("path =====> " + path);
 		log.debug("eduNo =====> " + courseDto.getEduNo());
 		
@@ -64,9 +64,8 @@ public class CourseController {
 	
 	// 교육 수정 시 첨부파일 삭제
 	@GetMapping("/franchises/courses/deleteFile")
-	public String deleteFile(HttpSession session
-							, @RequestParam Integer eduNo, @RequestParam Integer edufNo) {
-		String path = session.getServletContext().getRealPath("/upload/course/");
+	public String deleteFile(@RequestParam Integer eduNo, @RequestParam Integer edufNo) {
+		String path = "/home/ubuntu/upload/course/";
 		courseService.deleteCourseFile(edufNo, path);
 		return "redirect:/franchises/courses/modify?eduNo=" + eduNo;
 	}
@@ -93,14 +92,14 @@ public class CourseController {
 	}
 	
 	@PostMapping("/franchises/courses/insert")
-	public String insertCourse(HttpSession session, CourseDto courseDto) {
+	public String insertCourse(CourseDto courseDto) {
 		log.debug("EduNo =====> " + courseDto.getEduNo());
 		
 		// 파일업로드
 		courseDto.getEducationFile();
 		
 		// 파일 저장위치
-		String path = session.getServletContext().getRealPath("/upload/course/");
+		String path = "/home/ubuntu/upload/course/";
 		log.debug("path =====> " + path);
 		
 		courseService.insertCourse(courseDto, path);

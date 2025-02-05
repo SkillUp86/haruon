@@ -30,7 +30,7 @@ public class DeleteController {
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		String path = "/home/ubuntu/upload/draft/";
 		deleteService.getDeleteDraft(docType, draNo, appNo, path);
 		return "redirect:/draft/list";
 

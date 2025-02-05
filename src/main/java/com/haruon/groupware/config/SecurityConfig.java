@@ -22,13 +22,12 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-									.requestMatchers( "/login").anonymous()
+									.requestMatchers("/login", "/findPw", "/layouts/**", "/src/**","/WEB-INF/view/**").permitAll()
 									.requestMatchers("/addEmp").hasRole("HR") // 인사과만 사원 추가가능
-									.requestMatchers("/findPw", "/layouts/**", "/src/**","/WEB-INF/view/**").permitAll()
 					                .anyRequest().authenticated()
 					                );
         http.formLogin(auth -> auth
-			            .loginPage("/login").permitAll()
+			            .loginPage("/login")
 			            .usernameParameter("email")
 			            .passwordParameter("empPw")
 			            .loginProcessingUrl("/loginSuccess")

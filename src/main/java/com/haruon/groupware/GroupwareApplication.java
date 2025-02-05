@@ -18,7 +18,7 @@ public class GroupwareApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/upload/**").addResourceLocations("file:/home/ubuntu/uploads/");
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:/home/ubuntu/upload/");
 	}
 }
 

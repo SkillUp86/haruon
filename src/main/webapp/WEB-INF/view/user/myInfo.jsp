@@ -141,7 +141,7 @@
 												    	</c:if>
 												    	<c:if test="${e.fileName == null}">
 													       <div class="profile-image-area mb-2">
-									                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/profile.svg" id="author-img">
+									                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/noProfile.png" id="author-img">
 									                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#profileModal">
 	                                                                이미지 변경
 	                                                            </button>

@@ -53,7 +53,7 @@ public class ApprovalActionController {
 		} else if (!approvalActionService.isAccessByFinalApproval(draNo)) {
 			return "login";
 		}
-		approvalActionService.getUpdateFinalApproval(draNo);
+		approvalActionService.getUpdateFinalApproval(draNo, type);
 		return "redirect:/draft/" + type + "/detail/" + draNo;
 	}
 

@@ -26,9 +26,9 @@ private final EmpProfileService empProfileService;
 	
 	// 프로필 사진 업로드
 	@PostMapping("/upload/profile")
-	public String postMethodName(@RequestParam MultipartFile file, HttpSession session, Authentication authentication) {
+	public String postMethodName(@RequestParam MultipartFile file, Authentication authentication) {
 		log.debug("file = {}",file.getOriginalFilename());
-		String path = session.getServletContext().getRealPath("/upload/profile/");
+		String path = "/home/ubuntu/upload/profile/";
 		CustomUserDetails details = (CustomUserDetails)authentication.getPrincipal();
 		String email = details.getUsername();
 		log.debug("email = {}",email);

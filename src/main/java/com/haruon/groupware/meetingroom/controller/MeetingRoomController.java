@@ -40,7 +40,7 @@ public class MeetingRoomController {
 	        MeetingRoom meetingRoom, 
 	        @RequestParam("meetingroomFile") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    try {
-	        String path = request.getServletContext().getRealPath("/upload/meetingroom/");
+	        String path = "/home/ubuntu/upload/meetingroom/";
 	        
 	        // 서비스 호출 (회의실 저장 -> 파일 저장)
 	        meetingRoomService.addMeetingroom(meetingRoom, file, path);
@@ -63,7 +63,7 @@ public class MeetingRoomController {
 	public String deleteMeetingroom(@PathVariable Integer meeNo, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    try {
 	        // 저장 경로 확인
-	        String path = request.getServletContext().getRealPath("/upload/meetingroom/");
+	        String path = "/home/ubuntu/upload/meetingroom/";
 
 	        // 삭제 작업 실행
 	        log.debug("삭제할 meeNo: " + meeNo);
@@ -105,7 +105,7 @@ public class MeetingRoomController {
 	         RedirectAttributes redirectAttributes) {
 	     try {
 	         // 저장 경로 전달
-	         String path = request.getServletContext().getRealPath("/upload/meetingroom/");
+	         String path = "/home/ubuntu/upload/meetingroom/";
 
 	         // 회의실 정보 업데이트
 	         meetingRoomService.updateMeetingroom(meetingRoom);

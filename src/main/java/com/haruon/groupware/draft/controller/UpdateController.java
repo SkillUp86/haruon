@@ -92,60 +92,60 @@ public class UpdateController {
 	}
 
 	// 공통 로직 묶기
-	private String isAccess(HttpSession session, Integer draNo) {
+	private String isAccess(Integer draNo) {
 		// 유효성검사
 		if (!draftService.isAccess(draNo)) {
 			return "login";
 		}
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		String path = "/home/ubuntu/upload/draft/";
 		return path;
 	}
 
 	@PostMapping("/update/vacationDraft")
-	public String updateVacationDraft(@Valid RequestUpdateVacationDraft vacationDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateVacationDraft(@Valid RequestUpdateVacationDraft vacationDraft, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+vacationDraft.getType()+"/update/"+vacationDraft.getDraNo();
 		}
 		Integer draNo = vacationDraft.getDraNo();
-		String path = isAccess(session, draNo);
+		String path = isAccess(draNo);
 		updateService.getUpdateVacationDraft(vacationDraft, path);
 		return "redirect:/draft/"+vacationDraft.getType()+"/detail/" + vacationDraft.getDraNo();
 	}
 
 	@PostMapping("/update/salesDraft")
-	public String updateSalesDraft(@Valid RequestUpdateSalesDraft salesDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateSalesDraft(@Valid RequestUpdateSalesDraft salesDraft, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+salesDraft.getType()+"/update/" + salesDraft.getDraNo();
 		}
 		Integer draNo = salesDraft.getDraNo();
-		String path = isAccess(session, draNo);
+		String path = isAccess(draNo);
 		updateService.getUpdateSalesDraft(salesDraft, path);
 		return "redirect:/draft/"+salesDraft.getType()+"/detail/" + salesDraft.getDraNo();
 	}
 
 	@PostMapping("/update/businessDraft")
-	public String updateBusinessDraft(@Valid RequestUpdateBusinessDraft businessDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateBusinessDraft(@Valid RequestUpdateBusinessDraft businessDraft, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+businessDraft.getType()+"/update/" + businessDraft.getDraNo();
 		}
 		Integer draNo = businessDraft.getDraNo();
-		String path = isAccess(session, draNo);
+		String path = isAccess(draNo);
 		updateService.getUpdateBusinessDraft(businessDraft, path);
 		return "redirect:/draft/"+businessDraft.getType()+"/detail/" + businessDraft.getDraNo();
 	}
 
 	@PostMapping("/update/basicDraft")
-	public String updateBasicDraft(@Valid RequestUpdateBasicDraft basicDraft, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String updateBasicDraft(@Valid RequestUpdateBasicDraft basicDraft, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/draft/"+basicDraft.getType()+"/update/" + basicDraft.getDraNo();
 		}
 		Integer draNo = basicDraft.getDraNo();
-		String path = isAccess(session, draNo);
+		String path = isAccess(draNo);
 		updateService.getUpdateBasicDraft(basicDraft, path);
 		return "redirect:/draft/"+basicDraft.getType()+"/detail/" + basicDraft.getDraNo();
 	}

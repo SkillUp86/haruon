@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="user" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,7 +138,15 @@
 										<span class="input-group-text label-text">유형</span>
 										<select type="text" class="form-select" id="kind" name="kind" required>
 											<c:forEach items="${codeList}" var="c">
-												<option class="" id="code" value="${c.commonCode}">${c.descript}</option>
+												<c:if test="${c.commonCode == 'C03'}">
+											        <c:if test="${user.depNo == 2}">
+											            <option value="${c.commonCode}">${c.descript}</option>
+											        </c:if>
+											    </c:if>
+											    
+											    <c:if test="${c.commonCode != 'C03'}">
+											        <option value="${c.commonCode}">${c.descript}</option>
+											    </c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -215,7 +224,7 @@
 												</c:forEach>
 											</select>
 											<span class="input-group-text label-text">비상연락처</span>
-											<input class="form-control" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" id="urgentPhone" placeholder="010-0000-0000">
+											<input class="form-control" type="text" pattern="(010)\d{3,4}\d{4}" name="urgentPhone" id="urgentPhone" placeholder="01012345678">
 										</div>
 
 									</div>
@@ -418,6 +427,12 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
     
+	<c:if test="${not empty param.successMsg}">
+	    <script>
+	        alert("${param.successMsg}");  // 메시지 표시
+	        window.location.href = "/home"; // 홈으로 이동
+	    </script>
+	</c:if>
 
 </body>
     <script>
@@ -697,8 +712,8 @@
 					}  else if($('#vactionType').val() === '') {
 						alert('휴가 종류를 선택하세요')
 						return;
-					} else if(!/^010-\d{4}-\d{4}$/.test($('#urgentPhone').val())) {
-				        alert('전화번호 형식이 올바르지 않습니다. 예: 010-0000-0000');
+					} else if(!/^010\d{4}\d{4}$/.test($('#urgentPhone').val())) {
+				        alert('전화번호 형식이 올바르지 않습니다. 예: 01000000000');
 				        return;
 					} else if (new Date($('#vacStartDate').val().trim()) > new Date($('#vacFinishDate').val())) {
 			            alert('휴가 시작날짜가 종료날짜보다 늦을 수 없습니다.');
@@ -708,7 +723,6 @@
 				}
 			}
 		});
-
 			
 	   </script>
 </html>

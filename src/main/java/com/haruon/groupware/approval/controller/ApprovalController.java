@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.haruon.groupware.approval.dto.RequestApproval;
 import com.haruon.groupware.approval.dto.ResponseFranchise;
@@ -36,11 +37,11 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/approval")
-	public String insertApproval(@Valid RequestApproval approval, BindingResult bindingResult, Model model, HttpSession session) {
+	public String insertApproval(@Valid RequestApproval approval, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		log.debug(approval.toString());
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
-			return "/approval/approval";
+			redirectAttributes.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/approval";
 		}
 
 		List<MultipartFile> list = approval.getFormFile();
@@ -50,20 +51,20 @@ public class ApprovalController {
 					continue;
 				}
 				 if (f.getSize() > 10 * 1024 * 1024) {
-		                model.addAttribute("msg", "첨부파일 크기는 10MB를 초과할 수 없습니다.");
-		                return "/approval/approval";
+					 redirectAttributes.addAttribute("msg", "첨부파일 크기는 10MB를 초과할 수 없습니다.");
+		                return "redirect:/approval";
 		            }
 				if (!f.getContentType().equals("image/jpeg") && !f.getContentType().equals("image/png") && !f.getContentType().equals("application/pdf")) {
-					model.addAttribute("msg", "이미지 파일,pdf 만 입력이 가능합니다");
-					return "/approval/approval";
+					redirectAttributes.addAttribute("msg", "이미지 파일,pdf 만 입력이 가능합니다");
+					return "redirect:/approval";
 				}
 			}
 		}
 
-		String path = session.getServletContext().getRealPath("/upload/draft/");
+		String path ="/home/ubuntu/upload/draft/";
 		approvalService.addApproval(approval, path);
-
-		return "redirect:/home";
+		redirectAttributes.addAttribute("successMsg", "결재문서 작성 완료.");
+		return "redirect:/approval";
 	}
 
 	@GetMapping("/approval")
