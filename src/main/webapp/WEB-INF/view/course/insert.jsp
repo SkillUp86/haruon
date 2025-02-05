@@ -9,21 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
-
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->    
     
     <!-- 페이지 제목 입력칸 -->
@@ -97,7 +90,7 @@
                 <!-- 메인컨텐츠 입력칸 -->
                 <div class="layout-top-spacing" id="cancel-row">
                     <h2 class="mt-3 mb-3">교육 등록</h2>
-                    <div class="card row ms-3 w-50 p-3 row">
+                    <div class="card row ms-3 w-50 p-3">
                         <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/insert" class="row g-3" enctype="multipart/form-data">
                             <div class="col-6">
 	                            <label for="empNo" class="form-label">교육 담당자</label>
@@ -158,7 +151,6 @@
     <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 	
 	<script>
