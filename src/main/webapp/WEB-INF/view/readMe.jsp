@@ -50,7 +50,6 @@
 	             <div class="app-hamburger-container">
 	                 <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu chat-menu d-xl-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
 	             </div>
-	             <br><br>
 	             <hr>
 	             <div class="app-note-container">
 	                 <div class="tab-title">
@@ -93,6 +92,57 @@
 	                 </div>
 	
 	                 <div id="ct" class="note-container note-grid">
+	                 <!-- 테스트계정 -->
+	                     <div class="note-item all-notes test">
+	                         <div class="note-inner-content">
+	                             <h5>테스트 계정</h5>
+	                             
+	                             <ul>
+	                             	<li>비밀번호는 모두 1234입니다.</li>
+	                                 <li>
+	                                 	가맹점권한
+	                                 	<div class="input-group input-group-sm mt-2">
+										    <span class="input-group-text">아 이 디</span>
+										    <input id="idFranchise" type="text" class="form-control" value="franchise@haruon.com" readonly>
+										    <button id="copyIdFranchise" class="btn">copy</button>
+										</div>
+									</li></br>
+	                                 <li>
+	                                 	인사권한
+	                                 	<div class="input-group input-group-sm mt-2">
+										    <span class="input-group-text">아 이 디</span>
+										    <input id="idPersonnel" type="text" class="form-control" value="personnel@haruon.com" readonly>
+										    <button id="copyIdPersonnel" class="btn">copy</button>
+										</div>
+                                 	 </li></br>
+	                                 <li>
+	                                 	시스템
+	                                 	<div class="input-group input-group-sm mt-2">
+										    <span class="input-group-text">아 이 디</span>
+										    <input id="idSystem" type="text" class="form-control" value="system@haruon.com" readonly>
+										    <button id="copyIdSystem" class="btn">copy</button>
+										</div>
+                                 	 </li></br>
+	                                 <li>
+	                                 	부서관리
+	                                 	<div class="input-group input-group-sm mt-2">
+										    <span class="input-group-text">아 이 디</span>
+										    <input id="idDivision" type="text" class="form-control" value="division@haruon.com" readonly>
+										    <button id="copyIdDivision" class="btn">copy</button>
+										</div>
+                                 	 </li></br>
+	                                 <li>
+	                                 	일반직원
+	                                 	<div class="input-group input-group-sm mt-2">
+										    <span class="input-group-text" >아 이 디</span>
+										    <input id="idCommon" type="text" class="form-control" value="common@haruon.com" readonly>
+										    <button id="copyIdCommon" class="btn">copy</button>
+										</div>
+                                 	 </li>
+                               	 </ul>
+	                         </div>
+	                     </div>
+	                 <!-- 공통기능 시작 -->
 	                     <!-- 출퇴근 등록 -->
 	                     <div class="note-item all-notes common">
 	                         <div class="note-inner-content">
@@ -273,78 +323,316 @@
 	                         <div class="note-inner-content">
 	                             <h5>메신저</h5>
 	                             <ul>
-	                             	 <li>위치 : 상단 헤더 부분의 MESSANGER</li>
-	                              	 <li>대화하기
+	                             	 <li>
+	                             	 	위치 : 상단 헤더 부분의 『MESSANGER
+	                             	 	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888ea8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+	                             	 	』클릭
+	                             	 </li>
+	                              	 <li>
+	                              	 	대화하기
 		                              	 <ol>
 		                              	 	<li><사원검색> 탭에서 사원을 검색</li> 
 		                              	 	<li>『채팅』 버튼으로 채팅방 생성</li>
 		                              	 </ol>
-                              	 		- 채팅방에 하나 이상 메세지가 있다면 본인과 상대방의 <채팅목록>에서 조회 가능
+                              	 		- 채팅방에 하나 이상 메세지가 있다면 본인과 상대방의 <채팅목록>에서 채팅방 조회 가능
 	                              	 </li>
-	                              	 <li>참여중인 채팅방 
+	                              	 <li>
+	                              	 	참여중인 채팅방 
 		                              	 <ol>
-		                              	 	<li><채팅목록>참여하고있는 채팅방 선택</li> 
+		                              	 	<li><채팅목록>참여하고 있는 채팅방 선택</li> 
 		                              	 	<li>『채팅』 버튼으로 채팅방 참여
 		                              	 		<br> 『나가기』 버튼으로 채팅방 나가기
 	                              	 		</li>
 		                              	 </ol>
+	                              	 	- 한번에 여러 채팅방 대화가 가능
 	                              	 </li>
-	                              	 - 한번에 여러 채팅방 대화가 가능하지만, 1:1 대화만 가능
 	                             </ul>
 	                             ${noteEnd}
 	                         </div>
 	                     </div>
-	                     <!-- 테스트계정 -->
-	                     <div class="note-item all-notes test">
+                     <!-- 공통기능 종료 -->
+                     <!-- 부서관리권한 시작 -->
+	                     <!-- 부서 근태관리 -->
+	                      <div class="note-item all-notes division">
 	                         <div class="note-inner-content">
-	                             <h5>테스트 계정</h5>
-	                             
+	                             <h5>근태관리</h5>
 	                             <ul>
-	                             	<li>비밀번호는 모두 1234입니다.</li>
-	                                 <li>
-	                                 	가맹점권한
-	                                 	<div class="input-group input-group-sm mt-2">
-										    <span class="input-group-text">아 이 디</span>
-										    <input id="idFranchise" type="text" class="form-control" value="franchise@haruon.com" readonly>
-										    <button id="copyIdFranchise" class="btn">copy</button>
-										</div>
-									</li></br>
-	                                 <li>
-	                                 	인사권한
-	                                 	<div class="input-group input-group-sm mt-2">
-										    <span class="input-group-text">아 이 디</span>
-										    <input id="idPersonnel" type="text" class="form-control" value="personnel@haruon.com" readonly>
-										    <button id="copyIdPersonnel" class="btn">copy</button>
-										</div>
-                                 	 </li></br>
-	                                 <li>
-	                                 	시스템
-	                                 	<div class="input-group input-group-sm mt-2">
-										    <span class="input-group-text">아 이 디</span>
-										    <input id="idSystem" type="text" class="form-control" value="system@haruon.com" readonly>
-										    <button id="copyIdSystem" class="btn">copy</button>
-										</div>
-                                 	 </li></br>
-	                                 <li>
-	                                 	부서관리
-	                                 	<div class="input-group input-group-sm mt-2">
-										    <span class="input-group-text">아 이 디</span>
-										    <input id="idDivision" type="text" class="form-control" value="division@haruon.com" readonly>
-										    <button id="copyIdDivision" class="btn">copy</button>
-										</div>
-                                 	 </li></br>
-	                                 <li>
-	                                 	일반직원
-	                                 	<div class="input-group input-group-sm mt-2">
-										    <span class="input-group-text" >아 이 디</span>
-										    <input id="idCommon" type="text" class="form-control" value="common@haruon.com" readonly>
-										    <button id="copyIdCommon" class="btn">copy</button>
-										</div>
-                                 	 </li>
-                               	 </ul>
+	                             	 <li>위치 : 근태관리 > 부서 근태
+	                              	 <li>
+	                              	 	부서원 근태관리(근태 TAB)
+                              	 		<br>- 상태변경
+                              	 		<ol>
+                              	 			<li>
+                              	 				『수정』버튼을 클릭하여 변경 
+                              	 				<br>(상태변경은 근태승인상태가 승인전 일 때만 가능)
+                              	 			</li>
+                            	 		</ol>
+                              	 	    - 승인하기
+                              	 	    <ol>
+                              	 	    	<li>
+                              	 	    		 승인대상 근태를 선택하거나 상단 『전체 선택』을 클릭하여 조회 중인 대상을 전체 선택 
+                              	 	    	</li>
+                              	 	    	<li>
+                              	 	    		상단 『선택 승인』 버튼을 클릭하여 근태 승인
+                              	 	    		<br>(근태상태가 '미지정'일 경우 승인되지 않음)
+                              	 	    	</li>
+                              	 	    </ol>
+                              	 	    하거나 '전체선택'을 선택한 후 
+                            	 	 </li>
+	                              	 <li> 
+	                              	 	부서원 연차관리(연가 TAB)
+	                              	 		<br>- 연차조정
+	                              	 		<ol>
+	                              	 			<li>
+	                              	 				『연차수정』 버튼 을 클릭하여 변경 
+	                              	 			</li>
+	                              	 			<li>
+	                              	 				변경 후 사원의 연차에 따라 <br>
+	                              	 				조정연차(총 연차 - 기본연차)가 계산되어 조회됨
+	                              	 			</li>
+	                            	 		</ol>
+	                              	 </li>
+	                             </ul>
+	                             ${noteEnd}
 	                         </div>
 	                     </div>
+                     <!-- 부서관리권한 종료 -->
+                     <!-- 가맹점관리권한 시작 -->
+	                     <!-- 가맹점 -->
+	                      <div class="note-item all-notes franchise">
+	                         <div class="note-inner-content">
+	                             <h5>가맹점 리스트/통계</h5>
+	                             <ul>
+	                             	 <li>위치 : 가맹점 > 가맹점관리 > 가맹점리스트
+	                              	 <li> 가맹점 전체 통계 TAB
+	                              	 	<br>- 『펼치기』 클릭 시, 전체 가맹점 매출·운영실태·매출 통계를 조회 
+                              	 	    <br>- 『이전달』/『다음달』을 클릭하여 월별 매출액 TOP 3를 조회</li>
+	                              	 <li> 가맹점 정보 
+	                              	 	<br>- 『<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#434343"><path d="M192-192v-96l72-72v168h-72Zm126 0v-222l66-66 6 6v282h-72Zm126 0v-228l72 72v156h-72Zm126 0v-186l72-72v258h-72Zm126 0v-312l72-72v384h-72ZM192-378v-102l192-192 144 144 240-240v102L528-426 384-570 192-378Z"></path></svg>click』
+	                              	 		  을 클릭 시, 가맹점 정보·매출통계 리포트가 조회
+	                              	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                     <div class="note-item all-notes franchise">
+	                         <div class="note-inner-content">
+	                             <h5>가맹점 등록</h5>
+	                             <ul>
+	                             	 <li>위치 : 가맹점 > 가맹점관리 > 가맹점등록</li>
+	                              	 <ol>
+	                              	 	<li>가맹점정보를 입력</li>
+	                              	 	<li>
+	                              	 		『등록』 버튼을 클릭
+	                              	 		<br>(등록한 가맹점은 가맹점리스트에서 확인 가능)
+	                              	 	</li>
+	                              	 </ol>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                      <div class="note-item all-notes franchise">
+	                         <div class="note-inner-content">
+	                             <h5>가맹점 교육</h5>
+	                             <ul>
+	                             	 <li>위치 : 가맹점 > 가맹점교육 > *
+	                              	 <li>
+	                              	 	교육 리스트
+	                              	 	<br>- 원하는 행을 클릭하면 상세보기로 이동
+	                              	 	<br>- 상세보기에서 『수정』버튼으로 내용 수정을 『삭제』버튼으로 수정을 할 수 있다.
+	                              	 </li>
+	                              	 <li>교육 등록
+	                              	 	<br>- '가맹점관리과' 사원을 선택 후, 교육 정보를 입력
+	                              	 	<br>(등록한 교육내용은 가맹점 리스트에서 확인 가능)
+	                              	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                     <div class="note-item all-notes franchise">
+	                         <div class="note-inner-content">
+	                             <h5>가맹점 문의·답변 </h5>
+	                             <ul>
+	                             	 <li>위치 : 가맹점 > 가맹점문의</li>
+	                              	 <li>
+	                              	 	문의 리스트
+	                              	 	<br> - 가맹점에서 등록한 문의사항을 답변등록/미등록 별로 조회
+	                              	 	<br> - 원하는 행 클릭시 문의 상세내역으로 이동
+	                              	 </li>
+	                              	 <li>문의 상세내역
+	                              	 	<br> - 가맹점에서 등록한 문의 상세내역 조회 가능
+	                              	 	<br> - 답변이 없다면, '답변'폼이 활성화되며 내용입력후 『등록』 버튼으로 답변 등록 가능
+	                              	 	<br> - 답변이 있다면, '답변'폼에 이전에 등록한 답변이 출력
+	                              	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                <!-- 가맹점관리권한 종료 -->       
+	                
+	                <!-- 인사권한 시작 -->
+	                     <!-- 사원등록 -->
+	                      <div class="note-item all-notes personnel">
+	                         <div class="note-inner-content">
+	                             <h5>사원등록</h5>
+	                             <ul>
+	                             	 <li>위치 : 조직도 > 사원등록</li>
+	                             	 <li>사원 등록 절차
+		                              	 <ol>
+		                              	 	<li>신규사원의 정보를 입력</li>
+		                              	 	<li>『SIGN UP』 버튼 클릭</li>
+		                              	 	<li>
+		                              	 		등록된 사람의 메일로 초기비밀번호 전송
+		                              	 		<br>
+	                              	 		</li>
+		                              	 </ol>
+	                              	 </li>
+	                              	 <li>아이디는 이메일, 초기비밀번호는 랜덤문자열로 설정됨</li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                     <!-- 사원정보 수정 -->
+	                      <div class="note-item all-notes personnel">
+	                         <div class="note-inner-content">
+	                             <h5>사원정보 수정</h5>
+	                             <ul>
+	                             	 <li>위치 : 조직도 > 사원조회 > 『수정』 버튼 > 정보 수정</li>
+	                             	 <li>부서·직급·내선번호 수정 가능</li>
+	                             	 <li>사원 퇴사 시, 『퇴사』 버튼 클릭하여 퇴사일자 입력</li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                     <!-- 공지 입력 -->
+	                      <div class="note-item all-notes personnel">
+	                         <div class="note-inner-content">
+	                             <h5>공지게시판 - 글 작성</h5>
+	                             <ul>
+	                             	 <li>
+	                             	 	위치 : 게시판 > 공지 게시판 
+	                             	 	> 『<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+		                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>글쓰기』 버튼 
+	                                 </li>
+	                             	 <li>사내 공지글 작성 가능</li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+                  <!-- 인사권한 종료 -->  
+                  <!-- 시스템 권한 시작 -->
+                  	      <!-- 회사 정보 수정 -->
+	                      <div class="note-item all-notes system">
+	                         <div class="note-inner-content">
+	                             <h5>회사 정보 수정</h5>
+	                             <ul>
+	                             	 <li>위치 : 회사/부서 관리 > 회사 </li>
+	                             	 <li>
+										<ol>
+											<li>『수정』 버튼을 클릭하여 회사정보 수정페이지로 이동 </li>
+											<li>
+												수정할 정보 입력 후 『수정』 버튼을 클릭
+												<br>수정된 회사 정보는 페이지 하단(footer)부분에서 확인 가능
+											</li>
+										</ol>	                             	 
+	                             	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>  
 	                     
+                  	      <!-- 부서 정보 수정 -->
+	                      <div class="note-item all-notes system">
+	                         <div class="note-inner-content">
+	                             <h5>부서 정보 관리</h5>
+	                             <ul>
+	                             	 <li>위치 : 회사/부서 관리 > 부서 </li>
+	                             	 <li>
+										<ul>
+											<li>『수정』 버튼 클릭시 부서명 수정모달창 출력</li>	
+											<li>
+												『활성화』/『비활성화』 버튼 클릭시 부서 상태 변경
+												<br>
+												(비활성화 시, 다른 페이지에서 해당 부서를 조회할 수 없음)
+											</li>	
+											<li>
+												『<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>등록』
+		                                     	버튼 클릭시 부서명을 입력하여 새로운 부서 등록
+											</li>
+										</ul>	                             	 
+	                             	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>  
+	                     
+                  	      <!-- 게시판 관리 -->
+	                      <div class="note-item all-notes system">
+	                         <div class="note-inner-content">
+	                             <h5>자유 게시판 관리</h5>
+	                             <ul>
+	                             	 <li>위치 : 게시판 > 자유게시판 </li>
+	                             	 <li>
+										<ol>
+											<li>
+												보류
+											</li>
+										</ol>	                             	 
+	                             	 </li>
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                       
+                  	      <!-- 카테코리 관리 -->
+	                      <div class="note-item all-notes system">
+	                         <div class="note-inner-content">
+	                             <h5>게시판 카테고리 관리</h5>
+	                             <ul>
+	                             	<li>위치 : 게시판 > 카테고리 관리 </li>
+									<li>
+										『<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>등록』
+                                     	버튼 클릭시 카테고리명을 입력하여 새로운 카테고리 등록
+									</li>
+									<li>『수정』 버튼 클릭시 카테고리명 수정 모달창 출력</li>	
+									<li>
+										『삭제』 버튼 클릭시 카테고리와 매칭되는 글이 있다면 '기타'로 카테고리명 변경, 
+										매칭되는 글이 없다면 카테고리가 삭제 
+										<br>
+									</li>	
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>
+	                       
+                  	      <!-- 회의실 관리 -->
+	                      <div class="note-item all-notes system">
+	                         <div class="note-inner-content">
+	                             <h5>회의실 정보 관리</h5>
+	                             <ul>
+	                             	<li>위치 : 회의실 예약 > 회의실 조회 / 관리 </li>
+									<li>
+										회의실 등록
+										<br>
+										『<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>회의실추가』
+                                     	버튼 클릭시 회의실추가폼으로 이동하여 새로운 회의실정보 등록
+									</li>
+									<li>회의실 상세보기·수정
+										<ol>
+											<li>회의실 이름을 클릭하여 상세보기페이지로 이동</li>
+											<li>회의실 사진·이름·수용인원·정보·예약가능여부 폼 수정 후</li>
+											<li>『회의실 수정』버튼을 클릭하여 수정 가능</li>
+										</ol>
+									<li>
+									<li>회의실 삭제
+										<br>원하는 회의실 행의 『삭제하기』버튼 클릭
+										<br>(현재보다 미래기준으로 예약일정이 잡혀있다면, 삭제 불가)
+									</li>	
+	                             </ul>
+	                             ${noteEnd}
+	                         </div>
+	                     </div>  
+                  <!-- 시스템 권한 종료 -->  
 	                 </div>
 	
 	             </div>

@@ -89,7 +89,7 @@
                 
                 <!-- 메인컨텐츠 입력칸 -->
                 <div class="layout-top-spacing">
-                    <h2 class="mt-3 mb-3">교육 상세정보</h2>
+                    <h2 class="mt-3 mb-3">문의 상세정보</h2>
                     
                     	<div class="row">
                            <div class="card col-5 p-5 me-2">

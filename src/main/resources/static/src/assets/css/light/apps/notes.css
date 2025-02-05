@@ -406,10 +406,12 @@
     width: 0;
   }
   .tab-title.note-menu-show {
+    position: fixed;
+    top:60px;
     left: 0;
     width: 100%;
     min-width: 190px;
-    min-height: 485px;
+    height: 100%;
     border-radius: 0;
     border-bottom-right-radius: 8px;
     padding: 11px;
@@ -420,8 +422,16 @@
     height: 100%;
   }
   .app-hamburger-container {
-  	position: absolute;
+  	position: fixed;
+  	z-index: 100;
     text-align: left;
+    height: 60px;
+    width: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    left: 0;
+    top: 0;
+    
   }
   .hamburger {
     margin : 0px 0px 0px 9px;
