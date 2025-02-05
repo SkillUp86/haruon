@@ -140,8 +140,12 @@
 										        </td>
 										        <td>${m.meeNo}</td>
 										        <td>${m.capacity}</td>
-										        <td>${m.availYn}</td>
-										        <td>
+												<td>
+												    <span  ${m.availYn == 'Y' ? 'bg-success' : 'bg-danger'}>
+												        ${m.availYn == 'Y' ? '예약 가능' : '예약 불가'}
+												    </span>
+												</td>										        
+												<td>
 										            <div class="btn-group" role="group" aria-label="Action Buttons">
 										                <!-- 예약 버튼 -->
 										                <a class="btn btn-primary btn-sm reserve-btn"  href="${pageContext.request.contextPath}/addReservation/${m.meeNo}">예약하기</a>
@@ -213,27 +217,27 @@
     });
 
     // 이벤트 리스너 초기화 함수
-    function initializeReserveButtonEvents() {
-        document.querySelectorAll('.reserve-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const availYn = this.getAttribute('data-availYn'); // 버튼의 예약 가능 상태 가져오기
-                if (availYn === 'N') {
-                    alert('이 회의실은 예약할 수 없습니다.');
-                } else {
-                    // 예약 가능 상태인 경우 폼 제출
-                    this.closest('form').submit();
-                }
-            });
-        });
+    document.getElementById('noticeList').addEventListener('click', function(event) {
+    const reserveBtn = event.target.closest('.reserve-btn');
+    if (!reserveBtn) return;
+
+    const row = reserveBtn.closest('tr');
+    const availYn = row.getAttribute('data-availYn');
+    
+    if (availYn === 'N') {
+        alert('예약 불가 상태입니다. 관리자에게 문의하세요.');
+        event.preventDefault();
+        reserveBtn.classList.add('disabled');
     }
+});
 
-    // DataTables 'draw' 이벤트에 리스너 추가
-    noticeList.on('draw', function () {
-        initializeReserveButtonEvents();
-    });
-
-    // 초기 페이지 로드 시 이벤트 리스너 추가
-    initializeReserveButtonEvents();
+// 초기 버튼 상태 설정
+document.querySelectorAll('.reserve-btn').forEach(btn => {
+    const row = btn.closest('tr');
+    if (row.getAttribute('data-availYn') === 'N') {
+        btn.classList.add('disabled');
+    }
+});
 
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  
