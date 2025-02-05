@@ -49,7 +49,7 @@ public class MsgRestController {
 	public List<MsgSenderDto> getMsgSenders (@PathVariable Integer empNo) {
 		return msgService.getSendersMsg(empNo);
 	}
-	
+
 	// 임시보관함
 	@GetMapping("/MsgTemporarys/{empNo}")
 	public List<MsgSenderDto> getMsgTemporarys (@PathVariable Integer empNo) {

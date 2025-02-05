@@ -183,8 +183,36 @@
 		WHERE mr.emp_no = #{empNo} AND ms.state = 'E02' AND mr.state = 'D03'
 	</select>
 	
+	<resultMap type="com.haruon.groupware.message.dto.MsgSenderDto" id="msgMap">
+		<id property="msgsNo" column="msgsNo"/>
+        <result property="msgNo" column="msgNo"/>
+        <result property="empNo" column="empNo"/>
+        <result property="state" column="state"/>
+        <result property="sendDate" column="sendDate"/>
+        <result property="empNoS" column="empNoS"/>
+        <result property="enameS" column="enameS"/>
+        <result property="descriptS" column="descriptS"/>
+        <result property="emailS" column="emailS"/>
+        <result property="empNoR" column="empNoR"/>
+        <result property="enameR" column="enameR"/>
+        <result property="descriptR" column="descriptR"/>
+        <result property="emailR" column="emailR"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="fileNameE" column="fileNameE"/>
+        <result property="extE" column="extE"/>
+        <collection property="msgFileDtoList" javaType="java.util.List" resultMap="msgFileMap">
+        </collection>
+	</resultMap>
+	
+	<resultMap id="msgFileMap" type="com.haruon.groupware.message.dto.MsgFileDto">
+		<id property="msgsNo" column="msgsNo"/>
+		<result property="originNameM" column="originNameM"/>
+		<result property="fileNameM" column="fileNameM"/>
+		<result property="extM" column="extM"/>
+	</resultMap>
 	<!-- 보낸 쪽지 -->
-	<select id="getSendersMsg" parameterType="Integer" resultType="com.haruon.groupware.message.dto.MsgSenderDto">
+	<select id="getSendersMsg" parameterType="Integer" resultMap="msgMap">
 		SELECT m.msg_no msgNo
 			 , ms.msgs_no msgsNo
 		     , es.ename enameS

@@ -11,13 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="../src/assets/img/favicon.ico" />
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     
     <!--  BEGIN CUSTOM STYLE FILE  -->
@@ -29,10 +27,6 @@
     <link href="../src/assets/css/light/apps/mailbox.css" rel="stylesheet" type="text/css" />
     <link href="../src/plugins/css/light/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
 
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/editors/quill/quill.snow.css">
-    <link href="../src/assets/css/dark/apps/mailbox.css" rel="stylesheet" type="text/css" />
-    <link href="../src/plugins/css/dark/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
     
     <!--  END CUSTOM STYLE FILE  -->
     
@@ -234,7 +228,7 @@
                                                                     <div class="mb-4">
 											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
 											                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-											                            <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+											                            <input class="form-control file-upload-input" type="file" id="formFile" name="msgFiles">
 											                        </div>
 											                        
 											                        <div class="">
@@ -297,8 +291,6 @@
 		$('#btn-send').click(function() {
 			// state 값을 E02로 변경
 			$('#stateS').val("E02");
-			// content 값 채우기
-			$('#m-content').val($('.ql-editor').html());
 			
 			if($('#m-to').val() == '') {
 				alert('수신인을 선택해주세요');
@@ -349,35 +341,40 @@
 	        }
 	    });  
 		
-		
+	</script>
+	
+	<script>
+	   $(document).ready(function() {
+	   });
+	   
 	    document.addEventListener('click', function(event) {
-            // closest()를 사용해 클릭한 요소에서 가장 가까운 버튼 확인
-            let button = event.target.closest('button'); 
-            
+	        // closest()를 사용해 클릭한 요소에서 가장 가까운 버튼 확인
+	        let button = event.target.closest('button'); 
+	        
 		    // 상세 휴지통 버튼 클릭 시
-            if (button && button.id.startsWith('btnTrash')) {
-                console.log('휴지통 버튼 클릭 ' + button.id);
-                let targetId = button.id.replace('btnTrash', '');
+	        if (button && button.id.startsWith('btnTrash')) {
+	            console.log('휴지통 버튼 클릭 ' + button.id);
+	            let targetId = button.id.replace('btnTrash', '');
 		
 		    	var isConfirm = confirm('영구 삭제 하시겠습니까?');
-                
+	            
 			    if(isConfirm) {
-			        $("#formTrash"+targerId).submit();  // 폼 제출
+			        $("#formTrash"+targetId).submit();  // 폼 제출
 			    }
 		    }
 	    
 	    // 상세_복원 버튼 클릭 시
-            if (button && button.id.startsWith('btnBack')) {
-                console.log('복원 버튼 클릭 ' + button.id);
-                let targetId = button.id.replace('btnBack', '');
+	        if (button && button.id.startsWith('btnBack')) {
+	            console.log('복원 버튼 클릭 ' + button.id);
+	            let targetId = button.id.replace('btnBack', '');
 		
 		    	var isConfirm = confirm('복원 하시겠습니까?');
-                
+	            
 			    if(isConfirm) {
-			        $("#formBack"+targerId).submit();  // 폼 제출
+			        $("#formBack"+targetId).submit();  // 폼 제출
 			    }
 		    }
-	    });
+	    });	
 	</script>
 	
 	<!-- 메일 뷰 -->
@@ -467,16 +464,12 @@
                                                 <div class="media">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                                     <div class="media-body">
-                                                        <p>`;
-                                                        
-                                                        
-                    MsgTrashHTML += ((item.originNameM != null)?  
-                              		           `<a href="${pageContext.request.contextPath}/upload/msg/` + item.fileNameM + "." + item.extM + `" download="` + item.originNameM + "." + item.extM + `"> ` + item.originNameM + "." + item.extM 
-                              				  : `첨부파일없음`) 
-                              		
-                  
-                    MsgTrashHTML += `</p>
-                                                    </div>
+	                                                    <p>` +
+	                                                   	((item.originNameM != null)?  
+	                                           				`<a href="${pageContext.request.contextPath}/upload/msg/` + item.fileNameM + "." + item.extM + `" download="` + item.originNameM + "." + item.extM + `"> ` + item.originNameM + "." + item.extM + `</a>`
+	                                        				: `첨부파일없음`) + ` 
+	                                        			</p>
+                                                </div>
                                                 </div>
                                             </div>
                     

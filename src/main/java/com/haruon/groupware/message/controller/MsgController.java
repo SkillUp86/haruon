@@ -98,6 +98,7 @@ public class MsgController {
 		// 메일 보내기 - 직원 목록
 		List<EmpDto> empList = empService.getEmpList();
 		model.addAttribute("empList", empList);
+		
 		return "msg/sendersMsg";
 	}
 	

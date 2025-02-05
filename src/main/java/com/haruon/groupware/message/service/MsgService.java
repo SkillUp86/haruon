@@ -67,6 +67,7 @@ public class MsgService {
 		}
 		log.debug("msgDto ================> " + msgDto);
 		
+		msgMapper.modifyMsg(msgDto);
 		msgMapper.modifyReaderMsg(msgDto);
 		msgMapper.modifySenderMsg(msgDto);
 	}

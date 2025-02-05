@@ -11,13 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="../src/assets/img/favicon.ico" />
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     
     <!--  BEGIN CUSTOM STYLE FILE  -->
@@ -29,10 +27,6 @@
     <link href="../src/assets/css/light/apps/mailbox.css" rel="stylesheet" type="text/css" />
     <link href="../src/plugins/css/light/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
 
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/editors/quill/quill.snow.css">
-    <link href="../src/assets/css/dark/apps/mailbox.css" rel="stylesheet" type="text/css" />
-    <link href="../src/plugins/css/dark/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
     
     <!--  END CUSTOM STYLE FILE  -->
     
@@ -229,7 +223,7 @@
                                                                     <div class="mb-4">
 											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
 											                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-											                            <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+											                            <input class="form-control file-upload-input" type="file" multiple="multiple" id="formFile" name="msgFiles">
 											                        </div>
 											                        
 											                        <div class="">
@@ -292,8 +286,6 @@
 		$('#btn-send').click(function() {
 			// state 값을 E02로 변경
 			$('#stateS').val("E02");
-			// content 값 채우기
-			$('#m-content').val($('.ql-editor').html());
 			
 			if($('#m-to').val() == '') {
 				alert('수신인을 선택해주세요');
@@ -335,7 +327,7 @@
                  console.log('휴지통이동 버튼 클릭 ' + button.id);
                  let targetId = button.id.replace('btnTrash', '');
                  
-                 var isConfirm = confirm('휴지통으로 이동하시겠습니까?');
+                 var isConfirm = confirm('삭제하시겠습니까?');
                  
                  if(isConfirm) {
                     $("#formTrash"+targetId).submit();
@@ -365,7 +357,7 @@
                                                 <div class="mail-item-inner">
                                                     <div class="d-flex">
                                                         <div class="" data-bs-toggle="collapse" data-bs-target>
-                                                            <input class="" type="hidden" id="form-check-default2">
+                                                            <input class="" type="hidden" id="form-check-default2"/>
                                                         </div>
                                                         <div class="f-head ms-3">` +
 	                                                    	((item.fileNameE != null)?
@@ -377,7 +369,7 @@
                                                                 <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
                                                             </div>
                                                             <div class="meta-title-tag">
-                                                                <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
+                                                                <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'></p>
                                                                 <span class="mail-title">` + item.title + `
                                                                 <p class="meta-time align-self-center me-3">` + item.sendDate + `</p>
                                                             </div>
@@ -390,58 +382,63 @@
                                     
                     msgSenderHTML += `<div id="inNo` + no + `" class="collapse" aria-labelledby="#outNo` + no + `" data-bs-parent="#mailbox-inbox">
                                         <div class="mail-content-container sentmail">
-                                        
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <div class="d-flex user-info">
-                                                <div class="f-body">
-                                                    <div class="meta-mail-time">
-                                                        <div class="">
-                                                            <p class="user-email"><span>To.</span>` + item.enameR + `</p>
-                                                        </div>
-                                                        <p class="mail-content-meta-date current-recent-mail">` + item.sendDate.substr(0, 10) + `</p>
-                                                        <p class="meta-time align-self-center">` + item.sendDate.substr(11) + `</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="action-btns">
-	                                        	<form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/deleteMsgS/` + item.msgNo + `">
-		                                    		<button type="button" id="btnTrash` + item.msgNo + `">
-			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
-				                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
-				                                            <path d="M9 4v1h6V4z"/>
-			                                          	</svg>
-		                                    		</button>
-		                                    	</form>
-                                            </div>
-                                        </div>
-                                        <p> 제목: `+ item.title +`</p>
-                                        <p class="mail-content"> 
-                                        ` + item.content + ` </p>
-                                        <p> From.` + item.enameS + ` </p>
-                    
-                                        <div class="attachments">
-                                            <h6 class="attachments-section-title">Attachments</h6>
-                    
-                                            <div class="attachment file-folder">
-                                                <div class="media">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                                    <div class="media-body">
-                                                        <p>`;
-                                                        
-                                                        
-                    msgSenderHTML += ((item.originNameM != null)?  
-                              		           `<a href="${pageContext.request.contextPath}/upload/msg/` + item.fileNameM + "." + item.extM + `" download="` + item.originNameM + "." + item.extM + `"> ` + item.originNameM + "." + item.extM 
-                              				  : `첨부파일없음`) 
-                              		
-                  
-                    msgSenderHTML += `</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    
-                                        </div>
+                                         <span>aassss</span>
+	                                        <div class="d-flex justify-content-between mb-3">
+	                                            <div class="d-flex user-info">
+	                                                <div class="f-body">
+	                                                    <div class="meta-mail-time">
+	                                                        <div class="">
+	                                                            <p class="user-email"><span>To.</span>` + item.enameR + `</p>
+	                                                        </div>
+	                                                        <p class="mail-content-meta-date current-recent-mail">` + item.sendDate.substr(0, 10) + `</p>
+	                                                        <p class="meta-time align-self-center">` + item.sendDate.substr(11) + `</p>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                    
+	                                            <div class="action-btns">
+		                                        	<form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/deleteMsgS/` + item.msgNo + `">
+			                                    		<button type="button" id="btnTrash` + item.msgNo + `">
+				                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
+					                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
+					                                            <path d="M9 4v1h6V4z"/>
+				                                          	</svg>
+			                                    		</button>
+			                                    	</form>
+	                                            </div>
+	                                        </div>
+	                                        <p> 제목: `+ item.title +`</p>
+	                                        <p class="mail-content"> 
+	                                        ` + item.content + ` </p>
+	                                        <p> From.` + item.enameS + ` </p>
+	                    
+	                                        <div class="attachments">
+	                                            <h6 class="attachments-section-title">Attachments</h6>
+	                    
+	                                            <div class="attachment file-folder">
+	                                            <p class="mail-content 2222">` + item.msgFileDtoList[0].fileNameE + ` </p>
+	                                            	` +
+	                                            	(
+                                            			item.msgFileDtoList.forEach(function(item2) {
+                                            				console.log(item2);
+                                            			+ `
+                                            			/*<span>`+ item2.originNameM +`</span>
+		                                                <div class="media">
+			                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+			                                                <div class="media-body">
+			                                                    <p>` +
+			                                                   	((item2.originNameM != null && item2.originNameM != "" )?  
+			                                           				`<a href="${pageContext.request.contextPath}/upload/msg/` + item2.fileNameM + "." + item2.extM + `" download="` + item2.originNameM + "." + item2.extM + `"> ` + item2.originNameM + "." + item2.extM + `</a>`
+			                                        				: `첨부파일없음`) + ` 
+			                                        			</p>
+			                                                </div>
+		                                                </div>*/
+														`})
+			                                        ) + `
+	                                            </div>
+	                    
+	                                        </div>
                                     </div>
                                 </div>`
                                     

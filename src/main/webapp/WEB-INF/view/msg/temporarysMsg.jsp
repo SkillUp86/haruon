@@ -11,13 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="../src/assets/img/favicon.ico" />
     <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../layouts/vertical-light-menu/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     
     <!--  BEGIN CUSTOM STYLE FILE  -->
@@ -29,10 +27,6 @@
     <link href="../src/assets/css/light/apps/mailbox.css" rel="stylesheet" type="text/css" />
     <link href="../src/plugins/css/light/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
 
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/editors/quill/quill.snow.css">
-    <link href="../src/assets/css/dark/apps/mailbox.css" rel="stylesheet" type="text/css" />
-    <link href="../src/plugins/css/dark/sweetalerts2/custom-sweetalert.css" rel="stylesheet" type="text/css" />
     
     <!--  END CUSTOM STYLE FILE  -->
     
@@ -168,8 +162,8 @@
                                                     </div>
 
                                                     <div id="msgTemporary">
-                                                    <!-- 메일 상세보기 시작 - HTML 동적 처리할 부분 -->                                               
-                                                    <!-- 메일 상세보기 끝 -->
+                                                    <!-- 임시 발송 - HTML 동적 처리할 부분 -->                                               
+                                                    <!-- 임시 발송 끝 -->
                                                     </div>
                                                         
                                                 </div>
@@ -241,7 +235,7 @@
 											                        <div class="mb-4">
 											                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> File:</p>
 											                            <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-											                            <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple" name="msgFiles">
+											                            <input class="form-control file-upload-input" type="file" id="formFile" name="msgFiles">
 											                        </div>
 											                        
 											                        <div class="">
@@ -265,8 +259,6 @@
                                         </div>
                                         <!-- 메세지 보내는 Modal 창 끝 -->
                                     
-	                                    <!-- 임시 메세지 Modal 창 시작 -->
-	                                    <!-- 임시 메세지 Modal 창 끝 -->
                                     </div>
                                 </div>
                             </div>
