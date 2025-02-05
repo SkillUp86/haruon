@@ -142,7 +142,7 @@
 	                
 	                <div class="text-center">
 	                	<!-- 수정 버튼 -->
-	                	 <c:if test="${user.empNo == s.empNo}">
+	                	<c:if test="${user.empNo == s.empNo}">
 	                	<button type="submit" class="btn btn-primary" id="modScheduleBtn">수정</button>
 	                	
 	                	

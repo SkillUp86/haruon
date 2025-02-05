@@ -26,7 +26,8 @@
         s.content content,
     	s.start_time startTime,
     	s.end_time endTime,
-    	e.ename 
+    	e.ename ,
+    	sa.emp_no empNo
     FROM schedules s
    	INNER JOIN common_code c ON s.kind = c.common_code
     left JOIN schedule_attendance sa ON s.sch_no = sa.sch_no
