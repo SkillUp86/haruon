@@ -23,8 +23,8 @@
 			<if test="extNum != null">
 				ext_num = #{extNum},
 			</if>
-			<if test="password != null">
-				emp_pw = #{password},
+			<if test="password != null and password.length() > 1">
+			    emp_pw = #{password},
 			</if>
 		</set>
 		where emp_no = #{empNo}

@@ -18,6 +18,8 @@ import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.service.EmpService;
 import com.haruon.groupware.user.service.EmpUpdateService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class EmpUpdateController {
     @Autowired
@@ -37,6 +39,7 @@ public class EmpUpdateController {
         if (!empUpdateService.isAccess(updateInfo.getEmpNo())) {
             return "login";
         }
+        log.debug(updateInfo.toString());
         empUpdateService.updateEmpInfo(updateInfo);
         return "redirect:/myInfo";
     }

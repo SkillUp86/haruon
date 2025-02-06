@@ -16,6 +16,8 @@ import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.mapper.EmpMapper;
 import com.haruon.groupware.user.mapper.EmpUpdateMapper;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Transactional
 @Service
 public class EmpUpdateService {
@@ -68,7 +70,9 @@ public class EmpUpdateService {
 	}
 	// 유저 업데이트
 	public int updateEmpInfo(RequestEmpUpdateInfo updateInfo) {
-		updateInfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
+		if(updateInfo.getPassword().length() > 1) {
+			updateInfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
+		}
 		return empUpdateMapper.updateEmpByEmpNo(updateInfo);
 	}
 	
