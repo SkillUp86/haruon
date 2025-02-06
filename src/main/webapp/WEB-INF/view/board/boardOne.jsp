@@ -228,7 +228,12 @@
                              </div><!-- END 댓글 입력 -->
                              
                              <div class="icon-container">
-                                 <a href="javascript:history.back()" data-feather="align-justify" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                             	<c:if test="${b.catNo != 1}">
+                                	<a href="${pageContext.request.contextPath}/board" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                                </c:if>
+                             	<c:if test="${b.catNo == 1}">
+                                	<a href="${pageContext.request.contextPath}/board/notice" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                                </c:if>
                              </div>
                              
                          </div>
