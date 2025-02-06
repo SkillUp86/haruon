@@ -85,6 +85,7 @@
 			b.boa_no boaNo
 			, b.emp_no empNo
 			, e.ename ename
+			, e.dep_no depNo
 			, b.cat_no catNo
 			, c.cat_name catName
 			, b.title

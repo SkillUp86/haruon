@@ -126,7 +126,7 @@
                              		<p class="mb-5">${b.content}</p>
                              		<c:forEach var="bf" items="${boardFiles}">
 	                             		<c:if test="${bf.ext == 'png'}">
-	                             			<img src="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}">
+	                             			<img src="${pageContext.request.contextPath}/upload/board/${bf.originalName}.${bf.ext}">
 	                             		</c:if>
                              		</c:forEach>
                              	</div>
@@ -140,35 +140,50 @@
                                     </button>
                              	</div>
                              	
-                             	<!-- 세션의 empNo와 작성자의 empNo가 같을 때만 수정, 삭제 버튼 표시 -->
-								<c:if test="${empNo == b.empNo}">
-	                             	<div>
-	                             		<p style="text-align: right;">
-	                             			<c:if test="${b.catNo != 1}"> <!-- 자유 게시판 글일 때  -->
-	                             				<a href="${pageContext.request.contextPath}/board/modify?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+                             	<!-- 세션의 empNo와 작성자의 empNo가 같을 때는 수정+삭제 버튼, 전산과 직원일 때는 삭제 버튼 표시 -->
+								<div>
+									<p style="text-align: right;">
+										<!-- 자유 게시판 글일 때 -->
+										<c:if test="${b.catNo != 1}">
+											<!-- 수정 버튼 (작성자 본인만) -->
+											<c:if test="${empNo == b.empNo}">
+												<a href="${pageContext.request.contextPath}/board/modify?boaNo=${b.boaNo}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
-	                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-												</a> &nbsp;
-												<a href="${pageContext.request.contextPath}/board/delete?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
-		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
-		                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-		                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+													<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 												</a>
-	                             			</c:if>
-	                             			<c:if test="${b.catNo == 1}"> <!-- 공지 글일 때  -->
-	                             				<a href="${pageContext.request.contextPath}/board/modifyNotice?boaNo=${b.boaNo}"><!-- 글 수정 아이콘 -->
+												&nbsp;
+											</c:if>
+											<!-- 삭제 버튼 -->
+											<c:if test="${empNo == b.empNo || depNo == 4}">
+												<a href="${pageContext.request.contextPath}/board/delete?boaNo=${b.boaNo}">
+													관리자<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+													<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+													<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+												</a>
+											</c:if>
+										</c:if>
+										
+										<!-- 공지 글일 때 -->
+										<c:if test="${b.catNo == 1}">
+											<c:if test="${empNo == b.empNo}">
+												<!-- 수정 버튼 -->
+												<a href="${pageContext.request.contextPath}/board/modifyNotice?boaNo=${b.boaNo}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 flaticon-notes">
-	                                                <path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-												</a> &nbsp;
-												<a href="${pageContext.request.contextPath}/board/deleteNotice?boaNo=${b.boaNo}"><!-- 글 삭제 아이콘 -->
-		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
-		                                        	<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-		                                        	<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+													<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 												</a>
-	                             			</c:if>
-	                             		</p>
-	                             	</div>
-	                             </c:if><!-- END 수정, 삭제 버튼 -->
+												&nbsp;
+												<!-- 삭제 버튼 -->
+												<a href="${pageContext.request.contextPath}/board/deleteNotice?boaNo=${b.boaNo}">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+													<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+													<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+												</a>
+											</c:if>
+										</c:if>
+									</p>
+								</div>
+
+	                             
 	                             
                              </div>
                              

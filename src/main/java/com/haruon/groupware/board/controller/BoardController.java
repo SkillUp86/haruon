@@ -57,6 +57,8 @@ public class BoardController {
         
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		int empNo = userDetails.getEmpNo();
+		int depNo = userDetails.getDepNo();
+		model.addAttribute("depNo",depNo);
         
         // 추천 여부 확인
         boolean isLiked = boardService.isLiked(boaNo, empNo);
