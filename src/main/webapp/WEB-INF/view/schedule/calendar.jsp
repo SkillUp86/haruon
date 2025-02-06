@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'G02': return '#af92e2'; // 연차
             case 'G03': return '#ffbb57'; // 출장
             case 'G04': return '#82f029'; // 회의
-            case 'G05': return '#9aff47'; // 반차
+            case 'G05': return '#FF1493'; // 반차
             default: return '#ffffff';
         }
     }
