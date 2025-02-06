@@ -179,6 +179,20 @@
            });
     });
     </script>
+    <script>
+    // 페이지 로드 후 모든 td 요소를 대상으로 10글자만 표시하도록 처리
+    window.onload = function() {
+        // 모든 td 요소 중에서 내용이 있는 td를 찾음
+        var tdElements = document.querySelectorAll('td');
+
+        tdElements.forEach(function(td) {
+            // td 내용이 10글자 이상인 경우, 10글자로 잘라서 다시 설정
+            if (td.textContent.length > 20) {
+                td.textContent = td.textContent.substring(0, 20) + '...';
+            }
+        });
+    };
+</script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>
