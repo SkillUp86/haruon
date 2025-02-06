@@ -20,7 +20,10 @@
 		           SUBSTRING(e.phone, 8)) phone
 			 , e.address address
 			 , e.post_code postCode
-			 , e.gender gender
+			 , case 
+			       when e.gender = 'F' then '여자'
+			       when e.gender = 'M' then '남자'
+			   end gender
 			 , e.birth birth
 			 , e.join_date joinDate
 			 , e.exit_date exitDate

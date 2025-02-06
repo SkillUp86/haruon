@@ -20,7 +20,7 @@
 			<if test="phone != null">
 				phone = #{phone},
 			</if>
-			<if test="postCode != null">
+			<if test="extNum != null">
 				ext_num = #{extNum},
 			</if>
 			<if test="password != null">

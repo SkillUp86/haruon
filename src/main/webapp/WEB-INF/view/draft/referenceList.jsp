@@ -168,7 +168,7 @@
             }
         ],
         "stripeClasses": [],
-        "lengthMenu": [2, 10, 20],
+        "lengthMenu": [5, 10, 20],
         "pageLength": 10,
         "processing": true,
         "serverSide": true,

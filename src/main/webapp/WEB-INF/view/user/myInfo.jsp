@@ -184,8 +184,8 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="address">주소</label>
-                                                                        <input type="text" class="form-control mb-3" value="${e.postCode}" id="selectPostcode" name="postCode" value="" placeholder="우편번호" >
-                                                                        <input type="text" class="form-control mb-3" value="${e.address}" id="roadAddress" name="address" value="" placeholder="주소" >
+                                                                        <input type="text" class="form-control mb-3" value="${e.postCode}" id="selectPostcode" name="postCode" value="" placeholder="우편번호" readonly>
+                                                                        <input type="text" class="form-control mb-3" value="${e.address}" id="roadAddress" name="address" value="" placeholder="주소" readonly>
                                                                         <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
                                                                         <input id="sample4_detailAddress" placeholder="상세주소" style="display:none;">
                                                                         <input type="hidden" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
@@ -206,7 +206,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="phone">연락처</label>
-                                                                        <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone" readonly>
+                                                                        <input type="text" class="form-control mb-3" value="${e.phone}" id="phone" name="phone">
                                                                     </div>
                                                                 </div>
                                                                 
