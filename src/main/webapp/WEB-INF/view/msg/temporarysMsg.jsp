@@ -393,7 +393,7 @@
 							                                          <div class="f-head ms-3">` +
 																	       ((item.fileNameE != null)?
 																		       `<img src="${pageContext.request.contextPath}/upload/profile/` + item.fileNameE + '.' + item.extE + `" class="user-profile" alt="avatar">`
-																		     : `<img src="${pageContext.request.contextPath}/upload/profile/profile.svg" class="user-profile" alt="avatar">`)
+																		     : `<img src="${pageContext.request.contextPath}/upload/profile/noProfile.png" class="user-profile" alt="avatar">`)
 															      + ` </div>
 							                     	                  <div class="f-body">
 								                                          <div class="meta-mail-time">

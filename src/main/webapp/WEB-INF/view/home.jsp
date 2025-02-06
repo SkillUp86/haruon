@@ -450,11 +450,11 @@
 	                msgUnreadListHTML += `<div class="card mt-2">
 	                                        <div class="d-flex justify-content-between align-items-center">
 	                                            <div>
-	                                                <span class="avatar avatar-xl">
-	                                                    <img src="/src/assets/img/` + profile + `" class="rounded">
+	                                                <span class="avatar avatar-lg">
+	                                                    <img src="${pageContext.request.contextPath}/upload/profile/` + profile + `" class="rounded">
 	                                                </span>  
 	                                                <span class="ps-5">` + result[i].senderName + `</span>
-	                                                <span class="ps-5">` + result[i].title + `</span>
+	                                                <span class="ps-5">` + result[i].title.substr(0, 10) + `</span>
 	                                            </div>
 	                                            <span class="pe-5">` + result[i].sendDate + `</span>
 	                                        </div>
