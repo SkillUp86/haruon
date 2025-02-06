@@ -144,8 +144,8 @@
 			  , used_leave usedLeave
 			  , (YEAR(NOW()) - YEAR(join_date)) yearsOfService
 			  , total_leave 
-			  		- (case when((YEAR(NOW()) - YEAR(join_date)) > 2) 
-					  		  then (15 + (YEAR(NOW()) - YEAR(join_date) - 1) / 2) 
+			  		- (case when((YEAR(NOW()) - YEAR(join_date)) &gt; 2) then (15 + (YEAR(NOW()) - YEAR(join_date) - 1) / 2) 
+			  				when ((YEAR(NOW()) - YEAR(join_date)) &lt; 1) then truncate(15 * (12 - (MONTH(join_date)-1)) / 12, 0)
 						ELSE 15 end) modifiedLeave
 			  , (SELECT ((SUM(e2.used_leave) / SUM(e2.total_leave))* 100) 
 			  	  FROM emp e2 
