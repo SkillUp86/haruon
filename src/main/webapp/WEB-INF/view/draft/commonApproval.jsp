@@ -173,29 +173,50 @@
 	        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
 			<script>
-			let a = `${d.type}`+'-'+`${d.appNo}`+""+`${d.draNo}`;
-			function downloadPDF() {
-			    const element = document.querySelector('.container');
+    let a = `${d.type}-${d.appNo}${d.draNo}`;
+    let originalElements = []; // 원본 textarea 저장용 배열
 
-			    html2canvas(element).then((canvas) => {
-			        const imgData = canvas.toDataURL('image/png');
-			        const pdf = new jspdf.jsPDF();
+    function downloadPDF() {
+        // 🔹 1️⃣ textarea → div 변환 & 원본 저장
+        $('textarea').each(function() {
+            if (!$(this).hasClass('d-none')) {
+                const originalTextarea = $(this);
+                const textValue = originalTextarea.val().replace(/\n/g, "<br>"); // 줄바꿈 유지
+                const newDiv = $("<div contenteditable='true' class='form-control'>" + textValue + "</div>");
 
-			        // PDF 크기를 캔버스 이미지 크기와 동일하게 설정
-			        const imgWidth = canvas.width;
-			        const imgHeight = canvas.height;
+                // 원본 요소 저장
+                originalElements.push({ original: originalTextarea, replacement: newDiv });
 
-			        // A4 크기로 맞추고 싶으면 비율 유지
-			        const pageWidth = pdf.internal.pageSize.getWidth();
-			        const pageHeight = (imgHeight * pageWidth) / imgWidth;
+                originalTextarea.replaceWith(newDiv);
+            }
+        });
 
-			        // PDF를 꽉 채움
-			        pdf.addImage(imgData, 'PNG', 0, 5, pageWidth, pageHeight);
-			        pdf.save(a+".pdf");
-			    });
-			}
-			
-			</script>
+        const element = document.querySelector('.container');
+
+        // 🔹 2️⃣ PDF 변환
+        setTimeout(() => {
+            html2canvas(element).then((canvas) => {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = pdf.internal.pageSize.getWidth();
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 5, imgWidth, imgHeight);
+                pdf.save(a + ".pdf");
+
+                // 🔹 3️⃣ div → textarea 원상복구
+                originalElements.forEach(({ original, replacement }) => {
+                    replacement.replaceWith(original);
+                });
+
+                // 배열 초기화 (다음 실행을 위해)
+                originalElements = [];
+            });
+        }, 100);
+    }
+</script>
 	        <c:if test="${msg != null}">
 			    <script>
 			        let message = '${msg}';
