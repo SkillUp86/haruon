@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.haruon.groupware.auth.CustomUserDetails;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.user.entity.EmpEntity;
 import com.haruon.groupware.user.entity.EmpFile;
+import com.haruon.groupware.user.mapper.EmpMapper;
 import com.haruon.groupware.user.mapper.EmprofileMapper;
 
 @Transactional
@@ -17,9 +22,11 @@ import com.haruon.groupware.user.mapper.EmprofileMapper;
 public class EmpProfileService {
 
 	private final EmprofileMapper emprofileMapper;
+	private final EmpMapper empMapper;
 
-	public EmpProfileService(EmprofileMapper emprofileMapper) {
+	public EmpProfileService(EmprofileMapper emprofileMapper, EmpMapper empMapper) {
 		this.emprofileMapper = emprofileMapper;
+		this.empMapper = empMapper;
 	}
 
 	// 프로필 보기
@@ -41,7 +48,22 @@ public class EmpProfileService {
 		int row = emprofileMapper.removeProfileFile(email);
 		if (row == 1) {
 			insertFile(file, email, path);
-		} 
+		}
+		updateSecurityContext(email);
+	}
+
+	private void updateSecurityContext(String email) {
+		// DB에서 최신 사용자 정보 가져오기
+		EmpEntity empEntity = empMapper.findByEmp(email);
+		EmpFile updatedProfile = emprofileMapper.findEmpFileByUser(email);
+
+		// 새로운 CustomUserDetails 생성
+		CustomUserDetails updatedUserDetails = new CustomUserDetails(empEntity, updatedProfile);
+
+		// 새로운 Authentication 객체 생성
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails, null, updatedUserDetails.getAuthorities());
+		// SecurityContext 업데이트
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
 	}
 
 	private void insertFile(MultipartFile file, String email, String path) {
