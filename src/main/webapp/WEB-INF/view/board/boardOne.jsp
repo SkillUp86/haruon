@@ -124,11 +124,11 @@
 			                 <div class="post-content">
 			                 	<div style="white-space: pre-wrap;">
                              		<p class="mb-5">${b.content}</p>
-                             		<!-- <c:forEach var="bf" items="${boardFiles}">
+                             		<c:forEach var="bf" items="${boardFiles}">
 	                             		<c:if test="${bf.ext == 'png'}">
 	                             			<img src="${pageContext.request.contextPath}/upload/board/${bf.fileName}.${bf.ext}">
 	                             		</c:if>
-                             		</c:forEach> -->
+                             		</c:forEach>
                              	</div>
                              	
                              	<!-- 추천 버튼 -->
