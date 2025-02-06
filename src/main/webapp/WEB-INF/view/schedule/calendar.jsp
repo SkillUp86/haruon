@@ -151,6 +151,7 @@
 			<jsp:include page="/WEB-INF/view/inc/footer.jsp" />		<!--  BEGIN FOOTER  -->
             <!--  END FOOTER  -->
        		<!-- 캘린더API  -->
+       		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     let calendarEl = document.getElementById('calendar');
@@ -213,7 +214,66 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-</script> 
+
+$(document).ready(function () {
+    // 일정 내용 글자수 카운트
+    $("#addContent").on("input", function () {
+        let contentLength = $(this).val().length;
+        $("#chatHelper").text(contentLength);
+        if (contentLength > 100) {
+            alert("100자 이하로 입력해주세요.");
+            $(this).val($(this).val().substring(0, 100));
+            $("#chatHelper").text(100);
+        }
+    });
+
+    // 일정 추가 버튼 클릭 시 유효성 검사
+    $("#addScheduleForm").on("submit", function (e) {
+        let title = $("#title").val().trim();
+        let startTime = $("#startTime").val();
+        let endTime = $("#endTime").val();
+        let content = $("#addContent").val().trim();
+
+        if (title === "") {
+            alert("일정 제목을 입력하세요.");
+            $("#title").focus();
+            e.preventDefault();
+            return;
+        }
+
+        if (startTime === "") {
+            alert("시작 날짜를 입력하세요.");
+            $("#startTime").focus();
+            e.preventDefault();
+            return;
+        }
+
+        if (endTime === "") {
+            alert("종료 날짜를 입력하세요.");
+            $("#endTime").focus();
+            e.preventDefault();
+            return;
+        }
+
+        if (new Date(startTime) > new Date(endTime)) {
+            alert("종료 날짜는 시작 날짜보다 이후여야 합니다.");
+            $("#endTime").focus();
+            e.preventDefault();
+            return;
+        }
+        
+
+        if (content === "") {
+            alert("일정 내용을 입력하세요.");
+            $("#addContent").focus();
+            e.preventDefault();
+            return;
+            
+            
+        }
+    });
+});
+</script>
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>

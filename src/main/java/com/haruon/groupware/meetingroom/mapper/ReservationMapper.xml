@@ -66,5 +66,9 @@ ORDER BY r.rev_date DESC, r.rev_time DESC
 </select>
 
 
-
+<select id="countReservationsByMeeNo" resultType="int">
+    SELECT COUNT(*) 
+    FROM reservation 
+    WHERE mee_no = #{meeNo}
+</select>
 </mapper>

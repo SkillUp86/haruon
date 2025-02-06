@@ -126,4 +126,3 @@ public class ReservationService {
 			return approvalMapper.findEmpDept(deptNo, empNo);
 		}
 	}
-

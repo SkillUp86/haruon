@@ -188,7 +188,6 @@
     </div>
 </div>
 
-<!-- 참조자 선택 모달 -->
 <div class="modal fade " id="approvalModal" tabindex="-1" role="dialog" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 	        <div class="modal-content">
@@ -226,7 +225,6 @@
 	        </div>
 	    </div>
 	</div>
-    <!-- 결재자 모달END -->
 
                 <!-- 메인컨텐츠 END -->
             </div>
@@ -264,7 +262,6 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 <script>
-//참조자 선택 후 선택된 사람들을 입력창에 표시
 $('.dept').click(function() {
 			let deptNo = $(this).val();
 			$.ajax({
@@ -272,7 +269,7 @@ $('.dept').click(function() {
 				method: "GET"
 			}).done(function(response) {
 				emp = response;
-				employeeList(emp);  // 직원 목록 표시
+				employeeList(emp);  
 			}).fail(function() {
 				alert('실패');
 			})
@@ -280,12 +277,9 @@ $('.dept').click(function() {
 		
 function employeeList(emp) {
 	let empList = $('#employeeList');
-	let empSubList = $('#employeeSubList');
 	empList.empty();
-	empSubList.empty();
 	if (emp && emp.length > 0) {
 		emp.forEach(function(item) {
-			//console.log(item)
 	
 			let selectEmpList = $(`
 						<li class="form-check">
@@ -294,11 +288,11 @@ function employeeList(emp) {
 						</li>
 						`);
 			
-			empSubList.append(selectEmpList.clone());
-			empList.append(selectEmpList.clone());
+			empList.append(selectEmpList);
 		});
 	} 
 }
+
 $('#btnInsertApprover').on('click', function () {
     let selectedEmps = [];
     let selectedEmpIds = [];
@@ -315,8 +309,6 @@ $('#btnInsertApprover').on('click', function () {
     $('#attendees').val(selectedEmpIds.join(','));
     $('#attendeeNames').val(selectedEmps.join(', '));
     $('#approvalModal').modal('hide');
-});
-
 
 //예약 날짜 변경 시 시간 목록 가져오기
 
@@ -407,6 +399,85 @@ document.querySelector('#formInsert').addEventListener('submit', function(e) {
      alert('과거 날짜 예약 불가');
      document.getElementById('revDate').value = '';
  }
+});
+
+
+//폼 제출 이벤트 핸들러
+document.getElementById('formInsert').addEventListener('submit', function(e) {
+    // 필수 필드 검증
+    const revDate = document.getElementById('revDate').value;
+    const revTime = document.getElementById('revTime').value;
+    
+    // 1. 공백 검증
+    if (!revDate || !revTime) {
+        e.preventDefault();
+        showAlert('danger', '모든 필수 항목을 입력해주세요.');
+        return;
+    }
+
+    // 2. 시간 유효성 검증
+    const [timeCode, timeDesc] = revTime.split(',');
+    const [startHour, endHour] = timeCode.split('~').map(Number);
+    const selectedDate = new Date(revDate);
+    
+    // 시간대 유효성 검사
+    if (isNaN(startHour) || isNaN(endHour) || startHour >= endHour) {
+        e.preventDefault();
+        showAlert('danger', '잘못된 시간대가 선택되었습니다.');
+        return;
+    }
+
+    // 3. 날짜/시간 조합 검증
+    const now = new Date();
+    const selectedDateTime = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        startHour
+    );
+
+    // 과거 시간 예약 방지
+    if (selectedDateTime < now) {
+        e.preventDefault();
+        showAlert('danger', '과거 시간은 예약할 수 없습니다.');
+        document.getElementById('revDate').value = '';
+        document.getElementById('revTime').selectedIndex = 0;
+        return;
+    }
+});
+
+// 부트스트랩 알림 표시 함수
+function showAlert(type, message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.role = 'alert';
+    
+    alertDiv.innerHTML = `
+        <strong>${type === 'danger' ? '오류!' : '성공!'}</strong> ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
+    // 알림 위치 지정 (폼 상단)
+    const formTop = document.querySelector('.blog-create-section');
+    formTop.prepend(alertDiv);
+
+    // 5초 후 자동 숨김
+    setTimeout(() => {
+        alertDiv.classList.remove('show');
+    }, 5000);
+}
+
+// 날짜 선택 시 시간 옵션 갱신
+document.getElementById('revDate').addEventListener('change', function() {
+    const selectedDate = new Date(this.value);
+    const now = new Date();
+    
+    // 과거 날짜 선택 방지
+    if (selectedDate < now.setHours(0,0,0,0)) {
+        this.value = '';
+        showAlert('warning', '과거 날짜 선택 불가');
+        return;
+    }
 });
 
 </script>

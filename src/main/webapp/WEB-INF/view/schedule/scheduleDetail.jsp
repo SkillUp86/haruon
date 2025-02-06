@@ -185,6 +185,61 @@
     <!--  BEGIN CUSTOM SCRIPTS FILE  -->
     <script src="../src/plugins/src/fullcalendar/custom-fullcalendar.js"></script>
     <!--  END CUSTOM SCRIPTS FILE  -->
-  
+  <script>
+//폼 제출 이벤트 핸들러
+  document.getElementById('modScheduleForm').addEventListener('submit', function(e) {
+      const startTime = document.getElementById('startTime').value;
+      const endTime = document.getElementById('endTime').value;
+      const title = document.getElementById('title').value;
+
+      // 1. 공백 검사
+      if (!startTime || !endTime || !title) {
+          e.preventDefault();
+          alert('필수 항목(*)을 모두 입력해주세요.');
+          return;
+      }
+
+      // 2. 날짜 유효성 검사
+      const startDate = new Date(startTime);
+      const endDate = new Date(endTime);
+      
+      if (endDate <= startDate) {
+          e.preventDefault();
+          alert('종료 시간은 시작 시간보다 이후여야 합니다.');
+          document.getElementById('endTime').value = '';
+          return;
+      }
+
+      // 3. 현재 시간보다 이전인지 확인
+      const now = new Date();
+      if (startDate < now) {
+          e.preventDefault();
+          alert('과거 시간으로는 수정할 수 없습니다.');
+          document.getElementById('startTime').value = '';
+          return;
+      }
+  });
+
+  // 실시간 날짜 검증
+  document.getElementById('startTime').addEventListener('change', function() {
+      const endTimeField = document.getElementById('endTime');
+      const startDate = new Date(this.value);
+      
+      // 시작시간 변경 시 종료시간 최소값 설정
+      endTimeField.min = this.value;
+      
+      // 종료시간이 시작시간보다 이전인 경우 초기화
+      if (new Date(endTimeField.value) < startDate) {
+          endTimeField.value = '';
+      }
+  });
+
+  // 내용 길이 카운터
+  document.getElementById('modContent').addEventListener('input', function() {
+      const counter = document.getElementById('chatHelper');
+      counter.textContent = this.value.length;
+  });
+
+  </script>
 </body>
 </html>

@@ -29,7 +29,7 @@ public class MeetingRoomController {
 	@Autowired MeetingRoomService meetingRoomService;
 	
 	@GetMapping("/meetingroom")
-	public String meetingroom(Model model ) {
+	public String meetingroom(Model model) {
 		List<MeetingRoom> meetingroomList = meetingRoomService.meetingroomList();	
 		model.addAttribute("meetingroomList" ,meetingroomList);
 		return"meetingroom/meetingroom";
@@ -71,7 +71,7 @@ public class MeetingRoomController {
 	        Integer result = meetingRoomService.deleteMeetingroom(meeNo, path);
 
 	        if (result == 1) {
-	            redirectAttributes.addFlashAttribute("message", "회의실과 파일이 성공적으로 삭제되었습니다.");
+	            redirectAttributes.addFlashAttribute("m	essage", "회의실과 파일이 성공적으로 삭제되었습니다.");
 	        } else {
 	            redirectAttributes.addFlashAttribute("error", "회의실 또는 파일 삭제에 실패했습니다.");
 	        }

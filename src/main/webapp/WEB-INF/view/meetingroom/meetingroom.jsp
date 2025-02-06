@@ -151,6 +151,7 @@
 										                <a class="btn btn-primary btn-sm reserve-btn"  href="${pageContext.request.contextPath}/addReservation/${m.meeNo}">예약하기</a>
 										                <!-- 삭제 버튼 -->
 														 <c:if test="${user.depNo == 4}">
+														 
 														<a class="btn btn-danger btn-sm" href="${pageContext.request.contextPath}/deleteMeetingroom/${m.meeNo}">삭제하기</a>
 														</c:if>
 										            </div>
@@ -175,7 +176,17 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
+<c:if test="${not empty error}">
+    <script>
+        alert("${error}");
+    </script>
+</c:if>
 
+<c:if test="${not empty message}">
+    <script>
+        alert("${message}");
+    </script>
+</c:if>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -225,7 +236,7 @@
     const availYn = row.getAttribute('data-availYn');
     
     if (availYn === 'N') {
-        alert('예약 불가 상태입니다. 관리자에게 문의하세요.');
+        alert('예약 불가 상태입니다.');
         event.preventDefault();
         reserveBtn.classList.add('disabled');
     }
@@ -238,6 +249,7 @@ document.querySelectorAll('.reserve-btn').forEach(btn => {
         btn.classList.add('disabled');
     }
 });
+
 
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->  

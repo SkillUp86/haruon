@@ -15,6 +15,7 @@ import com.haruon.groupware.meetingroom.entity.MeetingRoom;
 import com.haruon.groupware.meetingroom.entity.MeetingRoomFile;
 import com.haruon.groupware.meetingroom.mapper.MeetingRoomMapper;
 import com.haruon.groupware.meetingroom.mapper.ReservationMapper;
+import com.haruon.groupware.schedule.mapper.ScheduleMapper;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -24,6 +25,7 @@ public class MeetingRoomService {
 	
 	@Autowired MeetingRoomMapper meetingRoomMapper;
 	@Autowired ReservationMapper reservationMapper;
+	@Autowired ScheduleMapper scheduleMapper;
 	
 	public List<MeetingRoom> meetingroomList(){
 		return meetingRoomMapper.meetingroomList();
@@ -33,6 +35,11 @@ public class MeetingRoomService {
 	public Integer deleteMeetingroom(Integer meeNo, String path) {
 	    // 관련 파일 조회
 	    MeetingRoomFile meetingRoomFile = meetingRoomMapper.findMeetingRoomFileByMeeNo(meeNo);
+	    
+	    int reservationCount = reservationMapper.countReservationsByMeeNo(meeNo);
+	    if (reservationCount > 0) {
+	        throw new IllegalStateException("예약이 존재하는 회의실은 삭제할 수 없습니다");
+	    }
 
 	    if (meetingRoomFile != null) {
 	        // 파일 경로 생성
