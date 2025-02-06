@@ -235,7 +235,7 @@
     const row = reserveBtn.closest('tr');
     const availYn = row.getAttribute('data-availYn');
     
-    if (availYn === 'N') {
+    if (availYn == 'N') {
         alert('예약 불가 상태입니다.');
         event.preventDefault();
         reserveBtn.classList.add('disabled');
@@ -245,7 +245,7 @@
 // 초기 버튼 상태 설정
 document.querySelectorAll('.reserve-btn').forEach(btn => {
     const row = btn.closest('tr');
-    if (row.getAttribute('data-availYn') === 'N') {
+    if (row.getAttribute('data-availYn') == 'N') {
         btn.classList.add('disabled');
     }
 });

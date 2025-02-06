@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -48,7 +48,7 @@
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container container-xxl">
-	        <jsp:include page="/WEB-INF/view/inc/header.jsp" />
+           <jsp:include page="/WEB-INF/view/inc/header.jsp" />
     </div>
     <!--  END NAVBAR  -->
       
@@ -136,37 +136,37 @@
                     <textarea class="form-control" id="info" name="info" rows="5" readonly>${meetingRoom.info}</textarea>
                 </div>
 
-	                <div class="row mb-4">
-					    <div class="col-sm-6">
-					        <label for="revDate" class="form-label">예약 일자</label>
-					        <input type="date" class="form-control" id="revDate" name="revDate" required>
-					    </div>
-					    <div class="col-sm-6">
-					        <label for="revTime" class="form-label">예약 시간</label>
-					        <select class="form-control" id="revTime" name="revTime" required>
-						    <option value="" selected>시간을 선택하세요</option>
-						    <c:forEach var="time" items="${reservationTime}">
-						        <option value="${time.commonCode},${time.descript}">${time.descript}</option>
-						    </c:forEach>
-						</select>
-					    </div>
-					</div>
+                   <div class="row mb-4">
+                   <div class="col-sm-6">
+                       <label for="revDate" class="form-label">예약 일자</label>
+                       <input type="date" class="form-control" id="revDate" name="revDate" required>
+                   </div>
+                   <div class="col-sm-6">
+                       <label for="revTime" class="form-label">예약 시간</label>
+                       <select class="form-control" id="revTime" name="revTime" required>
+                      <option value="" selected>시간을 선택하세요</option>
+                      <c:forEach var="time" items="${reservationTime}">
+                          <option value="${time.commonCode},${time.descript}">${time.descript}</option>
+                      </c:forEach>
+                  </select>
+                   </div>
+               </div>
 
 
-				<div class="form-group row invoice-note">
-			                    <label>예약 정보</label>
-			                    <div class="col-sm-12">
-			                        <textarea class="form-control" id="info" name="content" style="height: 300px;" required></textarea>
-			                    </div>
-			                </div>
+            <div class="form-group row invoice-note">
+                             <label>예약 정보</label>
+                             <div class="col-sm-12">
+                                 <textarea class="form-control" id="info" name="content" style="height: 300px;" required></textarea>
+                             </div>
+                         </div>
                 
                 <div class="input-group mb-4">
-				    <div class="input-group">
-				        <span class="input-group-text label-text">참여자</span>
-				        <input type="hidden" class="form-control" id="attendees" name="attendees" value="" required>
-				        <input type="text" class="form-control" id="attendeeNames" placeholder="참여자 목록" required readonly>
-				    </div>
-				</div>
+                <div class="input-group">
+                    <span class="input-group-text label-text">참여자</span>
+                    <input type="hidden" class="form-control" id="attendees" name="attendees" value="" required>
+                    <input type="text" class="form-control" id="attendeeNames" placeholder="참여자 목록" required readonly>
+                </div>
+            </div>
 
                 <div class="text-end">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#approvalModal">
@@ -188,43 +188,45 @@
     </div>
 </div>
 
+<!-- 참조자 선택 모달 -->
 <div class="modal fade " id="approvalModal" tabindex="-1" role="dialog" aria-hidden="true">
-	    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title">회의 참여자 선택</h5>
-	            </div>
-	            <div class="modal-body container">
-	                <div class="row">
-					    <div class="col-6 border-end">
-					        <h6>부서 목록</h6>
-					        <div class="list-group">
-					            <c:forEach var="d" items="${deptList}">
-					                <button class="btn mb-1 dept" type="button" value="${d.depNo}">${d.dname}</button>
-					            </c:forEach>
-					        </div>
-					    </div>
-					    
-					    <div class="col-6 d-flex">
-					        <div class="flex-grow-1">
-					            <h6>직원 목록</h6>
-					            <div class="list-group" id="employeeList">
-					            
-					            </div>
-					        </div>
-				    		</div>
-					    </div>
-					</div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-primary" id="btnInsertApprover" >선택</button>
-	                <button type="button" class="btn btn-light-dark" data-bs-dismiss="modal">
-	                    <i class="flaticon-cancel-12"></i> 취소
-	                </button>
-	            </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+       <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title">회의 참여자 선택</h5>
+               </div>
+               <div class="modal-body container">
+                   <div class="row">
+                   <div class="col-6 border-end">
+                       <h6>부서 목록</h6>
+                       <div class="list-group">
+                           <c:forEach var="d" items="${deptList}">
+                               <button class="btn mb-1 dept" type="button" value="${d.depNo}">${d.dname}</button>
+                           </c:forEach>
+                       </div>
+                   </div>
+                   
+                   <div class="col-6 d-flex">
+                       <div class="flex-grow-1">
+                           <h6>직원 목록</h6>
+                           <div class="list-group" id="employeeList">
+                           
+                           </div>
+                       </div>
+                      </div>
+                   </div>
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" id="btnInsertApprover" >선택</button>
+                   <button type="button" class="btn btn-light-dark" data-bs-dismiss="modal">
+                       <i class="flaticon-cancel-12"></i> 취소
+                   </button>
+               </div>
+               </div>
+           </div>
+       </div>
+   </div>
+    <!-- 결재자 모달END -->
 
                 <!-- 메인컨텐츠 END -->
             </div>
@@ -262,37 +264,41 @@
     <script src="${pageContext.request.contextPath}/src/plugins/src/tagify/tagify.min.js"></script>
     <script src="${pageContext.request.contextPath}/src/assets/js/apps/ecommerce-create.js"></script>
 <script>
+//참조자 선택 후 선택된 사람들을 입력창에 표시
 $('.dept').click(function() {
-			let deptNo = $(this).val();
-			$.ajax({
-				url: '/reservation/depts/' + deptNo + '/employee',
-				method: "GET"
-			}).done(function(response) {
-				emp = response;
-				employeeList(emp);  
-			}).fail(function() {
-				alert('실패');
-			})
-		});
-		
+         let deptNo = $(this).val();
+         $.ajax({
+            url: '/reservation/depts/' + deptNo + '/employee',
+            method: "GET"
+         }).done(function(response) {
+            emp = response;
+            employeeList(emp);  // 직원 목록 표시
+         }).fail(function() {
+            alert('실패');
+         })
+      });
+      
 function employeeList(emp) {
-	let empList = $('#employeeList');
-	empList.empty();
-	if (emp && emp.length > 0) {
-		emp.forEach(function(item) {
-	
-			let selectEmpList = $(`
-						<li class="form-check">
-							<input type="checkbox" class="form-check-input" namxe="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
-							<label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
-						</li>
-						`);
-			
-			empList.append(selectEmpList);
-		});
-	} 
+   let empList = $('#employeeList');
+   let empSubList = $('#employeeSubList');
+   empList.empty();
+   empSubList.empty();
+   if (emp && emp.length > 0) {
+      emp.forEach(function(item) {
+         //console.log(item)
+   
+         let selectEmpList = $(`
+                  <li class="form-check">
+                     <input type="checkbox" class="form-check-input" namxe="employeeRadio" id="\${item.empNo}" value="\${item.empNo}">
+                     <label class="form-check-label" for="\${item.empNo}">(\${item.descript}) \${item.ename}</label>
+                  </li>
+                  `);
+         
+         empSubList.append(selectEmpList.clone());
+         empList.append(selectEmpList.clone());
+      });
+   } 
 }
-
 $('#btnInsertApprover').on('click', function () {
     let selectedEmps = [];
     let selectedEmpIds = [];
@@ -309,6 +315,8 @@ $('#btnInsertApprover').on('click', function () {
     $('#attendees').val(selectedEmpIds.join(','));
     $('#attendeeNames').val(selectedEmps.join(', '));
     $('#approvalModal').modal('hide');
+});
+
 
 //예약 날짜 변경 시 시간 목록 가져오기
 
@@ -330,7 +338,7 @@ $('#revDate').on('change', function () {
         data: { revDate: revDate }, // 전달 데이터
         success: function(times) {
             // 요청 성공 시 응답 데이터를 콘솔에 출력
-            console.log('Received Times:', times); 	
+            console.log('Received Times:', times);    
 
             const revTimeSelect = $('#revTime');
             revTimeSelect.empty();
@@ -338,7 +346,7 @@ $('#revDate').on('change', function () {
 
             if (times && times.length > 0) {
                 times.forEach(function (time) {
-                	revTimeSelect.append(`<option value="\${time.commonCode},\${time.descript}">\${time.descript}</option>`);
+                   revTimeSelect.append(`<option value="\${time.commonCode},\${time.descript}">\${time.descript}</option>`);
                 });
             } else {
                 console.log('No times available');
@@ -399,85 +407,6 @@ document.querySelector('#formInsert').addEventListener('submit', function(e) {
      alert('과거 날짜 예약 불가');
      document.getElementById('revDate').value = '';
  }
-});
-
-
-//폼 제출 이벤트 핸들러
-document.getElementById('formInsert').addEventListener('submit', function(e) {
-    // 필수 필드 검증
-    const revDate = document.getElementById('revDate').value;
-    const revTime = document.getElementById('revTime').value;
-    
-    // 1. 공백 검증
-    if (!revDate || !revTime) {
-        e.preventDefault();
-        showAlert('danger', '모든 필수 항목을 입력해주세요.');
-        return;
-    }
-
-    // 2. 시간 유효성 검증
-    const [timeCode, timeDesc] = revTime.split(',');
-    const [startHour, endHour] = timeCode.split('~').map(Number);
-    const selectedDate = new Date(revDate);
-    
-    // 시간대 유효성 검사
-    if (isNaN(startHour) || isNaN(endHour) || startHour >= endHour) {
-        e.preventDefault();
-        showAlert('danger', '잘못된 시간대가 선택되었습니다.');
-        return;
-    }
-
-    // 3. 날짜/시간 조합 검증
-    const now = new Date();
-    const selectedDateTime = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate(),
-        startHour
-    );
-
-    // 과거 시간 예약 방지
-    if (selectedDateTime < now) {
-        e.preventDefault();
-        showAlert('danger', '과거 시간은 예약할 수 없습니다.');
-        document.getElementById('revDate').value = '';
-        document.getElementById('revTime').selectedIndex = 0;
-        return;
-    }
-});
-
-// 부트스트랩 알림 표시 함수
-function showAlert(type, message) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-    alertDiv.role = 'alert';
-    
-    alertDiv.innerHTML = `
-        <strong>${type === 'danger' ? '오류!' : '성공!'}</strong> ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
-
-    // 알림 위치 지정 (폼 상단)
-    const formTop = document.querySelector('.blog-create-section');
-    formTop.prepend(alertDiv);
-
-    // 5초 후 자동 숨김
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-    }, 5000);
-}
-
-// 날짜 선택 시 시간 옵션 갱신
-document.getElementById('revDate').addEventListener('change', function() {
-    const selectedDate = new Date(this.value);
-    const now = new Date();
-    
-    // 과거 날짜 선택 방지
-    if (selectedDate < now.setHours(0,0,0,0)) {
-        this.value = '';
-        showAlert('warning', '과거 날짜 선택 불가');
-        return;
-    }
 });
 
 </script>
