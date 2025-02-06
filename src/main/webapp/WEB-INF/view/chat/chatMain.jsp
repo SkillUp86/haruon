@@ -9,25 +9,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>HARUON 메신저</title>
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/vertical-light-menu/loader.js"></script>
+    <title>HARUON | 메신저</title>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/assets/img/favicon.ico"/>
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/loader.js"></script>
     
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/vertical-light-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/layouts/vertical-light-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/apps/contacts.css" rel="stylesheet" type="text/css" />
 
-    <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/light/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/src/assets/css/light/elements/custom-pagination.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->    
 
     <style>
@@ -149,16 +146,17 @@
     <!--  END CONTENT AREA  -->
     
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/plugins/src/global/vendors.min.js"></script>
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-    <script src="../src/plugins/src/waves/waves.min.js"></script>
-    <script src="../layouts/vertical-light-menu/app.js"></script>
-    <script src="../src/assets/js/custom.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/global/vendors.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/waves/waves.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
-    <script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../src/assets/js/apps/contact.js"></script>
+    <script src="${pageContext.request.contextPath}/src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/src/assets/js/apps/contact.js"></script>
+    
 	<!-- document 초기화시 로드 -->
 	<script>
 		$(document).ready(function() {
@@ -166,7 +164,8 @@
 			showChatRoomList();
 		});
 	</script>    
-	<!-- 상태변경 script -->
+	
+	<!-- 나의 상태변경 script -->
 	<script>
 		var switchBtn = {
 			switchConnectionJ01 : '/chat/connection/update/J01',
@@ -243,7 +242,7 @@
     	}
 	</script>
     
-    <!-- 사원검색 -> 채팅시작 버튼 클릭 script : showEmployeesList 관련-->
+    <!-- 사원검색 -> 채팅시작 버튼 클릭 & 채팅방 나가기 -->
     <script>
     	// 채팅방 탐색 버튼 클릭 => 새창에서 매칭되는 폼 제출
 	   document.addEventListener('click', function(event) {
@@ -380,8 +379,8 @@
 		
     </script>
     
+	<!-- 로그인한 사원이 참가하고있는 채팅방 리스트 출력 --> 
     <script>
-	 // 로그인한 사원이 참가하고있는 채팅방 리스트 출력
 		function showChatRoomList() {
 	   		$.ajax({
 	     	   url: '/chat/rooms/${principal.empNo}',
@@ -449,5 +448,6 @@
 		}
     
     </script>
+    
 </body>
 </html>

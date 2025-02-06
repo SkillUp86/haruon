@@ -144,7 +144,7 @@
 								</form>
 								
 								<div class="icon-container">
-	                                <a href="javascript:history.back()" data-feather="align-justify" class="btn btn-secondary me-4 mb-2">목록으로</a>
+	                                <a href="${pageContext.request.contextPath}/board/notice" class="btn btn-secondary me-4 mb-2">목록으로</a>
 	                             </div>
 							</div>
                     	</div>

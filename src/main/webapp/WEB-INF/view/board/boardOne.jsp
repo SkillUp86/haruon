@@ -74,7 +74,12 @@
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="#">게시판</a></li>
-                                                <li class="breadcrumb-item active" aria-current="page">자유</li>
+                                                <c:if test="${b.catNo != 1}">
+                                                	<li class="breadcrumb-item active" aria-current="page">자유</li>
+                                                </c:if>
+                                                <c:if test="${b.catNo == 1}">
+                                                	<li class="breadcrumb-item active" aria-current="page">공지</li>
+                                                </c:if>
                                             </ol>
                                         </nav>
                                     </div>
@@ -216,7 +221,12 @@
                              </div><!-- END 댓글 입력 -->
                              
                              <div class="icon-container">
-                                 <a href="javascript:history.back()" data-feather="align-justify" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                             	<c:if test="${b.catNo != 1}">
+                                	<a href="${pageContext.request.contextPath}/board" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                                </c:if> 
+                             	<c:if test="${b.catNo == 1}">
+                                	<a href="${pageContext.request.contextPath}/board/notice" class="btn btn-secondary me-4 mb-2">목록으로</a>
+                                </c:if> 
                              </div>
                              
                          </div>
