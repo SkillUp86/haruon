@@ -106,11 +106,10 @@
             <form id="formInsert" action="${pageContext.request.contextPath}/addReservation/${meetingRoom.meeNo}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="meetingRoomId" name="meetingRoomId" value="${meetingRoom.meeNo}">
                 <div class="row mb-4">
-                    <div class="col-md-8">
-                        <!-- 이미지 출력 -->
-                        <img src="${pageContext.request.contextPath}/upload/meetingroom/${meetingRoom.fileName}.${meetingRoom.fileExt}" 
-                             style="width: 100; height: 100;" />
-                    </div>
+                    <div class="col-md-8 d-flex justify-content-center">
+					    <img src="${pageContext.request.contextPath}/upload/meetingroom/${meetingRoom.fileName}.${meetingRoom.fileExt}" 
+					         style="width: 100px; height: 100px; object-fit: cover; max-width: 100%;" />
+					</div>
                 </div>
 
                 <div class="row mb-4">
