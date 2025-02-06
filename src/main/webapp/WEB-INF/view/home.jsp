@@ -438,7 +438,7 @@
 	                return;
 	            }
 	
-	            for (let i = 0; i < 3 && i < result.length; i++) {
+	            for (let i = 0; i < 4 && i < result.length; i++) {
 	                if (!result[i]) { 
 	                    continue;
 	                }
