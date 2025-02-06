@@ -149,10 +149,10 @@
 														</div>
 														<div class="input-group mb-2">
 															<span class="input-group-text label-text">시작날짜</span>
-															<input class="form-control" value="${d.vacStartDate}" type="datetime-local" id="vacStartDate" name="vacStartDate" readonly>
+															<input class="form-control" value="${d.vacStartDate}"id="vacStartDate" name="vacStartDate" readonly>
 													
 															<span class="input-group-text label-text">종료날짜</span>
-															<input class="form-control" value="${d.vacFinishDate}" type="datetime-local" id="vacFinishDate" name="vacFinishDate" readonly>
+															<input class="form-control" value="${d.vacFinishDate}"id="vacFinishDate" name="vacFinishDate" readonly>
 														</div>
 														
                                                     </div>
