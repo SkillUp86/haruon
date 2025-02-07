@@ -144,13 +144,13 @@ public class ApprovalActionService {
 		}
 
 		// 연차 차감
-		int updateTotalLeave = approvalActionMapper.updateTotalLeave(empNo, usedLeave + usedDays);
-		if (updateTotalLeave != 1) {
+		int updateUsedLeave = approvalActionMapper.updateTotalLeave(empNo, usedLeave + usedDays);
+		if (updateUsedLeave != 1) {
 			throw new IllegalArgumentException("연차 승인 실패. 오류");
 		}
 	}
 
-	// 휴가 사용 일수 계산 주말 및 공휴일 제외
+	// 휴가 사용 일수 계산 주말 제외
 	private int calculateLeaveDays(String start, String end) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
