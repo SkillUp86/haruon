@@ -22,10 +22,15 @@
 	        , e.ext_num extNum
 	        , e.email email
 	        , e.location location
+	        , ef.original_name originName
+	        , ef.file_name fileName
+	        , ef.ext ext
 	    FROM dept d
 	    LEFT JOIN emp e 
 		 	ON d.dep_no = e.dep_no AND e.location = 'I03' AND e.exit_date IS NULL 
-	    WHERE d.active_yn = 'Y' 
+		JOIN emp_file ef
+			ON e.emp_no = ef.emp_no
+	    WHERE d.active_yn = 'Y'  
 	</select>
 	
 	<!-- 모든 부서 리스트 -->
