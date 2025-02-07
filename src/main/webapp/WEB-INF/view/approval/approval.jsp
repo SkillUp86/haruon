@@ -170,10 +170,10 @@
 											<input type="text" class="form-control" id="place" name="place">
 
 											<span class="input-group-text label-text">시작날짜</span>
-											<input type="date" class="form-control" id="placeStartDate" name="placeStartDate">
+											<input type="datetime-local" class="form-control" id="placeStartDate" name="placeStartDate">
 
 											<span class="input-group-text label-text">종료날짜</span>
-											<input type="date" class="form-control" id="placeEndDate" name="placeEndDate">
+											<input type="datetime-local" class="form-control" id="placeEndDate" name="placeEndDate">
 										</div>
 									</div>
 
