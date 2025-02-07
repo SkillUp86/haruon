@@ -106,10 +106,12 @@
 														type="button" role="tab" aria-controls="#전체-tab-pane" aria-selected="true">전체</button>
 												</li>
 												<c:forEach var="ct" items="${categoryList}">
-													<li class="nav-item" role="presentation">
-														<button class="nav-link" id="tab-${ct.catNo}"
-															data-bs-toggle="tab" data-bs-target="#${ct.catNo}-tab-pane" type="button" role="tab" aria-controls="#${ct.catNo}-tab-pane" aria-selected="false">${ct.catName}</button>
-													</li>
+													<c:if test="${ct.catNo != 100}">
+														<li class="nav-item" role="presentation">
+															<button class="nav-link" id="tab-${ct.catNo}"
+																data-bs-toggle="tab" data-bs-target="#${ct.catNo}-tab-pane" type="button" role="tab" aria-controls="#${ct.catNo}-tab-pane" aria-selected="false">${ct.catName}</button>
+														</li>
+													</c:if>	
 												</c:forEach>
 											</div>
 											<span style="text-align: right; margin-bottom: 5px;"> 
@@ -167,8 +169,8 @@
 											
 											<!-- 탭2 ~ -->
 											<c:forEach var="ct" items="${categoryList}">
-												<c:if test="${ct.catNo != 1}">
-													<!-- 공지(catNo=1) 제외 -->
+												<c:if test="${ct.catNo != 1 || ct.catNo == 100}">
+													<!-- 공지(catNo=1), 기타 제외 -->
 													<div class="tab-pane fade show" id="${ct.catNo}-tab-pane" role="tabpanel" aria-labelledby="tab-${ct.catNo}" tabindex="0">
 
 														<div class="widget-content widget-content-area br-8">
