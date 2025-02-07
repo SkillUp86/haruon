@@ -3,27 +3,22 @@
 <mapper namespace="com.haruon.groupware.board.mapper.BoardMapper">
 	<!-- 자유 게시판 리스트 - 전체 -->
 	<select id="selectBoardList" parameterType="Map" resultType="Map">
-		SELECT 
-			b.boa_no boaNo
-			, e.ename ename
-			, b.title
-			, DATE_FORMAT(b.create_date,'%Y/%c/%e %H:%i') createDate
-			, b.view_cnt viewCnt
-			, c.cat_name catName
-			, COUNT(bl.like_no) countLike
-			, COUNT(bc.com_no) countComment
-		FROM board b
-		INNER JOIN emp e
-			ON b.emp_no = e.emp_no
-		INNER JOIN category c
-			ON b.cat_no = c.cat_no
-		LEFT JOIN board_like bl
-			ON b.boa_no = bl.boa_no
-		LEFT JOIN board_comment bc
-      		ON b.boa_no = bc.boa_no
-		WHERE b.cat_no != 1
-		GROUP BY b.boa_no, e.ename, b.title, b.create_date, b.view_cnt, c.cat_name 
-		ORDER BY b.boa_no DESC
+		 SELECT 
+	        b.boa_no boaNo
+	        , e.ename ename
+	        , b.title title
+	        , DATE_FORMAT(b.create_date, '%Y/%c/%e %H:%i') createDate
+	        , b.view_cnt viewCnt
+	        , c.cat_name catName
+	        , (SELECT COUNT(bl.like_no) FROM board_like bl WHERE bl.boa_no = b.boa_no) countLike
+	        , (SELECT COUNT(bc.com_no) FROM board_comment bc WHERE bc.boa_no = b.boa_no) countComment
+	    FROM board b
+	    INNER JOIN emp e 
+	    	ON b.emp_no = e.emp_no
+	    INNER JOIN category c 
+	    	ON b.cat_no = c.cat_no
+	    WHERE b.cat_no != 1
+	    ORDER BY b.boa_no DESC
 	</select>
 	
 	<!-- 카테고리 별 게시판 리스트 -->
@@ -36,8 +31,8 @@
 			, b.view_cnt viewCnt
 			, c.cat_name catName
 			, b.cat_no catNo
-			, COUNT(bl.like_no) countLike
-			, COUNT(bc.com_no) countComment
+			, (SELECT COUNT(bl.like_no) FROM board_like bl WHERE bl.boa_no = b.boa_no) countLike
+	        , (SELECT COUNT(bc.com_no) FROM board_comment bc WHERE bc.boa_no = b.boa_no) countComment
 	    FROM board b
 	    INNER JOIN emp e 
 	    	ON b.emp_no = e.emp_no
