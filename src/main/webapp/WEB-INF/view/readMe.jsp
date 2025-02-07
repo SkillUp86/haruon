@@ -661,10 +661,15 @@
 	      if (event.target && event.target.id.startsWith('copyId')) {
 		      let targetId = event.target.id.replace('copyId','id');
 		      const code = $('#'+targetId).val();
-		      
-		      window.navigator.clipboard.writeText(code).then ( () => {
-		   		  alert('아이디가 복사되었습니다');
-		   	  });
+
+		   	  // http execCommand 사용
+		      const textArea = document.createElement('textarea')
+	          textArea.value = code;
+	          document.body.appendChild(textArea)
+	          textArea.select()
+	          document.execCommand('copy')
+	          document.body.removeChild(textArea)
+		      alert('아이디가 복사되었습니다.');
 		   }
 		});
     </script>
