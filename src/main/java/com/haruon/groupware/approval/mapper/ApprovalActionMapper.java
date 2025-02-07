@@ -20,11 +20,19 @@ public interface ApprovalActionMapper {
 
 	// 일정 추가용 출장결재 데이터 뽑기
 	ResponseBusinessTrip findByBusinessTrip(int draNo);
+
 	// 일정 추가용 휴가결재 데이터 뽑기
 	ResponseVacation findByVacation(int draNo);
 
+	// 휴가 연차 갯수 가져오기
+	int findTotalLeave(int empNo);
+
+	// 휴가 연차 차감
+	int updateTotalLeave(int empNo, int leaveDay);
+
 	// 유효성 검사 1
 	ApprovalEntity findMidApprovalByEmpNo(int empNo, int draNo);
+
 	// 유효성 검사 2
 	ApprovalEntity findFinalApprovalByEmpNo(int empNo, int draNo);
 
@@ -33,4 +41,5 @@ public interface ApprovalActionMapper {
 
 	// 반려사유 입력
 	int saveRejectDescript(int draNo, String reasonDenial);
+
 }

@@ -1,5 +1,10 @@
 package com.haruon.groupware.approval.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,8 +13,6 @@ import com.haruon.groupware.approval.dto.ResponseBusinessTrip;
 import com.haruon.groupware.approval.dto.ResponseVacation;
 import com.haruon.groupware.approval.mapper.ApprovalActionMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
-import com.haruon.groupware.draft.dto.response.ResponseBusinessDraftDetail;
-import com.haruon.groupware.draft.entity.BusinessTrip;
 import com.haruon.groupware.draft.mapper.DraftMapper;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.mapper.ScheduleMapper;
@@ -22,13 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ApprovalActionService {
 
 	private final ApprovalActionMapper approvalActionMapper;
-	private final DraftMapper draftMapper;
 	private final ScheduleMapper scheduleMapper;
 
-	public ApprovalActionService(ApprovalActionMapper approvalActionMapper, DraftMapper draftMapper,
-			ScheduleMapper scheduleMapper) {
+	public ApprovalActionService(ApprovalActionMapper approvalActionMapper, ScheduleMapper scheduleMapper) {
 		this.approvalActionMapper = approvalActionMapper;
-		this.draftMapper = draftMapper;
 		this.scheduleMapper = scheduleMapper;
 	}
 
@@ -99,7 +99,7 @@ public class ApprovalActionService {
 			break;
 		}
 		default:
-			
+
 		}
 
 	}
@@ -118,6 +118,7 @@ public class ApprovalActionService {
 
 	// 휴가 일때 일정 추가
 	private void addVacationSchedule(int draNo) {
+		// 휴가 문서정보 전달
 		ResponseVacation vacation = approvalActionMapper.findByVacation(draNo);
 		Schedules schedules = new Schedules();
 		schedules.setKind(getVacationScheduleKind(vacation.getKind()));
@@ -126,7 +127,50 @@ public class ApprovalActionService {
 		schedules.setStartTime(vacation.getStartDate());
 		schedules.setEndTime(vacation.getFinishDate());
 		saveSchedule(schedules, vacation.getEmpNo());
+
+		// 연차 차감 로직
+		int usedDays = calculateLeaveDays(vacation.getStartDate(), vacation.getFinishDate());
+		deductTotalLeave(vacation.getEmpNo(), usedDays);
 	}
+
+	private void deductTotalLeave(int empNo, int usedDays) {
+		// 현재 연차 개수 가져오기
+		int currentLeave = approvalActionMapper.findTotalLeave(empNo);
+
+		// 연차가 부족하면 예외 발생
+		if (currentLeave < usedDays) {
+			throw new IllegalArgumentException("연차 승인 실패. 남은 연차가 부족합니다.");
+		}
+
+		// 연차 차감
+		int updateTotalLeave = approvalActionMapper.updateTotalLeave(empNo, currentLeave - usedDays);
+		if (updateTotalLeave != 1) {
+			throw new IllegalArgumentException("연차 승인 실패. 오류");
+		}
+	}
+
+	// 휴가 사용 일수 계산 주말 및 공휴일 제외
+	private int calculateLeaveDays(String start, String end) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		// 날짜만 가져오기
+		LocalDate startDate = LocalDateTime.parse(start, formatter).toLocalDate();
+		LocalDate endDate = LocalDateTime.parse(end, formatter).toLocalDate();
+
+		int days = 0;
+		LocalDate date = startDate;
+
+		while (!date.isAfter(endDate)) {
+			// 주말 제외
+			if (!(date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY)) {
+				days++;
+			}
+			date = date.plusDays(1);
+		}
+
+		return days;
+	}
+
 	// 휴가 결재 kind 분기
 	private String getVacationScheduleKind(String kind) {
 		switch (kind) {
@@ -138,6 +182,7 @@ public class ApprovalActionService {
 			throw new IllegalArgumentException("휴가 승인 실패. 잘못된 요청입니다.");
 		}
 	}
+
 	// 공통 로직 메서드 묶기
 	private void saveSchedule(Schedules schedules, int empNo) {
 		int schedule = scheduleMapper.addSchedule(schedules);
