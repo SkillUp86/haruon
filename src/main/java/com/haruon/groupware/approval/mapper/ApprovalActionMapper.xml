@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haruon.groupware.approval.mapper.ApprovalActionMapper">
+	<!-- 사용한 연차 갯수 가져오기 -->
+	<select id="findUsedLeave" parameterType="Integer">
+		select used_leave
+		  from emp
+		 where emp_no = #{empNo}
+	</select>
 	<!-- 휴가 연차 갯수 가져오기 -->
 	<select id="findTotalLeave" parameterType="Integer">
 		select total_leave
@@ -10,7 +16,7 @@
 	<!-- 휴가 연차 차감 -->
 	<update id="updateTotalLeave">
 		update emp 
-		set total_leave =#{leaveDay}
+		set used_leave =#{leaveDay}
 		where emp_no = #{empNo}
 	</update>
 	<!-- 일정 추가용 휴가결재 데이터 뽑기 -->

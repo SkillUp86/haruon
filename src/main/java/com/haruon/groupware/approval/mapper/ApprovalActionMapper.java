@@ -42,4 +42,7 @@ public interface ApprovalActionMapper {
 	// 반려사유 입력
 	int saveRejectDescript(int draNo, String reasonDenial);
 
+	int findUsedLeave(int empNo);
+
+
 }
