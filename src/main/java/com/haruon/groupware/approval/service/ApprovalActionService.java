@@ -13,7 +13,6 @@ import com.haruon.groupware.approval.dto.ResponseBusinessTrip;
 import com.haruon.groupware.approval.dto.ResponseVacation;
 import com.haruon.groupware.approval.mapper.ApprovalActionMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
-import com.haruon.groupware.draft.mapper.DraftMapper;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.mapper.ScheduleMapper;
 
@@ -130,26 +129,28 @@ public class ApprovalActionService {
 
 		// 연차 차감 로직
 		int usedDays = calculateLeaveDays(vacation.getStartDate(), vacation.getFinishDate());
-		deductTotalLeave(vacation.getEmpNo(), usedDays);
+		updateUsedLeave(vacation.getEmpNo(), usedDays);
 	}
 
-	private void deductTotalLeave(int empNo, int usedDays) {
-		// 현재 연차 개수 가져오기
-		int currentLeave = approvalActionMapper.findTotalLeave(empNo);
+	private void updateUsedLeave(int empNo, int usedDays) {
+		// 연차 개수 가져오기
+		int totalLeave = approvalActionMapper.findTotalLeave(empNo);
+		// 사용한 연자갯수
+		int usedLeave = approvalActionMapper.findUsedLeave(empNo);
 
 		// 연차가 부족하면 예외 발생
-		if (currentLeave < usedDays) {
+		if (totalLeave - usedLeave < usedDays) {
 			throw new IllegalArgumentException("연차 승인 실패. 남은 연차가 부족합니다.");
 		}
 
 		// 연차 차감
-		int updateTotalLeave = approvalActionMapper.updateTotalLeave(empNo, currentLeave - usedDays);
-		if (updateTotalLeave != 1) {
+		int updateUsedLeave = approvalActionMapper.updateTotalLeave(empNo, usedLeave + usedDays);
+		if (updateUsedLeave != 1) {
 			throw new IllegalArgumentException("연차 승인 실패. 오류");
 		}
 	}
 
-	// 휴가 사용 일수 계산 주말 및 공휴일 제외
+	// 휴가 사용 일수 계산 주말 제외
 	private int calculateLeaveDays(String start, String end) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
