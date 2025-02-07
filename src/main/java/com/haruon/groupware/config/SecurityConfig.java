@@ -23,6 +23,7 @@ public class SecurityConfig {
 									.requestMatchers("/addEmp","/insertNotice", "/modifyNotice").hasRole("HR") // 인사과만 사원 추가, 공지 등록•수정 가능
 									.requestMatchers("/categories","/company/modify","/depts/update").hasRole("IT") // 전산과만
 									.requestMatchers("/franchises", "/franchises/**").hasRole("FM") // 가맹점과만
+									.requestMatchers("/department/attendance").hasRole("HEAD") // 부서장만
 					                .anyRequest().authenticated()
 					                );
         http.formLogin(auth -> auth
