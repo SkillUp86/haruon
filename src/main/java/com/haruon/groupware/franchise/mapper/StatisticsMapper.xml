@@ -20,7 +20,8 @@
 		SELECT f.fra_no fraNo, f.fname fName, s.revenue revenue
 		  FROM franchise f
 		 INNER JOIN sales s ON f.fra_no = s.fra_no
-		 WHERE s.ym = #{targetMonth}
+		 INNER JOIN approval ap ON ap.dra_no = s.dra_no
+		 WHERE s.ym = #{targetMonth}  AND ap.state = 'A03'
 		 ORDER BY revenue DESC
 		 LIMIT 3;
 	</select>
@@ -30,7 +31,8 @@
 		SELECT f.fra_no fraNo, f.fname fName, s.revenue revenue
 		  FROM franchise f
 		 INNER JOIN sales s ON f.fra_no = s.fra_no
-		 WHERE s.ym = #{targetMonth}
+		 INNER JOIN approval ap ON ap.dra_no = s.dra_no
+		 WHERE s.ym = #{targetMonth}  AND ap.state = 'A03'
 		 ORDER BY revenue ASC
 		 LIMIT 3;
 	</select>
@@ -45,10 +47,11 @@
     		   (SELECT substr(s.ym, 6,2) months, sum(s.revenue) totalRevenue
 				  FROM franchise f
 				 INNER JOIN sales s ON f.fra_no = s.fra_no
+				 INNER JOIN approval ap ON ap.dra_no = s.dra_no
 				 <where> 
-				 	substr(s.ym,1,4) = DATE_FORMAT(NOW(), '%Y')
+				 	substr(s.ym,1,4) = DATE_FORMAT(NOW(), '%Y') AND ap.state = 'A03'
 				 	<if test="fraNo != null">
-				 		AND f.fra_no = 13
+				 		AND f.fra_no = #{fraNo}
 				 	</if>
 				 </where>
 			     GROUP BY s.ym) revenueByMonth
@@ -66,10 +69,11 @@
 			   (SELECT substr(s.ym, 6,2) months, sum(s.revenue) totalRevenue
 				  FROM franchise f
 				 INNER JOIN sales s ON f.fra_no = s.fra_no
+				 INNER JOIN approval ap ON ap.dra_no = s.dra_no
 				 <where> 
-				 	substr(s.ym,1,4) = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 YEAR), '%Y')
+				 	substr(s.ym,1,4) = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 YEAR), '%Y') AND ap.state = 'A03'
  				 	<if test="fraNo != null">
-				 		AND f.fra_no = 13
+				 		AND f.fra_no = #{fraNo}
 				 	</if>
 				 </where>
 			     GROUP BY s.ym) revenueByMonth

@@ -689,33 +689,33 @@
 		            $(result).each(function(index, item) {
 		                franchiseRevenueInLastYear.push(item.revenue);
 		            });
+		            
+		         // 차트 적용
+			        new Chart("chosenFranchiseChart", {
+			                type: "line",
+			                data: {
+			                labels: revenueChartxValues, // X축 라벨
+			                datasets: [
+			                    {
+			                    label: chartTitle[0],
+			                    data: franchiseRevenueInThisYear,
+			                    borderColor: "red",
+			                    fill: false
+			                    },
+			                    {
+			                    label: chartTitle[1], 
+			                    data: franchiseRevenueInLastYear, 
+			                    borderColor: "green",
+			                    fill: false
+			                    }
+			                ]
+			                },
+			                options: {
+			                legend: { display: true }
+			                }
+			        });
 		        }).fail(function() {
 		            console.log("작년 월별 매출액 ajax 호출 실패");
-		        });
-		        
-		        // 차트 적용
-		        new Chart("chosenFranchiseChart", {
-		                type: "line",
-		                data: {
-		                labels: revenueChartxValues, // X축 라벨
-		                datasets: [
-		                    {
-		                    label: chartTitle[0],
-		                    data: franchiseRevenueInThisYear,
-		                    borderColor: "red",
-		                    fill: false
-		                    },
-		                    {
-		                    label: chartTitle[1], 
-		                    data: franchiseRevenueInLastYear, 
-		                    borderColor: "green",
-		                    fill: false
-		                    }
-		                ]
-		                },
-		                options: {
-		                legend: { display: true }
-		                }
 		        });
 		    }).fail(function() {
 		        console.log("올해 월별 매출액 ajax 호출 실패");

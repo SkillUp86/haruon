@@ -35,15 +35,29 @@ public class StatisticsService {
 		return statisticsMapper.getBottom3FranchiseSalesByMonth(targetMonth);
 	}
 	
-	// 올해 월별 매출액
+	// 전체 가맹점 - 올해 월별 매출액
 	public List<FranchiseStatisticsDTO> getRevenueByMonthThisYear() {
 		return statisticsMapper.getRevenueByMonthThisYear(new Franchise());
 	}
-
-	// 작년 월별 매출액 - getRevenueByMonthLastYear
+	
+	
+	// 전체 가맹점 - 작년 월별 매출액 - getRevenueByMonthLastYear
 	public List<FranchiseStatisticsDTO> getRevenueByMonthLastYear() {
 		return statisticsMapper.getRevenueByMonthLastYear(new Franchise());
 	}
 
+	// 특정 가맹점 - 올해 월별 매출액
+	public List<FranchiseStatisticsDTO> getRevenueByMonthThisYear(Integer franchiseNo) {
+		Franchise franchise = new Franchise();
+		franchise.setFraNo(franchiseNo);
+		return statisticsMapper.getRevenueByMonthThisYear(franchise);
+	}
+	
+	// 특정 가맹점 - 작년 월별 매출액 
+	public List<FranchiseStatisticsDTO> getRevenueByMonthLastYear(Integer franchiseNo) {
+		Franchise franchise = new Franchise();
+		franchise.setFraNo(franchiseNo);
+		return statisticsMapper.getRevenueByMonthLastYear(franchise);
+	}
 
 }

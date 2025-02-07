@@ -58,13 +58,13 @@ public class StatisticsRestController {
 	// 특정가맹점의 올해 웗별 매출액
 	@GetMapping("/{fraNo}/thisYear/monthlyRevenue")
 	public ResponseEntity<List<FranchiseStatisticsDTO>> getRevenueByMonthThisYear(@PathVariable Integer fraNo) {
-		List<FranchiseStatisticsDTO> result = statisticsService.getRevenueByMonthThisYear();
+		List<FranchiseStatisticsDTO> result = statisticsService.getRevenueByMonthThisYear(fraNo);
 		return ResponseEntity.ok(result);
 	}
 	// 특정가맹점의 작년 웗별 매출액	
 	@GetMapping("/{fraNo}/lastYear/monthlyRevenue")
 	public ResponseEntity<List<FranchiseStatisticsDTO>> getRevenueByMonthLastYear(@PathVariable Integer fraNo) {
-		List<FranchiseStatisticsDTO> result = statisticsService.getRevenueByMonthLastYear();
+		List<FranchiseStatisticsDTO> result = statisticsService.getRevenueByMonthLastYear(fraNo);
 		return ResponseEntity.ok(result);
 	}
 
