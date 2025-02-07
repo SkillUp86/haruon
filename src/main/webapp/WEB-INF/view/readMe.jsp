@@ -662,19 +662,13 @@
 		      let targetId = event.target.id.replace('copyId','id');
 		      const code = $('#'+targetId).val();
 
-		   	  // execCommand 사용
-		      const textArea = document.createElement('textarea');
-		      textArea.value = code;
-		      document.body.appendChild(textArea);
-		      textArea.select();
-		      textArea.setSelectionRange(0, 30);
-		      try {
-		        document.execCommand('copy');
-		      } catch (err) {
-		        console.error('복사 실패', err);
-		      }
-		      textArea.setSelectionRange(0, 0);
-		      document.body.removeChild(textArea);
+		   	  // http execCommand 사용
+		      const textArea = document.createElement('textarea')
+	          textArea.value = code;
+	          document.body.appendChild(textArea)
+	          textArea.select()
+	          document.execCommand('copy')
+	          document.body.removeChild(textArea)
 		      alert('아이디가 복사되었습니다.');
 		   }
 		});
