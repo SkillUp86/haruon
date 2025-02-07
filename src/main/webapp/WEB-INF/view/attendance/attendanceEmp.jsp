@@ -190,7 +190,7 @@
 									                            <div class="card-header" id="vacationDraftHeader">
 									                                <section class="mb-0 mt-0">
 									                                    <div role="menu" class="collapsed" data-bs-toggle="collapse" data-bs-target="#vacationDraft" aria-expanded="true" aria-controls="vacationDraft">
-									                                        부서원 휴가신청 리스트
+									                                        나의 휴가신청 리스트
 									                                    </div>
 									                                </section>
 									                            </div>
