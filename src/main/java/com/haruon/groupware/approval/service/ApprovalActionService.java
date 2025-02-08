@@ -13,6 +13,7 @@ import com.haruon.groupware.approval.dto.ResponseBusinessTrip;
 import com.haruon.groupware.approval.dto.ResponseVacation;
 import com.haruon.groupware.approval.mapper.ApprovalActionMapper;
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.exception.NotEnoughLeaveException;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.mapper.ScheduleMapper;
 
@@ -38,8 +39,7 @@ public class ApprovalActionService {
 
 	// 중간 유효성 검사
 	public boolean isAccessBymidApproval(int draNo) {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
 		Integer midApp = approvalActionMapper.findMidApprovalByEmpNo(empNo, draNo).getMidApp();
 		// 중간결재자가 아닐시 접근제한
@@ -51,8 +51,7 @@ public class ApprovalActionService {
 
 	// 최종 유효성 검사
 	public boolean isAccessByFinalApproval(int draNo) {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
 		// Integer midApp =
 		// approvalActionMapper.findMidApprovalByEmpNo(empNo).getMidApp();
@@ -66,8 +65,7 @@ public class ApprovalActionService {
 
 	// 반려사유 권한이 있는지 확인
 	public boolean isAccessByRejectApproval(int draNo) {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int empNo = details.getEmpNo();
 
 		Integer rejectByEmpNo = approvalActionMapper.findRejectByEmpNo(empNo, draNo).getEmpNo();
@@ -79,8 +77,7 @@ public class ApprovalActionService {
 
 	// 결재자 사인이미지 유무
 	public int getFindSignByEmpNo() {
-		CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
+		CustomUserDetails details = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return approvalActionMapper.findSignByEmpNo(details.getEmpNo());
 	}
 
@@ -140,13 +137,13 @@ public class ApprovalActionService {
 
 		// 연차가 부족하면 예외 발생
 		if (totalLeave - usedLeave < usedDays) {
-			throw new IllegalArgumentException("연차 승인 실패. 남은 연차가 부족합니다.");
+			throw new NotEnoughLeaveException("연차 승인 실패. 남은 연차가 부족합니다. 반려를 선택해주세요.");
 		}
 
-		// 연차 차감
+		// 쓴 갯수 추가
 		int updateUsedLeave = approvalActionMapper.updateTotalLeave(empNo, usedLeave + usedDays);
 		if (updateUsedLeave != 1) {
-			throw new IllegalArgumentException("연차 승인 실패. 오류");
+			throw new NotEnoughLeaveException("연차 승인 실패. 오류");
 		}
 	}
 
@@ -180,7 +177,7 @@ public class ApprovalActionService {
 		case "H02":
 			return "G05";
 		default:
-			throw new IllegalArgumentException("휴가 승인 실패. 잘못된 요청입니다.");
+			throw new NotEnoughLeaveException("휴가 승인 실패. 잘못된 요청입니다. 연차, 반차만 입력 가능");
 		}
 	}
 

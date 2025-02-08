@@ -98,6 +98,11 @@
 											<div class="alert alert-primary" role="alert">${msg}</div>
 										</div>
 									</c:if>
+									<c:if test="${failMsg != null}">
+										<div class="col-xxl-12 col-md-12 mb-4">
+											<div class="alert alert-danger" role="alert">${failMsg}</div>
+										</div>
+									</c:if>
 								<form id="addEmp" method="post" action="${pageContext.request.contextPath}/addEmp">
 								    <div class="col-md-12">
 								        <div class="mb-3">

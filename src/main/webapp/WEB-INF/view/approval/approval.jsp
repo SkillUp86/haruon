@@ -107,8 +107,12 @@
 							<div class="widget-content widget-content-area mt-4">
 								<div class="input-group mb-4">
 									<h5 class="mb-4">결재라인</h5>
-
 								</div>
+								<c:if test="${msg != null}">
+										<div class="input-group mb-4">
+											<div class="alert alert-warning" role="alert">${msg}</div>
+										</div>
+									</c:if>	
 								<div class="input-group mb-4">
 
 									<span class="input-group-text label-text">기안자</span>
@@ -238,9 +242,7 @@
 								<div class="input-group">
 									<textarea class="form-control mb-4" rows="10" id="textContent" name="textContent"></textarea>
 								</div>
-								<div class="form-group mb-4">
-					                ${msg}
-					            </div>
+								
 								<div class="form-group mb-4">
 									<input class="form-control file-upload-input" type="file" id="formFile" name="formFile" multiple="multiple">
 								</div>

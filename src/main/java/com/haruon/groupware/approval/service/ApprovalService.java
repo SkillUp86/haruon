@@ -13,6 +13,7 @@ import com.haruon.groupware.approval.dto.ResponseFranchise;
 import com.haruon.groupware.approval.mapper.ApprovalMapper;
 import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.common.mapper.CommonMapper;
+import com.haruon.groupware.exception.InvalidApprovalException;
 import com.haruon.groupware.util.ApprovalFileUpload;
 
 import lombok.extern.slf4j.Slf4j;
@@ -65,28 +66,28 @@ public class ApprovalService {
 		switch (approval.getKind()) {
 		case "C02": // 출장 보고서
 			if (approval.getPlace() == null || approval.getPlace().isBlank()) {
-				throw new IllegalArgumentException("출장 지역은 필수입니다.");
+				throw new InvalidApprovalException("출장 지역은 필수입니다.");
 			}
 			if (approval.getPlaceStartDate() == null || approval.getPlaceEndDate() == null) {
-				throw new IllegalArgumentException("출장 기간은 필수입니다.");
+				throw new InvalidApprovalException("출장 기간은 필수입니다.");
 			}
 			break;
 
 		case "C03": // 매출 보고서
 			if (approval.getYm() == null || approval.getYm().isBlank()) {
-				throw new IllegalArgumentException("연월은 필수입니다.");
+				throw new InvalidApprovalException("연월은 필수입니다.");
 			}
 			if (approval.getRevenue() == null || approval.getRevenue() <= 0) {
-				throw new IllegalArgumentException("매출액은 필수이며 0보다 커야 합니다.");
+				throw new InvalidApprovalException("매출액은 필수이며 0보다 커야 합니다.");
 			}
 			break;
 
 		case "C04": // 휴가 보고서
 			if (approval.getVacStartDate() == null || approval.getVacFinishDate() == null) {
-				throw new IllegalArgumentException("휴가 기간은 필수입니다.");
+				throw new InvalidApprovalException("휴가 기간은 필수입니다.");
 			}
 			if (approval.getVacationType() == null || approval.getVacationType().isBlank()) {
-				throw new IllegalArgumentException("휴가 유형은 필수입니다.");
+				throw new InvalidApprovalException("휴가 유형은 필수입니다.");
 			}
 			break;
 		default:

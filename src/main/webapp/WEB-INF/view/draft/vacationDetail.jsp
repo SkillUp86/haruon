@@ -143,7 +143,7 @@
 														</div>
 														<div class="input-group">
 															<span class="input-group-text label-text">유형</span>
-															<input class="form-control" value="${d.vacType}" type="text" id="vacFinishDate" name="vacFinishDate" readonly>
+															<input class="form-control" value="${d.vacType}" type="text" readonly>
 															<span class="input-group-text label-text">비상연락처</span>
 															<input class="form-control" value="${d.emergPhone}" type="text" pattern="(010)-\d{3,4}-\d{4}" name="urgentPhone" id="urgentPhone" placeholder="010-0000-0000" readonly>
 														</div>
@@ -203,6 +203,32 @@
                 </div>
 
             </div>
+            <script>
+			    function formatting() {
+			        let startDate = "${d.vacStartDate}";
+			        let finishDate = "${d.vacFinishDate}";
+			
+			        // 날짜와 시간을 분리
+			        let [startDatePart, startTimePart] = startDate.split(" ");
+			        let [finishDatePart, finishTimePart] = finishDate.split(" ");
+			
+			        // 날짜와 시간 배열 변환
+			        let [startYear, startMonth, startDay] = startDatePart.split("-");
+			        let [startHour, startMinute, startSecond] = startTimePart.split(":");
+			
+			        let [finishYear, finishMonth, finishDay] = finishDatePart.split("-");
+			        let [finishHour, finishMinute, finishSecond] = finishTimePart.split(":");
+			
+			        // 변환
+			        let formattedStartDate = `\${startYear}년 \${startMonth}월 \${startDay}일 \${startHour}시 \${startMinute}분`;
+			        let formattedFinishDate = `\${finishYear}년 \${finishMonth}월 \${finishDay}일 \${finishHour}시 \${finishMinute}분`;
+			
+			        document.getElementById("vacStartDate").value = formattedStartDate;
+			        document.getElementById("vacFinishDate").value = formattedFinishDate;
+			    }
+			    // 페이지 로드 시 자동 실행
+			    window.onload = formatting;
+			</script>
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>

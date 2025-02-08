@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haruon.groupware.auth.CustomUserDetails;
+import com.haruon.groupware.exception.EmpNotFoundException;
 import com.haruon.groupware.user.dto.RequestEmpUpdateInfo;
 import com.haruon.groupware.user.dto.ResponseEmpInfo;
 import com.haruon.groupware.user.entity.EmpEntity;
@@ -37,7 +38,7 @@ public class EmpUpdateService {
 
 		int emp = empUpdateMapper.findByEmpAndEmail(empEntity);
 		if (emp != 1) {
-			throw new IllegalArgumentException("사원번호와 이메일이 일치하지 않습니다.");
+			throw new EmpNotFoundException("사원번호와 이메일이 일치하지 않습니다.");
 		}
 		String randomPassword = UUID.randomUUID().toString().substring(0, 6);
 		empEntity.setEmpPw(passwordEncoder.encode(randomPassword));

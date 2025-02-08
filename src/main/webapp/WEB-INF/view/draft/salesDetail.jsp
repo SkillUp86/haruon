@@ -138,7 +138,7 @@
                                                         </div>
                                                         <div class="input-group mb-1">
                                                             <span class="input-group-text label-text">매출연월</span>
-                                                            <input class="form-control" value="${d.ym}" readonly>
+                                                            <input class="form-control" id="ym" value="${d.ym}" readonly>
                                                             <span class="input-group-text label-text">매출액</span>
                                                             <input class="form-control" value="${d.revenue}" readonly>
                                                         </div>
@@ -188,7 +188,20 @@
                         <jsp:include page="/WEB-INF/view/inc/footer.jsp" />
                     </div>
                 </div>
-
+			<script>
+			    function formatting() {
+			        let ym = "${d.ym}";
+			        console.log(ym);
+			        // 날짜와 시간 배열 변환
+			        let [year, month] = ym.split("-");
+			        // 변환
+			        let formattedym = `\${year}년 \${month}월`;
+			        console.log("formattedym",formattedym);
+			        document.getElementById("ym").value = formattedym;
+			    }
+			    // 페이지 로드 시 자동 실행
+			    window.onload = formatting;
+			</script>
             </div>
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>

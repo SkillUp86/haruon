@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +44,10 @@ public class EmpService {
 		return empMapper.findByEmp(email);
 	}
 	public void addEmp(EmpDto emp) {
+		EmpEntity existingEmp = empMapper.findByEmp(emp.getEmail());
+		if(existingEmp!=null) {
+			throw new DataIntegrityViolationException("이미 가입된 이메일입니다.");
+		}
 		String randomPassword = UUID.randomUUID().toString().substring(0, 6);
 		emp.setEmpPw(passwordEncoder.encode(randomPassword));
 		SimpleMailMessage message = new SimpleMailMessage();

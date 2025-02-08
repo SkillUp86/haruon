@@ -50,8 +50,8 @@
 			   from dept
 			   where dep_no = sb.dep_no) subEmpDept
 			 , vc.kind kind
-			 , date_format(vc.start_date, '%Y년 %m월 %d일 %H시%i분') vacStartDate
-			 , date_format(vc.finish_date, '%Y년 %m월 %d일 %H시%i분') vacFinishDate
+			 , vc.start_date vacStartDate
+			 , vc.finish_date vacFinishDate
 			 , (select descript
 			   from common_code
 			   where common_code = vc.kind) vacType
@@ -133,7 +133,7 @@
 			 , d.content content
 			 , s.fra_no franchiseNo
 			 , fc.fname franchiseName
-			 , DATE_FORMAT(CONCAT(s.ym, '-01'), '%Y년 %m월') ym
+			 , s.ym ym
 			 , s.revenue revenue
 			 , date_format(d.create_date, '%Y년 %m월 %d일 %H시%i분') createDate
 			 , a.mid_app_date midDate
@@ -210,8 +210,8 @@
 			 , d.title title
 			 , d.content content
 			 , bt.place place
-			 , date_format(bt.start_date, '%Y년 %m월 %d일 %H시%i분') bizStartDate
-			 , date_format(bt.finish_date, '%Y년 %m월 %d일 %H시%i분') bizFinishDate
+			 , bt.start_date bizStartDate
+			 , bt.finish_date bizFinishDate
 			 , date_format(d.create_date, '%Y년 %m월 %d일 %H시%i분') createDate
 		 	 , a.mid_app_date midDate
 			 , a.final_app_date finalDate

@@ -140,9 +140,9 @@
                                                         </div>
                                                         <div class="input-group mb-1">
                                                             <span class="input-group-text label-text">시작날짜</span>
-                                                            <input class="form-control" value="${d.bizStartDate}" readonly>
+                                                            <input class="form-control" id="startDate" value="${d.bizStartDate}" readonly>
                                                             <span class="input-group-text label-text">종료날짜</span>
-                                                            <input class="form-control" value="${d.bizFinishDate}" readonly>
+                                                            <input class="form-control" id="finishDate" value="${d.bizFinishDate}" readonly>
                                                         </div>
                                                         
                                                     </div>
@@ -193,6 +193,33 @@
                 </div>
 
             </div>
+            <script>
+			    function formatting() {
+			        let startDate = "${d.bizStartDate}";
+			        let finishDate = "${d.bizFinishDate}";
+			
+			        // 날짜와 시간을 분리
+			        let [startDatePart, startTimePart] = startDate.split(" ");
+			        let [finishDatePart, finishTimePart] = finishDate.split(" ");
+			
+			        // 날짜와 시간 배열 변환
+			        let [startYear, startMonth, startDay] = startDatePart.split("-");
+			        let [startHour, startMinute, startSecond] = startTimePart.split(":");
+			
+			        let [finishYear, finishMonth, finishDay] = finishDatePart.split("-");
+			        let [finishHour, finishMinute, finishSecond] = finishTimePart.split(":");
+			
+			        // 변환
+			        let formattedStartDate = `\${startYear}년 \${startMonth}월 \${startDay}일 \${startHour}시 \${startMinute}분`;
+			        let formattedFinishDate = `\${finishYear}년 \${finishMonth}월 \${finishDay}일 \${finishHour}시 \${finishMinute}분`;
+			
+			        document.getElementById("startDate").value = formattedStartDate;
+			        document.getElementById("finishDate").value = formattedFinishDate;
+			    }
+			    // 페이지 로드 시 자동 실행
+			    window.onload = formatting;
+			</script>
+
             <script src="${pageContext.request.contextPath}/src/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script src="${pageContext.request.contextPath}/src/plugins/src/mousetrap/mousetrap.min.js"></script>

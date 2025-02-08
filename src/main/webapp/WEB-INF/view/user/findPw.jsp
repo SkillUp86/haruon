@@ -49,8 +49,14 @@
 
                                     <h2>비밀번호 찾기</h2>
                                     <p>비밀번호 찾기</p>
+                                    
                                 </div>
                                 <div class="col-md-12">
+                                <c:if test="${msg != null}">
+										<div class="col-xxl-12 col-md-12 mb-4">
+											<div class="alert alert-danger" role="alert">${msg}</div>
+										</div>
+									</c:if>
                                     <div class="mb-3">
                                         <label class="form-label">사원번호</label>
    										 <input type="text" id="empNo" name="empNo" pattern="[0-9]*" class="form-control" required>

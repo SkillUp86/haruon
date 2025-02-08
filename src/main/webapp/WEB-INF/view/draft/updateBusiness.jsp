@@ -152,9 +152,9 @@
                                                             </div>
                                                             <div class="input-group mb-1">
                                                                 <span class="input-group-text label-text">시작날짜</span>
-                                                                <input class="form-control" type="datetime-local" name="startDate" value="${d.bizStartDate}" required>
+                                                                <input class="form-control" type="datetime-local" id="startDate" name="startDate" value="${d.bizStartDate}" required>
                                                                 <span class="input-group-text label-text">종료날짜</span>
-                                                                <input class="form-control" type="datetime-local" name="finishDate" value="${d.bizFinishDate}" required>
+                                                                <input class="form-control" type="datetime-local" id="finishDate" name="finishDate" value="${d.bizFinishDate}" required>
                                                             </div>
 														</div>
                                                         <div class="input-group mb-2">
@@ -236,6 +236,7 @@
             <script src="${pageContext.request.contextPath}/layouts/vertical-light-menu/app.js"></script>
             <script>
 	            $(document).ready(function () {
+	            	   
 	                // 삭제 버튼 클릭 이벤트 핸들러
 	                $(".delete-btn").click(function () {
 	                    const $button = $(this);
