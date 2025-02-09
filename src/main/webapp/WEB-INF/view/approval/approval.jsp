@@ -432,7 +432,7 @@
 	<c:if test="${not empty param.successMsg}">
 	    <script>
 	        alert("${param.successMsg}");  // 메시지 표시
-	        window.location.href = "/home"; // 홈으로 이동
+	        window.location.href = "/draft/list"; // 홈으로 이동
 	    </script>
 	</c:if>
 
