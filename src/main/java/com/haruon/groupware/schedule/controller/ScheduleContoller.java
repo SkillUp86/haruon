@@ -1,5 +1,7 @@
 package com.haruon.groupware.schedule.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.haruon.groupware.common.entity.CommonCode;
 import com.haruon.groupware.schedule.entity.Schedules;
 import com.haruon.groupware.schedule.service.ScheduleService;
 
@@ -49,7 +52,11 @@ public class ScheduleContoller {
 	}
 
 	@PostMapping("/updateSchedule")
-	public String updateSchedule(@ModelAttribute Schedules schedules) {
+	public String updateSchedule(@ModelAttribute Schedules schedules, String parentCode, Model model) {
+		List<CommonCode> kind = scheduleService.kind(parentCode);
+		
+		model.addAttribute("kind", kind);
+		
 	    log.debug("Received schedules for update: {}", schedules);
 
 	    if (schedules == null || schedules.getSchNo() == null) {
