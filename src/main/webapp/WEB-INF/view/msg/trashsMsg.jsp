@@ -404,7 +404,7 @@
                          		           			+ ` </div>
                                                         <div class="f-body">
                                                             <div class="meta-mail-time">
-                                                                <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
+                                                                <p class="user-email">` + item.enameS + "(" + item.descriptS + ")" +` </p>
                                                             </div>
                                                             <div class="meta-title-tag">
                                                                 <p class="mail-content-excerpt" style="text-align:center" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
