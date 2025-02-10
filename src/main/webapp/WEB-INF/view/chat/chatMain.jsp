@@ -35,6 +35,7 @@
 		  transition: 0.3s ease all;
 		}
     </style>
+
 </head>
 <body>
     <!-- BEGIN LOADER -->
@@ -162,9 +163,24 @@
 		$(document).ready(function() {
 			showEmployeesList();
 			showChatRoomList();
+			
+			// 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수.
+            var strDocumentWidth = $(document).outerWidth();
+            var strDocumentHeight = $(document).outerHeight();
+            window.resizeTo ( strDocumentWidth, strDocumentHeight );
+
+            var strMenuWidth = strDocumentWidth - $(window).width();
+            var strMenuHeight = strDocumentHeight - $(window).height();
+
+            var strWidth = $('#content-sub').outerWidth() + strMenuWidth;
+            var strHeight = $('#content-sub').outerHeight() + strMenuHeight + 300;
+
+	    	//resize
+	    	window.resizeTo( strWidth, strHeight );
 		});
+
 	</script>    
-	
+
 	<!-- 나의 상태변경 script -->
 	<script>
 		var switchBtn = {
@@ -279,7 +295,7 @@
     	});
        	
     </script>
-    
+
     <!-- ajax 호출 : 사원검색 리스트 - showEmployeesList -->
     <script>
     	// 로그인한 사원을 포함한 전직원의 리스트 출력
@@ -448,6 +464,8 @@
 		}
     
     </script>
+    
+    
     
 </body>
 </html>
