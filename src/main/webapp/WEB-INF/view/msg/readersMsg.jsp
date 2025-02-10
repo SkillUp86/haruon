@@ -93,9 +93,7 @@
                                         
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                               <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#"> 메일함 </a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
                                                 <li class="breadcrumb-item active" aria-current="page"> 받은메일함 </li>
                                             </ol>
                                         </nav>
@@ -422,14 +420,12 @@
                                             </div>
                                         </div>
                 
-                                        <div class="action-btns">
+                                        <div>
                                            <form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/trashMsg/` + item.msgNo + `">
                                               <button type="button" id="btnTrash` + item.msgNo + `">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                                     <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
-                                                     <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
-                                                     <path d="M9 4v1h6V4z"/>
-                                                   </svg>
+                                              	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+												<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+												<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                               </button>
                                            </form>
                                         </div>
