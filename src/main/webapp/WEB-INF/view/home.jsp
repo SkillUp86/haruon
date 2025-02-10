@@ -111,8 +111,13 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                             <div class="layout-spacing">
                                 <div class="widget widget-six">
-								<p class="text-end">	
-								<div id="calendar"></div>
+                                	<div style="position: relative; margin-bottom: 20px;">
+						                <p style="position: absolute; top: -10px; right: 15px;">
+						                    <a href="${pageContext.request.contextPath}/calendar"><strong>더보기</strong></a>
+						                </p>
+						            </div>
+									<p class="text-end">	
+									<div id="calendar"></div>
                                 </div>
                             </div>
                         </div>
@@ -152,12 +157,12 @@
                                 </div>
                              <!-- 결재함 컨텐츠 끝-->
                              
-                            <!-- 쪽지함 시작-->
+                            <!-- 메일함 시작-->
                             <br>
                             <div class="layout-spacing">
                                 <div class="widget widget-six h-100">
                                     <div class="widget-heading">
-                                        <h5 style="display: inline-block;">안읽은쪽지함</h5>
+                                        <h5 style="display: inline-block;">안 읽은 메일함</h5>
                                         <p style="display: inline-block; float: right; margin-right: 15px;">
                                         	<a href="${pageContext.request.contextPath}/readersMsg"><strong>더보기</strong></a>
                                             <br>
@@ -167,7 +172,7 @@
                                     <div id="msgUnreadList"></div>							        
                                 </div>
                             </div>
-                             <!-- 쪽지함 끝-->
+                             <!-- 메일함 끝-->
                         </div>
 
 

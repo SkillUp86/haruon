@@ -103,12 +103,14 @@
 	               					<div class="widget-content widget-content-area br-8" style="margin-bottom: 300px; width: 100%;">
 		               					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; margin-top: 10px;">
 				                            <h2 class="mt-3 mb-3">&nbsp; 직원 목록</h2>
-				                            <div style="text-align: right; margin-top: 20px;" class="me-4">
-				                                <a class="btn btn-secondary me-4" href="${pageContext.request.contextPath}/addEmp">
-				                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-				                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 직원등록
-				                                </a>
-			                                 </div>
+				                            <c:if test="${depNo == 1}"><!-- 인사과만 직원등록 버튼 노출 (depNo=1) -->
+					                            <div style="text-align: right; margin-top: 20px;" class="me-4">
+					                                <a class="btn btn-secondary me-4" href="${pageContext.request.contextPath}/addEmp">
+					                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+					                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 직원등록
+					                                </a>
+				                                 </div>
+				                            </c:if>
 		                            	</div>
 	               						<div style="margin: 0 30px 100px;">
                                 		<table id="employeeList" class="zero-config table dt-table-hover" style="width:100%">

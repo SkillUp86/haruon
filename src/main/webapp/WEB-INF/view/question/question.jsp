@@ -110,6 +110,9 @@
 	                                   	<label class="form-control">${qfl.originName}.${qfl.ext}</label>
 	                                   </a>
                                    </c:forEach>
+                               <div class="icon-container" style="margin-top: 50px;">
+	                           		<a href="${pageContext.request.contextPath}/franchises/questions" class="btn btn-secondary me-4 mb-2">목록으로</a>
+	                           </div>
                             </div>
                             <div class="card col-6 p-5 me-2">
                             	<h3 class="ms-1 mt-3 mb-4">답변</h3>
@@ -121,7 +124,7 @@
 		                                    <textarea class="form-control" id="contents" name="content" placeholder="답변" rows="30" cols="40"></textarea>
 		                                </div>
 		                                <div class="text-end mt-2">
-		                                	<button type="button" id="addBtn" class="btn btn-gray btn-lg">등록</button>
+		                                	<button type="button" id="addBtn" class="btn btn-success btn-lg">등록</button>
 		                                </div>
                                 	</form>
                                 </c:if>

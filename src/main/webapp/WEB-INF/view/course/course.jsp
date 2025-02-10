@@ -109,6 +109,9 @@
 	                                <label class="form-label"> 정원 </label>
 	                                <label class="form-control">${c.capacity}</label>
 	                            </div>
+	                            <div class="icon-container" style="margin-top: 180px;">
+	                           		<a href="${pageContext.request.contextPath}/franchises/courses" class="btn btn-secondary me-4 mb-2">목록으로</a>
+	                           </div>
                            </div>
                            <div class="card col-8 p-5">
 	                            <div>
