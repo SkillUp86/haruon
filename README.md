@@ -4,9 +4,9 @@
   - (K-Digital Training) 클라우드 활용 자바 개발자 양성과정 86기 파이널 팀 프로젝트<br>
 
 # 📑 서비스 초기 설계 개요
- - <a href="https://app.luminpdf.com/viewer/679c7e3c1cf39e9a7b059013">스토리보드</a>
+ - <a href="https://drive.google.com/file/d/165VDJQDqiuiWo3ycASGSIZJyNAXy-zLX/view?usp=sharing">스토리보드</a>
  - <a href="https://docs.google.com/spreadsheets/d/1_2jt6uWHEDrZeYYrJ9j3cnmxJiIQ8ytv/edit?usp=sharing&ouid=106995358265152035103&rtpof=true&sd=true">요구사항 정의</a>
- - <a href="https://app.luminpdf.com/viewer/679c7e421cf39e9a7b059155">테이블 정의서</a>
+ - <a href="https://drive.google.com/file/d/1tqYL68vizimMNjUDtYVkYri1X2adKIGt/view?usp=sharing">테이블 정의서</a>
 
 # 🧰 개발 환경 및 기술 스택
 #### LANGUAGE & SKILL
