@@ -62,9 +62,9 @@
 # 🧑‍🤝‍🧑 Collaborators
 | 팀원 | 역할 | 담당업무 |
 |---|---|---|
-| <a href="https://github.com/">이동윤</a>|팀장|전자결재, security 설정|
+| <a href="https://github.com/LYUN555">이동윤</a>|팀장|전자결재, security 설정|
 | <a href="https://github.com/ES-Im">김은서</a>| 팀원 |근태관리, 실시간 채팅 |
-| <a href="">나정우</a>|팀원|회의실예약, 일정관리|
+| <a href="https://github.com/najungwoo">나정우</a>|팀원|회의실예약, 일정관리|
 | <a href="https://github.com/alim0o0">오아림</a>|팀원|조직도, 커뮤니티|
-| <a href="">장우림</a>|팀원|메일, 가맹점관리|
+| <a href="https://github.com/gd2872">장우림</a>|팀원|메일, 가맹점관리|
 	
