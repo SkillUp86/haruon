@@ -72,9 +72,7 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
                                                 <li class="breadcrumb-item"><a href="#">가맹점</a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
                                                 <li class="breadcrumb-item active" aria-current="page">교육 리스트</li>
                                             </ol>
                                         </nav>

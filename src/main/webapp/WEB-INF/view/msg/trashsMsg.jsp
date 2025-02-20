@@ -404,7 +404,7 @@
                          		           			+ ` </div>
                                                         <div class="f-body">
                                                             <div class="meta-mail-time">
-                                                                <p class="user-email">` + item.enameR + "(" + item.descriptR + ")" +` </p>
+                                                                <p class="user-email">` + item.enameS + "(" + item.descriptS + ")" +` </p>
                                                             </div>
                                                             <div class="meta-title-tag">
                                                                 <p class="mail-content-excerpt" style="text-align:center" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>
@@ -434,14 +434,12 @@
                                                 </div>
                                             </div>
                     
-                                            <div class="action-btns d-flex">
+                                            <div class="d-flex">
 	                                        	<form id="formTrash` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/deleteMsgR/` + item.msgNo + `">
 	                                        		<button type="button" id="btnTrash` + item.msgNo + `">
-			                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-				                                            <path d="M3 6h18a1 1 0 0 1 1 1v1H2V7a1 1 0 0 1 1-1z"/>
-				                                            <path d="M6 9h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z"/>
-				                                            <path d="M9 4v1h6V4z"/>
-			                                          	</svg>
+		                                        		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note">
+														<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+														<line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
 	                                        		</button>
 	                                        	</form>
 	                                        	<form id="formBack` + item.msgNo + `" method="post" action="${pageContext.request.contextPath}/backMsg/` + item.msgNo + `">

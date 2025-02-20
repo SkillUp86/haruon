@@ -118,19 +118,19 @@
 					<div class="row mb-3">
 					    <label class="col-sm-2 col-form-label">일정종류</label>
 					    <div class="col-sm-10">
-					        <input class="form-control" id="kind" name="kind" 
-					        value="${
+					        <input class="form-control" value="${
 					            (s.kind == 'G01') ? '일정' :
 					            (s.kind == 'G02') ? '연차' :
 					            (s.kind == 'G03') ? '출장' :
 					            (s.kind == 'G04') ? '회의' :
 					            (s.kind == 'G05') ? '반차' : ''
 					        }" readonly>
+					        <input type="hidden" name="kind" value="${s.kind}">
 					    </div>
 					</div>
 	               
 	                <div class="row mb-3">
-	                	<label for="inputPassword3" class="col-sm-2 col-form-label">일정내용</label>
+	                	<label for="inputPassword3" class="col-sm-2 col-form-l	abel">일정내용</label>
 	                	<div class="col-sm-10">
 	                		<textarea rows="3" maxlength="100" class="col-sm-12" 
 	                					id="modContent" name="content" style="height: 150px">${s.content}</textarea>	

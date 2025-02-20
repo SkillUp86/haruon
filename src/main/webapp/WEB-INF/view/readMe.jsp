@@ -565,24 +565,6 @@
 	                             ${noteEnd}
 	                         </div>
 	                     </div>  
-	                     
-                  	      <!-- 게시판 관리 -->
-	                      <div class="note-item all-notes system">
-	                         <div class="note-inner-content">
-	                             <h5>자유 게시판 관리</h5>
-	                             <ul>
-	                             	 <li>위치 : 게시판 > 자유게시판 </li>
-	                             	 <li>
-										<ol>
-											<li>
-												보류
-											</li>
-										</ol>	                             	 
-	                             	 </li>
-	                             </ul>
-	                             ${noteEnd}
-	                         </div>
-	                     </div>
 	                       
                   	      <!-- 카테코리 관리 -->
 	                      <div class="note-item all-notes system">

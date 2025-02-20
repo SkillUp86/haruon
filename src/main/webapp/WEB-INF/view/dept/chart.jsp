@@ -272,14 +272,14 @@
 										<div class="modal-body">
 											<div class="profile-image">
 										    	<c:if test="${e.fileName != null}">
-											       <div class="profile-image-area mb-2">
-							                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
-								                    </div>
+											      <div class="profile-image-area mb-2">
+							                      	<img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/${e.fileName}.${e.ext}" id="author-img">
+								                  </div>
 										    	</c:if>
 										    	<c:if test="${e.fileName == null}">
-											       <div class="profile-image-area mb-2">
-							                            <img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/noProfile.png" id="author-img">
-								                    </div>
+											      <div class="profile-image-area mb-2">
+							                      	<img class="author-img mb-2" src="${pageContext.request.contextPath}/upload/profile/noProfile.png" id="author-img">
+								                  </div>
 										    	</c:if>
 										    </div>
 											<div class="mb-3">

@@ -1,12 +1,12 @@
 # 📝 개요
   - 프로젝트 명 : 프랜차이즈 본사 그룹웨어 HARUON<br>
-  - 프로젝트 기간 : 2024-12-23 ~ 2025-02-<br>
+  - 프로젝트 기간 : 2024-12-23 ~ 2025-02-12<br>
   - (K-Digital Training) 클라우드 활용 자바 개발자 양성과정 86기 파이널 팀 프로젝트<br>
 
 # 📑 서비스 초기 설계 개요
- - <a href="https://app.luminpdf.com/viewer/679c7e3c1cf39e9a7b059013">스토리보드</a>
+ - <a href="https://drive.google.com/file/d/165VDJQDqiuiWo3ycASGSIZJyNAXy-zLX/view?usp=sharing">스토리보드</a>
  - <a href="https://docs.google.com/spreadsheets/d/1_2jt6uWHEDrZeYYrJ9j3cnmxJiIQ8ytv/edit?usp=sharing&ouid=106995358265152035103&rtpof=true&sd=true">요구사항 정의</a>
- - <a href="https://app.luminpdf.com/viewer/679c7e421cf39e9a7b059155">테이블 정의서</a>
+ - <a href="https://drive.google.com/file/d/1tqYL68vizimMNjUDtYVkYri1X2adKIGt/view?usp=sharing">테이블 정의서</a>
 
 # 🧰 개발 환경 및 기술 스택
 #### LANGUAGE & SKILL
@@ -62,9 +62,40 @@
 # 🧑‍🤝‍🧑 Collaborators
 | 팀원 | 역할 | 담당업무 |
 |---|---|---|
-| <a href="https://github.com/">이동윤</a>|팀장|전자결재, security 설정|
+| <a href="https://github.com/LYUN555">이동윤</a>|팀장|전자결재, security 설정|
 | <a href="https://github.com/ES-Im">김은서</a>| 팀원 |근태관리, 실시간 채팅 |
-| <a href="">나정우</a>|팀원|회의실예약, 일정관리|
+| <a href="https://github.com/najungwoo">나정우</a>|팀원|회의실예약, 일정관리|
 | <a href="https://github.com/alim0o0">오아림</a>|팀원|조직도, 커뮤니티|
-| <a href="">장우림</a>|팀원|메일, 가맹점관리|
+| <a href="https://github.com/gd2872">장우림</a>|팀원|메일, 가맹점관리|
+
+# 📌 담당 업무
+
+### 📝 결재 문서
+- 기본, 매출보고서, 휴가신청서, 출장신청서 총 4개의 기안서 작성 폼 구현
+- 기안 작성 시, 모달 창을 통해 중간결재자/최종결재자/수신참조자 선택 가능
+- 기안 제출 후 결재대기 상태에서 수정 및 삭제 가능
+- 결재문서 수정·삭제 시, 서비스 레이어에서 유효성 검증을 수행하여 본인이 아닐 경우 로그인 페이지로 리다이렉트 처리
+- 결재문서에서 기안자가 설정한 결재라인 및 참조자만 열람 가능하도록 권한 검증 메서드 구현
+- 결재자가 서명 미등록 시, 알림(alert) 창을 띄우고 마이페이지에서 전자결재 이미지 등록하도록 처리
+- 결재 완료 후 PDF 파일로 다운로드 가능
+- 결재 완료 시, 일정(Calendar)에 자동 등록하여 업무 일정과 연동
+- 결재 목록 및 참조 리스트 관리를 효율적으로 하기 위해 Datatables 라이브러리와 AJAX를 활용하여 리스트 페이지 구현
+- 페이징, 검색 기능 추가로 사용자 편의성 향상
+
+### 🏢 신규 사원 등록
+- 사원 초대 시 `JavaMailSender`를 활용하여 이메일 발송 구현
+- `Spring Security(CustomUserDetailsService)`로 권한·인증 처리 시 프로필 사진까지 세션에 로드하여 사용자별 접근 제어와 UX를 개선
+- 데이터베이스에 새로운 사원 등록 시 중복 여부 확인 및 유효성 검증 로직 구현
+
+### 🔒 마이페이지
+- `MultipartFile`로 프로필 이미지 업로드 및 서버에 저장, 기존 파일 삭제 처리 구현
+- 사원은 본인의 기본 정보를 실시간으로 수정 가능
+- 결재 시스템에서 사용되는 디지털 서명 이미지를 추가하거나 수정 가능
+
+### 📅 일정 관리
+- `FullCalendar.js`와 REST API를 활용해 달력에 일정 표시
+- 일정 페이지에서 AJAX 통신을 통해 서버에서 실시간으로 불러와 달력에 표시
+- 사용자가 새 일정을 추가할 수 있는 기능 제공
+- 일정 상세보기 페이지에서 수정, 삭제 기능
+
 	

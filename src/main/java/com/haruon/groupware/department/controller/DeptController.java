@@ -25,7 +25,8 @@ public class DeptController {
 	@GetMapping("/depts/chart")
 	public String deptChart(Model model) {
 		List<Map<String,Object>> deptList = deptService.getDeptHead();
-
+		model.addAttribute("d",deptList);
+		
 		Company company = companyService.getCompanyInfo();
         model.addAttribute("c", company);
         

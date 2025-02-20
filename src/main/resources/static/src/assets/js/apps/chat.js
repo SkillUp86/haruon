@@ -12,7 +12,7 @@ $(document).ready(function() {
     $('.chat-box .overlay-phone-call').css('display', 'block');
     $('.chat-box .overlay-video-call').css('display', 'block');
     $('.chat-meta-user').addClass('chat-active');
-    $('.chat-box').css('height', 'calc(100vh - 158px)');
+    $('.chat-box').css('height', 'calc(93vh)');
     $('.chat-footer').addClass('chat-active');
 
 

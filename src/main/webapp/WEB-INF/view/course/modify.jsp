@@ -82,10 +82,8 @@
                                         </div>
                                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                             <ol class="breadcrumb">
-                                            	<!-- 여기도 페이지 마다 이름 바꿔줘야 합니다 -->
-                                                <li class="breadcrumb-item"><a href="#">Franchises</a></li>
-                                                <!-- 여기도 페이지 마다 이름 바꿔줘야 합니다!!!!!!!!!!!!!!!!! -->
-                                                <li class="breadcrumb-item active" aria-current="page">Modify Course</li>
+                                                <li class="breadcrumb-item"><a href="#">가맹점</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">교육 리스트</li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -117,7 +115,7 @@
                                     <form id="addForm" method="post" action="${pageContext.request.contextPath}/franchises/courses/modify" class="row g-3" enctype="multipart/form-data">
                                     	<input type="hidden" name="eduNo" value="${c.eduNo}">
                                         <div class="col-12">
-                                            <label for="empNo" class="form-label">EMP</label>
+                                            <label for="empNo" class="form-label">담당자</label>
                                             <select id="empNo" name="empNo" class="form-control">
                                             	<option value="${c.empNo}">${c.ename}</option>
                                             	<c:forEach items="${empList}" var="el">
@@ -126,36 +124,40 @@
                                             </select>
                                         </div>
                                         <div class="col-12">
-                                            <label for="place" class="form-label">PLACE</label>
+                                            <label for="place" class="form-label">장소</label>
                                             <input type="text" class="form-control" id="place" name="place" value="${c.place}" placeholder="장소">
                                         </div>
                                         <div class="col-12">
-                                            <label for="eduDate" class="form-label">EDU DATE</label>
+                                            <label for="eduDate" class="form-label">일정</label>
                                             <input type="datetime-local" class="form-control" id="eduDate" name="eduDate" value="${c.eduDate}" placeholder="교육 일정">
                                         </div>
                                         <div class="col-12">
-                                            <label for="title" class="form-label">TITLE</label>
+                                            <label for="title" class="form-label">제목</label>
                                             <input type="text" class="form-control" id="title" name="title" value="${c.title}" placeholder="제목">
                                         </div>
 										<div class="col-12">
-										    <label for="contents" class="form-label">CONTENT</label>
+										    <label for="contents" class="form-label">내용</label>
 										    <textarea class="form-control" id="contents" name="content" placeholder="내용" rows="5" cols="40">${c.content}</textarea>
 										</div>
                                         <div class="col-12">
-                                            <label for="capacity" class="form-label">CAPACITY</label>
+                                            <label for="capacity" class="form-label">정원</label>
                                             <input type="number" class="form-control" id="capacity" name="capacity" value="${c.capacity}" placeholder="정원">
                                         </div>
 										<div class="form-group">
-                                            <label for="educationFile" class="form-label">FILE</label>
+                                            <label for="educationFile" class="form-label">첨부파일</label>
 											<input class="form-control file-upload-input mb-3" type="file" id="educationFile" name="educationFile" multiple="multiple">
 											<c:forEach items="${cfl}" var="cfl">
 												<label class="form-control mt-1"> ${cfl.originName}.${cfl.ext} 
-													<a href="${pageContext.request.contextPath}/franchises/courses/deleteFile?eduNo=${c.eduNo}&edufNo=${cfl.edufNo}" class="btn btn-gray ms-4"> 삭제 </a>		
+													<a href="${pageContext.request.contextPath}/franchises/courses/deleteFile?eduNo=${c.eduNo}&edufNo=${cfl.edufNo}" class="delete-file-btn">
+														<!-- 첨부파일 삭제 아이콘 -->
+									                    &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+									                    	<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+													</a>		
 												</label>
 											</c:forEach>	
 										</div>		                                        
-                                        <div class="col-12">
-                                            <button type="button" id="addBtn" class="btn btn-gray _effect--ripple waves-effect waves-light">수정</button>
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" id="addBtn" class="btn btn-success _effect--ripple waves-effect waves-light">수정</button>
                                         </div>
                                     </form>
                                 </div>
