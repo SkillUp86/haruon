@@ -363,9 +363,9 @@
 			   on a.state = sc.common_code
 		 where r.emp_no = #{empNo}
 		 <if test="search != null and search != ''">
-		 	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 	    and (d.title like concat (#{search}, '%') 
+			    or kc.descript like concat (#{search}, '%') 
+			    or sc.descript like concat (#{search}, '%'))
 		 </if>
 		 order by d.dra_no desc
 		 limit #{start} , #{length}
@@ -385,9 +385,9 @@
 			   on a.state = sc.common_code
 	     where r.emp_no = #{empNo}
 	     <if test="search != null and search != ''">
-		 	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 	   and (d.title like concat (#{search}, '%') 
+			   or kc.descript like concat (#{search}, '%') 
+			   or sc.descript like concat (#{search}, '%'))
 		 </if>
 	</select>
 	<!-- 사원별 결재문서 리스트 -->
@@ -409,9 +409,9 @@
 		 where a.mid_app = #{empNo}
 			   or a.final_app = #{empNo}
 		 <if test="search != null and search != ''">
-		 	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 	   and (d.title like concat (#{search}, '%') 
+			   or kc.descript like concat (#{search}, '%') 
+			   or sc.descript like concat (#{search}, '%'))
 		 </if>
 		 order by d.dra_no desc
 		 limit #{start} , #{length}
@@ -429,9 +429,9 @@
 		 where a.mid_app = #{empNo}
 			or a.final_app = #{empNo}
 		  <if test="search != null and search != ''">
-		 	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		 	   and (d.title like concat (#{search}, '%') 
+		 	   or kc.descript like concat (#{search}, '%') 
+		 	   or sc.descript like concat (#{search}, '%'))
 		 </if>
 	</select>
 
@@ -453,9 +453,9 @@
 			   on a.state = sc.common_code
 		 where d.emp_no = #{empNo}
 		 <if test="search != null and search != ''">
-		  	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		  	   and (d.title like concat (#{search}, '%') 
+		 	   or kc.descript like concat (#{search}, '%') 
+		 	   or sc.descript like concat (#{search}, '%'))
 		 </if>
 		 order by draNo desc
 		 limit #{start} , #{length}
@@ -474,9 +474,9 @@
 			   on a.state = sc.common_code
 		 where emp_no = #{empNo}
 		 <if test="search != null and search != ''">
-		  	   and (d.title like concat ('%', #{search}, '%') 
-		 	   or kc.descript like concat ('%', #{search}, '%') 
-		 	   or sc.descript like concat ('%', #{search}, '%'))
+		  	   and (d.title like concat (#{search}, '%') 
+		 	   or kc.descript like concat (#{search}, '%') 
+		 	   or sc.descript like concat (#{search}, '%'))
 		 </if>
 	</select>
 </mapper>
